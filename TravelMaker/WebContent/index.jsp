@@ -64,6 +64,13 @@ integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQV
 		width:500px;
 		height:500px;
 	}
+	
+	.carousel-control-prev, .carousel-control-next {
+		height:750px;
+		margin-top:auto;
+		margin-bottom:auto;
+	
+	}
     </style>
 </head>
 <body>
@@ -81,7 +88,7 @@ integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQV
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active dd">
-                            <a href="https://www.louvre.fr/"><img src='<%= request.getContextPath() %>/resources/images/서울2.jpg' class="d-block w-100" alt="..."></a>
+						<img src='<%= request.getContextPath() %>/resources/images/서울2.jpg' class="d-block w-100" alt="..."></a>
                         <div class="carousel-caption d-none d-md-block">
 							<hr>
                             <h1>서울 특별시</h1>
@@ -90,7 +97,7 @@ integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQV
 						
                     </div>
                     <div class="carousel-item dd">
-                            <a href="https://www.louvre.fr/"><img src='<%= request.getContextPath() %>/resources/images/경기도2.jpg' class="d-block w-100" alt="..."></a>
+                            <img src='<%= request.getContextPath() %>/resources/images/경기도2.jpg' class="d-block w-100" alt="..."></a>
                         <div class="carousel-caption d-none d-md-block">
                             <h1>경기도</h1>
                           
@@ -99,14 +106,14 @@ integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQV
 
                   
                     <div class="carousel-item dd">
-                            <a href="https://www.louvre.fr/"><img src='<%= request.getContextPath() %>/resources/images/강원도.jpg' class="d-block w-100" alt="..."></a>
+                            <img src='<%= request.getContextPath() %>/resources/images/강원도.jpg' class="d-block w-100" alt="..."></a>
                         <div class="carousel-caption d-none d-md-block">
                             <h1>강원도</h1>
                           
                         </div>
                     </div>
                     <div class="carousel-item dd">
-                        <a href="https://www.louvre.fr/"><img src='<%= request.getContextPath() %>/resources/images/충청도11.jpg' class="d-block w-100" alt="..."></a>
+                        <img src='<%= request.getContextPath() %>/resources/images/충청도11.jpg' class="d-block w-100" alt="..."></a>
                         <div class="carousel-caption d-none d-md-block">
                             <h1>충청도</h1>
                            
@@ -114,7 +121,7 @@ integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQV
 					</div>
 					
 					<div class="carousel-item dd">
-                        <a href="https://www.louvre.fr/"><img src='<%= request.getContextPath() %>/resources/images/경상도3.jpg' class="d-block w-100" alt="..."></a>
+                        <img src='<%= request.getContextPath() %>/resources/images/경상도3.jpg' class="d-block w-100" alt="..."></a>
                         <div class="carousel-caption d-none d-md-block">
                             <h1>경상도</h1>
                            
@@ -122,7 +129,7 @@ integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQV
 					</div>
 					
 					<div class="carousel-item dd">
-                        <a href="https://www.louvre.fr/"><img src='<%= request.getContextPath() %>/resources/images/전라도.jpg' class="d-block w-100" alt="..."></a>
+                        <img src='<%= request.getContextPath() %>/resources/images/전라도.jpg' class="d-block w-100" alt="..."></a>
                         <div class="carousel-caption d-none d-md-block">
 							
                             <h1>전라도</h1>
