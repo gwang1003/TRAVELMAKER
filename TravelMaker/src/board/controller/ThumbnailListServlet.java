@@ -39,6 +39,16 @@ public class ThumbnailListServlet extends HttpServlet {
 		
 		ArrayList<Board> blist = bs.selectList(1);
 		ArrayList<Attachment> flist = bs.selectList(2);
+		
+		if(blist != null && flist != null) {
+			request.setAttribute("blist", blist);
+			request.setAttribute("flist", flist);
+			request.getRequestDispatcher("views/thumbnail/thumbnailListView.jsp").forward(request, response);
+			
+		}else {
+			request.setAttribute("msg", "사진 게시판 조회 실패!!");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**

@@ -36,6 +36,34 @@ public class BoardDao {
 		return 0;
 	}
 
+	
+
+	public Board selectBoard(Connection con, int bid) {
+		// TODO Auto-generated method stub
+		return new Board();
+	}
+
+	public Board selectBoardNoCnt(Connection con, int bid) {
+		// TODO Auto-generated method stub
+		return new Board();
+	}
+
+	public int deleteBoard(Connection con, int bid) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int insertBoard(Connection con, Board b) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int updateBoard(Connection con, Board b) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	// 게시판 조회용 
 	public ArrayList<Board> selectBList(Connection con) {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -63,8 +91,9 @@ public class BoardDao {
 							rs.getInt("notgood"),
 							rs.getDate("write_date"),
 							rs.getDate("update_date"),
-							rs.getString("status"),
-							rs.getString("l_code")));
+							rs.getString("l_code"),
+							rs.getString("m_id"),
+							rs.getString("status")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -75,32 +104,7 @@ public class BoardDao {
 		return list;
 	}
 
-	public Board selectBoard(Connection con, int bid) {
-		// TODO Auto-generated method stub
-		return new Board();
-	}
-
-	public Board selectBoardNoCnt(Connection con, int bid) {
-		// TODO Auto-generated method stub
-		return new Board();
-	}
-
-	public int deleteBoard(Connection con, int bid) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int insertBoard(Connection con, Board b) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int updateBoard(Connection con, Board b) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public ArrayList selectFList(Connection con, int flag) {
+	public ArrayList selectFList(Connection con) {
 		ArrayList<Attachment> list = new ArrayList<Attachment>();
 
 		PreparedStatement pstmt = null;
@@ -146,6 +150,70 @@ public class BoardDao {
 	public ArrayList<Reply> insertReply(Connection con) {
 		// TODO Auto-generated method stub
 		return new ArrayList<Reply>();
+	}
+
+	public ArrayList<Board> selectList(Connection con, int currentPage, int boardLimit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int insertThBoard(Connection conn, Board b) {
+		PreparedStatement pstmt = null;
+
+		int result = 0;
+
+		String query = prop.getProperty("insertThBoard");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+
+			pstmt.setString(1, b.getbTitle());
+			pstmt.setString(2, b.getbContent());
+			pstmt.setString(3, b.getbWriter());
+			pstmt.setString(4, b.getlCode());
+			pstmt.setInt(5, b.getsType());
+			pstmt.setString(6, b.getmId());
+			pstmt.setInt(7, b.getbType());
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public int insertAttachment(Connection conn, ArrayList<Attachment> fileList) {
+		PreparedStatement pstmt = null;
+
+		int result = 0;
+
+		String query = prop.getProperty("insertAttachment");
+
+		try {
+
+			for (int i = 0; i < fileList.size(); i++) {
+				Attachment at = fileList.get(i);
+				
+				pstmt = conn.prepareStatement(query);
+				
+				pstmt.setString(1, at.getOriginName());
+				pstmt.setString(2, at.getChangeName());
+				pstmt.setString(3, at.getFilePath());
+				pstmt.setInt(4, at.getFileLevel());
+
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+
+		return result;
 	}
 
 }
