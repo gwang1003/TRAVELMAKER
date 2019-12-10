@@ -144,12 +144,12 @@ nav ul li a.active {
 				<div class="menuToggle"></div>
 				<ul id="navUl">
 					<li><a id="a0" class="active" href="#main">Home</a></li>
-					<li><a id = "a1" href="#aboutMe">BEST</a></li>
-					<li><a id="a1" href="#aboutMe" onclick="goThumbnail();">축제</a></li>
-					<li><a id="a2" href="#guestBook">여행</a></li>
-					<li><a id="a3" href="#gallery">숙박</a></li>
-					<li><a id="a3" href="#gallery">커뮤니티</a></li>
-					<li><a id="a4" href="#login">LOGIN</a></li>
+					<li><a id = "a1" href="#aboutMe" onclick="goBest();">BEST</a></li>
+					<li><a id="a1" href="#aboutMe" onclick="goFes();">축제</a></li>
+					<li><a id="a2" href="#guestBook" onclick="goTravel();">여행</a></li>
+					<li><a id="a3" href="#gallery" onclick="goSleep();">숙박</a></li>
+					<li><a id="a3" href="#gallery" onclick="goCom();">커뮤니티</a></li>
+					<li><a id="a4" href="#login" onclick="goLogin();">LOGIN</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -286,9 +286,26 @@ nav ul li a.active {
 			});
 		}
 		
+		function goBest(){
+			location.href="<%= contextPath %>/best.th";
+		}
+		
 		// 축제 게시판 ㄱㄱ
-		function goThumbnail(){
-			location.href="<%= contextPath %>/list.th";
+		function goFes(){
+			location.href="<%= contextPath %>/festival.th";
+		}
+		
+		function goTravel(){
+			location.href="<%= contextPath %>/travel.th";
+		}
+		function goSleep(){
+			location.href="<%= contextPath %>/sleep.th";
+		}
+		function goCom(){
+			location.href="<%= contextPath %>/community.th";
+		}
+		function goLogin(){
+			location.href="<%= contextPath %>/login.lo";
 		}
 	</script>
 
