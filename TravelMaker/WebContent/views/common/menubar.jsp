@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%
+		String contextPath = request.getContextPath();
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -142,7 +145,7 @@ nav ul li a.active {
 				<ul id="navUl">
 					<li><a id="a0" class="active" href="#main">Home</a></li>
 					<li><a id = "a1" href="#aboutMe">BEST</a></li>
-					<li><a id="a1" href="#aboutMe">축제</a></li>
+					<li><a id="a1" href="#aboutMe" onclick="goThumbnail();">축제</a></li>
 					<li><a id="a2" href="#guestBook">여행</a></li>
 					<li><a id="a3" href="#gallery">숙박</a></li>
 					<li><a id="a3" href="#gallery">커뮤니티</a></li>
@@ -281,6 +284,11 @@ nav ul li a.active {
 					});
 				});
 			});
+		}
+		
+		// 축제 게시판 ㄱㄱ
+		function goThumbnail(){
+			location.href="<%= contextPath %>/list.th";
 		}
 	</script>
 
