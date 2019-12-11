@@ -16,7 +16,7 @@ import static common.JDBCTemplate.*;
 public class QADao {
 	private Properties prop = new Properties();
 	public QADao() {
-		String fileName = BoardDao.class.getResource("/sql/board/board-query.properties").getPath();
+		String fileName = BoardDao.class.getResource("/sql/QA/QA-query.properties").getPath();
 
 		try {
 			prop.load(new FileReader(fileName));
@@ -38,8 +38,8 @@ public class QADao {
 			pstmt.setString(1, mId);
 			
 			rset = pstmt.executeQuery();
-			
 			while(rset.next()) {
+				System.out.println(rset.getString("QA_TYPE"));
 				list.add(new QA(rset.getString("QA_TYPE"),
 								rset.getString("QA_TITLE"),
 								rset.getString("QA_STATUS"),

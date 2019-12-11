@@ -17,6 +17,7 @@ public class QAService {
 		ArrayList<QA> list = new QADao().selectQAList(conn, mId);
 		
 		close(conn);
+		System.out.println(list);
 		return list;
 	}
 	
