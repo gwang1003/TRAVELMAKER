@@ -84,7 +84,7 @@ nav ul li a.active {
 
 /* section2 timeline*/
 /*responsive web part*/
-@media ( max-width :820px) {
+@media ( max-width :1130px) {
 	.menuToggle {
 		position: absolute;
 		width: 40px;
@@ -143,13 +143,13 @@ nav ul li a.active {
 				<div class="logo">Travel Maker</div>
 				<div class="menuToggle"></div>
 				<ul id="navUl">
-					<li><a id="a0" class="active" href="#main">Home</a></li>
-					<li><a id = "a1" href="#aboutMe">BEST</a></li>
-					<li><a id="a1" href="#aboutMe" onclick="goThumbnail();">축제</a></li>
-					<li><a id="a2" href="#guestBook">여행</a></li>
-					<li><a id="a3" href="#gallery">숙박</a></li>
-					<li><a id="a3" href="#gallery">커뮤니티</a></li>
-					<li><a id="a4" href="#login">LOGIN</a></li>
+					<li><a id="a0" class="active" href="<%= contextPath %>">Home</a></li>
+					<li><a id = "a1" href="#aboutMe" onclick="goBest();">BEST</a></li>
+					<li><a id="a1" href="<%= contextPath %>/views/board/festival/festivalAllList.jsp">축제</a></li>
+					<li><a id="a2" href="#guestBook" onclick="goTravel();">여행</a></li>
+					<li><a id="a3" href="#gallery" onclick="goSleep();">숙박</a></li>
+					<li><a id="a3" href="#gallery" onclick="goCom();">커뮤니티</a></li>
+					<li><a id="a4" href="#login" onclick="goLogin();">LOGIN</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -286,10 +286,27 @@ nav ul li a.active {
 			});
 		}
 		
-		// 축제 게시판 ㄱㄱ
-		function goThumbnail(){
-			location.href="<%= contextPath %>/list.th";
+		<%-- function goBest(){
+			location.href="<%= contextPath %>/best.th";
 		}
+		
+		// 축제 게시판 ㄱㄱ
+		function goFes(){
+			location.href="<%= contextPath %>/festivalall.fe";
+		}
+		
+		function goTravel(){
+			location.href="<%= contextPath %>/travelall.th";
+		}
+		function goSleep(){
+			location.href="<%= contextPath %>/sleepall.th";
+		}
+		function goCom(){
+			location.href="<%= contextPath %>/communityall.th";
+		}
+		function goLogin(){
+			location.href="<%= contextPath %>/login.lo";
+		} --%>
 	</script>
 
 

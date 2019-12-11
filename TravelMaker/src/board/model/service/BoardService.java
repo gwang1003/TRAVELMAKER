@@ -26,7 +26,7 @@ public class BoardService {
 	// 2. 게시글 리스트 조회용 서비스 메소드
 	public ArrayList<Board> selectList(int currentPage, int boardLimit) {
 		Connection con = getConnection();
-		ArrayList<Board> list = new BoardDao().selectBList(con, currentPage, boardLimit);
+		ArrayList<Board> list = new BoardDao().selectList(con, currentPage, boardLimit);
 
 		return new ArrayList<Board>();
 
@@ -90,9 +90,22 @@ public class BoardService {
 
 	// 사진 게시판 글쓰기
 	public int insertThumbnail(Board b, ArrayList<Attachment> fileList) {
-		Connection con = getConnection();
-		int result = new BoardDao().insertThumbnail(con, b, fileList);
-		return 0;
+		Connection conn = getConnection();
+
+		BoardDao bDao = new BoardDao();
+
+		int result1 = bDao.insertThBoard(conn, b);
+		int result2 = bDao.insertAttachment(conn, fileList);
+
+		if (result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+
+		close(conn);
+
+		return result1;
 	}
 
 	// 사진 게시판 상세보기
