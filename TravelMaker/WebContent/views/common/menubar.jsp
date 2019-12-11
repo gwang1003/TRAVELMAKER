@@ -84,7 +84,7 @@ nav ul li a.active {
 
 /* section2 timeline*/
 /*responsive web part*/
-@media ( max-width :820px) {
+@media ( max-width :1130px) {
 	.menuToggle {
 		position: absolute;
 		width: 40px;
@@ -143,7 +143,7 @@ nav ul li a.active {
 				<div class="logo">Travel Maker</div>
 				<div class="menuToggle"></div>
 				<ul id="navUl">
-					<li><a id="a0" class="active" href="#main">Home</a></li>
+					<li><a id="a0" class="active" href="<%= contextPath %>">Home</a></li>
 					<li><a id = "a1" href="#aboutMe" onclick="goBest();">BEST</a></li>
 					<li><a id="a1" href="<%= contextPath %>/views/board/festival/festivalAllList.jsp">축제</a></li>
 					<li><a id="a2" href="#guestBook" onclick="goTravel();">여행</a></li>

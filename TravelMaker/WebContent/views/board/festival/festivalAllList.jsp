@@ -3,9 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-<head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet"
@@ -14,28 +11,31 @@
 	crossorigin="anonymous">
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap" rel="stylesheet">
 
 <style>
 body {
 	width: 1500px;
+	height: 1000px;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 #total {
-	position: relative;
+	position: inline-block;
 }
 
 #choice1 {
 	float: left;
 	width: 1000px;
-	height: 1000px;
+	height: 800px;
 	margin-left: 120px;
-	border: 1px solid skyblue;
+	border-bottom:1px solid black;
 	background-color: white;
 	position: relative;
 	padding: 0;
 }
+
 
 .travel {
 	width: 100%;
@@ -149,42 +149,52 @@ body {
 
 #festivalTable {
 	width: 100%;
+	height: 800px;
 	margin: 0;
 }
 
-th {
-	text-align: center;
-}
 
 #month-choice {
 	margin-top: 50px;
 	margin-bottom: 50px;
 }
+#write{
+	float:right;
+}
+#insertBtn{
+	border:none;
+	background-color:white;
+}
+
 </style>
 </head>
 
 <body>
-	<%@ include file="../../common/menubar.jsp"%>
+	<%@ include file="../../common/menubar.jsp" %>
 	<h1
-		style="color: black; font-weight: 900; color: black; margin-top: 140px; margin-left: 40%;">축제
-		목록</h1>
+		style="color: black; color: black; margin-top: 140px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">축제
+		ALL</h1>
+		<br>
+		<br>
 	<div id="total">
 
 		<div id="choice1">
 
-			<div id="search" style="display: inline;">
-				<div class="tag" style="float: left;">
-					<h3>축제 ALL</h3>
-				</div>
+			<div id="search" align="center" style="display: inline;">
 				<div>
-					<button style="float: right; width:100px; height:40px; background-color:orangered; color:white; border-radius:10px; font-size:20px;">검색</button>
-					<input type="text" style="float: right; width: 500px; height:40px;">
+				<select>
+					<option>----</option>
+					<option>제목</option>
+					<option>작성자</option>
+				</select>
+				<input type="search" style="width: 500px; height:40px;">
+					<button style="width:100px; height:40px; background-color:orangered; color:white; border-radius:10px; font-size:20px;">검색</button>
+					
 
 				</div>
 
 			</div>
-			<br>
-			<br>
+
 			<br>
 			<br>
 
@@ -192,7 +202,7 @@ th {
 
 			<!-- 전체 글수 최신순 인기순 새로고침 -->
 			<div class="count">
-				<span style="text-align: left">전체 글 수 : </span>
+				<span style="text-align: left">전체 글 수 : 여기넣어</span>
 				<div id="good">
 					<button type="button" class="btn btn-outline-primary">최신순</button>
 					&emsp;
@@ -201,20 +211,28 @@ th {
 						src="<%=contextPath%>/resources/images/새로고침.png" id="represch"
 						width="30px" height="30px"></a>&emsp;
 				</div>
+				
 			</div>
+			<br>
+			<br>
+				<div id="write">
+					<button type="button" id="insertBtn" onclick="location.href='festivalInsert.jsp'"><img src="<%=contextPath %>/resources/images/edit.png" width="40px" height="40px"></button>
+				</div>
 
 
 			<br>
+			<br>
 
 			<hr>
+			
 			<div id="festivalTable">
-				<div class="thumbnailArea" style="width: 1000px;">
-
+			
+				<div class="thumbnailArea" style="width: 1000px; height:200px;" onclick="location.href='festivalDetail.jsp'">
 
 					<input type="hidden" value="">
-					<div style="float: left; width: 250px; box-sizing: border-box;">
+					<div style="float: left; width: 300px; box-sizing: border-box;">
 
-						<img src="<%=contextPath%>/resources/images/서울2.jpg" width="250px"
+						<img src="<%=contextPath%>/resources/images/서울2.jpg" width="300px"
 							height="200px">
 
 					</div>
@@ -224,7 +242,7 @@ th {
 						<p>내용 넣어</p>
 					</div>
 					<div
-						style="float: left; width: 200px; height: 200px; box-sizing: border-box;">
+						style="float: left; width: 150px; height: 200px; box-sizing: border-box;">
 						<p>
 							조회수 <br> 좋아요
 						</p>
@@ -233,8 +251,14 @@ th {
 				</div>
 
 			</div>
+			
+			
 
 		</div>
+		
+		
+		
+		
 
 
 
