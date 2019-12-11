@@ -1,249 +1,292 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossorigin="anonymous">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-    <style>
-        body{
-            width: 1500px;
-            margin-left: auto;
-            margin-right: auto;
+<style>
+body {
+	width: 1500px;
+	margin-left: auto;
+	margin-right: auto;
+}
 
-        }
+#total {
+	position: relative;
+}
 
-        #total{
-            position: relative;
-        }
+#choice1 {
+	float: left;
+	width: 1000px;
+	height: 1000px;
+	margin-left: 120px;
+	border: 1px solid skyblue;
+	background-color: white;
+	position: relative;
+	padding: 0;
+}
 
-        #choice1 {
-        float: left;
-        width: 1000px;
-        height: 1000px;
-        margin-left: 120px;
-        border: 1px solid skyblue;
-        background-color: white;
-        position: relative;
-        padding: 0;
-    }
+.travel {
+	width: 100%;
+	height: 30%;
+}
 
-    .travel {
-        width: 100%;
-        height: 30%;
-    }
+#choice2 {
+	position: fixed;
+	right: 70px;
+	top: 220px;
+	border-radius: 12px;
+	border: 3px solid aliceblue;
+	background-color: aliceblue;
+	box-shadow: 5px 5px 5 10px ghostwhite;
+	color: black;
+	width: 300px;
+	height: 500px;
+	text-align: center;
+}
 
-    #choice2 {
-        position: fixed;
-        right: 70px;
-        top: 220px;
-        border-radius: 12px;
-        border: 3px solid aliceblue;
-        background-color: aliceblue;
-        box-shadow: 5px 5px 5 10px ghostwhite;
-        color: black;
-        width: 300px;
-        height: 500px;
-        text-align: center;
+.btn-outline-info {
+	width: 70px;
+	height: 50px;
+	margin: auto;
+	font-size: 13px;
+	border: none;
+}
 
-    }
+.tag {
+	box-shadow: 2px 1px 2px 1px gray;
+	background-color: orangered;
+	border-radius: 10px;
+	opacity: 0.8;
+	position: relative;
+	width: 120px;
+	height: 45px;
+	border: 1px solid red;
+}
 
-    .btn-outline-info{
-        width: 70px;
-        height: 50px;
-        margin: auto;
-        font-size: 13px;
-        border: none;
-    }
+.tag>h3 {
+	color: white;
+	margin: auto;
+	margin-top: auto;
+	text-align: center;
+	margin: 6px 0px;
+	height: 20px;
+	font-size: 25px;
+}
 
+.info-btn {
+	float: right;
+	font-weight: 700;
+	color: black;
+	background-color: white;
+	border-radius: 10px;
+	margin: 6px 0px;
+	height: 38px;
+}
 
-    .tag {
-        box-shadow: 2px 1px 2px 1px gray;
-        background-color: orangered;
-        border-radius: 10px;
-        opacity: 0.8;
-        position: relative;
-        width: 120px;
-        height: 45px;
-        border: 1px solid red;
-    }
+.in-wrap {
+	width: 100%;
+	height: 100%;
+}
 
-    .tag>h3 {
-        color: white;
-        margin: auto;
-        margin-top: auto;
-        text-align: center;
-        margin: 6px 0px;
-        height: 20px;
-        font-size: 25px;
-    }
+.thumb-pic {
+	box-sizing: border-box;
+	margin: auto;
+	width: 30%;
+	height: 100%;
+}
 
-    
-    .info-btn{
-        float:right;
-        font-weight: 700;
-        color: black;
-        background-color: white;
-        border-radius: 10px;
-        margin: 6px 0px;
-        height: 38px;
+.stage {
+	box-sizing: border-box;
+	width: 70%;
+	height: 150px;
+}
 
-    }
+.stage>h2, p {
+	color: black;
+	vertical-align: top;
+	text-align: center;
+}
 
-    .in-wrap{
-        width: 100%;
-        height: 100%;
-    }
+.stage>h2 {
+	margin: auto;
+}
 
-    .thumb-pic {
-        box-sizing: border-box;
-        margin: auto;
-        width: 30%;
-        height: 100%;
-    }
+.thumb-pic>img {
+	box-sizing: border-box;
+	width: 100%;
+	height: 30%;
+}
 
-    .stage {
-        box-sizing: border-box;
-        width: 70%;
-        height: 150px;
-    }
+.wrap>a>* {
+	padding: 16px 0 16px;
+	float: left;
+}
 
-    .stage>h2,
-    p {
-        color: black;
-        vertical-align: top;
-        text-align: center;
-    }
+.count {
+	width: 100%;
+}
 
-    .stage>h2 {
-        margin: auto;
-    }
+.count p {
+	width: 50%;
+	float: left;
+}
 
-    .thumb-pic>img {
-        box-sizing: border-box;
-        width: 100%;
-        height: 30%;
-    }
+#good {
+	float: right;
+}
 
-    .wrap>a>* {
-        padding: 16px 0 16px;
-        float: left;
-    }
+#festivalTable {
+	width: 100%;
+	margin: 0;
+}
 
-    .count{
-        width: 100%;
-    }
+th {
+	text-align: center;
+}
 
-    .count p{
-        width: 50%;
-        float: left;
-    }
-    #good{
-        float: right;
-    }
-
-    #festivalTable{
-        width: 100%;
-        margin: 0;
-    }
-
-    th{
-        text-align:center;
-    }
-
-    #month-choice{
-        margin-top: 50px;
-        margin-bottom: 50px;
-
-    }
+#month-choice {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
 </style>
 </head>
 
 <body>
-    <%@ include file="../../common/menubar.jsp" %>
-    <h1 style="color:black; font-weight:900; color:black; margin-top: 140px; margin-left: 40%;">축제 목록</h1>
-    <div id="total">
+	<%@ include file="../../common/menubar.jsp"%>
+	<h1
+		style="color: black; font-weight: 900; color: black; margin-top: 140px; margin-left: 40%;">축제
+		목록</h1>
+	<div id="total">
 
-        <div id="choice1">
-            <div class="tag">
-                <h3>축제 ALL</h3>
-            </div>
-            <br>
+		<div id="choice1">
 
-            <!-- 전체 글수 최신순 인기순 새로고침 -->
-            <div class="count">
-                <span style="text-align:left">전체 글 수 : </span>
-                <div id="good">
-                        <button type="button" class="btn btn-outline-primary">최신순</button>&emsp;
-                        <button type="button" class="btn btn-outline-primary">인기순</button>&emsp;
-                    <a href="javascript:" class="btn_represch"><img src="<%= contextPath %>/resources/images/새로고침.png" id="represch" width="30px" height="30px"></a>&emsp;
-                </div>
+			<div id="search" style="display: inline;">
+				<div class="tag" style="float: left;">
+					<h3>축제 ALL</h3>
+				</div>
+				<div>
+					<button style="float: right; width:100px; height:40px; background-color:orangered; color:white; border-radius:10px; font-size:20px;">검색</button>
+					<input type="text" style="float: right; width: 500px; height:40px;">
 
-            </div>
-            <br>
+				</div>
 
-
-
-            <div id="festivalTable">
-                
-            </div>
-
-        </div>
+			</div>
+			<br>
+			<br>
+			<br>
+			<br>
 
 
 
-
-        <div id="choice2">
-            <table align="center" id="month-choice">
-                <tr>
-                    <td><button type="button" class="btn btn-outline-info">#1월</button></td>
-                    <td><button type="button" class="btn btn-outline-info">#2월</button></td>
-                    <td><button type="button" class="btn btn-outline-info">#3월</button></td>
-                </tr>
-                <tr>
-                    <td><button type="button" class="btn btn-outline-info">#4월</button></td>
-                    <td><button type="button" class="btn btn-outline-info">#5월</button></td>
-                    <td><button type="button" class="btn btn-outline-info">#6월</button></td>
-                </tr>
-                <tr>
-                    <td><button type="button" class="btn btn-outline-info">#7월</button></td>
-                    <td><button type="button" class="btn btn-outline-info">#8월</button></td>
-                    <td><button type="button" class="btn btn-outline-info">#9월</button></td>
-                </tr>
-                <tr>
-                    <td><button type="button" class="btn btn-outline-info">#10월</button></td>
-                    <td><button type="button" class="btn btn-outline-info">#11월</button></td>
-                    <td><button type="button" class="btn btn-outline-info">#12월</button></td>
-                </tr>
-            </table>
+			<!-- 전체 글수 최신순 인기순 새로고침 -->
+			<div class="count">
+				<span style="text-align: left">전체 글 수 : </span>
+				<div id="good">
+					<button type="button" class="btn btn-outline-primary">최신순</button>
+					&emsp;
+					<button type="button" class="btn btn-outline-primary">인기순</button>
+					&emsp; <a href="javascript:" class="btn_represch"><img
+						src="<%=contextPath%>/resources/images/새로고침.png" id="represch"
+						width="30px" height="30px"></a>&emsp;
+				</div>
+			</div>
 
 
-            <hr>
-            <table align="center" id="month-choice">
-                <tr>
-                    <td><button type="button" class="btn btn-outline-info">서울<br>특별시</button></td>
-                    <td><button type="button" class="btn btn-outline-info">강원도</button></td>
-                    <td><button type="button" class="btn btn-outline-info">경기도</button></td>
-                </tr>
-                <tr>
-                    <td><button type="button" class="btn btn-outline-info">충청도</button></td>
-                    <td><button type="button" class="btn btn-outline-info">경상도</button></td>
-                    <td><button type="button" class="btn btn-outline-info">전라도</button></td>
-                </tr>
-            </table>
-        </div>
+			<br>
 
-    </div>
+			<hr>
+			<div id="festivalTable">
+				<div class="thumbnailArea" style="width: 1000px;">
 
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+					<input type="hidden" value="">
+					<div style="float: left; width: 250px; box-sizing: border-box;">
+
+						<img src="<%=contextPath%>/resources/images/서울2.jpg" width="250px"
+							height="200px">
+
+					</div>
+					<div
+						style="float: left; width: 550px; height: 200px; box-sizing: border-box;">
+						<p id="title">제목여기다가 넣어</p>
+						<p>내용 넣어</p>
+					</div>
+					<div
+						style="float: left; width: 200px; height: 200px; box-sizing: border-box;">
+						<p>
+							조회수 <br> 좋아요
+						</p>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+
+
+		<div id="choice2">
+			<table align="center" id="month-choice">
+				<tr>
+					<td><button type="button" class="btn btn-outline-info">#1월</button></td>
+					<td><button type="button" class="btn btn-outline-info">#2월</button></td>
+					<td><button type="button" class="btn btn-outline-info">#3월</button></td>
+				</tr>
+				<tr>
+					<td><button type="button" class="btn btn-outline-info">#4월</button></td>
+					<td><button type="button" class="btn btn-outline-info">#5월</button></td>
+					<td><button type="button" class="btn btn-outline-info">#6월</button></td>
+				</tr>
+				<tr>
+					<td><button type="button" class="btn btn-outline-info">#7월</button></td>
+					<td><button type="button" class="btn btn-outline-info">#8월</button></td>
+					<td><button type="button" class="btn btn-outline-info">#9월</button></td>
+				</tr>
+				<tr>
+					<td><button type="button" class="btn btn-outline-info">#10월</button></td>
+					<td><button type="button" class="btn btn-outline-info">#11월</button></td>
+					<td><button type="button" class="btn btn-outline-info">#12월</button></td>
+				</tr>
+			</table>
+
+
+			<hr>
+			<table align="center" id="month-choice">
+				<tr>
+					<td><button type="button" class="btn btn-outline-info">
+							서울<br>특별시
+						</button></td>
+					<td><button type="button" class="btn btn-outline-info">강원도</button></td>
+					<td><button type="button" class="btn btn-outline-info">경기도</button></td>
+				</tr>
+				<tr>
+					<td><button type="button" class="btn btn-outline-info">충청도</button></td>
+					<td><button type="button" class="btn btn-outline-info">경상도</button></td>
+					<td><button type="button" class="btn btn-outline-info">전라도</button></td>
+				</tr>
+			</table>
+		</div>
+
+	</div>
+
+
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
 </body>
 </html>
