@@ -292,17 +292,17 @@ nav ul li a.active {
 		
 		// 축제 게시판 ㄱㄱ
 		function goFes(){
-			location.href="<%= contextPath %>/festival.th";
+			location.href="<%= contextPath %>/festivalall.th";
 		}
 		
 		function goTravel(){
-			location.href="<%= contextPath %>/travel.th";
+			location.href="<%= contextPath %>/travelall.th";
 		}
 		function goSleep(){
-			location.href="<%= contextPath %>/sleep.th";
+			location.href="<%= contextPath %>/sleepall.th";
 		}
 		function goCom(){
-			location.href="<%= contextPath %>/community.th";
+			location.href="<%= contextPath %>/communityall.th";
 		}
 		function goLogin(){
 			location.href="<%= contextPath %>/login.lo";
