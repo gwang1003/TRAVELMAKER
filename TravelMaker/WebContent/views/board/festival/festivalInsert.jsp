@@ -101,7 +101,7 @@ label{
 
 		<!-- 파일 업로드를 위해서는 enctype을 지정해줘야 함 -->
 		<form action="<%=contextPath%>/insert.fe" method="post"
-			enctype="multipart/form-data">
+			enctype="multipart/form-data"> 
 			<div class="insertArea">
 				<table align="center">
 					<br>

@@ -127,7 +127,7 @@ public class FestivalInsertServlet extends HttpServlet {
 				fileList.add(at);
 			}
 			int result = new BoardService().insertThumbnail(b, fileList);
-
+ 
 			if (result > 0) {
 				response.sendRedirect("festivalall.fe");
 			}else {

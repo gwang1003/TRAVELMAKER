@@ -94,7 +94,7 @@ public class BoardService {
 		Connection conn = getConnection();
 
 		BoardDao bDao = new BoardDao();
-
+ 
 		int result1 = bDao.insertThBoard(conn, b);
 		int result2 = bDao.insertAttachment(conn, fileList);
 		//int result3 = bDao.insertInformation(conn,in);

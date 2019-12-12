@@ -54,7 +54,7 @@ body {
 	border: 3px solid aliceblue;
 	background-color: aliceblue;
 	color: black;
-	width: 20%;
+	width: 20%; 
 	height: 500px;
 	text-align: center;
 }

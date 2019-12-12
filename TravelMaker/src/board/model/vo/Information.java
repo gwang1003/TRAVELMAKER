@@ -13,7 +13,7 @@ public class Information {
 	public Information() {
 		
 	}
-
+ 
 	public Information(int bId, String sDay, String eDay, String tel, int price, String address, String page) {
 		super();
 		this.bId = bId;

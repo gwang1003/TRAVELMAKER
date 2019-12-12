@@ -224,7 +224,7 @@ public class BoardDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			
+			 
 			pstmt.setString(1,in.getsDay());
 			pstmt.setString(2, in.geteDay());
 			pstmt.setString(3, in.getTel());
