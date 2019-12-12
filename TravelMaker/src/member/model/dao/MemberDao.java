@@ -39,9 +39,9 @@ public class MemberDao {
 
 			rset = pstmt.executeQuery();
 			if (rset.next()) {
-				loginUser = new Member(rset.getString(1), rset.getString(2), rset.getString(3),
-										rset.getString(4), rset.getString(5), rset.getString(6),
-										rset.getDate(7), rset.getString(8), rset.getString(9), rset.getInt(10));
+				loginUser = new Member(rset.getInt(1), rset.getString(2), rset.getString(3),
+										rset.getString(4), rset.getString(5), rset.getString(6), rset.getString(7),
+										rset.getDate(8), rset.getString(9), rset.getString(10));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -64,8 +64,8 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, m.getmId());
-			pstmt.setString(2, m.getmName());
-			pstmt.setString(3, m.getPass());
+			pstmt.setString(2, m.getPass());
+			pstmt.setString(3, m.getmName());
 			pstmt.setString(4, m.getPhone());
 			pstmt.setString(5, m.getmNo());
 			pstmt.setString(6, m.getEmail());
@@ -95,7 +95,6 @@ public class MemberDao {
 			
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
-				System.out.println(rset.getInt(1));
 				result = rset.getInt(1);
 			}
 		} catch (SQLException e) {

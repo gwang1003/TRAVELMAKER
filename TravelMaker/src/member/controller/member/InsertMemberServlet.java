@@ -51,7 +51,7 @@ public class InsertMemberServlet extends HttpServlet {
 		
 		String nickName = request.getParameter("nickName");
 		
-		Member mem = new Member(mId, mName, pass, phone, mNo, email, nickName);
+		Member mem = new Member(mId, pass, mName, phone, mNo, email, nickName);
 
 		int result = new MemberService().insertMember(mem);
 		

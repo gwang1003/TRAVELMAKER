@@ -1,4 +1,4 @@
-package QA.controller;
+package member.controller.QA;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class QADetailServlet
+ * Servlet implementation class QASelectServlet
  */
-@WebServlet("/detail.qa")
-public class QADetailServlet extends HttpServlet {
+@WebServlet("/select.qa")
+public class QAListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QADetailServlet() {
+    public QAListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

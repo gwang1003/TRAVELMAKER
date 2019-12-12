@@ -303,10 +303,10 @@ nav ul li a.active {
 		}
 		function goCom(){
 			location.href="<%= contextPath %>/communityall.th";
-		}
-		function goLogin(){
-			location.href="<%= contextPath %>/login.lo";
 		} --%>
+		function goLogin(){
+			location.href="<%= contextPath %>/views/join&login/login.jsp";
+		}
 	</script>
 
 
