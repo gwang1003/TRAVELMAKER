@@ -100,7 +100,7 @@ label{
 			내용 작성</h1>
 
 		<!-- 파일 업로드를 위해서는 enctype을 지정해줘야 함 -->
-		<form action="<%=contextPath%>/insert.th" method="post"
+		<form action="<%=contextPath%>/insert.fe" method="post"
 			enctype="multipart/form-data">
 			<div class="insertArea">
 				<table align="center">
@@ -159,11 +159,11 @@ label{
 				<div align="center" id="detailArea">
 						<label>시작일&emsp; </label><input type="text" name="sdate">&emsp;
 						<label>종료일&emsp; </label><input type="text" name="edate">&emsp;
-						<label>전화번호&emsp; </label><input type="phone" name="tel"><br>
+						<label>전화번호&emsp; </label><input type="text" name="tel"><br>
 						
 						&emsp;<label>가 격&emsp; </label><input type="text" name="price">&emsp;&nbsp;&nbsp;
 						<label>주 소&emsp; </label><input type="text" name="address">&emsp;
-						<label>홈페이지&emsp; </label><input type="phone" name="home"><br>
+						<label>홈페이지&emsp; </label><input type="text" name="home"><br>
 				</div>
 
 				<script>

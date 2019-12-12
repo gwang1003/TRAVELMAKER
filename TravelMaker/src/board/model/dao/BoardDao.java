@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import board.model.vo.Attachment;
 import board.model.vo.Board;
+import board.model.vo.Information;
 import board.model.vo.Reply;
 
 public class BoardDao {
@@ -213,6 +214,35 @@ public class BoardDao {
 			close(pstmt);
 		}
 
+		return result;
+	}
+
+	public int insertInformation(Connection conn, Information in) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("insertInformation");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1,in.getsDay());
+			pstmt.setString(2, in.geteDay());
+			pstmt.setString(3, in.getTel());
+			pstmt.setInt(4, in.getPrice());
+			pstmt.setString(5, in.getAddress());
+			pstmt.setString(6, in.getPage());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			
+		}
+		
+		
 		return result;
 	}
 

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import board.model.dao.BoardDao;
 import board.model.vo.Attachment;
 import board.model.vo.Board;
+import board.model.vo.Information;
 import board.model.vo.Reply;
 
 public class BoardService {
@@ -96,8 +97,9 @@ public class BoardService {
 
 		int result1 = bDao.insertThBoard(conn, b);
 		int result2 = bDao.insertAttachment(conn, fileList);
+		//int result3 = bDao.insertInformation(conn,in);
 
-		if (result1 > 0 && result2 > 0) {
+		if (result1 > 0 && result2 > 0/* && result3>0*/) {
 			commit(conn);
 		} else {
 			rollback(conn);
