@@ -1,4 +1,4 @@
-package QA.model.dao;
+package member.model.dao;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,14 +9,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import QA.model.vo.QA;
+import member.model.vo.QA;
 import board.model.dao.BoardDao;
 import static common.JDBCTemplate.*;
 
 public class QADao {
 	private Properties prop = new Properties();
 	public QADao() {
-		String fileName = BoardDao.class.getResource("/sql/QA/QA-query.properties").getPath();
+		String fileName = BoardDao.class.getResource("/sql/board/board-query.properties").getPath();
 
 		try {
 			prop.load(new FileReader(fileName));
@@ -38,8 +38,8 @@ public class QADao {
 			pstmt.setString(1, mId);
 			
 			rset = pstmt.executeQuery();
+			
 			while(rset.next()) {
-				System.out.println(rset.getString("QA_TYPE"));
 				list.add(new QA(rset.getString("QA_TYPE"),
 								rset.getString("QA_TITLE"),
 								rset.getString("QA_STATUS"),

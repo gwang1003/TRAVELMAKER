@@ -1,12 +1,12 @@
-package QA.model.service;
+package member.model.service;
 
 import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import QA.model.dao.QADao;
-import QA.model.vo.QA;
+import member.model.dao.QADao;
+import member.model.vo.QA;
 
 public class QAService {
 	
@@ -17,7 +17,6 @@ public class QAService {
 		ArrayList<QA> list = new QADao().selectQAList(conn, mId);
 		
 		close(conn);
-		System.out.println(list);
 		return list;
 	}
 	
