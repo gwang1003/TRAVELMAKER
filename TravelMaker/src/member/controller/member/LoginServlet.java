@@ -38,8 +38,6 @@ public class LoginServlet extends HttpServlet {
 		
 		Member loginUser = new MemberService().loginMember(loginId, loginPass);
 		
-		System.out.println(loginUser);
-		
 		if(loginUser != null) {
 			HttpSession session = request.getSession();
 			
