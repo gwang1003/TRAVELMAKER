@@ -16,7 +16,7 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class LoginServlet
  */
-// @WebServlet("/login.me") --> 암호화 처리 전
+@WebServlet("/login.me")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,24 +33,25 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String userId = request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
+		String loginId = request.getParameter("loginId");
+		String loginPass = request.getParameter("loginPass");
 		
-		Member loginUser = new MemberService().loginMember(userId, userPwd);
+		Member loginUser = new MemberService().loginMember(loginId, loginPass);
 		
 		System.out.println(loginUser);
 		
 		if(loginUser != null) {
 			HttpSession session = request.getSession();
 			
+			session.setAttribute("msg", "로그인에 성공하였습니다");
 			session.setAttribute("loginUser", loginUser);
 			
 			response.sendRedirect(request.getContextPath());
 			
 		}else {
-			request.setAttribute("msg", "로그인에 실패하였습니다.");
+			request.getSession().setAttribute("msg", "로그인에 실패하였습니다");
 			
-			RequestDispatcher view = request.getRequestDispatcher("views/common/errorPage.jsp");
+			RequestDispatcher view = request.getRequestDispatcher(request.getContextPath());
 			view.forward(request, response);
 		}	
 	}

@@ -4,100 +4,77 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class Member {
-	private String userId;
-	private String userNo;
-	private String userPwd;
-	private String userName;
-	private String nickName;
+	private String mId;
+	private String mName;
+	private String pass;
 	private String phone;
+	private String mNo;
 	private String email;
 	private Date joinDate;
-	private String status;
-	private String bArray;
+	private String nickName;
+	private String bIdArray;
+	private int m_seq;
 	
 	public Member() {}
 
-	public Member(String userId, String userNo, String userPwd, String userName, String nickName, String phone,
-			String email, Date joinDate, String status, String bArray) {
+	public Member(String mId, String mName, String pass, String phone, String mNo, String email, Date joinDate,
+			String nickName, String bIdArray, int m_seq) {
 		super();
-		this.userNo = userNo;
-		this.userId = userId;
-		this.userPwd = userPwd;
-		this.userName = userName;
-		this.nickName = nickName;
+		this.mId = mId;
+		this.mName = mName;
+		this.pass = pass;
 		this.phone = phone;
+		this.mNo = mNo;
 		this.email = email;
 		this.joinDate = joinDate;
-		this.status = status;
-		this.bArray = bArray;
-	}
-	
-	public Member(String userId, String userNo, String userPwd, String userName, String nickName, String phone,
-			String email, String status, String bArray) {
-		super();
-		this.userNo = userNo;
-		this.userId = userId;
-		this.userPwd = userPwd;
-		this.userName = userName;
 		this.nickName = nickName;
+		this.bIdArray = bIdArray;
+		this.m_seq = m_seq;
+	}
+
+	public Member(String mId, String mName, String pass, String phone, String mNo, String email, String nickName) {
+		super();
+		this.mId = mId;
+		this.mName = mName;
+		this.pass = pass;
+		this.phone = phone;
+		this.mNo = mNo;
+		this.email = email;
+		this.nickName = nickName;
+	}
+
+	public Member(String mId, String phone, String email, String nickName) {
+		super();
+		this.mId = mId;
 		this.phone = phone;
 		this.email = email;
-		this.status = status;
-		this.bArray = bArray;
-	}
-
-	public Member(String userId, String nickName) {
-		super();
-		this.userId = userId;
 		this.nickName = nickName;
 	}
+	
+	
 
-	public String getUserNo() {
-		return userNo;
+	public String getmId() {
+		return mId;
 	}
 
-	public void setUserNo(String userNo) {
-		this.userNo = userNo;
+	public void setmId(String mId) {
+		this.mId = mId;
 	}
 
-	public String getbArray() {
-		return bArray;
+	public String getmName() {
+		return mName;
 	}
 
-	public void setbArray(String bArray) {
-		this.bArray = bArray;
+	public void setmName(String mName) {
+		this.mName = mName;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getPass() {
+		return pass;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getUserPwd() {
-		return userPwd;
-	}
-
-	public void setUserPwd(String userPwd) {
-		this.userPwd = userPwd;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getNickName() {
-		return nickName;
-	}
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setPass(String pass) {
+		this.pass = pass;
 	}
 
 	public String getPhone() {
@@ -106,6 +83,14 @@ public class Member {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getmNo() {
+		return mNo;
+	}
+
+	public void setmNo(String mNo) {
+		this.mNo = mNo;
 	}
 
 	public String getEmail() {
@@ -124,18 +109,34 @@ public class Member {
 		this.joinDate = joinDate;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getbIdArray() {
+		return bIdArray;
+	}
+
+	public void setbIdArray(String bIdArray) {
+		this.bIdArray = bIdArray;
+	}
+
+	public int getM_seq() {
+		return m_seq;
+	}
+
+	public void setM_seq(int m_seq) {
+		this.m_seq = m_seq;
 	}
 
 	@Override
 	public String toString() {
-		return "Member [userNo=" + userNo + ", userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName
-				+ ", nickName=" + nickName + ", phone=" + phone + ", email=" + email + ", joinDate=" + joinDate
-				+ ", status=" + status + ", bArray=" + bArray + "]";
+		return "Member [mId=" + mId + ", mName=" + mName + ", pass=" + pass + ", phone=" + phone + ", mNo=" + mNo
+				+ ", email=" + email + ", joinDate=" + joinDate + ", nickName=" + nickName + ", bIdArray=" + bIdArray
+				+ ", m_seq=" + m_seq + "]";
 	}
 }

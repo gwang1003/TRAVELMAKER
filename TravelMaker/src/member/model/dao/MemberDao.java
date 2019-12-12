@@ -12,12 +12,9 @@ import static common.JDBCTemplate.*;
 import member.model.vo.Member;
 
 public class MemberDao {
-	// sql 폴더 안에 member 폴더 만들고 member-query.properties 파일 만들기
 	private Properties prop = new Properties();
 
 	public MemberDao() {
-		// 항상 memeber-query.properties에서 값을 가져올 수 있도록
-		// 기본 생성자 안에서 properties 파일을 불러오는 작업을 하자~~
 		String fileName = MemberDao.class.getResource("/sql/member/member-query.properties").getPath();
 
 		try {
@@ -34,7 +31,6 @@ public class MemberDao {
 		ResultSet rset = null;
 
 		String sql = prop.getProperty("loginMember");
-
 		try {
 			pstmt = conn.prepareStatement(sql);
 
@@ -42,11 +38,10 @@ public class MemberDao {
 			pstmt.setString(2, pwd);
 
 			rset = pstmt.executeQuery();
-
 			if (rset.next()) {
-				loginUser = new Member(rset.getString("user_Id"), rset.getString("user_No"), rset.getString("user_pwd"),
-						rset.getString("user_name"), rset.getString("nickName"), rset.getString("phone"), rset.getString("email"),
-						rset.getDate("joinDate"), rset.getString("status"), rset.getString("bArray"));
+				loginUser = new Member(rset.getString(1), rset.getString(2), rset.getString(3),
+										rset.getString(4), rset.getString(5), rset.getString(6),
+										rset.getDate(7), rset.getString(8), rset.getString(9), rset.getInt(10));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -68,16 +63,13 @@ public class MemberDao {
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, m.getUserId());
-			pstmt.setString(2, m.getUserNo());
-			pstmt.setString(3, m.getUserPwd());
-			pstmt.setString(4, m.getUserName());
-			pstmt.setString(5, m.getNickName());
-			pstmt.setString(6, m.getPhone());
-			pstmt.setString(7, m.getEmail());
-			pstmt.setDate(8, m.getJoinDate());
-			pstmt.setString(9, m.getStatus());
-			pstmt.setString(10, m.getbArray());
+			pstmt.setString(1, m.getmId());
+			pstmt.setString(2, m.getmName());
+			pstmt.setString(3, m.getPass());
+			pstmt.setString(4, m.getPhone());
+			pstmt.setString(5, m.getmNo());
+			pstmt.setString(6, m.getEmail());
+			pstmt.setString(7, m.getNickName());
 
 			result = pstmt.executeUpdate();
 
@@ -91,20 +83,19 @@ public class MemberDao {
 	}
 	
 	// 3. 아이디 중복 확인용 dao
-	public int idCheck(Connection conn, String userId) {
+	public int idCheck(Connection conn, String mId) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		
 		String sql = prop.getProperty("idCheck");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userId);
+			pstmt.setString(1, mId);
 			
 			rset = pstmt.executeQuery();
-			
 			if(rset.next()) {
+				System.out.println(rset.getInt(1));
 				result = rset.getInt(1);
 			}
 		} catch (SQLException e) {

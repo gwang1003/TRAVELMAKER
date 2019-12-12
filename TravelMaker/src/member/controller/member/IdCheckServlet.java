@@ -30,37 +30,16 @@ public class IdCheckServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("userId");
+		String mId = request.getParameter("mId");
 		
-		int result = new MemberService().idCheck(userId);
-		
-		// 1. 자바스크립트를 이용한 중복체크
-		
-		/*request.setAttribute("result", result);
-		request.setAttribute("userId", userId);
-		
-		RequestDispatcher view = request.getRequestDispatcher("views/member/idCheckForm.jsp");
-		view.forward(request, response);*/
-		
-		// 2. ajax를 이용한 중복체크
-		PrintWriter out = response.getWriter(); // 스트림 열어서 갖고옴
+		int result = new MemberService().idCheck(mId);
+
+		PrintWriter out = response.getWriter();
 		if(result > 0) {
 			out.print("fail");
 		}else {
 			out.print("success");
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 	}
 
