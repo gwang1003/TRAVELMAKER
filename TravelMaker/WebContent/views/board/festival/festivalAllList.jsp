@@ -11,7 +11,9 @@
 	crossorigin="anonymous">
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<link href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
+	rel="stylesheet">
 
 <style>
 body {
@@ -22,7 +24,8 @@ body {
 }
 
 #total {
-	position: inline-block;
+	width: 20%;
+	height: 950px;
 }
 
 #choice1 {
@@ -30,28 +33,28 @@ body {
 	width: 1000px;
 	height: 800px;
 	margin-left: 120px;
-	border-bottom:1px solid black;
+	border-bottom: 1px solid black;
 	background-color: white;
-	position: relative;
 	padding: 0;
 }
-
 
 .travel {
 	width: 100%;
 	height: 30%;
 }
+#ct{
+	width:380px;
+}
 
 #choice2 {
 	position: fixed;
-	right: 70px;
-	top: 220px;
+	margin-left:1200px;
+	top:150px;
 	border-radius: 12px;
 	border: 3px solid aliceblue;
 	background-color: aliceblue;
-	box-shadow: 5px 5px 5 10px ghostwhite;
 	color: black;
-	width: 300px;
+	width: 20%; 
 	height: 500px;
 	text-align: center;
 }
@@ -153,50 +156,49 @@ body {
 	margin: 0;
 }
 
-
 #month-choice {
 	margin-top: 50px;
 	margin-bottom: 50px;
 }
-#write{
-	float:right;
-}
-#insertBtn{
-	border:none;
-	background-color:white;
+
+#write {
+	float: right;
 }
 
+#insertBtn {
+	border: none;
+	background-color: white;
+}
 </style>
 </head>
 
 <body>
-	<%@ include file="../../common/menubar.jsp" %>
+	<%@ include file="../../common/menubar.jsp"%>
 	<h1
 		style="color: black; color: black; margin-top: 140px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">축제
 		ALL</h1>
-		<br>
-		<br>
+	<br>
+	<br>
 	<div id="total">
 
 		<div id="choice1">
 
 			<div id="search" align="center" style="display: inline;">
 				<div>
-				<select>
-					<option>----</option>
-					<option>제목</option>
-					<option>작성자</option>
-				</select>
-				<input type="search" style="width: 500px; height:40px;">
-					<button style="width:100px; height:40px; background-color:orangered; color:white; border-radius:10px; font-size:20px;">검색</button>
-					
+					<select>
+						<option>----</option>
+						<option>제목</option>
+						<option>작성자</option>
+					</select> <input type="search" style="width: 500px; height: 40px;">
+					<button
+						style="width: 100px; height: 40px; background-color: orangered; color: white; border-radius: 10px; font-size: 20px;">검색</button>
+
 
 				</div>
 
 			</div>
 
-			<br>
-			<br>
+			<br> <br>
 
 
 
@@ -211,23 +213,26 @@ body {
 						src="<%=contextPath%>/resources/images/새로고침.png" id="represch"
 						width="30px" height="30px"></a>&emsp;
 				</div>
-				
+
 			</div>
-			<br>
-			<br>
-				<div id="write">
-					<button type="button" id="insertBtn" onclick="location.href='festivalInsert.jsp'"><img src="<%=contextPath %>/resources/images/edit.png" width="40px" height="40px"></button>
-				</div>
+			<br> <br>
+			<div id="write">
+				<button type="button" id="insertBtn"
+					onclick="location.href='festivalInsert.jsp'">
+					<img src="<%=contextPath%>/resources/images/edit.png" width="40px"
+						height="40px">
+				</button>
+			</div>
 
 
-			<br>
-			<br>
+			<br> <br>
 
 			<hr>
-			
+
 			<div id="festivalTable">
-			
-				<div class="thumbnailArea" style="width: 1000px; height:200px;" onclick="location.href='festivalDetail.jsp'">
+
+				<div class="thumbnailArea" style="width: 1000px; height: 200px;"
+					onclick="location.href='festivalDetail.jsp'">
 
 					<input type="hidden" value="">
 					<div style="float: left; width: 300px; box-sizing: border-box;">
@@ -243,6 +248,7 @@ body {
 					</div>
 					<div
 						style="float: left; width: 150px; height: 200px; box-sizing: border-box;">
+						<p>작성자</p>
 						<p>
 							조회수 <br> 좋아요
 						</p>
@@ -251,58 +257,56 @@ body {
 				</div>
 
 			</div>
-			
-			
+
+
 
 		</div>
-		
-		
-		
-		
 
 
 
 
-		<div id="choice2">
-			<table align="center" id="month-choice">
-				<tr>
-					<td><button type="button" class="btn btn-outline-info">#1월</button></td>
-					<td><button type="button" class="btn btn-outline-info">#2월</button></td>
-					<td><button type="button" class="btn btn-outline-info">#3월</button></td>
-				</tr>
-				<tr>
-					<td><button type="button" class="btn btn-outline-info">#4월</button></td>
-					<td><button type="button" class="btn btn-outline-info">#5월</button></td>
-					<td><button type="button" class="btn btn-outline-info">#6월</button></td>
-				</tr>
-				<tr>
-					<td><button type="button" class="btn btn-outline-info">#7월</button></td>
-					<td><button type="button" class="btn btn-outline-info">#8월</button></td>
-					<td><button type="button" class="btn btn-outline-info">#9월</button></td>
-				</tr>
-				<tr>
-					<td><button type="button" class="btn btn-outline-info">#10월</button></td>
-					<td><button type="button" class="btn btn-outline-info">#11월</button></td>
-					<td><button type="button" class="btn btn-outline-info">#12월</button></td>
-				</tr>
-			</table>
+		<div id="ct">
+			<div id="choice2">
+				<table align="center" id="month-choice">
+					<tr>
+						<td><button type="button" class="btn btn-outline-info">#1월</button></td>
+						<td><button type="button" class="btn btn-outline-info">#2월</button></td>
+						<td><button type="button" class="btn btn-outline-info">#3월</button></td>
+					</tr>
+					<tr>
+						<td><button type="button" class="btn btn-outline-info">#4월</button></td>
+						<td><button type="button" class="btn btn-outline-info">#5월</button></td>
+						<td><button type="button" class="btn btn-outline-info">#6월</button></td>
+					</tr>
+					<tr>
+						<td><button type="button" class="btn btn-outline-info">#7월</button></td>
+						<td><button type="button" class="btn btn-outline-info">#8월</button></td>
+						<td><button type="button" class="btn btn-outline-info">#9월</button></td>
+					</tr>
+					<tr>
+						<td><button type="button" class="btn btn-outline-info">#10월</button></td>
+						<td><button type="button" class="btn btn-outline-info">#11월</button></td>
+						<td><button type="button" class="btn btn-outline-info">#12월</button></td>
+					</tr>
+				</table>
 
 
-			<hr>
-			<table align="center" id="month-choice">
-				<tr>
-					<td><button type="button" class="btn btn-outline-info">
-							서울<br>특별시
-						</button></td>
-					<td><button type="button" class="btn btn-outline-info">강원도</button></td>
-					<td><button type="button" class="btn btn-outline-info">경기도</button></td>
-				</tr>
-				<tr>
-					<td><button type="button" class="btn btn-outline-info">충청도</button></td>
-					<td><button type="button" class="btn btn-outline-info">경상도</button></td>
-					<td><button type="button" class="btn btn-outline-info">전라도</button></td>
-				</tr>
-			</table>
+				<hr>
+				<table align="center" id="month-choice">
+					<tr>
+						<td><button type="button" class="btn btn-outline-info">
+								서울<br>특별시
+							</button></td>
+						<td><button type="button" class="btn btn-outline-info">강원도</button></td>
+						<td><button type="button" class="btn btn-outline-info">경기도</button></td>
+					</tr>
+					<tr>
+						<td><button type="button" class="btn btn-outline-info">충청도</button></td>
+						<td><button type="button" class="btn btn-outline-info">경상도</button></td>
+						<td><button type="button" class="btn btn-outline-info">전라도</button></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 
 	</div>
