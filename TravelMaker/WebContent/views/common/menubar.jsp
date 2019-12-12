@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="member.model.vo.Member" %>
 	<%
 		String contextPath = request.getContextPath();
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		System.out.println(loginUser); 
 	%>
 <!DOCTYPE html>
 <html>
@@ -149,7 +151,11 @@ nav ul li a.active {
 					<li><a id="a2" href="#guestBook" onclick="goTravel();">여행</a></li>
 					<li><a id="a3" href="#gallery" onclick="goSleep();">숙박</a></li>
 					<li><a id="a3" href="#gallery" onclick="goCom();">커뮤니티</a></li>
-					<li><a id="a4" href="#login" onclick="goLogin();">LOGIN</a></li>
+					<% if(loginUser != null) { %>
+						<li><a id="a4" href="#" onclick="goMyPage();">마이페이지</a></li>
+					<% }else { %>
+						<li><a id="a4" href="#login" onclick="goLogin();">LOGIN</a></li>
+					<% } %>
 				</ul>
 			</nav>
 		</div>
@@ -304,7 +310,11 @@ nav ul li a.active {
 		function goCom(){
 			location.href="<%= contextPath %>/communityall.th";
 		} --%>
-		function goLogin(){
+		function goMyPage() {
+			location.href="<%= contextPath %>/views/myPage/Plan.jsp";
+		}
+		
+		function goLogin() {
 			location.href="<%= contextPath %>/views/join&login/login.jsp";
 		}
 	</script>
