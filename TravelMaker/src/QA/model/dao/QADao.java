@@ -1,4 +1,4 @@
-package member.model.dao;
+package QA.model.dao;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,14 +9,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import member.model.vo.QA;
+import QA.model.vo.QA;
 import board.model.dao.BoardDao;
 import static common.JDBCTemplate.*;
 
 public class QADao {
 	private Properties prop = new Properties();
 	public QADao() {
-		String fileName = BoardDao.class.getResource("/sql/board/board-query.properties").getPath();
+		String fileName = BoardDao.class.getResource("/sql/QA/QA-query.properties").getPath();
 
 		try {
 			prop.load(new FileReader(fileName));
@@ -26,7 +26,7 @@ public class QADao {
 	}
 	
 	// 내가 문의한 내역 리스트
-	public ArrayList<QA> selectQAList(Connection conn, String mId) {
+	public ArrayList<QA> selectQAList(Connection conn, int mSeq) {
 		ArrayList<QA> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -35,11 +35,11 @@ public class QADao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, mId);
+			pstmt.setInt(1, mSeq);
 			
 			rset = pstmt.executeQuery();
-			
 			while(rset.next()) {
+				System.out.println(rset.getString("QA_TYPE"));
 				list.add(new QA(rset.getString("QA_TYPE"),
 								rset.getString("QA_TITLE"),
 								rset.getString("QA_STATUS"),

@@ -1,22 +1,23 @@
-package member.model.service;
+package QA.model.service;
 
 import static common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import member.model.dao.QADao;
-import member.model.vo.QA;
+import QA.model.dao.QADao;
+import QA.model.vo.QA;
 
 public class QAService {
 	
 	// 1. 나의 QA 리스트(회원)
-	public ArrayList<QA> selectQAList(String mId) {
+	public ArrayList<QA> selectQAList(int mSeq) {
 		Connection conn = getConnection();
 		
-		ArrayList<QA> list = new QADao().selectQAList(conn, mId);
+		ArrayList<QA> list = new QADao().selectQAList(conn, mSeq);
 		
 		close(conn);
+		System.out.println(list);
 		return list;
 	}
 	

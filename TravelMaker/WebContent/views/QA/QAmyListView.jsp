@@ -3,7 +3,7 @@
 	
 <% 
 	ArrayList<QA> list = (ArrayList<QA>)request.getAttribute("list");
-	Member loginUser = (Member)session.getAttribute("loginUser");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -373,7 +373,7 @@
 				<div class="my-info" id="my-info">
 					<h3 id="my-info-text">마이페이지</h3>
 					<img src="img/smile.jpg"><br>
-					<p id="name">&nbsp;&nbsp;&nbsp;<%= loginUser.getUserName() %></p>
+					<p id="name">&nbsp;&nbsp;&nbsp;<%= loginUser.getmName() %></p>
 					<br>
 					<br>
 					<button class="myinfo-button" id="my-info-logout"
@@ -445,17 +445,19 @@
 								</tr>
 							</thead>
 							<tbody>
-							<%if(list != null) { %>
-								<% for(int i = 0; i < list.size(); i++) { %>
-									<tr>
-										<td><%= list.get(i).getqId() %></td>
-										<th><%= list.get(0).getqTitle() %></th>
-										<td><%= list.get(0).getEnrollDate() %></td>
-									</tr>
-								<% } %>
-							<% } else {%>
-								<div style="width:300px; height:50px; text-align:center;">문의내역이 존재하지 않습니다</div>
-							<% } %>
+								<% if(list.isEmpty()){ %>
+						 			<tr>
+							 			<td colspan="3">문의내역이 존재하지 않습니다</td>
+							 		</tr>
+								 <%} else { %>
+						 			<% for(QA q : list) {%>
+						 				<tr>
+						 					<td><%= q.getqId() %></td>
+						 					<td><%= q.getqTitle() %></td>
+						 					<td><%= q.getEnrollDate() %></td>
+						 				</tr>
+						 			<% } %>
+					 			<% } %>
 							</tbody>
 						</table>
 						<button type="submit" class="btn btn-dark" id="write">글쓰기</button>
@@ -469,19 +471,12 @@
 		// 게시판 상세 보기 기능 구현
 		$(function(){
 			$(".board-table td").mouseenter(function(){
-				$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
+				$(this).parent().css({"background":"darkgray", "cursor":"pointer", "color":"white"});
 			}).mouseout(function(){
-				$(this).parent().css({"background":"black"});
+				$(this).parent().css({"background":"white", "color":"black"});
 			}).click(function(){
-				var bId = $(this).parent().children("input").val();
-				
-				// 로그인 한 사람만 게시글 상세 보기 가능
-				<% if(loginUser != null) { %>
-					location.href="<%= request.getContextPath() %>/detail.bo?bId="+bId;
-				<% } else { %>
-					alert('로그인 해야만 상세보기가 가능합니다!');
-				<% } %>
-				
+				var qId = $(this).parent().children().eq(0).text();
+					location.href="<%= request.getContextPath() %>/detail.qa?qId="+qId;					
 			});
 			
 			

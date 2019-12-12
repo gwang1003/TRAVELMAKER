@@ -1,4 +1,4 @@
-package member.controller.QA;
+package QA.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class QAInsertSelvlet
+ * Servlet implementation class AnswerInsertServlet
  */
-@WebServlet("/insert.qa")
-public class QAInsertServlet extends HttpServlet {
+@WebServlet("/insert.an")
+public class AnswerInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QAInsertServlet() {
+    public AnswerInsertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

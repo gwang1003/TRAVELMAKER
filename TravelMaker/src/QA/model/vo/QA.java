@@ -1,4 +1,4 @@
-package member.model.vo;
+package QA.model.vo;
 
 import java.util.Date;
 
