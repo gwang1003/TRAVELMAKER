@@ -37,9 +37,9 @@ public class MemberService {
 	}
 	
 	// 멤버 확인
-	public int idCheck(String userId) {
+	public int idCheck(String mId) {
 		Connection conn = getConnection();
-		int result = new MemberDao().idCheck(conn, userId);
+		int result = new MemberDao().idCheck(conn, mId);
 		
 		close(conn);
 		
