@@ -14,24 +14,25 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
 	rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
 <style>
 .outer {
 	width: 1500px;
-	height: 1000px;
+	height: 1200px;
 	background: white;
 	margin: auto;
 	margin-top: 150px;
 }
 
-table {
-	border: 1px solid white;
-}
+
 
 .insertArea {
 	width: 1000px;
-	height: 800px;
+	height: 1000px;
 	margin: auto;
-	border:1px solid black;
+	background:ghostwhite;
+	box-shadow:10px 5px 15px 15px gray;
+	border-radius:10px;
 }
 
 #titleImgArea {
@@ -58,21 +59,35 @@ table {
 }
 
 .btnArea {
-	width: 200px;
+	width: 250px;
 	margin: auto;
 }
 
 button {
-	height: 22px;
-	width: 80px;
-	background: yellowgreen;
-	border: yellowgreen;
+	height: 35px;
+	width: 100px;
+	background: black;
+	border: black;
 	color: white;
 	border-radius: 5px;
+	font-size:20px;
 }
 
 button:hover {
 	cursor: pointer;
+}
+
+#detailArea{
+	margin-left:70px;
+	
+}
+
+td{
+	font-size:16px;
+}
+label{
+	font-size:16px;
+	font-family: 'Do Hyeon', sans-serif;
 }
 </style>
 </head>
@@ -81,34 +96,36 @@ button:hover {
 
 	<div class="outer">
 		<br>
-		<h1 align="center" style="font-family: 'Black Han Sans', sans-serif;">축제
+		<h1 align="center" style="font-family: 'Do Hyeon', sans-serif;">축제
 			내용 작성</h1>
 
 		<!-- 파일 업로드를 위해서는 enctype을 지정해줘야 함 -->
-		<form action="<%=contextPath%>/insert.th" method="post" enctype="multipart/form-data">
+		<form action="<%=contextPath%>/insert.th" method="post"
+			enctype="multipart/form-data">
 			<div class="insertArea">
 				<table align="center">
+					<br>
 					<tr>
-						<td width="100px">제목</td>
+						<td width="100px" style="font-family: 'Do Hyeon', sans-serif;">제목</td>
 						<td colspan="3"><input type="text" size="100" name="title"></td>
 					</tr>
 					<tr>
-						<td>메인 이미지</td>
+						<td style="font-family: 'Do Hyeon', sans-serif;">메인 이미지</td>
 						<td colspan="3">
 							<div id="titleImgArea">
 								<img id="titleImg" width="755" height="400">
 							</div>
 						</td>
 					</tr>
-					
+
 					<tr>
-						<td width="100px">내용</td>
+						<td width="100px" style="font-family: 'Do Hyeon', sans-serif;">내용</td>
 						<td colspan="3"><textarea name="content" rows="7" cols="102"
 								style="resize: none;"></textarea></td>
 					</tr>
-					
+
 					<tr>
-						<td>내용 사진</td>
+						<td style="font-family: 'Do Hyeon', sans-serif;">내용 사진</td>
 						<td>
 							<div id="contentImgArea1">
 								<img id="contentImg1" width="245" height="150">
@@ -125,7 +142,7 @@ button:hover {
 							</div>
 						</td>
 					</tr>
-					
+
 				</table>
 
 				<!-- 파일 업로드 하는 부분 -->
@@ -136,6 +153,17 @@ button:hover {
 					<input type="file" id="thumbnailImg3" name="thumbnailImg3"
 						onchange="LoadImg(this,3)"> <input type="file"
 						id="thumbnailImg4" name="thumbnailImg4" onchange="LoadImg(this,4)">
+				</div>
+				<br><br>
+
+				<div align="center" id="detailArea">
+						<label>시작일&emsp; </label><input type="text" name="sdate">&emsp;
+						<label>종료일&emsp; </label><input type="text" name="edate">&emsp;
+						<label>전화번호&emsp; </label><input type="phone" name="tel"><br>
+						
+						&emsp;<label>가 격&emsp; </label><input type="text" name="price">&emsp;&nbsp;&nbsp;
+						<label>주 소&emsp; </label><input type="text" name="address">&emsp;
+						<label>홈페이지&emsp; </label><input type="phone" name="home"><br>
 				</div>
 
 				<script>
@@ -201,8 +229,8 @@ button:hover {
 			</div>
 			<br>
 			<div class="btnArea">
-				<button type="button" onclick="javascript:history.back();">취소하기</button>
-				<button type="submit">작성완료</button>
+				<button type="button" onclick="javascript:history.back();" style="font-family: 'Black Han Sans', sans-serif;">취소하기</button>
+				<button type="submit" style="font-family: 'Black Han Sans', sans-serif;">작성완료</button>
 			</div>
 		</form>
 
