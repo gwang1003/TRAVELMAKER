@@ -42,7 +42,7 @@ public class FestivalAllList extends HttpServlet {
 		if (blist != null && flist != null) {
 			request.setAttribute("blist", blist);
 			request.setAttribute("flist", flist);
-			request.getRequestDispatcher("views/board/festival/festivalAllList").forward(request, response);
+			request.getRequestDispatcher("views/board/festival/festivalAllList.jsp").forward(request, response);
 
 		} else {
 			request.setAttribute("msg", "사진 게시판 조회 실패!!");

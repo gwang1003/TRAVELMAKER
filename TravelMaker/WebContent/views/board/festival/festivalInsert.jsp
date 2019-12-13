@@ -100,7 +100,7 @@ label{
 			내용 작성</h1>
 
 		<!-- 파일 업로드를 위해서는 enctype을 지정해줘야 함 -->
-		<form action="<%=contextPath%>/insert.fe" method="post"
+		<form action="<%= contextPath %>/insert.fe" method="post"
 			enctype="multipart/form-data"> 
 			<div class="insertArea">
 				<table align="center">
@@ -109,6 +109,19 @@ label{
 						<td width="100px" style="font-family: 'Do Hyeon', sans-serif;">제목</td>
 						<td colspan="3"><input type="text" size="100" name="title"></td>
 					</tr>
+					<tr>
+						<td width="100px" style="font-family: 'Do Hyeon', sans-serif;">지역</td>
+						<td colspan="3"><select name="lcode">
+							<option>----</option>
+							<option value=10>서울특별시</option>
+							<option value=20>경기도</option>
+							<option value=30>강원도</option>
+							<option value=40>충청도</option>
+							<option value=50>경상도</option>
+							<option value=60>전라도</option>
+						</select></td>
+					</tr>
+					
 					<tr>
 						<td style="font-family: 'Do Hyeon', sans-serif;">메인 이미지</td>
 						<td colspan="3">

@@ -8,11 +8,10 @@ public class Attachment {
 	private String originName;	// 사용자가 업로드한 파일명
 	private String changeName;	// 변경 된 파일명
 	private String filePath;	// 파일이 저장 된 경로
-	private Date uploadDate;	// 업로드 일자
-	private int fileLevel;		// 메인 사진 0, 일반 사진 1
-	private Date createDate; // 게시글 작성일
 	private Date modifyDate; // 게시글 수정일
 	private String status;		// 삭제여부
+	private Date createDate; // 게시글 작성일
+	private int fileLevel;		// 메인 사진 0, 일반 사진 1
 
 	
 	public Attachment() {
@@ -20,7 +19,7 @@ public class Attachment {
 	}
 
 
-	public Attachment(int fId, int bId, String originName, String changeName, String filePath, Date uploadDate,
+	public Attachment(int fId, int bId, String originName, String changeName, String filePath,
 			int fileLevel, Date createDate, Date modifyDate, String status) {
 		super();
 		this.fId = fId;
@@ -28,7 +27,6 @@ public class Attachment {
 		this.originName = originName;
 		this.changeName = changeName;
 		this.filePath = filePath;
-		this.uploadDate = uploadDate;
 		this.fileLevel = fileLevel;
 		this.createDate = createDate;
 		this.modifyDate = modifyDate;
@@ -86,15 +84,6 @@ public class Attachment {
 	}
 
 
-	public Date getUploadDate() {
-		return uploadDate;
-	}
-
-
-	public void setUploadDate(Date uploadDate) {
-		this.uploadDate = uploadDate;
-	}
-
 
 	public int getFileLevel() {
 		return fileLevel;
@@ -139,7 +128,7 @@ public class Attachment {
 	@Override
 	public String toString() {
 		return "Attachment [fId=" + fId + ", bId=" + bId + ", originName=" + originName + ", changeName=" + changeName
-				+ ", filePath=" + filePath + ", uploadDate=" + uploadDate + ", fileLevel=" + fileLevel + ", createDate="
+				+ ", filePath=" + filePath + ", fileLevel=" + fileLevel + ", createDate="
 				+ createDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
 	}
 	

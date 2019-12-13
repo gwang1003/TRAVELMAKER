@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.*, board.model.vo.*"%>
+
+<%
+	ArrayList<Board> blist = (ArrayList<Board>) request.getAttribute("blist");
+	ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
+	System.out.println(blist);
+	System.out.println(flist);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +21,12 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
 	rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
 
 <style>
 body {
 	width: 1500px;
-	height: 1000px;
+	height:1500px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -30,31 +38,29 @@ body {
 
 #choice1 {
 	float: left;
-	width: 1000px;
-	height: 800px;
+	width: 1050px;
+	height: 1200px;
 	margin-left: 120px;
 	border-bottom: 1px solid black;
-	background-color: white;
 	padding: 0;
+	background:ghostwhite;
+	box-shadow:10px 5px 15px 15px gray;
+	border-radius:10px;
 }
 
-.travel {
-	width: 100%;
-	height: 30%;
-}
-#ct{
-	width:380px;
+#ct {
+	width: 380px;
 }
 
 #choice2 {
 	position: fixed;
-	margin-left:1200px;
-	top:150px;
+	margin-left: 1200px;
+	top: 150px;
 	border-radius: 12px;
 	border: 3px solid aliceblue;
 	background-color: aliceblue;
 	color: black;
-	width: 20%; 
+	width: 20%;
 	height: 500px;
 	text-align: center;
 }
@@ -63,19 +69,8 @@ body {
 	width: 70px;
 	height: 50px;
 	margin: auto;
-	font-size: 13px;
+	font-size: 17px;
 	border: none;
-}
-
-.tag {
-	box-shadow: 2px 1px 2px 1px gray;
-	background-color: orangered;
-	border-radius: 10px;
-	opacity: 0.8;
-	position: relative;
-	width: 120px;
-	height: 45px;
-	border: 1px solid red;
 }
 
 .tag>h3 {
@@ -139,6 +134,7 @@ body {
 
 .count {
 	width: 100%;
+	margin-right:20px;
 }
 
 .count p {
@@ -153,7 +149,8 @@ body {
 #festivalTable {
 	width: 100%;
 	height: 800px;
-	margin: 0;
+	margin-left: 20px;
+	magin-right:20px;
 }
 
 #month-choice {
@@ -167,15 +164,23 @@ body {
 
 #insertBtn {
 	border: none;
-	background-color: white;
+	background-color: ghostwhite;
 }
+button{
+	font-family: 'Do Hyeon', sans-serif;
+}
+
+span,p{
+	font-family: 'Do Hyeon', sans-serif;
+}
+
 </style>
 </head>
 
 <body>
 	<%@ include file="../../common/menubar.jsp"%>
 	<h1
-		style="color: black; color: black; margin-top: 140px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">축제
+		style="color: black; color: black; margin-top: 120px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">축제
 		ALL</h1>
 	<br>
 	<br>
@@ -189,9 +194,9 @@ body {
 						<option>----</option>
 						<option>제목</option>
 						<option>작성자</option>
-					</select> <input type="search" style="width: 500px; height: 40px;">
+					</select> <input type="search" style="width: 500px; height: 40px; margin-top:20px;">
 					<button
-						style="width: 100px; height: 40px; background-color: orangered; color: white; border-radius: 10px; font-size: 20px;">검색</button>
+						style="width: 100px; height: 40px; background-color: orangered; color: white; border-radius: 10px; font-size: 25px;">검색</button>
 
 
 				</div>
@@ -204,7 +209,7 @@ body {
 
 			<!-- 전체 글수 최신순 인기순 새로고침 -->
 			<div class="count">
-				<span style="text-align: left">전체 글 수 : 여기넣어</span>
+				<span style="text-align: left; margin-left:20px;">전체 글 수 : 여기넣어</span>
 				<div id="good">
 					<button type="button" class="btn btn-outline-primary">최신순</button>
 					&emsp;
@@ -216,13 +221,14 @@ body {
 
 			</div>
 			<br> <br>
+			<% if (loginUser !=null){ %>
 			<div id="write">
-				<button type="button" id="insertBtn"
-					onclick="location.href='festivalInsert.jsp'">
+				<button type="button" id="insertBtn"onclick="location.href='<%=contextPath%>/views/board/festival/festivalInsert.jsp'">
 					<img src="<%=contextPath%>/resources/images/edit.png" width="40px"
 						height="40px">
 				</button>
 			</div>
+			<% } %>
 
 
 			<br> <br>
@@ -233,30 +239,54 @@ body {
 
 				<div class="thumbnailArea" style="width: 1000px; height: 200px;"
 					onclick="location.href='festivalDetail.jsp'">
-
-					<input type="hidden" value="">
+					<%
+						for (Board b : blist) {
+					%>
+					<input type="hidden" value="<%=b.getbId()%>">
 					<div style="float: left; width: 300px; box-sizing: border-box;">
 
-						<img src="<%=contextPath%>/resources/images/서울2.jpg" width="300px"
-							height="200px">
-
+						<%
+							for (Attachment at : flist) {
+						%>
+						<%
+							if (b.getbId() == at.getbId()) {
+						%>
+						<img
+							src="<%=contextPath%>/resources/festival_uploadFile/<%=at.getChangeName()%>"
+							width="300px" height="200px">
+						<%
+							}
+						%>
+						<%
+							}
+						%>
 					</div>
 					<div
 						style="float: left; width: 550px; height: 200px; box-sizing: border-box;">
-						<p id="title">제목여기다가 넣어</p>
-						<p>내용 넣어</p>
+						<span><%=b.getbId()%>번 게시글 </span>
+						<p><%=b.getbTitle()%></p>
+						<p><%=b.getbContent()%></p>
 					</div>
 					<div
-						style="float: left; width: 150px; height: 200px; box-sizing: border-box;">
-						<p>작성자</p>
+						style="float: left; width: 150px; height: 200px; box-sizing: border-box;  margin-bottom:40px;">
+						<p><%= b.getbWriter() %></p>
 						<p>
-							조회수 <br> 좋아요
+							조회수 : 
+							<%=b.getbCount()%>
+							<br> 좋아요 : 
+							<%=b.getGood()%>
 						</p>
 					</div>
+					<%
+						}
+					%>
+					
 
 				</div>
+				<hr>
 
 			</div>
+			
 
 
 

@@ -3,7 +3,6 @@
 	<%
 		String contextPath = request.getContextPath();
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
-		System.out.println(loginUser); 
 	%>
 <!DOCTYPE html>
 <html>
@@ -147,9 +146,9 @@ nav ul li a.active {
 				<ul id="navUl">
 					<li><a id="a0" class="active" href="<%= contextPath %>">Home</a></li>
 					<li><a id = "a1" href="#aboutMe" onclick="goBest();">BEST</a></li>
-					<li><a id="a1" href="<%= contextPath %>/views/board/festival/festivalAllList.jsp">축제</a></li>
+					<li><a id="a1" href="#" onclick="goFes();">축제</a></li>
 					<li><a id="a2" href="#guestBook" onclick="goTravel();">여행</a></li>
-					<li><a id="a3" href="#gallery" onclick="goSleep();">숙박</a></li>
+					<li><a id="a3" href="<%= contextPath %>/views/Sleep/SleepAll.jsp">숙박</a></li>
 					<li><a id="a3" href="#gallery" onclick="goCom();">커뮤니티</a></li>
 					<% if(loginUser != null) { %>
 						<li><a id="a4" href="#" onclick="goMyPage();">마이페이지</a></li>
@@ -297,9 +296,7 @@ nav ul li a.active {
 		}
 		
 		// 축제 게시판 ㄱㄱ
-		function goFes(){
-			location.href="<%= contextPath %>/festivalall.fe";
-		}
+		
 		
 		function goTravel(){
 			location.href="<%= contextPath %>/travelall.th";
@@ -316,6 +313,9 @@ nav ul li a.active {
 		
 		function goLogin() {
 			location.href="<%= contextPath %>/views/join&login/login.jsp";
+		}
+		function goFes(){
+			location.href="<%= contextPath %>/festivalall.fe";
 		}
 	</script>
 
