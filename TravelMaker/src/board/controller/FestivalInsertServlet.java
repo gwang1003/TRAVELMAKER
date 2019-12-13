@@ -52,8 +52,7 @@ public class FestivalInsertServlet extends HttpServlet {
 
 			String savePath = root + "/resources/festival_uploadFile/";
 
-			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8",
-					new MyFileRenamePolicy());
+			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 
 			ArrayList<String> changeFiles = new ArrayList<String>();
 			ArrayList<String> originFiles = new ArrayList<String>();
@@ -83,26 +82,31 @@ public class FestivalInsertServlet extends HttpServlet {
 			// 3_1. 파일 외에 게시판 제목, 내용, 작성자 회원 번호 받아와서 Board 객체 생성
 			String title = multiRequest.getParameter("title");
 			String content = multiRequest.getParameter("content");
-			/*String sdate = multiRequest.getParameter("sdate");
+			int lcode = Integer.parseInt(multiRequest.getParameter("lcode"));
+			String sdate = multiRequest.getParameter("sdate");
 			String edate = multiRequest.getParameter("edate");
 			String tel = multiRequest.getParameter("tel");
 			int price = Integer.parseInt(multiRequest.getParameter("price"));
 			String address = multiRequest.getParameter("address");
-			String page = multiRequest.getParameter("home");*/
-			String bWriter = String.valueOf(((Member) request.getSession().getAttribute("loginUser")).getM_seq());
+			String page = multiRequest.getParameter("home");
+			String bWriter = ((Member) request.getSession().getAttribute("loginUser")).getNickName();
+			int mId = ((Member)request.getSession().getAttribute("loginUser")).getM_seq();
 
+			
 			Board b = new Board();
 			b.setbTitle(title);
 			b.setbContent(content);
 			b.setbWriter(bWriter);
+			b.setlCode(lcode);
+			b.setmId(mId);
 
-			/*Information in = new Information();
+			Information in = new Information();
 			in.setsDay(sdate);
 			in.seteDay(edate);
 			in.setTel(tel);
 			in.setPrice(price);
 			in.setAddress(address);
-			in.setPage(page);*/
+			in.setPage(page);
 
 			// 3_2. Attachment 테이블에 값 삽입할 것들 작업하기
 			// Attachment 객체들을 담을 리스트 만들어 주기
@@ -126,7 +130,7 @@ public class FestivalInsertServlet extends HttpServlet {
 
 				fileList.add(at);
 			}
-			int result = new BoardService().insertThumbnail(b, fileList);
+			/*int result = new BoardService().insertThumbnail(b, fileList);
  
 			if (result > 0) {
 				response.sendRedirect("festivalall.fe");
@@ -141,11 +145,11 @@ public class FestivalInsertServlet extends HttpServlet {
 				request.setAttribute("msg", "사진 게시판 등록 실패!!");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 
-			}
+			}*/
 
 			// 4. 사진 게시판 작성용 비즈니스 로직을 처리할 서비스 요청
 			// (board 객체, Attachment 리스트 전달)
-			/*int result = new BoardService().insertThumbnail(b, in, fileList);
+			int result = new BoardService().insertThumbnail(b, in, fileList);
 
 			if (result > 0) {
 				response.sendRedirect("festivalall.fe");
@@ -160,7 +164,7 @@ public class FestivalInsertServlet extends HttpServlet {
 				request.setAttribute("msg", "사진 게시판 등록 실패!!");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 
-			}*/
+			}
 		}
 	}
 

@@ -90,16 +90,16 @@ public class BoardService {
 	}
 
 	// 사진 게시판 글쓰기
-	public int insertThumbnail(Board b, ArrayList<Attachment> fileList) {
+	public int insertThumbnail(Board b, Information in, ArrayList<Attachment> fileList) {
 		Connection conn = getConnection();
 
 		BoardDao bDao = new BoardDao();
  
 		int result1 = bDao.insertThBoard(conn, b);
 		int result2 = bDao.insertAttachment(conn, fileList);
-		//int result3 = bDao.insertInformation(conn,in);
+		int result3 = bDao.insertInformation(conn,in);
 
-		if (result1 > 0 && result2 > 0/* && result3>0*/) {
+		if (result1 > 0 && result2 > 0 && result3>0) {
 			commit(conn);
 		} else {
 			rollback(conn);
