@@ -11,7 +11,12 @@ integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQV
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <title>Insert title here</title>
 <style>
+	* {
+		box-sizing: border-box;
+	}
     body {
+    	width: 100%;
+    	height: 900px;
         margin: 0;
         padding: 0;
         font-family: Arial;
@@ -56,7 +61,7 @@ integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQV
 	}
 
 	h1{
-		font-size: 130px;
+		font-size:130px;
 		margin-bottom: 30%;
 	}
 
@@ -66,11 +71,67 @@ integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQV
 	}
 	
 	.carousel-control-prev, .carousel-control-next {
-		height:750px;
+		height:50%;
 		margin-top:auto;
-		margin-bottom:auto;
-	
+		margin-bottom:auto;	
 	}
+	
+	.d-none {
+		top:40%;
+		width:70%;
+	}
+	
+	
+	@media only screen and (max-width: 1200px){
+            .dd h1 {
+            font-size: 125px;}
+    }
+    @media only screen and (max-width: 1150px){
+            .dd h1 {
+            font-size: 120px;}
+    }
+    @media only screen and (max-width: 1100px){
+            .dd h1 {
+            font-size: 115px;}
+    }
+    @media only screen and (max-width: 1050px){
+            .dd h1 {
+            font-size: 110px;}
+    }
+    @media only screen and (max-width: 1000px){
+            .dd h1 {
+            font-size: 105px;}
+    }
+    @media only screen and (max-width: 950px){
+            .dd h1 {
+            font-size: 100px;}
+    }
+    @media only screen and (max-width: 900px){
+            .dd h1 {
+            font-size: 95px;}
+    }
+    @media only screen and (max-width: 850px){
+            .dd h1 {
+            font-size: 90px;}
+    }
+    @media only screen and (max-width: 800px){
+            .dd h1 {
+            font-size: 85px;}
+    }
+    @media only screen and (max-width: 750px){
+            .dd h1 {
+            font-size: 80px;}
+    }
+    @media only screen and (max-width: 700px){
+            .dd h1 {
+            font-size: 75px;}
+    }
+    @media only screen and (max-width: 650px){
+            .dd h1 {
+            font-size: 700px;}
+    }
+	
+
     </style>
 </head>
 <body>
@@ -90,7 +151,7 @@ integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQV
                     <div class="carousel-item active dd">
 						<img src='<%= request.getContextPath() %>/resources/images/서울2.jpg' class="d-block w-100" alt="..."></a>
                         <div class="carousel-caption d-none d-md-block">
-							<hr>
+
                             <h1>서울 특별시</h1>
                           
 						</div>
