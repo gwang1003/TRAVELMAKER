@@ -478,7 +478,7 @@
 				var qId = $(this).parent().children().eq(0).text();
 					location.href="<%= request.getContextPath() %>/detail.qa?qId="+qId;					
 			});
-			
+			 
 			
 		});
 	
