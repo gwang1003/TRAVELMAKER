@@ -30,7 +30,7 @@ public class QAInsertServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String content = request.getParameter("content");
 		String title = request.getParameter("title");
-	}
+	} 
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -56,7 +56,7 @@
     }
 
         .note-insert,
-        .note-table ,
+        .note-table , 
         .note-view
        {
           display:none;

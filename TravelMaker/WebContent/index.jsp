@@ -24,7 +24,7 @@ integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQV
 
     ul{
         margin: 0;
-        padding: 0;
+        padding: 0; 
     }
     ul,li{list-style:none;}
   #slide{height:100%;position:relative;overflow:hidden;}
