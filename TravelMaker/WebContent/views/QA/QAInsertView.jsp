@@ -29,7 +29,7 @@
     .titleDiv {
        border:1px solid gainsboro;
        width:100%;
-        height:5%;
+        height:7%;
             
         box-sizing: border-box;
     }
@@ -40,7 +40,7 @@
 
     .top1{
             width:100%;
-            height:60%;
+            height:100%;
             box-sizing: border-box;
             margin-top:1%;
     }
@@ -62,6 +62,9 @@
           display:none;
 
        }
+       .top1 select {
+       	height:50%;
+       }
 
   </style>
 </head>
@@ -69,6 +72,13 @@
 <form action="<%= request.getContextPath() %>/insert.qa">
     <div class="titleDiv">
         <div class="top1">
+        	<select name="type">
+        		<option value="10">글쓰기</option>
+        		<option value="20">여행지</option>
+        		<option value="30">숙박</option>
+        		<option value="40">회원</option>
+        		<option value="50">시스템</option>
+        	</select><br>
             <label>&nbsp;&nbsp;&nbsp;제목 &nbsp;&nbsp;&nbsp;</label><input type="text" name="title"> <br>
         </div>
         <input type="text" id="HC" name="content" hidden>

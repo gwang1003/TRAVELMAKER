@@ -1,13 +1,16 @@
 package QA.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+import QA.model.service.QAService;
+import QA.model.vo.QA;
+import member.model.vo.Member;
 
 /**
  * Servlet implementation class QAInsertSelvlet
@@ -30,6 +33,15 @@ public class QAInsertServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String content = request.getParameter("content");
 		String title = request.getParameter("title");
+		int type = Integer.parseInt(request.getParameter("type"));
+		Member m = (Member)request.getSession().getAttribute("loginUser");
+		QA q = new QA(type, title, content, m.getM_seq());
+		
+		int result = new QAService().insertQuestion(q);
+		
+		if(result > 0) {
+			response.sendRedirect("select.qa?mSeq=" + m.getM_seq());
+		}
 	} 
 
 	/**

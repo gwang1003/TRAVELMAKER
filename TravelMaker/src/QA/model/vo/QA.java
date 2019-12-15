@@ -4,19 +4,19 @@ import java.util.Date;
 
 public class QA {
 	private int qId;
-	private String qType;
+	private int qType;
 	private String qTitle;
 	private String qContent;
 	private String status;
 	private Date enrollDate;
 	private String answer;
 	private Date answerDate;
-	private String mId;
+	private int mSeq;
 	
 	public QA() {}
 
-	public QA(int qId, String qType, String qTitle, String qContent, String status, Date enrollDate, String answer,
-			Date answerDate, String mId) {
+	public QA(int qId, int qType, String qTitle, String qContent, String status, Date enrollDate, String answer,
+			Date answerDate, int mSeq) {
 		super();
 		this.qId = qId;
 		this.qType = qType;
@@ -26,13 +26,13 @@ public class QA {
 		this.enrollDate = enrollDate;
 		this.answer = answer;
 		this.answerDate = answerDate;
-		this.mId = mId;
+		this.mSeq = mSeq;
 	}
 	
 	
 
-	public QA(String qType, String qTitle, String qContent, String status, Date enrollDate, String answer,
-			Date answerDate, String mId) {
+	public QA(int qType, String qTitle, String qContent, String status, Date enrollDate, String answer,
+			Date answerDate, int mSeq) {
 		super();
 		this.qType = qType;
 		this.qTitle = qTitle;
@@ -41,26 +41,39 @@ public class QA {
 		this.enrollDate = enrollDate;
 		this.answer = answer;
 		this.answerDate = answerDate;
-		this.mId = mId;
+		this.mSeq = mSeq;
+	}
+	
+	
+
+	public QA(int qType, String qTitle, String qContent, int mSeq) {
+		super();
+		this.qType = qType;
+		this.qTitle = qTitle;
+		this.qContent = qContent;
+		this.mSeq = mSeq;
 	}
 
-	public QA(String qType, String qTitle, String status, Date enrollDate) {
+	
+	public QA(int qId, int qType, String qTitle, String status, Date enrollDate) {
 		super();
+		this.qId = qId;
 		this.qType = qType;
 		this.qTitle = qTitle;
 		this.status = status;
 		this.enrollDate = enrollDate;
 	}
+
 	
 	
 
-	public QA(String qType, String qTitle, String status, Date enrollDate, String mId) {
+	public QA(int qType, String qTitle, String status, Date enrollDate, int mSeq) {
 		super();
 		this.qType = qType;
 		this.qTitle = qTitle;
 		this.status = status;
 		this.enrollDate = enrollDate;
-		this.mId = mId;
+		this.mSeq = mSeq;
 	}
 
 	public int getqId() {
@@ -71,11 +84,11 @@ public class QA {
 		this.qId = qId;
 	}
 
-	public String getqType() {
+	public int getqType() {
 		return qType;
 	}
 
-	public void setqType(String qType) {
+	public void setqType(int qType) {
 		this.qType = qType;
 	}
 
@@ -127,19 +140,19 @@ public class QA {
 		this.answerDate = answerDate;
 	}
 
-	public String getmId() {
-		return mId;
+	public int getmSeq() {
+		return mSeq;
 	}
 
-	public void setmId(String mId) {
-		this.mId = mId;
+	public void setmSeq(int mSeq) {
+		this.mSeq = mSeq;
 	}
 
 	@Override
 	public String toString() {
 		return "QA [qId=" + qId + ", qType=" + qType + ", qTitle=" + qTitle + ", qContent=" + qContent + ", status="
 				+ status + ", enrollDate=" + enrollDate + ", answer=" + answer + ", answerDate=" + answerDate
-				+ ", mId=" + mId + "]";
+				+ ", mSeq=" + mSeq + "]";
 	}
 	
 	

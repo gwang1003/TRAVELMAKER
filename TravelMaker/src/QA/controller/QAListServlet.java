@@ -35,7 +35,6 @@ public class QAListServlet extends HttpServlet {
 		int mSeq = Integer.parseInt(request.getParameter("mSeq"));
 		ArrayList<QA> list = new QAService().selectQAList(mSeq);
 		
-		System.out.println(list);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("views/QA/QAmyListView.jsp").forward(request, response);
 	}

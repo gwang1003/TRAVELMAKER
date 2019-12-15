@@ -1,14 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*, QA.model.vo.*, member.model.vo.*"%>
+	pageEncoding="UTF-8" import="java.util.*, QA.model.vo.*"%>
 	
 <% 
-	ArrayList<QA> list = (ArrayList<QA>)request.getAttribute("list");
+	QA q = (QA)request.getAttribute("q");
 
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
 <title>Insert title here</title>
 <style>
         body {
@@ -364,6 +369,14 @@
               margin-left: 2%;
             }
             
+            #marginBody {
+            	border:1px solid red;
+            }
+            
+            #marginBody h3{
+            	border:1px solid black;
+            }
+            
           </style>
 </head>
 <body>
@@ -409,59 +422,11 @@
 			<section class="notice">
 				<div class="page-title">
 					<div class="container">
-						<h3>문의내역</h3>
+						<h3>문의 내역</h3>
 					</div>
-				</div>
-
-				<!-- board search area -->
-				<div id="board-search">
-					<div class="container">
-						<select id="inquire-type" style="float: left;">
-							<option value="여행지" selected>여행지</option>
-							<option value="숙박">숙박</option>
-							<option value="회원">회원</option>
-							<option value="시스템">시스템</option>
-						</select>
-						<div class="search-window">
-							<form action="">
-								<div class="search-wrap">
-									<input id="search" type="search" name=""
-										placeholder="검색어를 입력해주세요." value="">
-									<button type="submit" class="btn btn-dark">검색</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-
-				<!-- board list area -->
-				<div id="board-list">
-					<div class="container">
-						<table class="board-table">
-							<thead>
-								<tr>
-									<th scope="col" class="th-num">번호</th>
-									<th scope="col" class="th-title">제목</th>
-									<th scope="col" class="th-date">등록일</th>
-								</tr>
-							</thead>
-							<tbody>
-								<% if(list.isEmpty()){ %>
-						 			<tr>
-							 			<td colspan="3">문의내역이 존재하지 않습니다</td>
-							 		</tr>
-								 <%} else { %>
-						 			<% for(QA q : list) {%>
-						 				<tr>
-						 					<td><%= q.getqId() %></td>
-						 					<td><%= q.getqTitle() %></td>
-						 					<td><%= q.getEnrollDate() %></td>
-						 				</tr>
-						 			<% } %>
-					 			<% } %>
-							</tbody>
-						</table>
-						<button type="button" class="btn btn-dark" id="write">글쓰기</button>
+					<div>제목 : <%= q.getqTitle() %></div>
+					<div class="content">
+						<%= q.getqContent() %>
 					</div>
 				</div>
 			</section>
@@ -470,21 +435,7 @@
 	
 	<script>
 		// 게시판 상세 보기 기능 구현
-		$(function(){
-			$(".board-table td").mouseenter(function(){
-				$(this).parent().css({"background":"darkgray", "cursor":"pointer", "color":"white"});
-			}).mouseout(function(){
-				$(this).parent().css({"background":"white", "color":"black"});
-			}).click(function(){
-				var qId = $(this).parent().children().eq(0).text();
-					location.href="<%= request.getContextPath() %>/detail.qa?qId="+qId;					
-			});
-			 
-			$(".btn-dark").click(function(){
-				location.href="<%= request.getContextPath()%>/views/QA/QAInsertView.jsp"
-			})
-		});
-	
+		
 	</script>
 </body>
 </html>
