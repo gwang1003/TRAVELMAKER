@@ -39,12 +39,12 @@ public class QADao {
 			
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
-				System.out.println(rset.getString("QA_TYPE"));
-				list.add(new QA(rset.getString("QA_TYPE"),
+				list.add(new QA(rset.getInt("qa_id"),
+								rset.getInt("QA_TYPE"),
 								rset.getString("QA_TITLE"),
 								rset.getString("QA_STATUS"),
 								rset.getDate("ENROLL_DATE")));
-				
+				 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -69,11 +69,11 @@ public class QADao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new QA(rset.getString("QA_TYPE"),
+				list.add(new QA(rset.getInt("QA_TYPE"),
 								rset.getString("QA_TITLE"),
 								rset.getString("QA_STATUS"),
 								rset.getDate("ENROLL_DATE"),
-								rset.getString("M_NAME")));
+								rset.getInt("M_Seq")));
 				
 			}
 		} catch (SQLException e) {
@@ -95,10 +95,11 @@ public class QADao {
 		try {
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setString(1, q.getqType());
-			pstmt.setString(2, q.getqTitle());
-			pstmt.setString(3, q.getqContent());
-			pstmt.setString(4, q.getmId());
+			
+			pstmt.setString(1, q.getqTitle());
+			pstmt.setString(2, q.getqContent());
+			pstmt.setInt(3, q.getmSeq());
+			pstmt.setInt(4, q.getqType());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -140,10 +141,10 @@ public class QADao {
 		try {
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setString(1, q.getqType());
+			pstmt.setInt(1, q.getqType());
 			pstmt.setString(2, q.getqTitle());
 			pstmt.setString(3, q.getqContent());
-			pstmt.setString(4, q.getmId());
+			pstmt.setInt(4, q.getmSeq());
 			pstmt.setInt(5, q.getqId());
 			
 			result = pstmt.executeUpdate();
@@ -161,22 +162,23 @@ public class QADao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = prop.getProperty("selectAllQAList");
+		String query = prop.getProperty("selectQA");
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, qId);
 			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				q = new QA(rset.getString("QA_TYPE"),
+				q = new QA(rset.getInt("QA_TYPE"),
 								rset.getString("QA_TITLE"),
 								rset.getString("QA_CONTENT"),
 								rset.getString("QA_STATUS"),
 								rset.getDate("ENROLL_DATE"),
 								rset.getString("ANSWER"),
 								rset.getDate("AN_DATE"),
-								rset.getString("M_NAME"));
+								rset.getInt("M_SEQ"));
 				
 			}
 		} catch (SQLException e) {
