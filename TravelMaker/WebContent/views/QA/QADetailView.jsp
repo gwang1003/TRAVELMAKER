@@ -166,20 +166,58 @@
 
     <!-- .notice -->
     <style>
+    		.notice {
+    			width:80%;
+    			height:90%;
+    			margin-left:auto;
+    			margin-right:auto;
+    		}
+    
             table {
               border-collapse: collapse;
               border-spacing: 0;
             }
         
             .page-title {
-              margin-bottom: 60px;
+              width:100%;
+              height:8%;
+              border:1px solid rgba(31, 5, 5, 0.158);
+              background:rgba(31, 5, 5, 0.158);
+            }
+            
+            .title {
+            	width:100%;
+            	height:5%;
+            	border:1px solid rgba(31, 5, 5, 0.158);
+				background:rgba(31, 5, 5, 0.158);
+            	font-size: 22px;
+            	line-height:45px;
+            	
             }
         
             .page-title h3 {
-              font-size: 28px;
-              color: #333333;
-              font-weight: 400;
-              text-align: center;
+            	width:100%;
+                font-size: 29px;
+                color: #333333;
+                font-weight: bolder;
+                text-align: center;
+                line-height:30px;
+            }
+            
+            .content {
+            	width:100%;
+            	height:41%;
+            	border:1px solid rgba(31, 5, 5, 0.158);
+				background:rgba(31, 5, 5, 0.158);
+            }
+            
+            .inContent {
+            	width:97%;
+            	height:93%;
+            	margin:auto;
+            	background:white;
+            	border: 1px solid black;
+            	margin-top:1.5%;
             }
         
             #board-search .search-window {
@@ -369,13 +407,6 @@
               margin-left: 2%;
             }
             
-            #marginBody {
-            	border:1px solid red;
-            }
-            
-            #marginBody h3{
-            	border:1px solid black;
-            }
             
           </style>
 </head>
@@ -419,14 +450,22 @@
 
 		<section id="marginBody">
 
-			<section class="notice">
+			<section class="notice" style="border:1px solid black">
 				<div class="page-title">
-					<div class="container">
-				 		<h3>문의 내역</h3>
-					</div> 
-					<div>제목 : <%= q.getqTitle() %></div>
-					<div class="content">
+				 	<h3>문의 내역</h3>
+				</div> 
+				<div class="title">&nbsp;&nbsp;&nbsp;&nbsp;제목 : <%= q.getqTitle() %></div>
+				<div class="content">
+					<div class="inContent">
 						<%= q.getqContent() %>
+					</div>
+				</div>
+				<div class="title">&nbsp;&nbsp;&nbsp;&nbsp;답변</div>
+				<div class="content">
+					<div class="inContent">
+						<% if(q.getAnswer() != null) { %>
+							<%= q.getAnswer() %>
+						<% } %>
 					</div>
 				</div>
 			</section>
