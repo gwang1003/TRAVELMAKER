@@ -41,7 +41,7 @@ public class QAInsertServlet extends HttpServlet {
 		
 		if(result > 0) {
 			response.sendRedirect("select.qa?mSeq=" + m.getM_seq());
-		}
+		} 
 	} 
 
 	/**

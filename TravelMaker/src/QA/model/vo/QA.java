@@ -53,7 +53,7 @@ public class QA {
 		this.qContent = qContent;
 		this.mSeq = mSeq;
 	}
-
+ 
 	
 	public QA(int qId, int qType, String qTitle, String status, Date enrollDate) {
 		super();

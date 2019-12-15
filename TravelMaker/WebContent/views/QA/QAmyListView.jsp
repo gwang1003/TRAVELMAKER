@@ -204,7 +204,7 @@
               outline: 0;
               border-width: 1px;
             }
-        
+         
             #board-search .search-window .search-wrap .btn {
               position: absolute;
               right: 0;

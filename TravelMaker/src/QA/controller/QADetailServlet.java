@@ -39,7 +39,7 @@ public class QADetailServlet extends HttpServlet {
 			request.setAttribute("q", q);
 			request.getRequestDispatcher("views/QA/QADetailView.jsp").forward(request, response);
 		}
-		
+		 
 	}
 
 	/**

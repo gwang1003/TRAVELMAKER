@@ -44,7 +44,7 @@ public class QADao {
 								rset.getString("QA_TITLE"),
 								rset.getString("QA_STATUS"),
 								rset.getDate("ENROLL_DATE")));
-				
+				 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -37,7 +37,7 @@ public class QAListServlet extends HttpServlet {
 		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("views/QA/QAmyListView.jsp").forward(request, response);
-	}
+	} 
  
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -422,8 +422,8 @@
 			<section class="notice">
 				<div class="page-title">
 					<div class="container">
-						<h3>문의 내역</h3>
-					</div>
+				 		<h3>문의 내역</h3>
+					</div> 
 					<div>제목 : <%= q.getqTitle() %></div>
 					<div class="content">
 						<%= q.getqContent() %>

@@ -20,7 +20,7 @@ public class QAService {
 		System.out.println(list);
 		return list;
 	}
-	
+	 
 	// 2. 전체 QA 리스트(관리자가 회원들이 한 문의 내역 확인)
 	public ArrayList<QA> selectAllQAList() {
 		Connection conn = getConnection();
