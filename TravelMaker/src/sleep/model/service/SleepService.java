@@ -12,9 +12,16 @@ import sleep.model.vo.Sleep;
 public class SleepService {
 	
 	// 전체리스트
-	public ArrayList<Sleep> selectList(){
+	public ArrayList selectList(int flag){
 		Connection conn=getConnection();
-		ArrayList<Sleep> list = new SleepDao().selectList(conn);
+		ArrayList<Sleep> list = null;
+		
+		SleepDao sDao = new SleepDao();
+		if(flag == 1) {
+			list = sDao.selectSList(conn);
+		}else {
+			list = sDao.selectFist(conn);
+		}
 		
 		close(conn);
 		

@@ -10,6 +10,7 @@ import java.util.*;
 import java.sql.PreparedStatement;
 import static common.JDBCTemplate.*;
 
+import sleep.model.vo.Attachment;
 import sleep.model.vo.Room;
 import sleep.model.vo.Sleep;
 
@@ -145,7 +146,70 @@ public class SleepDao {
 		return 0;
 	}
 	
+	// 사진 게시판 게시글 리스트 조회
+	public ArrayList<Sleep> selectSFist(Connection conn) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList selectFist(Connection conn) {
+		Statement stmt = null;
+	      ResultSet rset = null;
+	      ArrayList<Sleep> list = null;
+	      Properties prop = null;
+
+	      String sql = prop.getProperty("selectBList");
+
+	      try {
+	         stmt = conn.createStatement();
+	         rset = stmt.executeQuery(sql);
+	         list = new ArrayList<Sleep>();
+
+	         while (rset.next()) {
+	            list.add(new Sleep(rset.getInt("sId"), rset.getString("sType"), rset.getString("sName"),
+	                  rset.getString("sContent"), rset.getInt("rId"), rset.getInt("lCode")));
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	         close(stmt);
+	      }
+
+	      return list;
+	   }
+	
+
+	public ArrayList selectSList(Connection conn) {
+	      ArrayList<Attachment> list = new ArrayList<Attachment>();
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      Properties prop = null;
+
+	      String sql = prop.getProperty("selectFList");
+
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         rset = pstmt.executeQuery();
+
+	         while (rset.next()) {
+	            Attachment at = new Attachment();
+	            at.setbId(rset.getInt("sId"));
+	            at.setChangeName(rset.getString("change_name"));
+
+	            list.add(at);
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      return list;
+	   }
+}
+	
 	
 
 
-}
+
