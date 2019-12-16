@@ -20,17 +20,17 @@
 
     form {
         width: 70%;
-        height:100%;
+        height:80%;
         margin-left:auto;
         margin-right:auto;
-        background: rgba(31, 5, 5, 0.075);
+        
     }
 
     .titleDiv {
        border:1px solid gainsboro;
        width:100%;
-        height:7%;
-            
+        height:10%;
+        background: rgba(31, 5, 5, 0.075);
         box-sizing: border-box;
     }
 
@@ -65,6 +65,13 @@
        .top1 select {
        	height:50%;
        }
+       
+       .sub {
+       		width:15%;
+       		height:5%;
+       		margin:auto;
+       		margin-left:830px;
+       }
 
   </style>
 </head>
@@ -72,19 +79,22 @@
 <form action="<%= request.getContextPath() %>/insert.qa">
     <div class="titleDiv">
         <div class="top1">
+        	<div>
+        	<label>&nbsp;&nbsp;&nbsp;문의 타입</label>
         	<select name="type">
         		<option value="10">글쓰기</option>
         		<option value="20">여행지</option>
         		<option value="30">숙박</option>
         		<option value="40">회원</option>
         		<option value="50">시스템</option>
-        	</select><br>
-            <label>&nbsp;&nbsp;&nbsp;제목 &nbsp;&nbsp;&nbsp;</label><input type="text" name="title"> <br>
+        	</select>
+        	</div>
+            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목 &nbsp;&nbsp;&nbsp;</label><input type="text" name="title"> <br>
         </div>
         <input type="text" id="HC" name="content" hidden>
     </div>
     <div id="summernote"><p></p></div>
-    <button type="submit"></button>
+    <button type="submit" class="sub">작성완료</button>
 
     </form>
     <script>
