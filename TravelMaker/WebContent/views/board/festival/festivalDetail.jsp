@@ -195,8 +195,8 @@ td {
 				<div
 					style="border: 1px solid black; text-align: center; border-radius: 10px">
 					<details>
-						<summary style="margin-top: 60px;">
-							축제 설명 보기<br> <br> <br> <br>
+						<summary style="margin-top: 30px;">
+							축제 설명 보기<br> <br>
 						</summary>
 						<br>
 						<p><%= b.getbContent() %></p>
