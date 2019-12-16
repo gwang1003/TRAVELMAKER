@@ -300,13 +300,13 @@ nav ul li a.active {
 		
 		function goTravel(){
 			location.href="<%= contextPath %>/travelall.th";
-		}
+		} --%>
 		function goSleep(){
 			location.href="<%= contextPath %>/sleepall.th";
 		}
 		function goCom(){
 			location.href="<%= contextPath %>/communityall.th";
-		} --%>
+		} 
 		function goMyPage() {
 			location.href="<%= contextPath %>/views/myPage/Plan.jsp";
 		}

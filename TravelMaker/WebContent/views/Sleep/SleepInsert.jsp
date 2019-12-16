@@ -131,10 +131,18 @@ label{
                </tr>
 
                <tr>
-                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">내용</td>
-                  <td colspan="3"><textarea name="content" rows="7" cols="102"
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 정보</td>
+                  <td colspan="3"><textarea name="content" rows="7" cols="104"
                         style="resize: none;"></textarea></td>
+                  
+                      
                </tr>
+         <td width="100px" name="price" style="font-family: 'Do Hyeon', sans-serif; ">가격</td>
+                  <td colspan="3"><textarea name="content" rows="1" cols="15"
+                        style="resize: none;"></textarea></td>
+			
+					
+										
 
                <tr>
                   <td style="font-family: 'Do Hyeon', sans-serif;">객실 사진</td>
@@ -175,6 +183,12 @@ label{
                   </td>
                 
                </tr>
+               
+                 <tr>
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 타입 내용</td>
+                  <td colspan="3"><textarea name="content" rows="7" cols="104"
+                        style="resize: none;"></textarea></td>
+               </tr>
 
             </table>
 
@@ -192,7 +206,7 @@ label{
             <div align="center" id="detailArea">
             <table>
             	<tr>
-                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 타입</td>
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 타입 사진</td>
                   <td>
                      <div id="contentImgArea1">
                         <img id="contentImg1" width="245" height="150">
@@ -212,6 +226,8 @@ label{
             </table>
                
             </div>
+            
+            
 
             <script>
                // 내용 작성 부분의 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 함수

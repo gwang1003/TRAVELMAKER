@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.*;
 import java.sql.SQLException;
 import java.util.*;
+
+import board.model.dao.BoardDao;
+
 import java.sql.PreparedStatement;
 import static common.JDBCTemplate.*;
 
@@ -15,6 +18,19 @@ import sleep.model.vo.Room;
 import sleep.model.vo.Sleep;
 
 public class SleepDao {
+	
+	private Properties prop = new Properties();
+
+	public SleepDao() {
+		String fileName = BoardDao.class.getResource("/sql/board/Sleep-query.properties").getPath();
+
+		try {
+			prop.load(new FileReader(fileName));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	
 	//전체 리스트
