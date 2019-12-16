@@ -19,7 +19,7 @@ import board.model.vo.Reply;
 import member.model.vo.Member;
 
 public class BoardDao {
-	
+
 	private Properties prop = new Properties();
 
 	public BoardDao() {
@@ -38,14 +38,10 @@ public class BoardDao {
 		return 0;
 	}
 
-	
-
-	public ArrayList selectBoard(Connection con, int bid) {
+	public Board selectBoard(Connection con, int bid) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		Board b = null;
-		Information i =null;
-		Member m = null;
 
 		String query = prop.getProperty("selectBoard");
 
@@ -57,14 +53,12 @@ public class BoardDao {
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
-				b = new Board(rset.getInt("b_id") , rset.getDate("write_date") ,rset.getDate("update_date"), rset.getString("title"),
-						rset.getString("content"), rset.getInt("view_cnt") ,rset.getString("writer"),  rset.getString("status"),rset.getInt("b_type"));
-						
-				m = new Member(rset.getString("nickname"));
-						
-				i = new Information(rset.getString("TO_CHAR(SDAY,'YYYYMMDD')"),rset.getString("TO_CHAR(EDAY,'YYYYMMDD')"),rset.getString("tel"),rset.getInt("price"),rset.getString("address"),
-						rset.getString("pageaddress"));
+				b = new Board(rset.getInt("b_id"), rset.getDate("write_date"), rset.getDate("update_date"),
+						rset.getString("title"), rset.getString("content"), rset.getInt("view_cnt"),
+						rset.getString("writer"), rset.getString("status"), rset.getInt("b_type"));
+
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -93,8 +87,8 @@ public class BoardDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
-	// 게시판 조회용 
+
+	// 게시판 조회용
 	public ArrayList<Board> selectBList(Connection con) {
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -110,20 +104,10 @@ public class BoardDao {
 			list = new ArrayList<Board>();
 
 			while (rs.next()) {
-				list.add(new Board(rs.getInt("b_id"),
-								rs.getDate("write_date"),
-								rs.getDate("update_date"),
-								rs.getString("title"),
-								rs.getString("content"),
-								rs.getInt("view_cnt"),
-								rs.getInt("good"),
-								rs.getInt("notgood"),
-								rs.getString("writer"),
-								rs.getString("status"),
-								rs.getInt("l_code"),
-								rs.getInt("s_type"),
-								rs.getInt("b_type"),
-								rs.getInt("m_seq")));
+				list.add(new Board(rs.getInt("b_id"), rs.getDate("write_date"), rs.getDate("update_date"),
+						rs.getString("title"), rs.getString("content"), rs.getInt("view_cnt"), rs.getInt("good"),
+						rs.getInt("notgood"), rs.getString("writer"), rs.getString("status"), rs.getInt("l_code"),
+						rs.getInt("s_type"), rs.getInt("b_type"), rs.getInt("m_seq")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -150,7 +134,7 @@ public class BoardDao {
 				Attachment at = new Attachment();
 				at.setbId(rset.getInt("b_id"));
 				at.setChangeName(rset.getString("newfilename"));
-				
+
 				list.add(at);
 			}
 		} catch (SQLException e) {
@@ -169,21 +153,21 @@ public class BoardDao {
 
 	// 축제 디테일
 	public ArrayList<Attachment> selectThumbnail(Connection con, int bId) {
-		PreparedStatement pstmt= null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Attachment> list = null;
-		
+
 		String query = prop.getProperty("selectThumbnail");
-		
+
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, bId);
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			list = new ArrayList<Attachment>();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				Attachment at = new Attachment();
 				at.setfId(rs.getInt("no"));
 				at.setbId(rs.getInt("b_id"));
@@ -191,23 +175,56 @@ public class BoardDao {
 				at.setChangeName(rs.getString("newfilename"));
 				at.setFilePath(rs.getString("filepath"));
 				at.setCreateDate(rs.getDate("write_date"));
-				
+
 				list.add(at);
-				
+
 			}
-			
-			
+			System.out.println("ㅁ너아ㅣ런ㅇㄹ  : " + list);
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(rs);
 			close(pstmt);
 		}
-		
-		
-		
+
 		return list;
+	}
+
+	public Information selectInformtion(Connection con, int bId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Information in = null;
+
+		String query = prop.getProperty("selectInformation");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			pstmt.setInt(1, bId);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				in = new Information();
+				in.setsDay(rs.getString("to_char(sday)"));
+				in.seteDay(rs.getString("to_char(eday)"));
+				in.setTel(rs.getString("tel"));
+				in.setPrice(rs.getInt("price"));
+				in.setAddress(rs.getString("address"));
+				in.setPage(rs.getString("pageaddress"));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+
+		return in;
 	}
 
 	public ArrayList<Reply> selectReplyList(Connection con, int bId) {
@@ -240,7 +257,7 @@ public class BoardDao {
 			pstmt.setString(3, b.getbWriter());
 			pstmt.setInt(4, b.getlCode());
 			pstmt.setInt(5, b.getmId());
-			
+
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -263,9 +280,9 @@ public class BoardDao {
 
 			for (int i = 0; i < fileList.size(); i++) {
 				Attachment at = fileList.get(i);
-				
+
 				pstmt = conn.prepareStatement(query);
-				
+
 				pstmt.setString(1, at.getOriginName());
 				pstmt.setString(2, at.getChangeName());
 				pstmt.setString(3, at.getFilePath());
@@ -275,7 +292,7 @@ public class BoardDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(pstmt);
 		}
 
@@ -286,28 +303,49 @@ public class BoardDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("insertInformation");
-		
+
 		try {
 			pstmt = conn.prepareStatement(query);
-			 
-			pstmt.setString(1,in.getsDay());
+
+			pstmt.setString(1, in.getsDay());
 			pstmt.setString(2, in.geteDay());
 			pstmt.setString(3, in.getTel());
 			pstmt.setInt(4, in.getPrice());
 			pstmt.setString(5, in.getAddress());
 			pstmt.setString(6, in.getPage());
-			
+
 			result = pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(pstmt);
-			
+
 		}
-		
-		
+
+		return result;
+	}
+
+	public int increaseCount(Connection con, int bid) {
+		PreparedStatement pstmt = null;
+
+		int result = 0;
+
+		String query = prop.getProperty("increaseCount");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, bid);
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
 		return result;
 	}
 
