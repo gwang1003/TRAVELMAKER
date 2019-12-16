@@ -2,12 +2,12 @@
 	pageEncoding="UTF-8"
 	import="member.model.vo.*, java.util.*,sleep.model.vo.*"%>
 
-<%
+<%--
     	ArrayList<Sleep> blist = (ArrayList<Sleep>) request.getAttribute("blist");
     	ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
     
     
-    %>
+    --%>
 
 <!DOCTYPE html>
 <html>
@@ -299,7 +299,7 @@ nav ul li a.active {
 
 
 			<div class="wrap">
-				<a class="in-wrap" href="#">
+				<a class="in-wrap" href="<%=contextPath%>/views/Sleep/SleepDetail.jsp">
 					<div class="thumb-pic">
 						<img src='<%= request.getContextPath()%>/resources/images/호텔3.jpg'>
 					</div>

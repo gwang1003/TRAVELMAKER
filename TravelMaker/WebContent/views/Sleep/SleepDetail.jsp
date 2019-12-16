@@ -328,7 +328,8 @@ nav ul li a.active {
     <div id="subimg2" style="font-size: 25px; margin-left: 50%;">가격
       <div style="text-align: right; font-size: 20px;"><strong>247,000~원</strong></div>
       <br>
-      <div style="background: rgb(235, 60, 60); color: white; text-align: center; border-radius:4px;">예약</div>
+      <button onclick="location.href='reservation.jsp'" style="background: rgb(235, 60, 60); color: white; text-align: center; border-radius:4px; width:100%; height:40px;"><a style=" font-size:25px;">예약</a>
+     </div>
     </div>
 
   </div>
@@ -341,7 +342,9 @@ nav ul li a.active {
       <div id="subimg2" style="font-size: 25px; margin-left: 50%;">가격
         <div style="text-align: right; font-size: 20px;"><strong>268,000~원</strong></div>
         <br>
-        <div style="background: rgb(235, 60, 60); color: white; text-align: center; border-radius:4px;">예약</div>
+         <button onclick="location.href='reservation.jsp'" style="background: rgb(235, 60, 60); color: white; text-align: center; border-radius:4px; width:100%; height:40px;"><a style=" font-size:25px;">예약</a>
+       			
+        </div>
       </div>
   
     </div>
@@ -358,6 +361,7 @@ nav ul li a.active {
         </div>
     
       </div>
+      
 
       <div class="last">
 
@@ -374,7 +378,10 @@ nav ul li a.active {
   <script src="<%= request.getContextPath()%>/views/Sleep/swiper-4.5.1/dist/js/swiper.js"></script>
 
   <!-- Initialize Swiper -->
-  <script>
+  <script>  
+  
+
+  
     var galleryThumbs = new Swiper('.gallery-thumbs', {
       spaceBetween: 10,
       slidesPerView: 4,
