@@ -20,18 +20,12 @@ public class BoardService {
 	public int getListCount() {
 		Connection con = getConnection();
 		int result = new BoardDao().getListCount(con);
+		
+		close(con);
 
-		return 0;
+		return result;
 	}
 
-	// 2. 게시글 리스트 조회용 서비스 메소드
-	public ArrayList<Board> selectList(int currentPage, int boardLimit) {
-		Connection con = getConnection();
-		ArrayList<Board> list = new BoardDao().selectList(con, currentPage, boardLimit);
-
-		return new ArrayList<Board>();
-
-	}
 
 	// 3. 게시판 상세보기(조회수 증가)
 	public Board selectBoard(int bid) {
@@ -85,16 +79,16 @@ public class BoardService {
 	// 사진 게시판 리스트에 보여질 게시판 리스트 조회용 서비스
 	// 전달 받은 flag 값이 1인 경우 게시판 정보 리스트가 리턴
 	// 2인 경우 메인 사진 리스트가 리턴
-	public ArrayList selectList(int flag) {
+	public ArrayList selectList(int flag, int currentPage, int boardLimit) {
 		Connection con = getConnection();
 		ArrayList list = null;
 
 		BoardDao bDao = new BoardDao();
 
 		if (flag == 1) {
-			list = bDao.selectBList(con);
+			list = bDao.selectBList(con,currentPage,boardLimit);
 		} else {
-			list = bDao.selectFList(con);
+			list = bDao.selectFList(con,currentPage,boardLimit);
 		}
 
 		close(con);

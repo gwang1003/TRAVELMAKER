@@ -2,10 +2,19 @@
 	pageEncoding="UTF-8" import="java.util.*, board.model.vo.*"%>
 
 <%
+	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
 	ArrayList<Board> blist = (ArrayList<Board>) request.getAttribute("blist");
 	ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
 	System.out.println(blist);
 	System.out.println(flist);
+	
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage(); 
 %>
 <!DOCTYPE html>
 <html>
@@ -290,19 +299,42 @@ span, p {
 					</div>
 					</div>
 					<hr>
-					<%
-						}
-					%>
-		
-
+					<% } %>
 				</div>
 				<hr>
-
 			</div>
-
-
-
-
+			
+			<!-- 페이징 바 -->
+		<div class="pagingArea" align="center">
+			<!-- 맨 처음으로 (<<) -->
+			<button onclick="location.href='<%= contextPath %>/festivalall.fe?currentPage=1'"> &lt;&lt; </button>
+			
+			<!-- 이전 페이지로 (<) -->
+			<% if(currentPage == 1){ %>
+				<button disabled> &lt; </button>
+			<% } else { %>
+				<button onclick="location.href='<%= contextPath %>/festivalall.fe?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
+			<% } %>
+			
+			<!-- 10개의 페이지 목록 -->
+			<% for(int p = startPage; p <= endPage; p++){ %>
+				<% if(p == currentPage){ %>
+					<button disabled> <%= p %> </button>
+				<% } else { %>
+					<button onclick="location.href='<%= contextPath %>/festivalall.fe?currentPage=<%= p %>'"><%= p %></button>
+				<% } %>
+			<% } %>
+			
+			<!-- 다음 페이지로 (>) -->
+			<% if(currentPage == maxPage){ %>
+				<button disabled> &gt; </button>
+			<% } else { %>
+				<button onclick="location.href='<%= contextPath %>/festivalall.fe?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
+			<% } %>
+			
+			<!-- 맨 끝으로 (>>) -->
+			<button onclick="location.href='<%= contextPath %>/festivalall.fe?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+		</div>
 		</div>
 
 
