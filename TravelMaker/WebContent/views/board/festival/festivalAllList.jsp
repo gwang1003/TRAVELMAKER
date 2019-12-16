@@ -21,12 +21,14 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
 	rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap"
+	rel="stylesheet">
 
 <style>
 body {
 	width: 1500px;
-	height:1500px;
+	height: 1500px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -43,9 +45,9 @@ body {
 	margin-left: 120px;
 	border-bottom: 1px solid black;
 	padding: 0;
-	background:ghostwhite;
-	box-shadow:10px 5px 15px 15px gray;
-	border-radius:10px;
+	background: ghostwhite;
+	box-shadow: 10px 5px 15px 15px gray;
+	border-radius: 10px;
 }
 
 #ct {
@@ -134,7 +136,7 @@ body {
 
 .count {
 	width: 100%;
-	margin-right:20px;
+	margin-right: 20px;
 }
 
 .count p {
@@ -150,7 +152,7 @@ body {
 	width: 100%;
 	height: 800px;
 	margin-left: 20px;
-	magin-right:20px;
+	magin-right: 20px;
 }
 
 #month-choice {
@@ -166,14 +168,14 @@ body {
 	border: none;
 	background-color: ghostwhite;
 }
-button{
+
+button {
 	font-family: 'Do Hyeon', sans-serif;
 }
 
-span,p{
+span, p {
 	font-family: 'Do Hyeon', sans-serif;
 }
-
 </style>
 </head>
 
@@ -194,7 +196,8 @@ span,p{
 						<option>----</option>
 						<option>제목</option>
 						<option>작성자</option>
-					</select> <input type="search" style="width: 500px; height: 40px; margin-top:20px;">
+					</select> <input type="search"
+						style="width: 500px; height: 40px; margin-top: 20px;">
 					<button
 						style="width: 100px; height: 40px; background-color: orangered; color: white; border-radius: 10px; font-size: 25px;">검색</button>
 
@@ -209,7 +212,8 @@ span,p{
 
 			<!-- 전체 글수 최신순 인기순 새로고침 -->
 			<div class="count">
-				<span style="text-align: left; margin-left:20px;">전체 글 수 : 여기넣어</span>
+				<span style="text-align: left; margin-left: 20px;">전체 글 수 :
+					여기넣어</span>
 				<div id="good">
 					<button type="button" class="btn btn-outline-primary">최신순</button>
 					&emsp;
@@ -221,14 +225,19 @@ span,p{
 
 			</div>
 			<br> <br>
-			<% if (loginUser !=null){ %>
+			<%
+				if (loginUser != null) {
+			%>
 			<div id="write">
-				<button type="button" id="insertBtn"onclick="location.href='<%=contextPath%>/views/board/festival/festivalInsert.jsp'">
+				<button type="button" id="insertBtn"
+					onclick="location.href='<%=contextPath%>/views/board/festival/festivalInsert.jsp'">
 					<img src="<%=contextPath%>/resources/images/edit.png" width="40px"
 						height="40px">
 				</button>
 			</div>
-			<% } %>
+			<%
+				}
+			%>
 
 
 			<br> <br>
@@ -267,25 +276,25 @@ span,p{
 						<p><%=b.getbContent()%></p>
 					</div>
 					<div
-						style="float: left; width: 150px; height: 200px; box-sizing: border-box;  margin-bottom:40px;">
-						<p><%= b.getbWriter() %></p>
+						style="float: left; width: 150px; height: 200px; box-sizing: border-box; margin-bottom: 40px;">
+						<p><%=b.getbWriter()%></p>
 						<p>
-							조회수 : 
+							조회수 :
 							<%=b.getbCount()%>
-							<br> 좋아요 : 
+							<br> 좋아요 :
 							<%=b.getGood()%>
 						</p>
 					</div>
 					<%
 						}
 					%>
-					
+
 
 				</div>
 				<hr>
 
 			</div>
-			
+
 
 
 
@@ -339,12 +348,12 @@ span,p{
 		</div>
 
 	</div>
-	
+
 	<script>
 		$(function(){
 			$(".thumbnailArea").click(function(){
 				var bId =  $(this).children().eq(0).val();
-				location.href="<%= contextPath %>/detail.fe?bId=" + bId;
+				location.href="<%=contextPath%>/detail.fe?bId=" + bId;
 			});
 		});
 	</script>

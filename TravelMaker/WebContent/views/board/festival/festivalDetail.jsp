@@ -4,13 +4,10 @@
 	<%
 		Board b = (Board)request.getAttribute("board");
 		
-		String[] bWriter = b.getbWriter().split(",");
-		
-		int userNo = Integer.parseInt(bWriter[0]);
-		b.setbWriter(bWriter[1]);
-		
 		ArrayList<Attachment> fileList = (ArrayList<Attachment>)request.getAttribute("fileList");
 		Attachment titleImg = fileList.get(0);
+		Information in = (Information)request.getAttribute("in"); 
+		System.out.println("타이틀" +titleImg);
 	%>
 <!DOCTYPE html>
 <html>
@@ -186,18 +183,15 @@ td {
 					style="float: right; height: 30px;">
 				<div>
 					<h2>
-						<strong>명</strong>
+						<strong><%= b.getbTitle() %></strong>
 					</h2>
-					<h4>위치 : 강원도</h4>
+					<h4>위치 : <%= in.getAddress() %></h4>
 				</div>
 
 				<div
 					style="border: 1px solid black; text-align: center; border-radius: 10px">대표사진</div>
 				<br> <img
-					src="<%=request.getContextPath()%>/resources/images/서울2.jpg"
-					width="100%">
-				</td>
-
+					src="<%=request.getContextPath()%>/resources/festival_uploadFile/<%= titleImg.getChangeName() %>" width="100%">
 				<div
 					style="border: 1px solid black; text-align: center; border-radius: 10px">
 					<details>
@@ -205,11 +199,7 @@ td {
 							축제 설명 보기<br> <br> <br> <br>
 						</summary>
 						<br>
-						<p>동물과 자연 그대로의 산지생태축산 목장 대관령양떼목장은 농림부에서 지정한 동물복지와 산림보존에 특화된
-							산지생태축산 목장입니다. 대관령의 부드러운 능선과 야생 식물로 가득 차있는 습지대는 자연 그대로의 모습을 간직하고
-							있기에 더욱 아름답고 신기하기만 합니다. 푸른 초지가 바람에 흔들거리는 아름다운 목장의 능선에서 양들이 한가로이 풀을
-							뜯고 있는 모습을 보고 있으면, 마치 알프스에 와 있는듯한 착각을 하게합니다. 특히 봄, 여름, 가을, 겨울 시시각각
-							변하는 목장의 경관은 자연의 신비로움과 아름다움을 몸소 느끼게 해줍니다.</p>
+						<p><%= b.getbContent() %></p>
 					</details>
 				</div>
 
@@ -218,19 +208,17 @@ td {
 				<div id="b">
 					<div id="b1">
 						<ul>
-							<li>시작일&emsp;&emsp;2020.01.04</li>
-							<li>전화번호&emsp;&emsp; 1688-3005</li>
-							<li>주소 &emsp;&emsp;강원도 화천읍 어딘가</li>
-							<li>주관 &emsp;&emsp;재단나라 법인</li>
+							<li>시작일&emsp;&emsp;<%= in.getsDay() %></li>
+							<li>전화번호&emsp;&emsp;<%= in.getTel() %></li>
+							<li>주소 &emsp;&emsp;<%= in.getAddress() %></li>
 						</ul>
 					</div>
 
 					<div id="b2">
 						<ul>
-							<li>종료일 &emsp;&emsp;2020.02.26</li>
-							<li>홈페이지 &emsp;&emsp;http://www.narafestival.com</li>
-							<li>주최 &emsp;&emsp;화천군</li>
-							<li>이용요금 &emsp;&emsp;행사 홈페이지 참고http://www.narafestival.com</li>
+							<li>종료일 &emsp;&emsp;<%= in.geteDay() %></li>
+							<li>홈페이지 &emsp;&emsp;<%= in.getPage() %></li>
+							<li>이용요금 &emsp;&emsp;<%= in.getPrice() %></li>
 						</ul>
 					</div>
 				</div>

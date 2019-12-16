@@ -36,17 +36,28 @@ public class BoardService {
 	// 3. 게시판 상세보기(조회수 증가)
 	public Board selectBoard(int bid) {
 		Connection con = getConnection();
-		Board b = new BoardDao().selectBoard(con, bid);
+		BoardDao bDao = new BoardDao();
+		Board b =null;
 		
+		int result = bDao.increaseCount(con,bid);
 		
-		return new Board();
+		if(result>0) {
+			commit(con);
+			b = bDao.selectBoard(con, bid);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return b;
 	}
 
 	// 4. 게시판 상세보기(조회수 증가 없이)
 	public Board selectBoardNoCnt(int bid) {
 		Connection con = getConnection();
-		Board b = new BoardDao().selectBoardNoCnt(con, bid);
-		return new Board();
+		Board b = new BoardDao().selectBoard(con, bid);
+		return b;
 	}
 
 	// 5. 게시글 삭제 서비스
@@ -123,6 +134,15 @@ public class BoardService {
 		
 		
 	}
+	
+	// 게시판 상세보기 정보가져오기
+	public Information selectInformation(int bId) {
+		Connection con = getConnection();
+		Information in = new BoardDao().selectInformtion(con, bId);
+		
+		close(con);
+		return in;
+	}
 
 	public ArrayList<Reply> selectReplyList(int bId) {
 		Connection con = getConnection();
@@ -138,5 +158,7 @@ public class BoardService {
 
 		return new ArrayList<Reply>();
 	}
+
+	
 
 }
