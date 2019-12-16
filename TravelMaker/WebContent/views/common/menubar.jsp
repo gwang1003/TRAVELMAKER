@@ -152,7 +152,11 @@ nav ul li a.active {
 					<li><a id="a3" href="<%= contextPath %>/views/Sleep/SleepAll.jsp">숙박</a></li>
 					<li><a id="a3" href="#gallery" onclick="goCom();">커뮤니티</a></li>
 					<% if(loginUser != null) { %>
-						<li><a id="a4" href="#" onclick="goMyPage();">마이페이지</a></li>
+						<% if(loginUser.getmId().equals("admin")) { %>
+							<li><a id="a4" href="#" onclick="goManager();">관리자페이지</a></li>
+						<% } else {%>
+							<li><a id="a4" href="#" onclick="goMyPage();">마이페이지</a></li>
+						<% } %>
 					<% }else { %>
 						<li><a id="a4" href="#login" onclick="goLogin();">LOGIN</a></li>
 					<% } %>
@@ -310,6 +314,10 @@ nav ul li a.active {
 		} --%>
 		function goMyPage() {
 			location.href="<%= contextPath %>/views/myPage/Plan.jsp";
+		}
+		
+		function goManager() {
+			location.href="<%= contextPath %>/select.mo";
 		}
 		
 		function goLogin() {
