@@ -237,8 +237,7 @@ span,p{
 
 			<div id="festivalTable">
 
-				<div class="thumbnailArea" style="width: 1000px; height: 200px;"
-					onclick="location.href='festivalDetail.jsp'">
+				<div class="thumbnailArea" style="width: 1000px; height: 200px;">
 					<%
 						for (Board b : blist) {
 					%>
@@ -340,6 +339,15 @@ span,p{
 		</div>
 
 	</div>
+	
+	<script>
+		$(function(){
+			$(".thumbnailArea").click(function(){
+				var bId =  $(this).children().eq(0).val();
+				location.href="<%= contextPath %>/detail.fe?bId=" + bId;
+			});
+		});
+	</script>
 
 
 	<script

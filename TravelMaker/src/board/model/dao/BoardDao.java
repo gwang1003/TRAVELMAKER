@@ -16,6 +16,7 @@ import board.model.vo.Attachment;
 import board.model.vo.Board;
 import board.model.vo.Information;
 import board.model.vo.Reply;
+import member.model.vo.Member;
 
 public class BoardDao {
 	
@@ -39,9 +40,38 @@ public class BoardDao {
 
 	
 
-	public Board selectBoard(Connection con, int bid) {
-		// TODO Auto-generated method stub
-		return new Board();
+	public ArrayList selectBoard(Connection con, int bid) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board b = null;
+		Information i =null;
+		Member m = null;
+
+		String query = prop.getProperty("selectBoard");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			pstmt.setInt(1, bid);
+
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				b = new Board(rset.getInt("b_id") , rset.getDate("write_date") ,rset.getDate("update_date"), rset.getString("title"),
+						rset.getString("content"), rset.getInt("view_cnt") ,rset.getString("writer"),  rset.getString("status"),rset.getInt("b_type"));
+						
+				m = new Member(rset.getString("nickname"));
+						
+				i = new Information(rset.getString("TO_CHAR(SDAY,'YYYYMMDD')"),rset.getString("TO_CHAR(EDAY,'YYYYMMDD')"),rset.getString("tel"),rset.getInt("price"),rset.getString("address"),
+						rset.getString("pageaddress"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return b;
 	}
 
 	public Board selectBoardNoCnt(Connection con, int bid) {
@@ -137,9 +167,47 @@ public class BoardDao {
 		return 0;
 	}
 
+	// 축제 디테일
 	public ArrayList<Attachment> selectThumbnail(Connection con, int bId) {
-		// TODO Auto-generated method stub
-		return new ArrayList<Attachment>();
+		PreparedStatement pstmt= null;
+		ResultSet rs = null;
+		ArrayList<Attachment> list = null;
+		
+		String query = prop.getProperty("selectThumbnail");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, bId);
+			
+			rs = pstmt.executeQuery();
+			
+			list = new ArrayList<Attachment>();
+			
+			while(rs.next()) {
+				Attachment at = new Attachment();
+				at.setfId(rs.getInt("no"));
+				at.setbId(rs.getInt("b_id"));
+				at.setOriginName(rs.getString("originname"));
+				at.setChangeName(rs.getString("newfilename"));
+				at.setFilePath(rs.getString("filepath"));
+				at.setCreateDate(rs.getDate("write_date"));
+				
+				list.add(at);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		
+		
+		return list;
 	}
 
 	public ArrayList<Reply> selectReplyList(Connection con, int bId) {

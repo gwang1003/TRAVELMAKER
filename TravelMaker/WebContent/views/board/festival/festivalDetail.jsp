@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.*, board.model.vo.*"%>
+	
+	<%
+		Board b = (Board)request.getAttribute("board");
+		
+		String[] bWriter = b.getbWriter().split(",");
+		
+		int userNo = Integer.parseInt(bWriter[0]);
+		b.setbWriter(bWriter[1]);
+		
+		ArrayList<Attachment> fileList = (ArrayList<Attachment>)request.getAttribute("fileList");
+		Attachment titleImg = fileList.get(0);
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,7 +62,7 @@ body {
 	border-radius: 10px;
 	opacity: 0.8;
 	position: relative;
-	margin-top: 200px;
+	margin-top: 120px;
 }
 
 .tag>p {
@@ -174,7 +186,7 @@ td {
 					style="float: right; height: 30px;">
 				<div>
 					<h2>
-						<strong>강원도 대관령 양때 축제</strong>
+						<strong>명</strong>
 					</h2>
 					<h4>위치 : 강원도</h4>
 				</div>
