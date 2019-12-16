@@ -1,6 +1,7 @@
 package member.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
@@ -13,7 +14,12 @@ public class MemberService {
 		Connection conn = getConnection();
 
 		Member loginUser = new MemberDao().loginMember(conn, userId, userPwd);
-
+		
+		if(loginUser != null) {
+			new MemberDao().updateDate(conn, userId);
+			commit(conn);
+		}
+		
 		close(conn);
 
 		return loginUser;
@@ -44,6 +50,14 @@ public class MemberService {
 		close(conn);
 		
 		return result;
+	}
+	
+	public ArrayList<Member> selectAllMember() {
+	      Connection conn = getConnection();
+	      
+	      ArrayList<Member> mList = new MemberDao().selectAllMember(conn);
+	      close(conn);
+	      return mList;
 	}
 	
 	// 멤버 정보 변경 
