@@ -11,12 +11,12 @@ public class QA {
 	private Date enrollDate;
 	private String answer;
 	private Date answerDate;
-	private int mSeq;
+	private String writer;
 	
 	public QA() {}
 
 	public QA(int qId, int qType, String qTitle, String qContent, String status, Date enrollDate, String answer,
-			Date answerDate, int mSeq) {
+			Date answerDate, String writer) {
 		super();
 		this.qId = qId;
 		this.qType = qType;
@@ -26,13 +26,13 @@ public class QA {
 		this.enrollDate = enrollDate;
 		this.answer = answer;
 		this.answerDate = answerDate;
-		this.mSeq = mSeq;
+		this.writer = writer;
 	}
 	
 	
 
 	public QA(int qType, String qTitle, String qContent, String status, Date enrollDate, String answer,
-			Date answerDate, int mSeq) {
+			Date answerDate, String writer) {
 		super();
 		this.qType = qType;
 		this.qTitle = qTitle;
@@ -41,17 +41,17 @@ public class QA {
 		this.enrollDate = enrollDate;
 		this.answer = answer;
 		this.answerDate = answerDate;
-		this.mSeq = mSeq;
+		this.writer = writer;
 	}
 	
 	
 
-	public QA(int qType, String qTitle, String qContent, int mSeq) {
+	public QA(int qType, String qTitle, String qContent, String writer) {
 		super();
 		this.qType = qType;
 		this.qTitle = qTitle;
 		this.qContent = qContent;
-		this.mSeq = mSeq;
+		this.writer = writer;
 	}
  
 	
@@ -67,13 +67,13 @@ public class QA {
 	
 	
 
-	public QA(int qType, String qTitle, String status, Date enrollDate, int mSeq) {
+	public QA(int qType, String qTitle, String status, Date enrollDate, String writer) {
 		super();
 		this.qType = qType;
 		this.qTitle = qTitle;
 		this.status = status;
 		this.enrollDate = enrollDate;
-		this.mSeq = mSeq;
+		this.writer = writer;
 	}
 
 	public int getqId() {
@@ -140,19 +140,19 @@ public class QA {
 		this.answerDate = answerDate;
 	}
 
-	public int getmSeq() {
-		return mSeq;
+	public String getWriter() {
+		return writer;
 	}
 
-	public void setmSeq(int mSeq) {
-		this.mSeq = mSeq;
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 
 	@Override
 	public String toString() {
 		return "QA [qId=" + qId + ", qType=" + qType + ", qTitle=" + qTitle + ", qContent=" + qContent + ", status="
 				+ status + ", enrollDate=" + enrollDate + ", answer=" + answer + ", answerDate=" + answerDate
-				+ ", mSeq=" + mSeq + "]";
+				+ ", writer=" + writer + "]";
 	}
 	
 	
