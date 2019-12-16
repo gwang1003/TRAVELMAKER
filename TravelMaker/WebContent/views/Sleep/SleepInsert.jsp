@@ -18,7 +18,7 @@
 <style>
 .outer {
    width: 1500px;
-   height: 1600px;
+   height: 3500px;
    background: white;
    margin: auto;
    margin-top: 150px;
@@ -28,7 +28,7 @@
 
 .insertArea {
    width: 1000px;
-   height: 1400px	;
+   height: 3300px   ;
    margin: auto;
    background:ghostwhite;
    box-shadow:10px 5px 15px 15px gray;
@@ -105,8 +105,8 @@ label{
             <table align="center">
                <br>
                <tr>
-                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">제목</td>
-                  <td colspan="3"><input type="text" size="100" name="title"></td>
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">숙박 타입 </td>
+                  <td colspan="3"><input type="text" size="10" name="stype" text-aling="center"><a style="margin-left:3%; color:gray;">(1.호텔   2.모텔  3.펜션)</a></td>
                </tr>
                <tr>
                   <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">지역</td>
@@ -131,10 +131,18 @@ label{
                </tr>
 
                <tr>
-                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">내용</td>
-                  <td colspan="3"><textarea name="content" rows="7" cols="102"
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 정보</td>
+                  <td colspan="3"><textarea name="sinfor" rows="7" cols="104"
                         style="resize: none;"></textarea></td>
+                  
+                      
                </tr>
+         <td width="100px" name="price" style="font-family: 'Do Hyeon', sans-serif; ">가격</td>
+                  <td colspan="3"><textarea name="price" rows="1" cols="15"
+                        style="resize: none;"></textarea></td>
+         <br><br><br><br><br>
+               
+                              
 
                <tr>
                   <td style="font-family: 'Do Hyeon', sans-serif;">객실 사진</td>
@@ -159,21 +167,29 @@ label{
                 
                 <td></td>
                   <td>
-                     <div id="contentImgArea3">
-                        <img id="contentImg3" width="245" height="150">
+                     <div id="contentImgArea1">
+                        <img id="contentImg1" width="245" height="150">
+                     </div>
+                  </td>
+                  <td>
+                     <div id="contentImgArea2">
+                        <img id="contentImg2" width="245" height="150">
                      </div>
                   </td>
                   <td>
                      <div id="contentImgArea3">
-                        <img id="contentImg3" width="245" height="150">
-                     </div>
-                  </td>
-                  <td>
-                     <div id="contentImgArea3">
-                        <img id="contentImg3" width="245" height="150">
+                        <img id="contentImg3"
+                         width="245" height="150">
                      </div>
                   </td>
                 
+               </tr>
+               </tr>
+               
+                     <tr>
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 내용</td>
+                  <td colspan="3"><textarea name="scontent" rows="7" cols="104"
+                        style="resize: none;"></textarea></td>
                </tr>
 
             </table>
@@ -191,8 +207,31 @@ label{
 
             <div align="center" id="detailArea">
             <table>
-            	<tr>
-                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 타입</td>
+               <tr>
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 타입 사진1</td>
+                  <td>
+                     <div id="contentImgArea1">
+                        <img id="contentImg1" width="245" height="150">
+                     </div>
+                  </td>
+                  
+               </tr>
+               <br>
+               
+                  <tr>
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 타입 내용1</td>
+                  <td colspan="3"><textarea name="scontent1" rows="7" cols="104"
+                        style="resize: none;"></textarea></td>
+                        
+               </tr>
+               <tr>
+                <td width="100px" name="price" style="font-family: 'Do Hyeon', sans-serif; ">가격1</td>
+                  <td colspan="3"><textarea name="price1" rows="1" cols="15"
+                        style="resize: none;"></textarea></td>
+                        </tr>
+               
+                 <tr>
+                  <td style="font-family: 'Do Hyeon', sans-serif;">객실 사진 세부1</td>
                   <td>
                      <div id="contentImgArea1">
                         <img id="contentImg1" width="245" height="150">
@@ -208,10 +247,118 @@ label{
                         <img id="contentImg3" width="245" height="150">
                      </div>
                   </td>
-               </tr>
+                </tr>
+                <tr>
+               
             </table>
+            
                
             </div>
+            <br><br><br><br><br>
+            
+            
+              <div align="center" id="detailArea">
+            <table>
+               <tr>
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 타입 사진2</td>
+                  <td>
+                     <div id="contentImgArea2">
+                        <img id="contentImg2" width="245" height="150">
+                     </div>
+                  </td>
+                  
+               </tr>
+               <br>
+               
+                  <tr>
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 타입 내용2</td>
+                  <td colspan="3"><textarea name="scontent2" rows="7" cols="104"
+                        style="resize: none;"></textarea></td>
+                        
+               </tr>
+               <tr>
+                <td width="100px" name="price" style="font-family: 'Do Hyeon', sans-serif; ">가격2</td>
+                  <td colspan="3"><textarea name="price2" rows="1" cols="15"
+                        style="resize: none;"></textarea></td>
+                        </tr>
+               
+                 <tr>
+                  <td style="font-family: 'Do Hyeon', sans-serif;">객실 사진 세부2</td>
+                  <td>
+                     <div id="contentImgArea11">
+                        <img id="contentImg11" width="245" height="150">
+                     </div>
+                  </td>
+                  <td>
+                     <div id="contentImgArea22">
+                        <img id="contentImg22" width="245" height="150">
+                     </div>
+                  </td>
+                  <td>
+                     <div id="contentImgArea33">
+                        <img id="contentImg33" width="245" height="150">
+                     </div>
+                  </td>
+                </tr>
+                <tr>
+               
+            </table>
+            
+               
+            </div>
+            <br><br><br><br><br>
+            
+              <div align="center" id="detailArea">
+            <table>
+               <tr>
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 타입 사진3</td>
+                  <td>
+                     <div id="contentImgArea3">
+                        <img id="contentImg3" width="245" height="150">
+                     </div>
+                  </td>
+                  
+               </tr>
+               <br>
+               
+                  <tr>
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 타입 내용3</td>
+                  <td colspan="3"><textarea name="scontent3" rows="7" cols="104"
+                        style="resize: none;"></textarea></td>
+                        
+               </tr>
+               <tr>
+                <td width="100px" name="price" style="font-family: 'Do Hyeon', sans-serif; ">가격3</td>
+                  <td colspan="3"><textarea name="price3" rows="1" cols="15"
+                        style="resize: none;"></textarea></td>
+                        </tr>
+               
+                 <tr>
+                  <td style="font-family: 'Do Hyeon', sans-serif;">객실 사진 세부3</td>
+                  <td>
+                     <div id="contentImgArea111">
+                        <img id="contentImg111" width="245" height="150">
+                     </div>
+                  </td>
+                  <td>
+                     <div id="contentImgArea222">
+                        <img id="contentImg222" width="245" height="150">
+                     </div>
+                  </td>
+                  <td>
+                     <div id="contentImgArea333">
+                        <img id="contentImg333" width="245" height="150">
+                     </div>
+                  </td>
+                </tr>
+                <tr>
+               
+            </table>
+            
+               
+            </div>
+            
+            
 
             <script>
                // 내용 작성 부분의 공간을 클릭할 때 파일 첨부 창이 뜨도록 설정하는 함수

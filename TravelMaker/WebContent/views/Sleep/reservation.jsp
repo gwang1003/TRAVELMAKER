@@ -84,7 +84,7 @@
     </style>
 </head>
 <body>
-	<%@ include file="../../views/common/menubar.jsp" %>
+   <%@ include file="../../views/common/menubar.jsp" %>
 
 
         <div id="rs">
@@ -200,7 +200,7 @@
                         <div class="fix_cont">
                             <div class="scroller">
                                 <div class="txt">
-                                    <p>회원 정보를 제공받는 자, 제공목적, 제공하는 정보, 보유 · 이용기간은 아래와 같습니다.<br>"회원"은 정보 수집/이용 약관에 동의하지 않을 수 있으며, 동의하지 않는 경우 예약 서비스 이용에 제한이 있을 수 있습니다.</p>			
+                                    <p>회원 정보를 제공받는 자, 제공목적, 제공하는 정보, 보유 · 이용기간은 아래와 같습니다.<br>"회원"은 정보 수집/이용 약관에 동의하지 않을 수 있으며, 동의하지 않는 경우 예약 서비스 이용에 제한이 있을 수 있습니다.</p>         
                                     <table cellpadding="0" cellspacing="0" class="pop_table">
                                     <colgroup><col width="30%"><col width="70%"></colgroup>
                                     <tbody><tr>
