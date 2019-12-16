@@ -373,7 +373,7 @@
 			<section id="my-info-section1">
 				<div class="my-info" id="my-info">
 					<h3 id="my-info-text">마이페이지</h3>
-					<img src="img/smile.jpg"><br>
+					<img src="<%= request.getContextPath() %>/resources/images/smile.jpg"><br>
 					<p id="name">&nbsp;&nbsp;&nbsp;<%= loginUser.getmName() %></p>
 					<br>
 					<br>
