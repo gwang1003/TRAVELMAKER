@@ -45,7 +45,7 @@ body {
 	margin-left: 120px;
 	border-bottom: 1px solid black;
 	padding: 0;
-	background: ghostwhite;
+	background:white;
 	box-shadow: 10px 5px 15px 15px gray;
 	border-radius: 10px;
 }
@@ -176,6 +176,7 @@ button {
 span, p {
 	font-family: 'Do Hyeon', sans-serif;
 }
+
 </style>
 </head>
 
@@ -246,10 +247,12 @@ span, p {
 
 			<div id="festivalTable">
 
-				<div class="thumbnailArea" style="width: 1000px; height: 200px;">
+				<div class="thumbnailArea" style="width: 1000px; height: 1000px;">
 					<%
 						for (Board b : blist) {
 					%>
+					
+					<div class="cli" style="height:210px;">
 					<input type="hidden" value="<%=b.getbId()%>">
 					<div style="float: left; width: 300px; box-sizing: border-box;">
 
@@ -285,10 +288,12 @@ span, p {
 							<%=b.getGood()%>
 						</p>
 					</div>
+					</div>
+					<hr>
 					<%
 						}
 					%>
-
+		
 
 				</div>
 				<hr>
@@ -351,7 +356,7 @@ span, p {
 
 	<script>
 		$(function(){
-			$(".thumbnailArea").click(function(){
+			$(".cli").click(function(){
 				var bId =  $(this).children().eq(0).val();
 				location.href="<%=contextPath%>/detail.fe?bId=" + bId;
 			});
