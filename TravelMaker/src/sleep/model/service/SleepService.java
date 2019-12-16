@@ -1,11 +1,14 @@
 package sleep.model.service;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import static common.JDBCTemplate.*;
 
 import sleep.model.dao.SleepDao;
+import sleep.model.vo.Attachment;
 import sleep.model.vo.Room;
 import sleep.model.vo.Sleep;
 
@@ -53,21 +56,31 @@ public class SleepService {
 	
 	
 	// insert하는 부분
-	public int insertSleep(Sleep s) {
+	public int insertSleep(Sleep s, ArrayList<Attachment> fileList){
 		Connection conn = getConnection();
 		SleepDao sdao = new SleepDao();
-		int result = 0;
 		
-		result = sdao.insertSleep(conn,s);
+		int result1 = 0;
+		try {
+			result1 = sdao.insertSleep(conn,s);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int result2 = sdao.insertAttachment(conn,fileList);
 		
-		if(result > 0) {
+		
+		if(result1 > 0 && result2 > 0) {
 			commit(conn);
 		}else {
 			rollback(conn);
 		}
 		close(conn);
 		
-		return result;
+		return result1;
 		
 	}
 	
@@ -117,6 +130,8 @@ public class SleepService {
 		return result;
 		
 	}
+
+
 	
 	
 

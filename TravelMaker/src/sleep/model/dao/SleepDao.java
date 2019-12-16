@@ -15,6 +15,17 @@ import sleep.model.vo.Room;
 import sleep.model.vo.Sleep;
 
 public class SleepDao {
+	private Properties prop = new Properties();
+	
+	public SleepDao() {
+		String fileName = SleepDao.class.getResource("sql/Sleep/Sleep-query.properties").getPath();
+		
+		try {
+			prop.load(new FileReader(fileName));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	
 	//전체 리스트
@@ -29,15 +40,13 @@ public class SleepDao {
 	}
 	
 	// 삽입
-	public int insertSleep(Connection conn, Sleep s) {
+	public int insertSleep(Connection conn, Sleep s) throws FileNotFoundException, IOException {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		Properties prop = new Properties();
+		String sql = prop.getProperty("insertSleep");
+		
 		try {
-			prop.load(new FileReader("driver.properties"));
-			String sql = prop.getProperty("insertSleep");
-			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, s.getsId());
 			pstmt.setString(2, s.getsType());
@@ -48,10 +57,6 @@ public class SleepDao {
 			
 			result = pstmt.executeUpdate();
 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -207,6 +212,48 @@ public class SleepDao {
 	      }
 	      return list;
 	   }
+
+
+	public int insertAttachment(Connection conn, ArrayList<Attachment> fileList) {
+		PreparedStatement pstmt = null;
+		
+		int result = 0;
+		
+		String sql = prop.getProperty("insertAttachment");
+		
+		
+			try {
+				for(int i=0; i<fileList.size(); i++) {
+			    Attachment at = fileList.get(i);
+			
+			    pstmt= conn.prepareStatement(sql);
+			    pstmt.setString(1, at.getOriginName());
+			    pstmt.setString(2, at.getChangeName());
+			    pstmt.setString(3, at.getFilePath());
+			    pstmt.setInt(4, at.getFileLevel());
+			    
+			    result += pstmt.executeUpdate();
+			
+				}
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+		}
+			return result;
+	}
+		
+		
+		
+		
+		
+		
+		
+	
+	
 }
 	
 	
