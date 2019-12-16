@@ -6,7 +6,7 @@
 		
 		ArrayList<Attachment> fileList = (ArrayList<Attachment>)request.getAttribute("fileList");
 		Attachment titleImg = fileList.get(0);
-		Information in = (Information)request.getAttribute("in"); 
+		Information in = (Information)request.getAttribute("in");
 		System.out.println("타이틀" +titleImg);
 	%>
 <!DOCTYPE html>

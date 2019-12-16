@@ -34,8 +34,28 @@ public class BoardDao {
 	}
 
 	public int getListCount(Connection con) {
-		// TODO Auto-generated method stub
-		return 0;
+		int listCount = 0;
+		
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getListCount");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}		
+		return listCount;
 	}
 
 	public Board selectBoard(Connection con, int bid) {
@@ -89,7 +109,7 @@ public class BoardDao {
 	}
 
 	// 게시판 조회용
-	public ArrayList<Board> selectBList(Connection con) {
+	public ArrayList<Board> selectBList(Connection con, int currentPage, int boardLimit) {
 		Statement stmt = null;
 		ResultSet rs = null;
 		ArrayList<Board> list = null;
@@ -118,7 +138,7 @@ public class BoardDao {
 		return list;
 	}
 
-	public ArrayList selectFList(Connection con) {
+	public ArrayList selectFList(Connection con, int currentPage, int boardLimit) {
 		ArrayList<Attachment> list = new ArrayList<Attachment>();
 
 		PreparedStatement pstmt = null;
@@ -238,8 +258,37 @@ public class BoardDao {
 	}
 
 	public ArrayList<Board> selectList(Connection con, int currentPage, int boardLimit) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectList");
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			
+			int startRow = (currentPage-1) * boardLimit +1;
+			int endRow = startRow + boardLimit -1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2), rset.getDate(3), rset.getDate(4),rset.getString(5),rset.getString(6), rset.getInt(7),rset.getInt(8),rset.getInt(9),rset.getString(10),rset.getString(11),rset.getInt(12),rset.getInt(13),rset.getInt(14),rset.getInt(15)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		
+		return list;
 	}
 
 	public int insertThBoard(Connection conn, Board b) {
