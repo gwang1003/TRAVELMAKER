@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 import static common.JDBCTemplate.*;
 
@@ -23,6 +24,24 @@ public class MemberDao {
 		}
 	}
 
+	public void updateDate(Connection conn, String id) {
+		PreparedStatement pstmt = null;
+
+		String sql = prop.getProperty("updateDate");
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, id);
+
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+	}
+	
 	// 1. �쉶�썝 濡쒓렇�씤�슜 dao
 	public Member loginMember(Connection conn, String id, String pwd) {
 		Member loginUser = new Member();
@@ -39,8 +58,8 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			if (rset.next()) {
 				loginUser = new Member(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getString(4),
-						rset.getString(5), rset.getString(6), rset.getString(7), rset.getDate(8), rset.getString(9),
-						rset.getString(10));
+						rset.getString(5), rset.getString(6), rset.getString(7), rset.getDate(8), rset.getDate(9), rset.getString(10),
+						rset.getString(11), rset.getInt(12), rset.getString(13));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -149,8 +168,8 @@ public class MemberDao {
 
 			if (rset.next()) {
 				mem = new Member(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getString(4),
-						rset.getString(5), rset.getString(6), rset.getString(7), rset.getDate(8), 
-						rset.getString(9), rset.getString(10));
+						rset.getString(5), rset.getString(6), rset.getString(7), rset.getDate(8), rset.getDate(9), 
+						rset.getString(10), rset.getString(11), rset.getInt(12), rset.getString(13));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -226,4 +245,29 @@ public class MemberDao {
 		return result;
 	}
 
+	public ArrayList<Member> selectAllMember(Connection conn) {
+	      ArrayList<Member> mList = new ArrayList<>();
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      String sql = prop.getProperty("selectAllMember");
+
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+
+
+	         rset = pstmt.executeQuery();
+	         
+	         while (rset.next()) {
+	            mList.add(new Member(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getString(4),
+	                  rset.getString(5), rset.getString(6), rset.getString(7), rset.getDate(8), 
+	                  rset.getString(9), rset.getString(10)));
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      return mList;
+	   }
 }

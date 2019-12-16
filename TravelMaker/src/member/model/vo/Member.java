@@ -12,18 +12,72 @@ public class Member {
 	private String mNo;
 	private String email;
 	private Date joinDate;
+	private Date accessDate;
 	private String nickName;
 	private String bIdArray;
+	private int report;
+	private String status;
 
 	public Member() {
 	}
 	
+	
+	
+	public Date getAccessDate() {
+		return accessDate;
+	}
+
+
+
+	public void setAccessDate(Date accessDate) {
+		this.accessDate = accessDate;
+	}
+
+
+	public int getReport() {
+		return report;
+	}
+
+
+
+	public void setReport(int report) {
+		this.report = report;
+	}
+
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Member(int m_seq, String mId, String pass, String mName, String phone, String mNo, String email,
+			Date joinDate, Date accessDate, String nickName, String bIdArray, int report, String status) {
+		super();
+		this.m_seq = m_seq;
+		this.mId = mId;
+		this.pass = pass;
+		this.mName = mName;
+		this.phone = phone;
+		this.mNo = mNo;
+		this.email = email;
+		this.joinDate = joinDate;
+		this.accessDate = accessDate;
+		this.nickName = nickName;
+		this.bIdArray = bIdArray;
+		this.report = report;
+		this.status = status;
+	}
+
 	public Member(String nickName) {
 		super();
 		this.nickName = nickName;
 	}
-
-
 
 	public Member(String mId, String pass, String mName, String phone, String mNo, String email, String nickName) {
 		super();
@@ -162,11 +216,13 @@ public class Member {
 		this.bIdArray = bIdArray;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Member [m_seq=" + m_seq + ", mId=" + mId + ", pass=" + pass + ", mName=" + mName + ", phone=" + phone
-				+ ", mNo=" + mNo + ", email=" + email + ", joinDate=" + joinDate + ", nickName=" + nickName
-				+ ", bIdArray=" + bIdArray + "]";
+				+ ", mNo=" + mNo + ", email=" + email + ", joinDate=" + joinDate + ", accessDate=" + accessDate
+				+ ", nickName=" + nickName + ", bIdArray=" + bIdArray + ", report=" + report + ", status=" + status
+				+ "]";
 	}
-
 }
