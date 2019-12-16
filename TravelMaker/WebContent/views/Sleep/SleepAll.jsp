@@ -2,12 +2,12 @@
    pageEncoding="UTF-8"
    import="member.model.vo.*, java.util.*,sleep.model.vo.*"%>
 
-<%--
+<%
        ArrayList<Sleep> blist = (ArrayList<Sleep>) request.getAttribute("blist");
        ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
     
     
-    --%>
+    %>
 
 <!DOCTYPE html>
 <html>
@@ -267,6 +267,13 @@ nav ul li a.active {
    color: #fff;
    border-radius: 6px;
 }
+
+#admin{
+	width:100px;
+	height:40px;
+	float:left;
+}
+
 </style>
 <head>
 <meta charset="UTF-8">
@@ -349,7 +356,7 @@ nav ul li a.active {
 
       </div>
 
-
+ <button id="admin" onclick="location.href='SleepInsert.jsp'">작성하기</button>
 
 
 
@@ -486,12 +493,19 @@ nav ul li a.active {
       </div>
    </div>
 
-
-   <% if(loginUser != null && loginUser.getmId().equals("admin")) {%>
-   <button id="noticeInsert" type="button"
-      onclick="location.herf='<%= contextPath %>/views/Sleep/SleepInsert.jsp'">작성하기</button>
-   <%} %>
-
+<%
+				if (loginUser != null) {
+			%>
+			<div id="write">
+				<button type="button" id="insertBtn"
+					onclick="location.href='<%=contextPath%>/views/board/Sleep/SleepInert.jsp'">
+					<img src="<%=contextPath%>/resources/images/edit.png" width="40px"
+						height="40px">
+				</button>
+			</div>
+			<%
+				}
+			%>
 
 
 
