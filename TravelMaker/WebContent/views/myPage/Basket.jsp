@@ -167,15 +167,9 @@
 
     <!-- 영역 분할 -->
     <style>
-        /* 헤더 */
-        #menubar {
-            width: 100%;
-            height: 150px;
-        }
-    
         /* 몸체 */
         body {
-            margin: 0;
+            margin-top: 180px;
             width: 1500px;
             height: 1000px;
             overflow: auto;
@@ -193,6 +187,7 @@
             margin-left: 15%;
             width: 15%;
             height: 100%;
+            margin-right: 5%;
         }
     
         #marginBody {
@@ -319,48 +314,51 @@
     <!-- my-info-section4 css -->
     <style>
             #my-info-section4 {
-                margin-left: 3%;
-            }
+            margin-top: 10px;
+            margin-left: 80px;
+        }
 
-            #my_post {
-                width: 100%;
-            }
-    
-            .otherHr {
-                width: 63%;
-            }
-    
-            #my_post ul li{
-                list-style-type: none;
-                height: 100%;
-            }
-    
-            #firstHr {
-                width: 61%;
-            }
-    
-            .my-post-img {
-                width: 130px;
-                height: 100px;
-            }
-    
-            .line {
-                width: 40px;
-            }
-    
-            .btn-toolbar {
-            }
+        .otherHr {
+            width: 90%;
+            transform: translate(-60px, -20px);
+        }
+
+        #my_post ul li{
+            list-style-type: none;
+            height: 100%;
+        }
+
+        #firstHr {
+            width: 87%;
+            transform: translateX(-43px);
+        }
+
+        .my-post-img {
+            width: 130px;
+            height: 100px;
+            margin-right: 20px;
+        }
+
+        .line {
+            margin-left: 650px;
+            transform: translate(-200px, -100px);
+            width: 40px;
+        }
+
+        .btn-toolbar {
+            transform: translate(0, -15px);
+        }
     </style>
 </head>
 
 <body>
-
+	<%@ include file="../common/menubar.jsp" %>
     <section id="body">
         <aside>
             <section id="my-info-section1">
                 <div class="my-info" id="my-info">
                     <h3 id="my-info-text">마이페이지</h3>
-                    <img src="<%= request.getContextPath() %>/resources/img/smile.jpg"><br>
+                    <img src="<%= request.getContextPath() %>/resources/images/smile.jpg"><br>
                     <p id="name">&nbsp;&nbsp;&nbsp;임세웅</p>
                     <br><br>
                     <button class="myinfo-button" id="my-info-logout" onclick="logout();">로그아웃</button>
@@ -391,20 +389,18 @@
                 <div id="my_post">
                     <hr id="firstHr">
                     <ul>
-                        <li><img src="<%= request.getContextPath() %>/resources/img/비렁길.jpg" class="my-post-img">나의 장바구니1<img src="<%= request.getContextPath() %>/resources/img/line.png" class="line"></li>
+                        <li><img src="<%= request.getContextPath() %>/resources/images/비렁길.jpg" class="my-post-img">나의 장바구니1<img src="<%= request.getContextPath() %>/resources/images/line.png" class="line"></li>
                         <hr class="otherHr">
-                        <li><img src="<%= request.getContextPath() %>/resources/img/비렁길.jpg" class="my-post-img">나의 장바구니2<img src="<%= request.getContextPath() %>/resources/img/line.png" class="line"></li>
+                        <li><img src="<%= request.getContextPath() %>/resources/images/쌈짓길.jpg" class="my-post-img">나의 장바구니2<img src="<%= request.getContextPath() %>/resources/images/line.png" class="line"></li>
                         <hr class="otherHr">
-                        <li><img src="<%= request.getContextPath() %>/resources/img/비렁길.jpg" class="my-post-img">나의 장바구니3<img src="<%= request.getContextPath() %>/resources/img/line.png" class="line"></li>
+                        <li><img src="<%= request.getContextPath() %>/resources/images/강원도.jpg" class="my-post-img">나의 장바구니3<img src="<%= request.getContextPath() %>/resources/images/line.png" class="line"></li>
                         <hr class="otherHr">
-                        <li><img src="<%= request.getContextPath() %>/resources/img/비렁길.jpg" class="my-post-img">나의 장바구니4<img src="<%= request.getContextPath() %>/resources/img/line.png" class="line"></li>
+                        <li><img src="<%= request.getContextPath() %>/resources/images/전라도.jpg" class="my-post-img">나의 장바구니4<img src="<%= request.getContextPath() %>/resources/images/line.png" class="line"></li>
                         <hr class="otherHr">
                     </ul>
                 </div>
-        </section>
-        <section id="my-info-section5">
-            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group mr-2" role="group" aria-label="First group" style="margin-left: auto; margin-right: auto;">
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group mr-2" role="group" aria-label="First group" style="margin-left: 230px";>
                         <button type="button" class="btn btn-secondary">&lt;</button>
                         <button type="button" class="btn btn-secondary">1</button>
                         <button type="button" class="btn btn-secondary">2</button>
@@ -414,6 +410,7 @@
                     </div>
                 </div>
         </section>
+        
     </section>
 </body>
 

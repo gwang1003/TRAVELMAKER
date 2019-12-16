@@ -165,14 +165,8 @@
 
     <!-- 영역 분할 -->
     <style>
-        /* 헤더 */
-        #menubar {
-            width: 100%;
-            height: 150px;
-        }
-
         #body {
-            margin-top: 4%;
+            margin-top: 180px;
             width: 1500px;
             height: 1000px;
             display: flex;
@@ -509,13 +503,14 @@
 </head>
 
 <body>
+	<%@ include file="../common/menubar.jsp" %>
     <section id="body">
         <aside>
             <section id="my-info-section1">
                 <div class="my-info" id="my-info">
                     <h3 id="my-info-text">
                         마이페이지</h3>
-                    <img src="<%= request.getContextPath() %>/resources/img/smile.jpg"><br>
+                    <img src="<%= request.getContextPath() %>/resources/images/smile.jpg"><br>
                     <p id="name">&nbsp;&nbsp;&nbsp;임세웅</p>
                     <br><br>
                     <button class="myinfo-button" id="my-info-logout" onclick="logout();">로그아웃</button>

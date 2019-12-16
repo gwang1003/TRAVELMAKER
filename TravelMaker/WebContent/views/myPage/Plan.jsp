@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -146,6 +146,7 @@
             font-weight: 300;
             padding-left: 0;
             padding-right: 0;
+            z-index:0;
         }
 
         .sidebar-title {
@@ -302,7 +303,7 @@
             padding-top: 20px;
             padding-bottom: 20px;
             position: fixed;
-            z-index: 99;
+            z-index: 1;
             width: 100%;
             background-color: #5a649c !important;
         }
@@ -351,7 +352,7 @@
                 color: black;
             }
         }
-
+	    
         @media (max-width:767px) {
             .content-wrapper .container {
                 width: auto;
@@ -392,162 +393,158 @@
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <style>
-        body {
-            font-family: Arial;
-        }
+body {
+	font-family: Arial;
+}
 
-        /*nav part*/
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            padding: 10px 90px;
-            box-sizing: border-box;
-            background: rgba(54, 51, 51, 0.5);
-            z-index: 1;
-        }
+/*nav part*/
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100px;
+	padding: 10px 90px;
+	box-sizing: border-box;
+	background: rgba(54, 51, 51, 0.5);
+	z-index: 2;
+}
 
-        nav .logo {
-            padding: 22px 20px;
-            height: 80px;
-            float: left;
-            font-size: 24px;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: #fff;
-        }
+nav .logo {
+	padding: 22px 20px;
+	height: 80px;
+	float: left;
+	font-size: 24px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #fff;
+}
 
-        nav ul {
-            list-style-type: none;
-            float: right;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            z-index: 1;
-        }
+nav ul {
+	list-style-type: none;
+	float: right;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	z-index: 2;
+}
 
-        nav li {
-            z-index: 1;
-        }
+nav li {
+	z-index: 1;
+}
 
-        nav ul li a {
-            line-height: 80px;
-            color: #fff;
-            padding: 12px 30px;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 15px;
-            font-weight: bold;
-            z-index: 1;
-        }
+nav ul li a {
+	line-height: 80px;
+	color: #fff;
+	padding: 12px 30px;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 15px;
+	font-weight: bold;
+	z-index: 1;
+}
 
-        nav ul li a:hover {
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 5px;
-            text-decoration: none;
-            color: #fff;
-        }
+nav ul li a:hover {
+	background: rgba(0, 0, 0, 0.7);
+	border-radius: 5px;
+	text-decoration: none;
+	color: #fff;
+}
 
-        nav ul li a.active {
-            background: #e2472f;
-            color: #fff;
-            border-radius: 6px;
-        }
+nav ul li a.active {
+	background: #e2472f;
+	color: #fff;
+	border-radius: 6px;
+}
 
+#guestBook {
+	background: url("images/s3bg1.jpg");
+	position: relative;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
 
+/* section2 timeline*/
+/*responsive web part*/
+@media ( max-width :820px) {
+	.menuToggle {
+		position: absolute;
+		width: 40px;
+		height: 40px;
+		display: block;
+		float: right;
+		top: 25px;
+		right: 35px;
+		text-align: center;
+		font-size: 35px;
+		cursor: pointer;
+	}
+	.menuToggle:before {
+		line-height: 40px;
+		content: '\f0c9';
+		font-family: fontAwesome;
+		color: white;
+	}
+	.menuToggle.active:before {
+		line-height: 40px;
+		content: '\f00d';
+		font-family: fontAwesome;
+		color: white;
+	}
+	.menuToggle:before {
+		line-height: 40px;
+		content: '\f0c9';
+		font-family: fontAwesome;
+		color: white;
+	}
+	#navUl {
+		display: none;
+	}
+	#navUl.active {
+		display: block;
+		width: 100%;
+		background: rgba(54, 51, 51, 0.5);
+		margin-top: 10px;
+	}
+	#navUl.active li {
+		text-align: center;
+	}
+	#navUl.active li a {
+		display: block;
+	}
+	nav {
+		padding: 10px 30px;
+	}
+}
 
-        #guestBook {
-            background: url("images/s3bg1.jpg");
-            position: relative;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+.main-wrapper {
+	width: 100%;
+	transform: translateY(-50px);
+}
 
+nav #logo {
+	padding-top: 10px;
+}
 
-
-        /* section2 timeline*/
-        /*responsive web part*/
-        @media(max-width:820px) {
-            .menuToggle {
-                position: absolute;
-                width: 40px;
-                height: 40px;
-                display: block;
-                float: right;
-                top: 25px;
-                right: 35px;
-                text-align: center;
-                font-size: 35px;
-                cursor: pointer;
-            }
-
-            .menuToggle:before {
-                line-height: 40px;
-                content: '\f0c9';
-                font-family: fontAwesome;
-                color: white;
-            }
-
-            .menuToggle.active:before {
-                line-height: 40px;
-                content: '\f00d';
-                font-family: fontAwesome;
-                color: white;
-            }
-
-            .menuToggle:before {
-                line-height: 40px;
-                content: '\f0c9';
-                font-family: fontAwesome;
-                color: white;
-            }
-
-            #navUl {
-                display: none;
-            }
-
-            #navUl.active {
-                display: block;
-                width: 100%;
-                background: rgba(54, 51, 51, 0.5);
-                margin-top: 10px;
-            }
-
-            #navUl.active li {
-                text-align: center;
-            }
-
-            #navUl.active li a {
-                display: block;
-            }
-
-            nav {
-                padding: 10px 30px;
-            }
-        }
-
-        .main-wrapper {
-            width: 100%;
-            transform: translateY(-50px);
-        }
-
-        /*time line*/
-    </style>
+#a0, #a1, #a2, #a3, #a4, #a5 {
+	line-height: 17px;
+	margin-top:20px;
+	color: #fff;
+	padding: 12px 30px;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 15px;
+	font-weight: bold;
+	z-index: 1;
+}
+</style>
 
     <!-- 영역 분할 -->
     <style>
-        /* 헤더 */
-        #menubar {
-            width: 100%;
-            height: 150px;
-        }
-
         /* 몸체 */
         body {
-            margin: 0;
+            margin-top: 180px;
             width: 1500px;
             height: 1000px;
             overflow: auto;
@@ -565,6 +562,7 @@
             margin-left: 15%;
             width: 15%;
             height: 100%;
+            margin-right: 5%;
         }
 
         #marginBody {
@@ -742,18 +740,23 @@
 </head>
 
 <body>
-
+	<%@ include file="../common/menubar.jsp" %>
     <section id="body">
         <aside id="aside1">
             <section id="my-info-section1">
                 <div class="my-info" id="my-info">
                     <h3 id="my-info-text">마이페이지</h3>
-                    <img src="<%= request.getContextPath() %>/resources/img/smile.jpg"><br>
+                    <img src="<%= request.getContextPath() %>/resources/images/smile.jpg"><br>
                     <p id="name">&nbsp;&nbsp;&nbsp;임세웅</p>
                     <br><br>
                     <button class="myinfo-button" id="my-info-logout" onclick="logout();">로그아웃</button>
                     <button class="myinfo-button" id="my-info-modify" onclick="infoModify();">회원정보 수정</button>
                 </div>
+                <script>
+                	function logout() {
+                		location.href="<%= request.getContextPath() %>/logout.me";
+                	}
+                </script>
             </section>
 
             <section id="my-info-section2">
@@ -766,8 +769,7 @@
 
                         <hr>
                         <li class="bigContent">개인정보 관리</li>
-                        <li><a href="#l" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp';">회원정보 수정</a></li>
-
+                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp';">회원정보 수정</a></li>
                         <hr>
                         <li class="bigContent">고객센터</li>
                         <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/ServiceCenter.jsp';">문의 내역</a></li>
@@ -1163,7 +1165,7 @@
                 }
             </script>
 
-            <script>
+            <!-- <script>
                 const datePicker = (selector, type = "date") => {
                     const types = { DATE: "date", TIME: "time", DATETIME: "datetime-local" };
                     const elm = document.querySelector(selector);
@@ -1205,7 +1207,7 @@
                 datePicker(".start-time", "time");
                 datePicker(".end-time", "time");
 
-            </script>
+            </script> -->
         </section>
     </section>
 </body>

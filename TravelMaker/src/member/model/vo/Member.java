@@ -17,6 +17,13 @@ public class Member {
 
 	public Member() {
 	}
+	
+	public Member(String nickName) {
+		super();
+		this.nickName = nickName;
+	}
+
+
 
 	public Member(String mId, String pass, String mName, String phone, String mNo, String email, String nickName) {
 		super();
@@ -25,6 +32,15 @@ public class Member {
 		this.mName = mName;
 		this.phone = phone;
 		this.mNo = mNo;
+		this.email = email;
+		this.nickName = nickName;
+	}
+	
+	public Member(String mId, String pass, String nickName, String phone, String email) {
+		super();
+		this.mId = mId;
+		this.pass = pass;
+		this.phone = phone;
 		this.email = email;
 		this.nickName = nickName;
 	}

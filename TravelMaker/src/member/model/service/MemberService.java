@@ -47,14 +47,14 @@ public class MemberService {
 	}
 	
 	// 멤버 정보 변경 
-	public Member updateMember(Member m) {
+	public Member updateMember(Member m, String updateId) {
 		Connection conn = getConnection();
 		Member updateMember = null;
 		
-		int result = new MemberDao().updateMember(conn, m);
-		
+		int result = new MemberDao().updateMember(conn, m, updateId);
+		System.out.println(result);
 		if(result > 0) {
-			updateMember = new MemberDao().selectMember(conn, m.getUserId());
+			updateMember = new MemberDao().selectMember(conn, updateId);
 			commit(conn);
 		}else {
 			rollback(conn);
@@ -91,6 +91,15 @@ public class MemberService {
 		}else {
 			rollback(conn);
 		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+	public int nicknameCheck(String nick) {
+		Connection conn = getConnection();
+		int result = new MemberDao().nicknameCheck(conn, nick);
 		
 		close(conn);
 		

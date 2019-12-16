@@ -31,21 +31,24 @@ public class UpdateMemberServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		
-		String userId = request.getParameter("userId");
-		String nickName = request.getParameter("nickName");
-		// + phone, email
+		Member loginUser = (Member)(request.getSession().getAttribute("loginUser"));
+		String updateId = loginUser.getmId();
 		
-		Member m = new Member(userId, nickName);
+		String upId = request.getParameter("upId");
+		String upPass = request.getParameter("upPass");
+		String upNick = request.getParameter("upNick");
+		String upPhone = request.getParameter("upPhone");
+		String upEmail = request.getParameter("upEmail");
 		
-		Member updateMember = new MemberService().updateMember(m);
-		
+		Member m = new Member(upId, upPass, upNick, upPhone, upEmail);
+		Member updateMember = new MemberService().updateMember(m, updateId);
 		if(updateMember != null) {
-			request.getSession().setAttribute("msg", "성공적으로 회원정보를 수정했습니다.");
+			request.getSession().setAttribute("msg", "회원정보 변경");
 			request.getSession().setAttribute("loginUser", updateMember);
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(request.getContextPath() + "/views/myPage/info-update");
 		} else {
-			request.setAttribute("msg", "회원정보 수정에 실패했습니다.");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			request.setAttribute("msg", "회원정보 변경 실패");
+			response.sendRedirect(request.getContextPath());
 		}
 	}
 

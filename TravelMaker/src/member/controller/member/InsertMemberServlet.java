@@ -56,11 +56,11 @@ public class InsertMemberServlet extends HttpServlet {
 		int result = new MemberService().insertMember(mem);
 		
 		if(result > 0) {
-			request.getSession().setAttribute("msg", "회원 가입 성공!!");
+			request.getSession().setAttribute("msg", "회원 가입을 성공하였습니다");
 			response.sendRedirect(request.getContextPath());
 		}
 		else {
-			request.setAttribute("msg", "회원 가입 실패!!");
+			request.setAttribute("msg", "회원 가입이 실패했습니다");
 			RequestDispatcher view = request.getRequestDispatcher(request.getContextPath());
 			view.forward(request, response);
 		}
