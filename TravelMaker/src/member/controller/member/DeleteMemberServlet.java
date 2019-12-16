@@ -32,19 +32,19 @@ public class DeleteMemberServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Member m = (Member)request.getSession().getAttribute("loginUser");
 		
-		int result = new MemberService().deleteMember(m.getUserId());
-		
+		int result = new MemberService().deleteMember(m.getmId());
+		System.out.println(result);
 		if(result > 0) {
 			HttpSession session = request.getSession();
 			
 			session.removeAttribute("loginUser"); // 로그인 세션 정보 삭제
-			
-			session.setAttribute("msg", "회원 탈퇴가 완료되었습니다. 복구 관련 사항은 관리자에게 문의하세요.");
+			session.setAttribute("msg", "회원 탈퇴가 완료되었습니다.");
+			request.getSession().invalidate();
 			response.sendRedirect(request.getContextPath());
 			
 		}else {
 			request.setAttribute("msg", "회원 탈퇴에 실패하였습니다.");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			response.sendRedirect(request.getContextPath());
 		}
 		
 		

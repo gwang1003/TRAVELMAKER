@@ -1,23 +1,27 @@
-package member.controller.plan;
+package member.controller.member;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import member.model.service.MemberService;
+
 /**
- * Servlet implementation class PlanListServlet
+ * Servlet implementation class NicknameCheckServlet
  */
-@WebServlet("/list.pl")
-public class PlanListServlet extends HttpServlet {
+@WebServlet("/nicknameCheck.me")
+public class NicknameCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PlanListServlet() {
+    public NicknameCheckServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +30,16 @@ public class PlanListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("ㄴㅇㅁㅇㄴ");
-		request.getRequestDispatcher("/views/myPage/Plan.jsp").forward(request, response);
+		String nick = request.getParameter("nickName");
+		int result = new MemberService().nicknameCheck(nick);
+
+		PrintWriter out = response.getWriter();
+		if(result > 0) {
+			out.print("fail");
+		}else {
+			out.print("success");
+		}
+		
 	}
 
 	/**

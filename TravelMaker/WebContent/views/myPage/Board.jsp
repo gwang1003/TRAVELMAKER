@@ -166,17 +166,12 @@
 
     <!-- 영역 분할 -->
     <style>
-    /* 헤더 */
-    #menubar {
-        width: 100%;
-        height: 150px;
-    }
-
     /* 몸체 */
     body {
         width: 1500px;
         height: 1000px;
         overflow: auto;
+        margin-top: 180px;
         margin-left: auto;
         margin-right: auto;
     }
@@ -191,6 +186,7 @@
         margin-left: 15%;
         width: 15%;
         height: 100%;
+        margin-right: 5%;
     }
 
     #marginBody {
@@ -347,7 +343,7 @@
         }
 
         .line {
-            margin-left: 730px;
+            margin-left: 650px;
             transform: translate(-200px, -100px);
             width: 40px;
         }
@@ -359,13 +355,13 @@
 </head>
 
 <body>
-
+	<%@ include file="../common/menubar.jsp" %>
     <section id="body">
         <aside>
             <section id="my-info-section1">
                 <div class="my-info" id="my-info">
                     <h3 id="my-info-text">마이페이지</h3>
-                    <img src="<%= request.getContextPath() %>/resources/img/smile.jpg"><br>
+                    <img src="<%= request.getContextPath() %>/resources/images/smile.jpg"><br>
                     <p id="name">&nbsp;&nbsp;&nbsp;임세웅</p>
                     <br><br>
                     <button class="myinfo-button" id="my-info-logout" onclick="logout();">로그아웃</button>
@@ -399,13 +395,13 @@
                 <div id="my_post">
                     <hr id="firstHr">
                     <ul>
-                        <li><img src="<%= request.getContextPath() %>/resources/img/쌈짓길.jpg" class="my-post-img">#쌈짓길<img src="<%= request.getContextPath() %>/resources/img/line.png" class="line"></li>
+                        <li><img src="<%= request.getContextPath() %>/resources/images/쌈짓길.jpg" class="my-post-img">하하<img src="<%= request.getContextPath() %>/resources/images/line.png" class="line"></li>
                         <hr class="otherHr">
-                        <li><img src="<%= request.getContextPath() %>/resources/img/쌈짓길.jpg" class="my-post-img">#쌈짓길<img src="<%= request.getContextPath() %>/resources/img/line.png" class="line"></li>
+                        <li><img src="<%= request.getContextPath() %>/resources/images/쌈짓길.jpg" class="my-post-img">역시 쌈짓길 !<img src="<%= request.getContextPath() %>/resources/images/line.png" class="line"></li>
                         <hr class="otherHr">
-                        <li><img src="<%= request.getContextPath() %>/resources/img/쌈짓길.jpg" class="my-post-img">#쌈짓길<img src="<%= request.getContextPath() %>/resources/img/line.png" class="line"></li>
+                        <li><img src="<%= request.getContextPath() %>/resources/images/쌈짓길.jpg" class="my-post-img">쌈짓길 또 갔어요<img src="<%= request.getContextPath() %>/resources/images/line.png" class="line"></li>
                         <hr class="otherHr">
-                        <li><img src="<%= request.getContextPath() %>/resources/img/쌈짓길.jpg" class="my-post-img">#쌈짓길<img src="<%= request.getContextPath() %>/resources/img/line.png" class="line"></li>
+                        <li><img src="<%= request.getContextPath() %>/resources/images/쌈짓길.jpg" class="my-post-img">첫 번째 쌈짓길<img src="<%= request.getContextPath() %>/resources/images/line.png" class="line"></li>
                         <hr class="otherHr">
                     </ul>
 

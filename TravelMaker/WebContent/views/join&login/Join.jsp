@@ -46,7 +46,8 @@ table {
 	height: 11%;
 }
 
-#passExp, #passCorrect {
+#passExp, #passCorrect, #nameExp, #noExp, #nickNameExp, #phoneExp {
+	font-size: 12px;
 	color: red;
 	display: none;
 }
@@ -133,14 +134,12 @@ tr {
 	<!-- 1_1. 회원가입 폼 작성 -->
 	<div class="outer">
 		<div class="mimg">
-			<img id="logo" src="img/로고.png" width="100px">
+			<img id="logo" src="<%= request.getContextPath() %>/resources/images/로고.png" width="100px">
 			<h2 align="center">회원가입</h2>
 		</div>
 
 
-		<form id="joinForm" name="joinForm"
-			action="<%= request.getContextPath() %>/insert.me" method="post"
-			>
+		<form id="joinForm" name="joinForm" <%-- action="<%= request.getContextPath() %>/insert.me" method="post" --%>>
 			<!-- onsubmit="return joinValidate();" -->
 			<table>
 				<tr>
@@ -169,23 +168,27 @@ tr {
 				<tr>
 					<td>이름</td>
 					<td><input type="text" maxlength="5" name="mName" required></td>
+					<td><label id="nameExp">이름은 한글로 2글자에서 4글자 사이입니다</label></td>
 				</tr>
 
 				<tr>
 					<td>주민등록번호</td>
 					<td><input type="text" id="jo" name="mNo1">-<input
-						type="text" id="jo" name="mNo2"></td>
+					type="text" id="jo" name="mNo2"></td>
+					<td><label id="noExp">주민등록번호는 총 13자리입니다</label></td>
 				</tr>
 
 				<tr>
 					<td>닉네임</td>
-					<td><input type="text" maxlength="5" name="nickName" required></td>
+					<td><input type="text" maxlength="6" name="nickName" id="nickName" required></td>
+					<td><label id="nickNameExp">이미 존재하는 닉네임입니다</label></td>
 				</tr>
 
 				<tr>
 					<td>연락처</td>
 					<td><input type="tel" maxlength="11" name="phone"
-						placeholder="(-없이)01012345678"></td>
+						placeholder="(-없이)010-1234-5678"></td>
+					<td><label id="phoneExp">휴대폰 번호는 010, 011로 시작하며 11자리여야 합니다</label></td>
 				</tr>
 
 				<tr>
@@ -197,8 +200,8 @@ tr {
 							<option value="naver.com">hanmail.net</option>
 							<option value="naver.com">google.com</option>
 					</select></td>
-					<td width="200px"><button id="idCheck" type="button"
-							onclick="checkId()">이메일 인증</button></td>
+					<td width="200px"><button id="emailCheck" type="button"
+							onclick="checkEmail()">이메일 인증</button></td>
 				</tr>
 			</table>
 			<div class="btns" align="center">
@@ -210,45 +213,30 @@ tr {
 
 
 	<script>
+		var checkId, checkPwd1, checkPwd2, checkName, checkNo1, checkNo2, checkNickName, checkPhone, checkEmail; 
+		checkId = false;
+		checkPwd1 = false;
+		checkPwd2 = false;
+		checkName = false;
+		checkNo1 = false;
+		checkNo2 = false; 
+		checkNickName = false;
+		checkPhone = false;
+		checkEmail = false;
       
-      // 1. 메인으로 돌아가기
       function returnToMain(){
          location.href="<%= request.getContextPath() %>";
-      }
-   
-      // 2. 유효성 검사
-      function joinValidate(){
-         if(!(/^[a-z][a-z\d]{3,11}$/.test($("#joinForm input[name=userId]").val()))){
-            alert('아이디는 영소문자로 시작해서 4~12자 입력(숫자 포함 가능)');
-            $("#joinForm input[name=userId]").select();
-            return false;
-         }
-         
-         if($("#joinForm input[name=userPwd]").val() != $("#joinForm input[name=userPwd2]").val()){
-            $("#pwdResult").text("비밀번호 불일치").css("color","red");
-            return false;
-         }
-         /* id check
-         if(!(/^[가-힣]{2,}$/.test($("#joinForm input[name=userName]").val()))){
-            alert('이름은 한글로 2글자 이상 입력');
-            $("#joinForm input[name=userName]").select();
-            return false;
-         } */
-         
-         return true;
-         
       }
    
       // id 중복체크 
       $(function() {
 			var isUsable = false;
-			// 아이디 중복시 false, 아이디 사용 가능시 true -> 나중에 유효성 검사
 			
 			$("#idCheck").click(function() {
-				var mId = $("#joinForm input[name='mId']");
-				
-				if(!mId || mId.val().length < 4) {
-					alert("아이디는 최소 4자리 이상이어야 합니다.");
+				var mId = $("#joinForm input[name=mId]");
+				console.log("<%= request.getContextPath() %>/idCheck.me");
+				if(!mId || mId.val().length < 6) {
+					alert("아이디는 최소 6자리 이상이어야 합니다.");
 					mId.focus();
 				}else {
 					$.ajax({
@@ -261,20 +249,19 @@ tr {
 								mId.focus();
 							}else {
 								if(confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")) {
-									userId.prop('readonly', true); 
+									mId.prop('readonly', true); 
 									isUsable = true;
-									// -> 사용 가능하다는 flag값
 								}else {
 									mId.focus();
 								}
 							}
 							
 							if(isUsable) {
-								$("#joinBtn").removeAttr("disabled");
+								checkId = true;
 							}
 						},
-						error : function() {
-							console.log('서버 통신 안됨');
+						error : function(request, status, error) {
+							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 						}
 					});
 				}
@@ -285,8 +272,10 @@ tr {
 	    	 $("input[name=pass]").focusout(function() {
 	    		 if(passExp.test($(this).val())) {	
 	    			 $('#passExp').css('display', 'none');
+	    			 checkPwd1 = true;
 	    		 }else {
 	    			 $('#passExp').css('display', 'unset');
+	    			 checkPwd1 = false;
 	    		 }
 	    	 });
 	    	 
@@ -297,11 +286,121 @@ tr {
 	    		 
 		    	 if(pass1 == pass2) {
 		    		 $('#passCorrect').css('display', 'none');
+		    		 checkPwd2 = true
 		    	 }else {
 		    		 $('#passCorrect').css('display', 'unset');
+		    		 checkPwd2 = false;
 		    	 }
 	    	 });
 	    	 
+	    	 // 이름이 한글로 올바르게 적혀 있는지
+	    	 var nameExp = /^[가-힣]{2,3}$/;
+	    	 $("input[name=mName]").focusout(function() {
+	    		 if(nameExp.test($(this).val())) {	
+	    			 $('#nameExp').css('display', 'none');
+	    			 checkName = true;
+	    		 }else {
+	    			 $('#nameExp').css('display', 'unset');
+	    			 checkName = false;
+	    		 }
+	    	 });
+	    	 
+	    	 // 주민번호 형식이 맞는지
+	    	 var noExp = /^[0-9]{6}$/;
+	    	 var noExp2 = /^[0-9]{7}$/;
+	    	 $("input[name=mNo1]").focusout(function() {
+	    		 if(noExp.test($(this).val())) {	
+	    			$('#noExp').css('display', 'none');
+	    			checkNo1 = true;  
+	    		 }else {
+	    			 $('#noExp').css('display', 'unset');
+	    			 checkNo1 = false;
+	    		 }
+	    	 });
+	    	 $("input[name=mNo2]").focusout(function() {
+	    		 if(noExp2.test($(this).val())) {	
+	    			$('#noExp').css('display', 'none');
+	    			checkNo2 = true;  
+	    		 }else {
+	    			 $('#noExp').css('display', 'unset');
+	    			 checkNo2 = false;
+	    		 }
+	    	 });
+	    	 
+	    	 // 닉네임 길이 확인 및 중복확인
+	    	 $("input[name=nickName]").focusout(function() {
+	    		 var nick = $("#joinForm input[name=nickName]");
+	    		 $.ajax({
+						url : "<%= request.getContextPath() %>/nicknameCheck.me",
+						type : "post",
+						data : {nick:nick.val()},
+						success : function(data) {
+							if(nick.val().length < 2) {
+								
+							}else {
+								if(data == "fail") {
+									$("#nickNameExp").css('display', 'unset');
+									nick.focus();
+									checkNickName = false;
+								}else {
+									$("#nickNameExp").css('display', 'none');
+									checkNickName = true;
+								}
+							}
+						},
+						error : function() {
+							console.log('서버 통신 안됨');
+						}
+					});
+	    	 });
+	    	 
+	    	 // 연락처 11자리, 앞은 010 또는 011로 시작
+	    	 $('input[name=phone]').focusout(function() {
+	    		 var phone = $('input[name=phone]');
+	    		 if(phone.val().length == 11 && (phone.val().substring(0,3) == "010" || phone.val().substring(0,3) == "011")) {
+	    			 $("#phoneExp").css('display', 'none');
+	    			 checkPhone = true;
+	    		 }else {
+	    			 $("#phoneExp").css('display', 'unset');
+	    			 checkPhone = false;
+	    		 }
+	    		 console.log(checkId + " " + checkPwd1 + " " + checkPwd2 + " " + checkName + " " + checkNo1 + " " + checkNo2 + " " + checkNickName + " " + checkPhone);
+	    		 
+	    		 
+	    	 });
+	    	 
+	    	 
+	    	 $("#joinBtn").click(function() {
+	    		 console.log(checkId + checkPwd1 + checkPwd2 + checkName + checkNo1 + checkNo2 + checkNickName + checkPhone);
+	    		 if(checkId == true && checkPwd1 == true && checkPwd2 == true && checkName == true 
+		    				&& checkNo1 == true && checkNo2 == true && checkNickName == true && checkPhone == true) {
+		    			$("#joinForm").attr("method", "post");
+		    			$("#joinForm").attr("action", "<%= request.getContextPath() %>/insert.me");
+		    			alert("회원가입에 성공하였습니다");
+		    	}else { 
+		    			if(checkId == false) {
+		    				alert("아이디를 체크해주세요");
+		    			}else if(checkPwd1 == false) {
+		    				alert("비밀번호를 체크해주세요");
+		    			}else if(checkPwd2 == false) {
+		    				alert("비밀번호 확인을 체크해주세요");
+		    			}else if(checkName == false) {
+		    				alert("이름을 체크해주세요");
+		    			}else if(checkNo1 == false) {
+		    				alert("주민등록번호를 체크해주세요");
+		    			}else if(checkNo2 == false) {
+		    				alert("주민등록번호를 체크해주세요");
+		    			}else if(checkNickName == false) {
+		    				alert("닉네임을 체크해주세요");
+		    			}else if(checkPhone == false) {
+		    				alert("연락처를 체크해주세요");
+		    			}else {
+		    				
+		    			}
+		    	} 
+	    	 });
+	    	 
+	    		
       });
    </script>
 
