@@ -772,7 +772,8 @@ nav #logo {
                         <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp';">회원정보 수정</a></li>
                         <hr>
                         <li class="bigContent">고객센터</li>
-                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/ServiceCenter.jsp';">문의 내역</a></li>
+                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.qa?mSeq=' + <%= loginUser.getM_seq()%>">문의 내역</a></li>
+                        
                     </ul>
                 </div>
             </section>

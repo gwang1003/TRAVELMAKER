@@ -3,6 +3,7 @@
 	<%
 		String contextPath = request.getContextPath();
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		System.out.println(loginUser);
 	%>
 <!DOCTYPE html>
 <html>
