@@ -568,9 +568,9 @@ h2 {
                 			if(window.confirm("정말 회원을 탈퇴하시겠습니까 ?\n" +
                 					"한번 탈퇴한 회원은 복구가 불가능합니다")) {
                 				location.href="<%= request.getContextPath() %>/delete.me";
-                				window.alert("<% request.getSession().getAttribute("msg"); %>");
+                				window.alert("회원을 탈퇴하셨습니다");
                 			}else {
-                				window.alert("<% request.getSession().getAttribute("msg"); %>");
+                				window.alert("회원 탈퇴들 취소하셨습니다");
                 			}
                 		});
                 	});
