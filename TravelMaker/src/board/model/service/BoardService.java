@@ -37,6 +37,8 @@ public class BoardService {
 	public Board selectBoard(int bid) {
 		Connection con = getConnection();
 		Board b = new BoardDao().selectBoard(con, bid);
+		
+		
 		return new Board();
 	}
 
@@ -114,7 +116,12 @@ public class BoardService {
 	public ArrayList<Attachment> selectThumbnail(int bId) {
 		Connection con = getConnection();
 		ArrayList<Attachment> list = new BoardDao().selectThumbnail(con, bId);
-		return new ArrayList<Attachment>();
+		
+		close(con);
+		
+		return list;
+		
+		
 	}
 
 	public ArrayList<Reply> selectReplyList(int bId) {

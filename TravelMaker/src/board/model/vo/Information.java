@@ -24,6 +24,18 @@ public class Information {
 		this.address = address;
 		this.page = page;
 	}
+	
+	
+
+	public Information(String sDay, String eDay, String tel, int price, String address, String page) {
+		super();
+		this.sDay = sDay;
+		this.eDay = eDay;
+		this.tel = tel;
+		this.price = price;
+		this.address = address;
+		this.page = page;
+	}
 
 	public int getbId() {
 		return bId;

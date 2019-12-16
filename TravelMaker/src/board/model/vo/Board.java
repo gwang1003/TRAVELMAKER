@@ -38,7 +38,21 @@ public class Board {
 		this.bType = bType;
 		this.mId = mId;
 	}
-
+	
+	
+	public Board(int bId, Date wDate, Date uDate, String bTitle, String bContent, int bCount, String bWriter,
+			String status, int bType) {
+		super();
+		this.bId = bId;
+		this.wDate = wDate;
+		this.uDate = uDate;
+		this.bTitle = bTitle;
+		this.bContent = bContent;
+		this.bCount = bCount;
+		this.bWriter = bWriter;
+		this.status = status;
+		this.bType = bType;
+	}
 	public int getbId() {
 		return bId;
 	}
