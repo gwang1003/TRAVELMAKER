@@ -46,14 +46,13 @@ public class QA {
 	
 	
 
-	public QA(int qType, String qTitle, String qContent, String writer) {
+	public QA(int qType, String qTitle, String qContent) {
 		super();
 		this.qType = qType;
 		this.qTitle = qTitle;
 		this.qContent = qContent;
-		this.writer = writer;
 	}
- 
+	
 	
 	public QA(int qId, int qType, String qTitle, String status, Date enrollDate) {
 		super();
@@ -62,6 +61,16 @@ public class QA {
 		this.qTitle = qTitle;
 		this.status = status;
 		this.enrollDate = enrollDate;
+	}
+
+	public QA(int qId, int qType, String qTitle, String status, Date enrollDate, String writer) {
+		super();
+		this.qId = qId;
+		this.qType = qType;
+		this.qTitle = qTitle;
+		this.status = status;
+		this.enrollDate = enrollDate;
+		this.writer = writer;
 	}
 
 	
@@ -152,7 +161,7 @@ public class QA {
 	public String toString() {
 		return "QA [qId=" + qId + ", qType=" + qType + ", qTitle=" + qTitle + ", qContent=" + qContent + ", status="
 				+ status + ", enrollDate=" + enrollDate + ", answer=" + answer + ", answerDate=" + answerDate
-				+ ", writer=" + writer + "]";
+				+ ", writer=" + writer + "]"; 
 	}
 	
 	

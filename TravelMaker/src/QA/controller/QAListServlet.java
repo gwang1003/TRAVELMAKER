@@ -8,10 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.plaf.synth.SynthStyle;
 
 import QA.model.service.QAService;
 import QA.model.vo.QA;
+import member.model.vo.Member;
 
 /**
  * Servlet implementation class QASelectServlet
@@ -32,8 +32,11 @@ public class QAListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getSession().getAttribute("loginUser").equals("admin")) {
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		if(loginUser.getmId().equals("admin")) {
 			ArrayList<QA> list = new QAService().selectAllQAList();
+			request.setAttribute("list", list);		
+			request.getRequestDispatcher("views/myPage/ManagerQA.jsp").forward(request, response);
 		}else {
 		int mSeq = Integer.parseInt(request.getParameter("mSeq"));
 		ArrayList<QA> list = new QAService().selectQAList(mSeq);

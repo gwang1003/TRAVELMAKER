@@ -379,26 +379,26 @@
 					<br>
 					<button class="myinfo-button" id="my-info-logout"
 						onclick="logout();">로그아웃</button>
-					<button class="myinfo-button" id="my-info-modify"
-						onclick="infoModify();">회원정보 수정</button>
+						<script>
+                	function logout() {
+                		location.href="<%= request.getContextPath() %>/logout.me";
+                	}
+                </script>
 				</div>
 			</section>
 
 			<section id="my-info-section2">
 				<div id="mypage-menu">
 					<ul>
-						<li class="bigContent">나의 활동</li>
-						<li><a href="MyPage_MyActive-1.html">나의 계획</a></li>
-						<li><a href="MyPage_MyActive-2.html">내가 쓴 게시글</a></li>
-						<li><a href="MyPage_MyActive-3.html">장바구니</a></li>
-
+						<li class="bigContent"><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.mo'">회원 관리</a></li>
+						
 						<hr>
-						<li class="bigContent">개인정보 관리</li>
-						<li><a href="Mypage_ChangeIdPwd.html">회원정보 수정</a></li>
-
+						
+						<li class="bigContent"><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.qa?mSeq=' + <%= loginUser.getM_seq()%>">게시글 관리</a></li>
+						
 						<hr>
-						<li class="bigContent">고객센터</li>
-						<li style="font-weight: bold">문의 내역</li>
+						
+						<li class="bigContent"><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.qa'">회원 문의 내역</a></li>
 					</ul>
 				</div>
 			</section>
@@ -441,8 +441,11 @@
 							<thead>
 								<tr>
 									<th scope="col" class="th-num">번호</th>
-									<th scope="col" class="th-title">제목</th>
-									<th scope="col" class="th-date">등록일</th>
+									<th scope="col" class="th-num">문의 타입</th>
+									<th scope="col" class="th-title">이름</th>
+									<th scope="col" class="th-date">제목</th>
+									<th scope="col" class="th-date">문의 날짜</th>
+									<th scope="col" class="th-date">답변여부</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -454,8 +457,11 @@
 						 			<% for(QA q : list) {%>
 						 				<tr>
 						 					<td><%= q.getqId() %></td>
+						 					<td><%= q.getqType() %></td>
+						 					<td><%= q.getWriter() %></td>
 						 					<td><%= q.getqTitle() %></td>
 						 					<td><%= q.getEnrollDate() %></td>
+						 					<td><%= q.getStatus() %></td>
 						 				</tr>
 						 			<% } %>
 					 			<% } %>

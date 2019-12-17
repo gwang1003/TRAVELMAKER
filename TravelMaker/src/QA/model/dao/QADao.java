@@ -69,11 +69,12 @@ public class QADao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new QA(rset.getInt("QA_TYPE"),
+				list.add(new QA(rset.getInt("QA_ID"),
+								rset.getInt("QA_TYPE"),
 								rset.getString("QA_TITLE"),
 								rset.getString("QA_STATUS"),
 								rset.getDate("ENROLL_DATE"),
-								rset.getInt("M_Seq")));
+								rset.getString("M_NAME")));
 				
 			}
 		} catch (SQLException e) {
@@ -82,11 +83,12 @@ public class QADao {
 			close(rset);
 			close(pstmt);
 		}
+		System.out.println("dao list : " + list);
 		return list;
 	}
 
 	// 문의하기
-	public int insertQuestion(Connection conn, QA q) {
+	public int insertQuestion(Connection conn, QA q, int mSeq) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -98,7 +100,7 @@ public class QADao {
 			
 			pstmt.setString(1, q.getqTitle());
 			pstmt.setString(2, q.getqContent());
-			pstmt.setInt(3, q.getmSeq());
+			pstmt.setInt(3, mSeq);
 			pstmt.setInt(4, q.getqType());
 			
 			result = pstmt.executeUpdate();
@@ -144,7 +146,7 @@ public class QADao {
 			pstmt.setInt(1, q.getqType());
 			pstmt.setString(2, q.getqTitle());
 			pstmt.setString(3, q.getqContent());
-			pstmt.setInt(4, q.getmSeq());
+			pstmt.setString(4, q.getWriter());
 			pstmt.setInt(5, q.getqId());
 			
 			result = pstmt.executeUpdate();
@@ -171,15 +173,15 @@ public class QADao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				q = new QA(rset.getInt("QA_TYPE"),
+				q = new QA(rset.getInt("QA_ID"),
+							rset.getInt("QA_TYPE"),
 								rset.getString("QA_TITLE"),
 								rset.getString("QA_CONTENT"),
 								rset.getString("QA_STATUS"),
 								rset.getDate("ENROLL_DATE"),
 								rset.getString("ANSWER"),
 								rset.getDate("AN_DATE"),
-								rset.getInt("M_SEQ"));
-				
+								rset.getString("m_name"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -200,8 +202,8 @@ public class QADao {
 		try {
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setInt(1, qId);
-			pstmt.setString(2, answer);
+			pstmt.setString(1, answer);
+			pstmt.setInt(2, qId);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {

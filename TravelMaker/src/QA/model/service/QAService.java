@@ -33,10 +33,10 @@ public class QAService {
 	}
 	
 	// 3. 문의하기(회원)
-	public int insertQuestion(QA q) {
+	public int insertQuestion(QA q, int mSeq) {
 		Connection conn = getConnection();
 		
-		int result = new QADao().insertQuestion(conn, q);
+		int result = new QADao().insertQuestion(conn, q, mSeq);
 		
 		if(result > 0) {
 			commit(conn);

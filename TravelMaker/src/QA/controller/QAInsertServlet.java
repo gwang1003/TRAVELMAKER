@@ -35,9 +35,9 @@ public class QAInsertServlet extends HttpServlet {
 		String title = request.getParameter("title");
 		int type = Integer.parseInt(request.getParameter("type"));
 		Member m = (Member)request.getSession().getAttribute("loginUser");
-		QA q = new QA(type, title, content, m.getM_seq());
+		QA q = new QA(type, title, content);
 		
-		int result = new QAService().insertQuestion(q);
+		int result = new QAService().insertQuestion(q, m.getM_seq());
 		
 		if(result > 0) {
 			response.sendRedirect("select.qa?mSeq=" + m.getM_seq());
