@@ -1,7 +1,6 @@
 package QA.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,16 +11,16 @@ import QA.model.service.QAService;
 import QA.model.vo.QA;
 
 /**
- * Servlet implementation class AnswerInsertServlet
+ * Servlet implementation class AnswerInsertFormServlet
  */
-@WebServlet("/insert.an")
-public class AnswerInsertServlet extends HttpServlet {
+@WebServlet("/form.an")
+public class AnswerInsertFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AnswerInsertServlet() {
+    public AnswerInsertFormServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +30,12 @@ public class AnswerInsertServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int qId = Integer.parseInt(request.getParameter("qId"));
-		String content = request.getParameter("content");
-		int result = new QAService().insertAnswer(qId, content);
+		int no = Integer.parseInt(request.getParameter("no"));
+		System.out.println(no);
+		QA q = new QAService().selectQA(qId);
 		
-		if(result > 0) {
-			response.sendRedirect("detail.qa?qId=" + qId);
-		}
+			request.setAttribute("q", q);
+			request.getRequestDispatcher("views/QA/AnswerInsertView.jsp").forward(request, response);
 	}
 
 	/**

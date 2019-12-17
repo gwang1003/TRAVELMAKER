@@ -364,17 +364,16 @@
             
             
             .mTable {
-            	width:90%;
+            	width:95%;
             	margin-left:auto;
             	margin-right:auto;
             }
             
             .btn1 {
-            	width:90%;
+            	width:95%;
             	height:10%;
             	margin-left:auto;
             	margin-right:auto;
-
             }
             
             .btn1 button {
@@ -400,20 +399,23 @@
 					<button class="myinfo-button" id="my-info-logout"
 						onclick="logout();">로그아웃</button>
 				</div>
+				<script>
+                	function logout() {
+                		location.href="<%= request.getContextPath() %>/logout.me";
+                	}
+                </script>
 			</section>
 
 			<section id="my-info-section2">
 				<div id="mypage-menu">
 					<ul>
-						<li class="bigContent"><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.qa?mSeq=' + <%= loginUser.getM_seq()%>">회원 관리</a></li>
+						<li class="bigContent"><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.mo'">회원 관리</a></li>
+						<hr>
+						<li class="bigContent"><a href="#" onclick="location.href=''">게시글 관리</a></li>
 						
 						<hr>
 						
-						<li class="bigContent"><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.qa?mSeq=' + <%= loginUser.getM_seq()%>">게시글 관리</a></li>
-						
-						<hr>
-						
-						<li class="bigContent"><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.qa">회원 문의 내역</a></li>
+						<li class="bigContent"><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.qa'">회원 문의 내역</a></li>
 					</ul>
 				</div>
 			</section>
@@ -429,7 +431,9 @@
 					<th>닉네임</th>
 					<th>생년월일</th>
 					<th>이메일</th>
-					<th>가입일</th> 
+					<th>가입일</th>
+					<th>최근접속일</th>
+					<th>경고횟수</th> 
 				</tr>
 				<% if(mList != null) {%>
 					<% for(Member m : mList) { %>
@@ -442,6 +446,8 @@
 							<th><%= m.getmNo()%></th>
 							<th><%= m.getEmail()%></th>
 							<th><%= m.getJoinDate()%></th>
+							<th><%= m.getAccessDate() %></th>
+							<th><%= m.getReport() %></th>
 						</tr>
 					<% } %>
 				<% }else { %>

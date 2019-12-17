@@ -1,426 +1,420 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*, QA.model.vo.*"%>
-	
-<% 
-	QA q = (QA)request.getAttribute("q");
 
+<%
+	QA q = (QA) request.getAttribute("q");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+<link
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
+	rel="stylesheet">
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link
+	href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css"
+	rel="stylesheet">
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
 <title>Insert title here</title>
 <style>
-        body {
-            font-family: Arial;
-			width:1500px;
-			margin-top:10%;
-			margin-left:auto;
-			margin-right:auto;
-        }
+body {
+	font-family: Arial;
+	width: 1500px;
+	margin-top: 10%;
+	margin-left: auto;
+	margin-right: auto;
+}
 
-    <!-- 영역 분할 -->
-    <style>
-        /* 헤더 */
-        #menubar {
-            width: 100%;
-            height: 150px;
-        }
+<!--
+영역 분할 --> <style> /* 헤더 */ #menubar {
+	width: 100%;
+	height: 150px;
+}
 
-        #body {
-            margin-top: 4%;
-            width: 1500px;
-            height: 1000px;
-            display: flex;
-            overflow: auto;
-            flex-direction: row;
-            margin-left: auto;
-            margin-right: auto;
-        }
+#body {
+	margin-top: 4%;
+	width: 1500px;
+	height: 1000px;
+	display: flex;
+	overflow: auto;
+	flex-direction: row;
+	margin-left: auto;
+	margin-right: auto;
+}
 
-        aside {
+aside {
+	width: 15%;
+	height: 100%;
+}
 
-            width: 15%;
-            height: 100%;
-        }
+#marginBody {
+	width: 65%;
+}
 
-        #marginBody {
-            width: 65%;
-        }
+#my-info-section1 {
+	width: 80%;
+	height: 220px;
+}
 
-        #my-info-section1 {
-            width: 80%;
-            height: 220px;
-        }
+/* aside -> my-info-section2 */
+#my-info-section2 {
+	width: 80%;
+	height: 520px;
+}
 
-        /* aside -> my-info-section2 */
-        #my-info-section2 {
-            width: 80%;
-            height: 520px;
-        }
+ul a {
+	color: black;
+}
 
-        ul a {
-            color: black;
-        }
+@media only screen and (max-width: 2000px) {
+	#my-info-section1 {
+		width: 220px;
+	}
+	#my-info-section2 {
+		width: 220px;
+	}
+}
+</style>
 
-        @media only screen and (max-width: 2000px) {
-        #my-info-section1 {
-            width: 220px;
-        }
+<!-- aside->section1 css -->
+<style>
+#my-info {
+	width: 100%;
+	height: 100%;
+	background-color: cornflowerblue;
+}
 
-        #my-info-section2 {
-            width: 220px;
-        }
-    }
-    </style>
+.bi-person {
+	width: 40px;
+	height: 40px;
+	float: left;
+}
 
-    <!-- aside->section1 css -->
-    <style>
-        #my-info {
-            width: 100%;
-            height: 100%;
-            background-color: cornflowerblue;
-        }
+#my-info-text {
+	text-align: center;
+	color: white;
+	margin-bottom: 40px;
+}
 
-        .bi-person {
-            width: 40px;
-            height: 40px;
-            float: left;
-        }
+#my-info-section1 img {
+	margin-left: 35px;
+	width: 80px;
+	height: 80px;
+	float: left;
+}
 
-        #my-info-text {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-        }
+#name {
+	font-size: 24px;
+	font-weight: bold;
+}
 
-        #my-info-section1 img {
-            margin-left: 35px;
-            width: 80px;
-            height: 80px;
-            float: left;
-        }
+.myinfo-button {
+	border: 1px solid white;
+	width: 50%;
+	background-color: cornflowerblue;
+	color: white;
+	font-size: 13px;
+	height: 40px;
+}
 
-        #name {
-            font-size: 24px;
-            font-weight: bold;
-        }
+#my-info-logout {
+	float: left;
+}
+</style>
 
-        .myinfo-button {
-            border: 1px solid white;
-            width: 50%;
-            background-color: cornflowerblue;
-            color: white;
-            font-size: 13px;
-            height: 40px;
-        }
+<!-- aside->section2 css -->
+<style>
+#my-info-section2 {
+	margin-top: 50px;
+}
 
-        #my-info-logout {
-            float: left;
-        }
-    </style>
+aside {
+	float: left;
+}
 
-    <!-- aside->section2 css -->
-    <style>
-        #my-info-section2 {
-            margin-top: 50px;
-        }
+#mypage-menu {
+	border: 1px solid black;
+	margin-top: 30px;
+	width: 100%;
+	height: 80%;
+}
 
-        aside {
-            float: left;
-        }
+#mypage-menu ul {
+	text-decoration: none;
+	list-style-type: none;
+	font-size: 18px;
+}
 
-        #mypage-menu {
-            border: 1px solid black;
-            margin-top: 30px;
-            width: 100%;
-            height: 80%;
-        }
+#mypage-menu ul {
+	margin: 0;
+}
 
-        #mypage-menu ul {
-            text-decoration: none;
-            list-style-type: none;
-            font-size: 18px;
-        }
+#mypage-menu ul li {
+	margin-bottom: 15px;
+}
 
-        #mypage-menu ul {
-            margin: 0;
-        }
+.bigContent {
+	font-size: 23px;
+	font-weight: bold;
+	margin-top: 13px;
+	color: cornflowerblue;
+}
+</style>
 
-        #mypage-menu ul li {
-            margin-bottom: 15px;
-        }
+<!-- .notice -->
+<style>
+.notice {
+	width: 80%;
+	height: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
 
-        .bigContent {
-            font-size: 23px;
-            font-weight: bold;
-            margin-top: 13px;
-            color: cornflowerblue;
-        }
-    </style>
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
 
-    <!-- .notice -->
-    <style>
-    		.notice {
-    			width:80%;
-    			height:90%;
-    			margin-left:auto;
-    			margin-right:auto;
-    		}
-    
-            table {
-              border-collapse: collapse;
-              border-spacing: 0;
-            }
-        
-            .page-title {
-              width:100%;
-              height:8%;
-              border:1px solid rgba(31, 5, 5, 0.158);
-              background:rgba(31, 5, 5, 0.158);
-            }
-            
-            .title {
-            	width:100%;
-            	height:5%;
-            	border:1px solid rgba(31, 5, 5, 0.158);
-				background:rgba(31, 5, 5, 0.158);
-            	font-size: 22px;
-            	line-height:45px;
-            	
-            }
-        
-            .page-title h3 {
-            	width:100%;
-                font-size: 29px;
-                color: #333333;
-                font-weight: bolder;
-                text-align: center;
-                line-height:30px;
-            }
-            
-            .content {
-            	width:100%;
-            	height:41%;
-            	border:1px solid rgba(31, 5, 5, 0.158);
-				background:rgba(31, 5, 5, 0.158);
-            }
-            
-            .inContent {
-            	width:97%;
-            	height:93%;
-            	margin:auto;
-            	background:white;
-            	border: 1px solid black;
-            	margin-top:1.5%;
-            }
-        
-            #board-search .search-window {
-              padding: 15px 0;
-              background-color: #f9f7f9;
-            }
-        
-            #board-search .search-window .search-wrap {
-              position: relative;
-              /*   padding-right: 124px; */
-              margin: 0 auto;
-              margin-right:20px;
-              width: 70%;
-              max-width: 564px;
-            }
-        
-            #board-search .search-window .search-wrap input {
-              height: 40px;
-              width: 100%;
-              font-size: 14px;
-              padding: 7px 14px;
-              border: 1px solid #ccc;
-            }
-        
-            #board-search .search-window .search-wrap input:focus {
-              border-color: #333;
-              outline: 0;
-              border-width: 1px;
-            }
-        
-            #board-search .search-window .search-wrap .btn {
-              position: absolute;
-              right: 0;
-              top: 0;
-              bottom: 0;
-              width: 108px;
-              padding: 0;
-              
-              font-size: 16px;
-            }
-        
-            .board-table {
-              font-size: 13px;
-              width: 100%;
-              border-top: 1px solid #ccc;
-              border-bottom: 1px solid #ccc;
-            }
-        
-            .board-table a {
-              color: #333;
-              display: inline-block;
-              line-height: 1.4;
-              word-break: break-all;
-              vertical-align: middle;
-            }
-        
-            .board-table a:hover {
-              text-decoration: underline;
-            }
-        
-            .board-table th {
-              text-align: center;
-            }
-        
-            .board-table .th-num {
-              width: 100px;
-              text-align: center;
-            }
-        
-            .board-table .th-date {
-              width: 200px;
-            }
-        
-            .board-table th,
-            .board-table td {
-              padding: 14px 0;
-            }
-        
-            .board-table tbody td {
-              border-top: 1px solid #e7e7e7;
-              text-align: center;
-            }
-        
-            .board-table tbody th {
-              padding-left: 28px;
-              padding-right: 14px;
-              border-top: 1px solid #e7e7e7;
-              text-align: left;
-            }
-        
-            .board-table tbody th p {
-              display: none;
-            }
-        
-            .btn {
-              display: inline-block;
-              padding: 0 30px;
-              font-size: 15px;
-              font-weight: 400;
-              background: transparent;
-              text-align: center;
-              white-space: nowrap;
-              vertical-align: middle;
-              -ms-touch-action: manipulation;
-              touch-action: manipulation;
-              cursor: pointer;
-              -webkit-user-select: none;
-              -moz-user-select: none;
-              -ms-user-select: none;
-              user-select: none;
-              border: 1px solid transparent;
-              text-transform: uppercase;
-              -webkit-border-radius: 0;
-              -moz-border-radius: 0;
-              border-radius: 0;
-              -webkit-transition: all 0.3s;
-              -moz-transition: all 0.3s;
-              -ms-transition: all 0.3s;
-              -o-transition: all 0.3s;
-              transition: all 0.3s;
-            }
-        
-            .btn-dark {
-              background: #555;
-              color: #fff;
-            }
-        
-            .btn-dark:hover,
-            .btn-dark:focus {
-              background: #373737;
-              border-color: #373737;
-              color: #fff;
-            }
-        
-            .btn-dark {
-              background: #555;
-              color: #fff;
-            }
-        
-            .btn-dark:hover,
-            .btn-dark:focus {
-              background: #373737;
-              border-color: #373737;
-              color: #fff;
-            }
-        
-            /* reset */
-        
-            * {
-              list-style: none;
-              text-decoration: none;
-              box-sizing: border-box;
-            }
-        
-            .clearfix:after {
-              content: '';
-              display: block;
-              clear: both;
-            }
-        
-            .container {
-              width: 1100px;
-              margin: 0 auto;
-            }
-        
-            .blind {
-              position: absolute;
-              overflow: hidden;
-              clip: rect(0 0 0 0);
-              margin: -1px;
-              width: 1px;
-              height: 1px;
-            }
+.page-title {
+	width: 100%;
+	height: 8%;
+	border: 1px solid rgba(31, 5, 5, 0.158);
+	background: rgba(31, 5, 5, 0.158);
+}
 
-            .container {
-                width: 80%;
-            }
+.title {
+	width: 100%;
+	height: 5%;
+	border: 1px solid rgba(31, 5, 5, 0.158);
+	background: rgba(31, 5, 5, 0.158);
+	font-size: 22px;
+	line-height: 45px;
+}
 
-            #write {
-              margin-left: 85%;
-              margin-top: 3%;
-            }
+.page-title h3 {
+	width: 100%;
+	font-size: 29px;
+	color: #333333;
+	font-weight: bolder;
+	text-align: center;
+	line-height: 30px;
+}
 
-            #inquire-type {
-              height: 35px;
-              margin-top: 2.5%;
-              margin-left: 2%;
-            }
-            
-            
-          </style>
+.content {
+	width: 100%;
+	height: 41%;
+	border: 1px solid rgba(31, 5, 5, 0.158);
+	background: rgba(31, 5, 5, 0.158);
+}
+
+.inContent {
+	width: 97%;
+	height: 93%;
+	margin: auto;
+	background: white;
+	border: 1px solid black;
+	margin-top: 1.5%;
+}
+
+#board-search .search-window {
+	padding: 15px 0;
+	background-color: #f9f7f9;
+}
+
+#board-search .search-window .search-wrap {
+	position: relative;
+	/*   padding-right: 124px; */
+	margin: 0 auto;
+	margin-right: 20px;
+	width: 70%;
+	max-width: 564px;
+}
+
+#board-search .search-window .search-wrap input {
+	height: 40px;
+	width: 100%;
+	font-size: 14px;
+	padding: 7px 14px;
+	border: 1px solid #ccc;
+}
+
+#board-search .search-window .search-wrap input:focus {
+	border-color: #333;
+	outline: 0;
+	border-width: 1px;
+}
+
+#board-search .search-window .search-wrap .btn {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 108px;
+	padding: 0;
+	font-size: 16px;
+}
+
+.board-table {
+	font-size: 13px;
+	width: 100%;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+.board-table a {
+	color: #333;
+	display: inline-block;
+	line-height: 1.4;
+	word-break: break-all;
+	vertical-align: middle;
+}
+
+.board-table a:hover {
+	text-decoration: underline;
+}
+
+.board-table th {
+	text-align: center;
+}
+
+.board-table .th-num {
+	width: 100px;
+	text-align: center;
+}
+
+.board-table .th-date {
+	width: 200px;
+}
+
+.board-table th, .board-table td {
+	padding: 14px 0;
+}
+
+.board-table tbody td {
+	border-top: 1px solid #e7e7e7;
+	text-align: center;
+}
+
+.board-table tbody th {
+	padding-left: 28px;
+	padding-right: 14px;
+	border-top: 1px solid #e7e7e7;
+	text-align: left;
+}
+
+.board-table tbody th p {
+	display: none;
+}
+
+.btn {
+	display: inline-block;
+	padding: 0 30px;
+	font-size: 15px;
+	font-weight: 400;
+	background: transparent;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	border: 1px solid transparent;
+	text-transform: uppercase;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-ms-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-dark {
+	background: #555;
+	color: #fff;
+}
+
+.btn-dark:hover, .btn-dark:focus {
+	background: #373737;
+	border-color: #373737;
+	color: #fff;
+}
+
+.btn-dark {
+	background: #555;
+	color: #fff;
+}
+
+.btn-dark:hover, .btn-dark:focus {
+	background: #373737;
+	border-color: #373737;
+	color: #fff;
+}
+
+/* reset */
+* {
+	list-style: none;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+.clearfix:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.container {
+	width: 1100px;
+	margin: 0 auto;
+}
+
+.blind {
+	position: absolute;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	margin: -1px;
+	width: 1px;
+	height: 1px;
+}
+
+.container {
+	width: 80%;
+}
+
+#write {
+	margin-left: 85%;
+	margin-top: 3%;
+}
+
+#inquire-type {
+	height: 35px;
+	margin-top: 2.5%;
+	margin-left: 2%;
+}
+</style>
 </head>
 <body>
-	<%@ include file="../common/menubar.jsp" %>
+	<%@ include file="../common/menubar.jsp"%>
 	<section id="body">
 		<aside>
 			<section id="my-info-section1">
 				<div class="my-info" id="my-info">
 					<h3 id="my-info-text">마이페이지</h3>
 					<img src="img/smile.jpg"><br>
-					<p id="name">&nbsp;&nbsp;&nbsp;<%= loginUser.getmName() %></p>
-					<br>
-					<br>
+					<p id="name">
+						&nbsp;&nbsp;&nbsp;<%=loginUser.getmName()%></p>
+					<br> <br>
 					<button class="myinfo-button" id="my-info-logout"
 						onclick="logout();">로그아웃</button>
 					<button class="myinfo-button" id="my-info-modify"
@@ -450,31 +444,57 @@
 
 		<section id="marginBody">
 
-			<section class="notice" style="border:1px solid black">
+			<section class="notice" style="border: 1px solid black">
 				<div class="page-title">
-				 	<h3>문의 내역</h3>
-				</div> 
-				<div class="title">&nbsp;&nbsp;&nbsp;&nbsp;제목 : <%= q.getqTitle() %></div>
+					<h3>문의 내역</h3>
+				</div>
+				<div class="title">
+					&nbsp;&nbsp;&nbsp;&nbsp;제목 :
+					<%=q.getqTitle()%></div>
 				<div class="content">
 					<div class="inContent">
-						<%= q.getqContent() %>
+						<%=q.getqContent()%>
 					</div>
 				</div>
 				<div class="title">&nbsp;&nbsp;&nbsp;&nbsp;답변</div>
 				<div class="content">
 					<div class="inContent">
-						<% if(q.getAnswer() != null) { %>
-							<%= q.getAnswer() %>
-						<% } %>
+						<%
+							if (q.getAnswer() != null) {
+						%>
+						<%=q.getAnswer()%>
+						<%
+							}
+						%>
 					</div>
 				</div>
 			</section>
+			<%if(loginUser.getmId().equals("admin")) {%>
+				<% if(q.getAnswer() == null) { %>
+					<div style="width:80%; height:10%; margin-left:auto; margin-right:auto;">
+						<button type="submit" class="sub" style="float:right; margin-top:1%; width:15%; height:30%" onclick="Answer()">답변하기</button>
+					</div>
+				<% } else { %>
+					<div style="width:80%; height:10%; margin-left:auto; margin-right:auto;">
+						<button type="submit" class="sub" style="float:right; margin-top:1%; width:15%; height:30%" onclick="Answer()">답변수정하기</button>
+					</div>	
+				<% } %>
+			<% }else { %>
+			<div style="width:80%; height:10%; margin-left:auto; margin-right:auto;">
+				<button type="submit" class="sub" style="float:right; margin-top:1%; width:15%; height:30%" onclick="QUpdate()">수정하기</button>
+			</div>
+			<% } %>
 		</section>
 	</section>
-	
+
 	<script>
-		// 게시판 상세 보기 기능 구현
+		function Answer() {
+			location.href="<%= request.getContextPath() %>/form.an?qId=<%= q.getqId()%>&no=1";
+		}
 		
+		function AUpdate() {
+			location.href="<%= request.getContextPath() %>/form.an?qId=<%= q.getqId()%>&no=2";
+		}
 	</script>
 </body>
 </html>
