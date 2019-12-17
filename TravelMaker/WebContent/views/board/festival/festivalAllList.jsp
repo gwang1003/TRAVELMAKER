@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8" import="java.util.*, board.model.vo.*"%>
 
 <%
-	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
 	ArrayList<Board> blist = (ArrayList<Board>) request.getAttribute("blist");
 	ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
 	System.out.println(blist);
@@ -37,7 +36,7 @@
 <style>
 body {
 	width: 1500px;
-	height: 1500px;
+	height: 2000px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -50,7 +49,7 @@ body {
 #choice1 {
 	float: left;
 	width: 1050px;
-	height: 1200px;
+	height: 1800px;
 	margin-left: 120px;
 	border-bottom: 1px solid black;
 	padding: 0;
@@ -159,7 +158,7 @@ body {
 
 #festivalTable {
 	width: 100%;
-	height: 800px;
+	height: 1500px;
 	margin-left: 20px;
 	magin-right: 20px;
 }
@@ -256,7 +255,7 @@ span, p {
 
 			<div id="festivalTable">
 
-				<div class="thumbnailArea" style="width: 1000px; height: 1000px;">
+				<div class="thumbnailArea" style="width: 1000px; height: 1600px;">
 					<%
 						for (Board b : blist) {
 					%>

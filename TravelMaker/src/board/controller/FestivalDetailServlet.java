@@ -72,7 +72,6 @@ public class FestivalDetailServlet extends HttpServlet {
 		// 2. 해당 게시판의 사진들 리스트 조회
 		ArrayList<Attachment> fileList = bService.selectThumbnail(bId);
 		Information in = bService.selectInformation(bId);
-		System.out.println("파일좀가져와 : "+fileList);
 		
 		if(fileList != null) {
 			request.setAttribute("board", board);
