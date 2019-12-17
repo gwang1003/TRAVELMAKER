@@ -250,6 +250,7 @@
                         <li class="bigContent">고객센터</li>
                         <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.qa?mSeq=' + <%= loginUser.getM_seq()%>">문의 내역</a></li>
                         <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/PlanCalendar.jsp'">새 마이페이지</a></li>
+                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/PlanDetail.jsp'">플랜창</a></li>
                     </ul>
                 </div>
             </section>
