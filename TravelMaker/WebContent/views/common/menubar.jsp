@@ -149,7 +149,7 @@ nav ul li a.active {
 					<li><a id = "a1" href="#aboutMe" onclick="goBest();">BEST</a></li>
 					<li><a id="a1" href="#" onclick="goFes();">축제</a></li>
 					<li><a id="a2" href="#guestBook" onclick="goTravel();">여행</a></li>
-					<li><a id="a3" href="<%= contextPath %>/views/Sleep/SleepAll.jsp">숙박</a></li>
+					<li><a id="a3" href="#"onclick="goSleep();">숙박</a></li>
 					<li><a id="a3" href="#gallery" onclick="goCom();">커뮤니티</a></li>
 					<% if(loginUser != null) { %>
 						<% if(loginUser.getmId().equals("admin")) { %>
@@ -306,12 +306,13 @@ nav ul li a.active {
 		function goTravel(){
 			location.href="<%= contextPath %>/travelall.th";
 		}
+		--%>
 		function goSleep(){
-			location.href="<%= contextPath %>/sleepall.th";
+			location.href="<%= contextPath %>/list.sl";
 		}
 		function goCom(){
 			location.href="<%= contextPath %>/communityall.th";
-		} --%>
+		} 
 		function goMyPage() {
 			location.href="<%= contextPath %>/views/myPage/Plan.jsp";
 		}

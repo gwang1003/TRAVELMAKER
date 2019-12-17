@@ -161,7 +161,6 @@ public class SleepDao {
 		Statement stmt = null;
 	      ResultSet rset = null;
 	      ArrayList<Sleep> list = null;
-	      Properties prop = null;
 
 	      String sql = prop.getProperty("selectBList");
 
@@ -189,7 +188,6 @@ public class SleepDao {
 	      ArrayList<Attachment> list = new ArrayList<Attachment>();
 	      PreparedStatement pstmt = null;
 	      ResultSet rset = null;
-	      Properties prop = null;
 
 	      String sql = prop.getProperty("selectFList");
 
@@ -199,8 +197,8 @@ public class SleepDao {
 
 	         while (rset.next()) {
 	            Attachment at = new Attachment();
-	            at.setbId(rset.getInt("sId"));
-	            at.setChangeName(rset.getString("change_name"));
+	            at.setbId(rset.getInt("b_id"));
+	            at.setChangeName(rset.getString("newfilename"));
 
 	            list.add(at);
 	         }
