@@ -110,16 +110,22 @@ public class BoardDao {
 
 	// 게시판 조회용
 	public ArrayList<Board> selectBList(Connection con, int currentPage, int boardLimit) {
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Board> list = null;
 
 		String query = prop.getProperty("selectBList");
 
 		try {
-			stmt = con.createStatement();
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
 
-			rs = stmt.executeQuery(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rs = pstmt.executeQuery();
 
 			list = new ArrayList<Board>();
 
@@ -133,7 +139,7 @@ public class BoardDao {
 			e.printStackTrace();
 		} finally {
 			close(rs);
-			close(stmt);
+			close(pstmt);
 		}
 		return list;
 	}
@@ -148,6 +154,13 @@ public class BoardDao {
 
 		try {
 			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
 			rset = pstmt.executeQuery();
 
 			while (rset.next()) {
