@@ -99,18 +99,29 @@ label{
       <h1 align="center" style="font-family: 'Do Hyeon', sans-serif;">숙박 작성</h1>
 
       <!-- 파일 업로드를 위해서는 enctype을 지정해줘야 함 -->
-      <form action="<%= contextPath %>/insert.fe" method="post"
+      <form action="<%= contextPath %>/insert.sl" method="post"
          enctype="multipart/form-data"> 
          <div class="insertArea">
             <table align="center">
                <br>
                <tr>
-                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">숙박 타입 </td>
-                  <td colspan="3"><input type="text" size="10" name="stype" text-aling="center"><a style="margin-left:3%; color:gray;">(1.호텔   2.모텔  3.펜션)</a></td>
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">숙박 이름 </td>
+                  <td>
+                  <input name="sName">
+                  </td>
+                 <tr>
+                  <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">숙박 타입</td>
+                  <td colspan="3"><select name="sType">
+                     <option>----</option>
+                     <option value=1>호텔</option>
+                     <option value=2>모텔</option>
+                     <option value=3>펜션</option>
+                  </select></td>
+                  </tr>
                </tr>
                <tr>
                   <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">지역</td>
-                  <td colspan="3"><select name="lcode">
+                  <td colspan="3"><select name="lCode">
                      <option>----</option>
                      <option value=10>서울특별시</option>
                      <option value=20>경기도</option>
@@ -132,7 +143,7 @@ label{
 
                <tr>
                   <td width="100px" style="font-family: 'Do Hyeon', sans-serif;">객실 정보</td>
-                  <td colspan="3"><textarea name="sinfor" rows="7" cols="104"
+                  <td colspan="3"><textarea name="sContent" rows="7" cols="104"
                         style="resize: none;"></textarea></td>
                   
                       

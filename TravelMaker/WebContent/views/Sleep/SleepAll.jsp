@@ -3,7 +3,7 @@
    import="member.model.vo.*, java.util.*,sleep.model.vo.*"%>
 
 <%
-       ArrayList<Sleep> blist = (ArrayList<Sleep>) request.getAttribute("blist");
+       ArrayList<Sleep> slist = (ArrayList<Sleep>) request.getAttribute("slist");
        ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
     
     
@@ -22,6 +22,7 @@
    rel="stylesheet"
    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
    crossorigin="anonymous">
+   
 <script type="text/javascript"
    src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="external.css">
@@ -308,7 +309,12 @@ nav ul li a.active {
          <div class="wrap">
             <a class="in-wrap" href="<%=contextPath%>/views/Sleep/SleepDetail.jsp">
                <div class="thumb-pic">
-                  <img src='<%= request.getContextPath()%>/resources/images/호텔3.jpg'>
+               <%for(Sleep s : slist){ %>
+               <%for(Attachment at : flist){ %>
+                  <img src="<%=contextPath%>/resources/festival_uploadFile/<%=at.getChangeName()%>">
+                  <%}%>
+                  
+                  
                </div>
                <div class="stage gra_black_vertical">
                   <div class="name">
@@ -320,7 +326,7 @@ nav ul li a.active {
 
                   </div>
 
-                  <h2>신라호텔</h2>
+                  <h2><%=s.getsName() %></h2>
                   <div class="price">
                      <div class="map_html">
                         <p>
@@ -330,7 +336,7 @@ nav ul li a.active {
                   </div>
                </div>
             </a>
-
+	<%} %>
 
          </div>
 
@@ -493,19 +499,7 @@ nav ul li a.active {
       </div>
    </div>
 
-<%
-				if (loginUser != null) {
-			%>
-			<div id="write">
-				<button type="button" id="insertBtn"
-					onclick="location.href='<%=contextPath%>/views/board/Sleep/SleepInert.jsp'">
-					<img src="<%=contextPath%>/resources/images/edit.png" width="40px"
-						height="40px">
-				</button>
-			</div>
-			<%
-				}
-			%>
+
 
 
 

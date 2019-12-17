@@ -18,7 +18,7 @@ public class SleepDao {
 	private Properties prop = new Properties();
 	
 	public SleepDao() {
-		String fileName = SleepDao.class.getResource("sql/Sleep/Sleep-query.properties").getPath();
+		String fileName = SleepDao.class.getResource("/sql/Sleep/Sleep-query.properties").getPath();
 		
 		try {
 			prop.load(new FileReader(fileName));
@@ -46,14 +46,14 @@ public class SleepDao {
 		
 		String sql = prop.getProperty("insertSleep");
 		
+		System.out.println(sql);
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, s.getsId());
-			pstmt.setString(2, s.getsType());
-			pstmt.setString(3, s.getsName());
-			pstmt.setString(4, s.getsContent());
-			pstmt.setInt(5, s.getrId());
-			pstmt.setInt(6, s.getlCode());
+			pstmt.setString(1, s.getsType());
+			pstmt.setString(2, s.getsName());
+			pstmt.setString(3, s.getsContent());	
+			pstmt.setInt(4, s.getlCode());
 			
 			result = pstmt.executeUpdate();
 

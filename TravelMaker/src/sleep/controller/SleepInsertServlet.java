@@ -40,8 +40,9 @@ public class SleepInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {request.setCharacterEncoding("UTF-8");
-
+	System.out.println("1");
 	if (ServletFileUpload.isMultipartContent(request)) {
+		System.out.println("2");
 		int maxSize = 1024 * 1024 * 10;
 
 		String root = request.getSession().getServletContext().getRealPath("/");
@@ -76,21 +77,18 @@ public class SleepInsertServlet extends HttpServlet {
 		}
 
 		// 3_1. 파일 외에 게시판 제목, 내용, 작성자 회원 번호 받아와서 Board 객체 생성
-		int sId =Integer.parseInt(multiRequest.getParameter("sId"));
+		
 		String sType = multiRequest.getParameter("sType");
 		String sName = multiRequest.getParameter("sName");
 		String sContent  = multiRequest.getParameter("sContent");
-		int rId =Integer.parseInt(multiRequest.getParameter("rId"));
 		int lCode =Integer.parseInt(multiRequest.getParameter("lCode"));
 		
 
 		
 		Sleep s = new Sleep();
-		s.setsId(sId);
 		s.setsType(sType);
 		s.setsName(sName);
 		s.setsContent(sContent);
-		s.setrId(rId);
 		s.setlCode(lCode);
 
 		
@@ -137,6 +135,7 @@ public class SleepInsertServlet extends HttpServlet {
 		// 4. 사진 게시판 작성용 비즈니스 로직을 처리할 서비스 요청
 		// (board 객체, Attachment 리스트 전달)
 		int result = new SleepService().insertSleep(s,fileList);
+		System.out.println("ㅎㅇ");
 
 		if (result > 0) {
 			response.sendRedirect("list.sl");
