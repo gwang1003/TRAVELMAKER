@@ -75,7 +75,7 @@ public class BoardDao {
 			if (rset.next()) {
 				b = new Board(rset.getInt("b_id"), rset.getDate("write_date"), rset.getDate("update_date"),
 						rset.getString("title"), rset.getString("content"), rset.getInt("view_cnt"),
-						rset.getString("writer"), rset.getString("status"), rset.getInt("b_type"));
+						rset.getString("writer"), rset.getString("status"), rset.getInt("l_code"), rset.getInt("b_type"));
 
 			}
 
@@ -94,9 +94,45 @@ public class BoardDao {
 	}
 
 	public int deleteBoard(Connection con, int bid) {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("deleteBoard");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, bid);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
 	}
+	
+	public int deleteAttachment(Connection con, int bid) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		String query = prop.getProperty("deleteAttachment");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, bid);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
 
 	public int insertBoard(Connection con, Board b) {
 		// TODO Auto-generated method stub
@@ -411,4 +447,5 @@ public class BoardDao {
 		return result;
 	}
 
+	
 }

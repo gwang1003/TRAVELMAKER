@@ -51,6 +51,7 @@ public class BoardService {
 	public Board selectBoardNoCnt(int bid) {
 		Connection con = getConnection();
 		Board b = new BoardDao().selectBoard(con, bid);
+		close(con);
 		return b;
 	}
 
@@ -58,7 +59,29 @@ public class BoardService {
 	public int deleteBoard(int bid) {
 		Connection con = getConnection();
 		int result = new BoardDao().deleteBoard(con, bid);
-		return 0;
+		
+		if(result>0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
+	}
+	
+	public int deleteAttachment(int bid) {
+		Connection con = getConnection();
+		int result = new BoardDao().deleteAttachment(con, bid);
+		
+		if(result>0) {
+			commit(con);
+		}else {
+			rollback(con);
+		}
+		
+		close(con);
+		return result;
 	}
 
 	// 6. 게시글 입력용 서비스
@@ -152,6 +175,9 @@ public class BoardService {
 
 		return new ArrayList<Reply>();
 	}
+
+
+	
 
 	
 
