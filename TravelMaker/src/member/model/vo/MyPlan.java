@@ -3,13 +3,14 @@ package member.model.vo;
 import java.util.Date;
 
 public class MyPlan {
-	private int pId;
+	private String pId;
 	private String mId;
-	private String pName;
-	private Date date;
+	private String pTitle;
+	private String pContent;
+	private Date startDate;
+	private Date endDate;
 	private String startTime;
 	private String endTime;
-	private String content;
 	
 	public MyPlan() {}
 	
