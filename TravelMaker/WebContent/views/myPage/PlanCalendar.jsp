@@ -94,7 +94,7 @@
       ,dateClick: function() {
     	  var left = (screen.width/2)-300;
     	  var top = (screen.height/2)-225;
-    	  var url = "<%= request.getContextPath() %>/views/myPage/PlanDetail.jsp";
+    	  var url = "<%= request.getContextPath() %>/views/myPage/PlanList.jsp";
     	  var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=450" + ",top=" + top + ",left=" + left);
     	  uploadWin.moveTo(left, top);
     	  uploadWin.focus();
@@ -107,11 +107,19 @@
       , eventClick:function(event) {
     	  var left = (screen.width/2)-300;
     	  var top = (screen.height/2)-225;
-    	  var url = "<%= request.getContextPath() %>/views/myPage/PlanDetail.jsp";
+    	  var url = "<%= request.getContextPath() %>/views/myPage/PlanList.jsp";
     	  var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=450" + ",top=" + top + ",left=" + left);
     	  uploadWin.moveTo(left, top);
     	  uploadWin.focus();
       }
+      <%-- , eventClick:function(event) {
+    	  var left = (screen.width/2)-300;
+    	  var top = (screen.height/2)-225;
+    	  var url = "<%= request.getContextPath() %>/views/myPage/PlanDetail.jsp";
+    	  var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=450" + ",top=" + top + ",left=" + left);
+    	  uploadWin.moveTo(left, top);
+    	  uploadWin.focus();
+      } --%>
     });
 
     calendar.render();
@@ -163,7 +171,15 @@
     width:100%;
     height:100%; --%>
   }
-
+	
+  .fc-rigid {
+  	cursor: pointer;
+  	/* fc-widget-content fc-week-number */
+  }
+  
+  .fc-week-number {
+  	display:none;
+  }
 </style>
 </head>
 <body>

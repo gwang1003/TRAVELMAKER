@@ -109,7 +109,7 @@ public class PlanDao {
 
 	
 	// 계획 수정 
-	public int updatePlan(Connection conn, MyPlan mp) {
+	public int updatePlan(Connection conn, MyPlan mp, int userSeq) {
 		int result = 0;
 		
 		PreparedStatement pstmt = null;

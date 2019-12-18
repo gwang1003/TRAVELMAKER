@@ -3,42 +3,60 @@ package member.model.vo;
 import java.util.Date;
 
 public class MyPlan {
-	private String pId;
-	private String mId;
-	private String pTitle;
+	private int pSeq;
+	private int mSeq;
+	private String pName;
 	private String pContent;
 	private Date startDate;
 	private Date endDate;
 	private String startTime;
 	private String endTime;
-	
-	public MyPlan() {}
-	
-	public MyPlan(int pId, String mId, String pName, Date date, String startTime, String endTime, String content) {
+	private String fileName;
+
+	public MyPlan() {
+	}
+
+	public MyPlan(int pSeq, int mSeq, String pName, String pContent, Date startDate, Date endDate, String startTime,
+			String endTime, String fileName) {
 		super();
-		this.pId = pId;
-		this.mId = mId;
+		this.pSeq = pSeq;
+		this.mSeq = mSeq;
 		this.pName = pName;
-		this.date = date;
+		this.pContent = pContent;
+		this.startDate = startDate;
+		this.endDate = endDate;
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.content = content;
+		this.fileName = fileName;
 	}
 
-	public int getpId() {
-		return pId;
+	public MyPlan(int mSeq, String pName, String pContent, Date startDate, Date endDate, String startTime,
+			String endTime, String fileName) {
+		super();
+		this.mSeq = mSeq;
+		this.pName = pName;
+		this.pContent = pContent;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.fileName = fileName;
 	}
 
-	public void setpId(int pId) {
-		this.pId = pId;
+	public int getpSeq() {
+		return pSeq;
 	}
 
-	public String getmId() {
-		return mId;
+	public void setpSeq(int pSeq) {
+		this.pSeq = pSeq;
 	}
 
-	public void setmId(String mId) {
-		this.mId = mId;
+	public int getmSeq() {
+		return mSeq;
+	}
+
+	public void setmSeq(int mSeq) {
+		this.mSeq = mSeq;
 	}
 
 	public String getpName() {
@@ -49,12 +67,28 @@ public class MyPlan {
 		this.pName = pName;
 	}
 
-	public Date getDate() {
-		return date;
+	public String getpContent() {
+		return pContent;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setpContent(String pContent) {
+		this.pContent = pContent;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public String getStartTime() {
@@ -73,20 +107,20 @@ public class MyPlan {
 		this.endTime = endTime;
 	}
 
-	public String getContent() {
-		return content;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	@Override
 	public String toString() {
-		return "MyPlan [pId=" + pId + ", mId=" + mId + ", pName=" + pName + ", date=" + date + ", startTime="
-				+ startTime + ", endTime=" + endTime + ", content=" + content + "]";
+		return "MyPlan [pSeq=" + pSeq + ", mSeq=" + mSeq + ", pName=" + pName + ", pContent=" + pContent
+				+ ", startDate=" + startDate + ", endDate=" + endDate + ", startTime=" + startTime + ", endTime="
+				+ endTime + ", fileName=" + fileName + "]";
 	}
 
-	
 	
 }

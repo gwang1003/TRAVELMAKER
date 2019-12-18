@@ -8,6 +8,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous">
+</script>
 <title>Document</title>
 <style>
 .background, .container {
@@ -26,14 +31,14 @@
 .card-plan {
 	width: 100px;
 	height: 100px;
-	float:left;
-	margin-top : 3%;
+	float: left;
+	margin-top: 3%;
 	margin-left: 35%;
 }
 
 h2 {
-	margin-top:60px;
-	margin-left:50%;
+	margin-top: 60px;
+	margin-left: 50%;
 }
 
 .week {
@@ -97,17 +102,11 @@ keyframes active { 0% {
 
 30%
 {
-opacity
-:
- 
-1;
+opacity: 1;
 }
 100%
 {
-opacity
-:
- 
-0;
+opacity: 0;
 }
 }
 .week-day p {
@@ -144,6 +143,7 @@ opacity
 }
 
 .week-day-task-difficulty, .week-day-task-duration {
+	
 }
 
 .week-day-task-difficulty {
@@ -200,13 +200,19 @@ opacity
 	.week-day-task {
 		width: calc(100% - 120px);
 	}
-	
 	.box {
 		width: 400px;
 	}
-	
 	.plan-content {
 		width: 100%;
+	}
+	
+	input[type=text] {
+		border: none; 
+		border-right: 0px; 
+		border-top: 0px; 
+		boder-left: 0px; 
+		boder-bottom: 0px;
 	}
 }
 </style>
@@ -229,61 +235,101 @@ opacity
     if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
     return true;
   }
-
-  
-    }
-  });
-
-})(jQuery); // Fully reference jQuery after this point.
+}); // Fully reference jQuery after this point.
 
     </script>
 </head>
 <body>
-	<div class="container">
-		<div class="container-scroll">
-		<img class="card-plan" name="plan-img"
-				src="<%= request.getContextPath() %>/resources/images/강원도.jpg">
-			<h2 class="plan-name" name="plan-name">제목</h2>
-			<div class="week">
-				<div class="week-day">
-					<p class="week-day-name">내용</p>
-					<div class="holder">
-						<div class="week-day-task">
-							<input type="text" name="plan-content" class="plan-content" style="border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px; width:100%; height:100%;">	
-						</div>
-					</div>
+	<form  method="post" action="<%=request.getContextPath()%>/update.pl" enctype="multipart/form-data">
+		<div class="container">
+			<div class="container-scroll">
+				<div id="titleImgArea">
+					<img class="card-plan" name="plan-img" id="plan-img" width="100px"
+						height="100px;">
 				</div>
-				<div class="week-day">
-					<p class="week-day-name">시작/종료 일자</p>
-					<div class="holder">
-						<div class="box">
+				<input type="text" class="plan-name" name="plan-name" placeholder="계획명" width="200px" height="100px" style="font-size:25px; margin-top:35px;">
+				<div class="week">
+					<div class="week-day">
+						<p class="week-day-name">내용</p>
+						<div class="holder">
 							<div class="week-day-task">
-								<p class="week-day-task-difficulty">시작 : <input type="date" name="plan-start-date"></p>
-								<p class="week-day-task-difficulty">종료 : <input type="date" name="plan-end-date" ></p>
+								<input type="text" name="plan-content" class="plan-content"
+									style="border: none; border-right: 0px; border-top: 0px; boder-left: 0px; boder-bottom: 0px; width: 100%; height: 100%;">
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="week-day">
-					<p class="week-day-name">시작/종료 시간</p>
-					<div class="holder">
-						<div class="box">
-							<div class="week-day-task">
-								<p class="week-day-task-difficulty">시작 : <input type="time" name="plan-start-time"></p>
-								<p class="week-day-task-difficulty">종료 : <input type="time" name="plan-end-time"></p>
+					<div class="week-day">
+						<p class="week-day-name">시작/종료 일자</p>
+						<div class="holder">
+							<div class="box">
+								<div class="week-day-task">
+									<p class="week-day-task-difficulty">
+										시작 : <input type="date" name="plan-start-date">
+									</p>
+									<p class="week-day-task-difficulty">
+										종료 : <input type="date" name="plan-end-date">
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
+					<div class="week-day">
+						<p class="week-day-name">시작/종료 시간</p>
+						<div class="holder">
+							<div class="box">
+								<div class="week-day-task">
+									<p class="week-day-task-difficulty">
+										시작 : <input type="time" name="plan-start-time">
+									</p>
+									<p class="week-day-task-difficulty">
+										종료 : <input type="time" name="plan-end-time">
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button class="btn btn-success"
+						style="margin-left: 45%"
+						onclick="location.href='<%=request.getContextPath()%>'">취소</button>
+					<button class="btn btn-success">변경</button>
 				</div>
-				<button type="button" class="btn btn-success" style="margin-left:45%" onclick="location.href='<%= request.getContextPath() %>'">취소</button>
-				<button type="button" class="btn btn-success" onclick="location.href='<%= request.getContextPath() %>/updatePlan.pl'">변경</button>
+				<div class="week-space"></div>
 			</div>
-			<div class="week-space"></div>
 		</div>
-	</div>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-		crossorigin="anonymous"></script>
+		<div id="fileArea">
+			<input type="file" id="thumbnailImg1" name="thumbnailImg1"
+				onchange="LoadImg(this,1)">
+		</div>
+		<script>
+		$(function() {
+			$("#fileArea").hide();
+
+			$("#titleImgArea").click(function() {
+				$("#thumbnailImg1").click();
+			});
+		});
+		
+		function LoadImg(value, num) {
+			if (value.files && value.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+
+					switch (num) {
+					case 1:
+						// e.target.result -> data:URL (파일의 컨텐츠)
+						$("#plan-img").attr("src", e.target.result);
+						console.log(e.target.result);
+						console.log("쉿");
+						break;
+					};
+				}
+				// 파일 내용을 읽어들여 dataURL 형식의 문자열로 설정
+				reader.readAsDataURL(value.files[0]);
+			}
+		}
+		</script>
+	</form>
 	<script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
 
 </body>

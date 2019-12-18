@@ -6,19 +6,23 @@ import static common.JDBCTemplate.getConnection;
 import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
+import board.model.dao.BoardDao;
+import board.model.vo.Attachment;
+import board.model.vo.Board;
+import board.model.vo.Information;
 import member.model.dao.MemberDao;
 import member.model.dao.PlanDao;
 import member.model.vo.Member;
 import member.model.vo.MyPlan;
 
 public class PlanService {
-
-	// 계획 추가
-	public int insertPlan(MyPlan myplan) {
+	// 계획 변경
+	public int updatePlan(MyPlan p, int userSeq) {
 		Connection conn = getConnection();
-
-		int result = new PlanDao().insertPlan(conn, myplan);
+		
+		int result = new PlanDao().updatePlan(conn, p, userSeq);
 
 		if (result > 0) {
 			commit(conn);
@@ -29,25 +33,6 @@ public class PlanService {
 		close(conn);
 
 		return result;
-	}
-
-	// 계획 변경
-	public MyPlan updatePlan(MyPlan mp) {
-		Connection conn = getConnection();
-		MyPlan updatePlan = null;
-
-		int result = new PlanDao().updatePlan(conn, mp);
-
-		if (result > 0) {
-			updatePlan = new PlanDao().selectPlan(conn, mp.getpId());
-			commit(conn);
-		} else {
-			rollback(conn);
-		}
-
-		close(conn);
-
-		return updatePlan;
 	}
 
 	// 계획 삭제
