@@ -254,29 +254,29 @@ opacity
 					</div>
 				</div>
 				<div class="week-day">
-					<p class="week-day-name" name="plan-start-date">시작/종료 일자</p>
+					<p class="week-day-name">시작/종료 일자</p>
 					<div class="holder">
 						<div class="box">
 							<div class="week-day-task">
-								<p class="week-day-task-difficulty">시작 : <input type="date"></p>
-								<p class="week-day-task-difficulty">종료 : <input type="date"></p>
+								<p class="week-day-task-difficulty">시작 : <input type="date" name="plan-start-date"></p>
+								<p class="week-day-task-difficulty">종료 : <input type="date" name="plan-end-date" ></p>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="week-day">
-					<p class="week-day-name" name="plan-start-time">시작/종료 시간</p>
+					<p class="week-day-name">시작/종료 시간</p>
 					<div class="holder">
 						<div class="box">
 							<div class="week-day-task">
-								<p class="week-day-task-difficulty">시작 : <input type="time"></p>
-								<p class="week-day-task-difficulty">종료 : <input type="time"></p>
+								<p class="week-day-task-difficulty">시작 : <input type="time" name="plan-start-time"></p>
+								<p class="week-day-task-difficulty">종료 : <input type="time" name="plan-end-time"></p>
 							</div>
 						</div>
 					</div>
 				</div>
-				<button type="button" class="btn btn-success" style="margin-left:45%">취소</button>
-				<button type="button" class="btn btn-success">삽입</button>
+				<button type="button" class="btn btn-success" style="margin-left:45%" onclick="location.href='<%= request.getContextPath() %>'">취소</button>
+				<button type="button" class="btn btn-success" onclick="location.href='<%= request.getContextPath() %>/updatePlan.pl'">변경</button>
 			</div>
 			<div class="week-space"></div>
 		</div>
