@@ -1,6 +1,7 @@
 package QA.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,20 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import QA.model.service.QAService;
-import QA.model.vo.QA;
 import member.model.vo.Member;
 
 /**
- * Servlet implementation class QAUpdateServlet
+ * Servlet implementation class QADeleteServlet
  */
-@WebServlet("/update.qa")
-public class QAUpdateServlet extends HttpServlet {
+@WebServlet("/delete.qa")
+public class QADeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QAUpdateServlet() {
+    public QADeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,17 +30,13 @@ public class QAUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String content = request.getParameter("content");
-		String title = request.getParameter("title");
-		int type = Integer.parseInt(request.getParameter("type"));
 		int qId = Integer.parseInt(request.getParameter("qId"));
-		QA q = new QA(qId, type, title, content);
-		
-		int result = new QAService().updateQuestion(q);
+		Member m = (Member)request.getSession().getAttribute("loginUser");
+		int result = new QAService().deleteQuestion(qId);
 		
 		if(result > 0) {
-			response.sendRedirect("detail.qa?qId=" + qId);
-		} 
+			response.sendRedirect("select.qa?mSeq=" + m.getM_seq());
+		}
 	}
 
 	/**

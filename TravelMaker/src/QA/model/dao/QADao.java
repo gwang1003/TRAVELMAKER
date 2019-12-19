@@ -146,8 +146,7 @@ public class QADao {
 			pstmt.setInt(1, q.getqType());
 			pstmt.setString(2, q.getqTitle());
 			pstmt.setString(3, q.getqContent());
-			pstmt.setString(4, q.getWriter());
-			pstmt.setInt(5, q.getqId());
+			pstmt.setInt(4, q.getqId());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {

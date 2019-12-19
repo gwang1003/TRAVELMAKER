@@ -481,7 +481,8 @@ table {
 				<% } %>
 			<% }else { %>
 			<div style="width:80%; height:10%; margin-left:auto; margin-right:auto;">
-				<button type="submit" class="sub" style="float:right; margin-top:1%; width:15%; height:30%" onclick="QUpdate()">수정하기</button>
+				<button type="submit" class="sub" style="float:right; margin-top:1%; width:15%; height:30%" onclick="QDelete()">삭제하기</button>
+				<button type="submit" class="sub" style="float:right; margin-top:1%; width:15%; height:30%" onclick="QUpdate()">수정하기</button>	
 			</div>
 			<% } %>
 		</section>
@@ -489,11 +490,15 @@ table {
 
 	<script>
 		function Answer() {
-			location.href="<%= request.getContextPath() %>/form.an?qId=<%= q.getqId()%>&no=1";
+			location.href="<%= request.getContextPath() %>/form.an?qId=<%= q.getqId()%>";
 		}
 		
-		function AUpdate() {
-			location.href="<%= request.getContextPath() %>/form.an?qId=<%= q.getqId()%>&no=2";
+		function QUpdate() {
+			location.href="<%= request.getContextPath() %>/form.qa?qId=<%= q.getqId()%>";
+		}
+		
+		function QDelete() {
+			location.href="<%= request.getContextPath() %>/delete.qa?qId=<%= q.getqId()%>";
 		}
 	</script>
 </body>

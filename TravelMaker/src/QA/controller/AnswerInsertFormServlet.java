@@ -30,10 +30,8 @@ public class AnswerInsertFormServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int qId = Integer.parseInt(request.getParameter("qId"));
-		int no = Integer.parseInt(request.getParameter("no"));
-		System.out.println(no);
 		QA q = new QAService().selectQA(qId);
-		
+		System.out.println(q.getAnswer());
 			request.setAttribute("q", q);
 			request.getRequestDispatcher("views/QA/AnswerInsertView.jsp").forward(request, response);
 	}
