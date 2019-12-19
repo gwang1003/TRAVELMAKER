@@ -46,6 +46,14 @@ public class QA {
 	
 	
 
+	public QA(int qId, int qType, String qTitle, String qContent) {
+		super();
+		this.qId = qId;
+		this.qType = qType;
+		this.qTitle = qTitle;
+		this.qContent = qContent;
+	}
+
 	public QA(int qType, String qTitle, String qContent) {
 		super();
 		this.qType = qType;

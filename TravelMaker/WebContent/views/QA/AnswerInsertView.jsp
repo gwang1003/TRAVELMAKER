@@ -3,6 +3,7 @@
 
 <%
 	QA q = (QA) request.getAttribute("q");
+	System.out.println(q.getAnswer());
 %>
 <!DOCTYPE html>
 <html>
@@ -122,7 +123,7 @@ form {
 					<%=q.getqContent()%>
 				</div>
 			</div>
-			<input type="text" name="qId" value="<%= q.getqId() %>">
+			<input type="text" name="qId" value="<%= q.getqId() %>" hidden>
 			<input type="text" id="HC" name="content" hidden>
 		</div>
 		<div class="A">
@@ -146,9 +147,11 @@ form {
 		});
 	</script>
 
-	<script>
-		$(".note-editable").html(<%= q.getAnswer() %>)
+	<script>	
 		$(document).ready(function() {
+			<% if(q.getAnswer() != null) { %>
+			$(".note-editable").html('<%= q.getAnswer() %>')
+			<% } %>
 			$("button").mouseenter(function() {
 				$("#HC").val($(".note-editable").html())
 			})
