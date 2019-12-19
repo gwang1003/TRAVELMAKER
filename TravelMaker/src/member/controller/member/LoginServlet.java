@@ -1,6 +1,7 @@
 package member.controller.member;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import member.model.service.MemberService;
+import member.model.service.PlanService;
 import member.model.vo.Member;
+import member.model.vo.MyPlan;
 
 /**
  * Servlet implementation class LoginServlet
@@ -37,12 +40,13 @@ public class LoginServlet extends HttpServlet {
 		String loginPass = request.getParameter("loginPass");
 		
 		Member loginUser = new MemberService().loginMember(loginId, loginPass);
-		
+		ArrayList<MyPlan> planList = new PlanService().selectAllPlan();
 		if(loginUser != null) {
 			HttpSession session = request.getSession();
 			
 			session.setAttribute("msg", "로그인에 성공하였습니다");
 			session.setAttribute("loginUser", loginUser);
+			session.setAttribute("planList",  planList);
 			
 			response.sendRedirect(request.getContextPath());
 			

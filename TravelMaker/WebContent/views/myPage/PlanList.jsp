@@ -1,13 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="member.model.vo.Member"%>
+<%@page import="member.model.vo.MyPlan" %>
+<%@page import="java.util.ArrayList" %>
 <%
 	String contextPath = request.getContextPath();
 	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+	
+	ArrayList<MyPlan> planList = (ArrayList)request.getSession().getAttribute("planList");
+	if(planList != null) {
+		System.out.println(planList);
+	}
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset='utf-8' />
+<script
+  src="https://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous">
+</script>
 <link href='<%= request.getContextPath() %>/resources/fullcalendar-4.3.1/packages/core/main.css' rel='stylesheet' />
 <link href='<%= request.getContextPath() %>/resources/fullcalendar-4.3.1/packages/list/main.css' rel='stylesheet' />
 <script src='<%= request.getContextPath() %>/resources/fullcalendar-4.3.1/packages/core/main.js'></script>
@@ -15,11 +27,15 @@
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
+	var initialLocaleCode = 'ko';
+	
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'list' ],
 
+      locale: initialLocaleCode,
+      
       header: {
         left: 'prev,next today',
         center: 'title',
@@ -32,12 +48,8 @@
         listDay: { buttonText: 'list day' },
         listWeek: { buttonText: 'list week' }
       },
-      
-      <%-- var clickday = <%= request.getSession().getAttribute("clickdate") %>;
-      System.out.println("clickday : " + clickday); --%>
-
       defaultView: 'listDay',
-      defaultDate: '2019-08-12',
+      defaultDate: sessionStorage.getItem("clickday"),
       navLinks: true, // can click day/week names to navigate views
       editable: true,
       eventLimit: true, // allow "more" link when too many events
@@ -93,13 +105,48 @@
         },
         {
           title: 'Click for Google',
-          url: 'http://google.com/',
           start: '2019-08-28'
         }
+        <% if(planList != null) { %>
+        	<% for(MyPlan p : planList) { %>
+        		<% if(p.getmSeq() == loginUser.getM_seq()) {%>
+        			,{
+        				title: '<%= p.getpName()%>',
+        				start: '<%= p.getStartDate() + "T" + p.getStartTime() %>',
+        				end: '<%= p.getEndDate() + "T" + p.getEndTime() %>',
+        				imageurl: '<%= request.getContextPath() %>/resources/myplan_upload/<%= p.getFileName() %>'
+        			}
+        		<% }%>
+        	<% }%>
+        <% }%>
+      
       ]
+      , eventRender:function(info) {   
+    	  console.log(info.event.end);
+    	  if (info.event.extendedProps.imageurl) {
+              info.el.firstChild.innerHTML = "<img src='" + info.event.extendedProps.imageurl +"' width='40' height='40'>" + info.el.firstChild.innerHTML;
+          }
+    	  
+    	  if (info.event.extendedProps.end) {
+              info.el.firstChild.innerHTML = info.el.firstChild.innerHTML + "";
+          }
+    	  
+    	  if(info.event.end != null && info.event.end.getMonth() <= 8) {
+    		  $(".fc-list-item-time").html($(".fc-list-item-time").html() + info.event.end.getFullYear() + "-0" + (info.event.end.getMonth() + 1) + "-" + info.event.end.getDate());
+    	  }else if(info.event.end != null) {
+    		  $(".fc-list-item-time").html($(".fc-list-item-time").html() + info.event.end.getFullYear() + "-" + (info.event.end.getMonth() + 1) + "-" + info.event.end.getDate());
+		  }
+      }
     });
     calendar.render();
     
+    calendar.getAvailableLocaleCodes().forEach(function(localeCode) {
+        var optionEl = document.createElement('option');
+        optionEl.value = localeCode;
+        optionEl.selected = localeCode == initialLocaleCode;
+        optionEl.innerText = localeCode;
+        /* localeSelectorEl.appendChild(optionEl); */
+      });
     
   });
 
@@ -138,11 +185,8 @@
   <button onclick="location.href='<%= request.getContextPath() %>/views/myPage/PlanDetail.jsp'">추가</button>
   <script>
   $(function() {
-	  /* $('.fc-listWeek-button').removeClass('fc-button-active');
-	  $('.fc-listDay-button').addClass('fc-button-active'); */
+	  // day로 자동시작
 	  $(".fc-listDay-button").trigger("click");
-	  $("#calendar").datepicker().datepicker("defaultDate", new Date());
-	  
   });
   
 
