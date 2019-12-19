@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import board.model.dao.BoardDao;
+
 import static common.JDBCTemplate.*;
 
 import sleep.model.dao.SleepDao;
@@ -15,15 +17,15 @@ import sleep.model.vo.Sleep;
 public class SleepService {
 	
 	// 전체리스트
-	public ArrayList selectList(int flag){
+	public ArrayList selectList(int flag,int currentPage, int boardLimit){
 		Connection conn=getConnection();
-		ArrayList<Sleep> list = null;
+		ArrayList list = null;
 		
 		SleepDao sDao = new SleepDao();
 		if(flag == 1) {
-			list = sDao.selectSList(conn);
+			list = sDao.selectSList(conn,currentPage,boardLimit);
 		}else {
-			list = sDao.selectFist(conn);
+			list = sDao.selectFList(conn,currentPage,boardLimit);
 		}
 		
 		close(conn);
@@ -130,6 +132,16 @@ public class SleepService {
 		return result;
 		
 	}
+
+	// 1. 게시글 리스트 갯수 조회용 서비스 메소드
+		public int getListCount() {
+			Connection con = getConnection();
+			int result = new SleepDao().getListCount(con);
+			
+			close(con);
+
+			return result;
+		}
 
 
 	

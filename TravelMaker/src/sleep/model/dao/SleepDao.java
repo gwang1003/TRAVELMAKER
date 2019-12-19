@@ -3,11 +3,9 @@ package sleep.model.dao;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.*;
-import java.sql.SQLException;
 import java.util.*;
-import java.sql.PreparedStatement;
+
 import static common.JDBCTemplate.*;
 
 import sleep.model.vo.Attachment;
@@ -54,6 +52,7 @@ public class SleepDao {
 			pstmt.setString(2, s.getsName());
 			pstmt.setString(3, s.getsContent());	
 			pstmt.setInt(4, s.getlCode());
+			pstmt.setInt(5, s.getprice());
 			
 			result = pstmt.executeUpdate();
 
@@ -157,34 +156,42 @@ public class SleepDao {
 		return null;
 	}
 
-	public ArrayList selectFist(Connection conn) {
-		Statement stmt = null;
+	public ArrayList<Sleep> selectSList(Connection conn, int currentPage, int boardLimit) {
+		  PreparedStatement pstmt = null;
 	      ResultSet rset = null;
 	      ArrayList<Sleep> list = null;
 
 	      String sql = prop.getProperty("selectBList");
 
 	      try {
-	         stmt = conn.createStatement();
-	         rset = stmt.executeQuery(sql);
+	    	  pstmt = conn.prepareStatement(sql);
+	         
+	     	int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
 	         list = new ArrayList<Sleep>();
 
 	         while (rset.next()) {
-	            list.add(new Sleep(rset.getInt("sId"), rset.getString("sType"), rset.getString("sName"),
-	                  rset.getString("sContent"), rset.getInt("rId"), rset.getInt("lCode")));
+	            list.add(new Sleep(rset.getInt("s_Id"), rset.getString("s_Type"), rset.getString("s_Name"),
+	                  rset.getString("s_Content"),rset.getInt("l_Code")));
 	         }
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      } finally {
 	         close(rset);
-	         close(stmt);
+	         close(pstmt);
 	      }
 
 	      return list;
 	   }
 	
 
-	public ArrayList selectSList(Connection conn) {
+	public ArrayList selectFList(Connection conn, int currentPage, int boardLimit) {
 	      ArrayList<Attachment> list = new ArrayList<Attachment>();
 	      PreparedStatement pstmt = null;
 	      ResultSet rset = null;
@@ -193,6 +200,13 @@ public class SleepDao {
 
 	      try {
 	         pstmt = conn.prepareStatement(sql);
+	         
+	         int startRow = (currentPage - 1) * boardLimit + 1;
+				int endRow = startRow + boardLimit - 1;
+
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
 	         rset = pstmt.executeQuery();
 
 	         while (rset.next()) {
@@ -242,6 +256,32 @@ public class SleepDao {
 				close(pstmt);
 		}
 			return result;
+	}
+
+
+	public int getListCount(Connection con) {
+		int listCount = 0;
+		
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getListCount");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}		
+		return listCount;
 	}
 		
 		
