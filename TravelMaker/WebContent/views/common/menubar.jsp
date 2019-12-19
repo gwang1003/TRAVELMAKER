@@ -25,8 +25,9 @@ nav {
 	height: 100px;
 	padding: 10px 90px;
 	box-sizing: border-box;
-	background: rgba(54, 51, 51, 0.5);
+	background: white;
 	z-index: 1;
+	border-bottom:2px solid gray;
 }
 
 nav .logo {
@@ -36,7 +37,7 @@ nav .logo {
 	font-size: 24px;
 	font-weight: bold;
 	text-transform: uppercase;
-	color: #fff;
+	color: black;
 }
 
 nav ul {
@@ -54,7 +55,7 @@ nav li {
 
 nav ul li a {
 	line-height: 80px;
-	color: #fff;
+	color: black;
 	padding: 12px 30px;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -67,12 +68,12 @@ nav ul li a:hover {
 	background: rgba(0, 0, 0, 0.7);
 	border-radius: 5px;
 	text-decoration: none;
-	color: #fff;
+	color: white;
 }
 
 nav ul li a.active {
 	background: #e2472f;
-	color: #fff;
+	color: black;
 	border-radius: 6px;
 }
 

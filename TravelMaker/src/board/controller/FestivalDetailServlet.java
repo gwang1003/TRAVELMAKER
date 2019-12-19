@@ -14,6 +14,7 @@ import board.model.service.BoardService;
 import board.model.vo.Attachment;
 import board.model.vo.Board;
 import board.model.vo.Information;
+import board.model.vo.Reply;
 
 /**
  * Servlet implementation class FestivalDetailServlet
@@ -60,7 +61,7 @@ public class FestivalDetailServlet extends HttpServlet {
 				// 쿠키 객체 생성
 				Cookie c1 = new Cookie("bId" + bId, String.valueOf(bId));
 				// 하루동안 저장
-				c1.setMaxAge(1 * 24 * 60 * 60);
+				c1.setMaxAge(5);
 				response.addCookie(c1);
 			} else {
 				// bId 쿠키가 있는 경우는 게시글을 하루 안에 다시 클릭하는 것이므로
@@ -72,11 +73,13 @@ public class FestivalDetailServlet extends HttpServlet {
 		// 2. 해당 게시판의 사진들 리스트 조회
 		ArrayList<Attachment> fileList = bService.selectThumbnail(bId);
 		Information in = bService.selectInformation(bId);
+		ArrayList<Reply> rlist = bService.selectReplyList(bId);
 		
 		if(fileList != null) {
 			request.setAttribute("board", board);
 			request.setAttribute("fileList", fileList);
 			request.setAttribute("in", in);
+			request.setAttribute("rlist",rlist);
 			request.getRequestDispatcher("views/board/festival/festivalDetail.jsp").forward(request, response);
 		}else {
 			request.setAttribute("msg", "사진게시판 상세 보기 실패!!!");

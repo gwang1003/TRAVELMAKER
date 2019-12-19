@@ -5,22 +5,23 @@
     	Information info = (Information)request.getAttribute("info");
     	ArrayList<Attachment> fileList = (ArrayList<Attachment>) request.getAttribute("flist");
     	
+    	System.out.println("bid : " + board.getbId());
     	Attachment titleImg = fileList.get(0);
     
-    	int lcode = board.getlCode();
+    	String lcode = board.getlCode();
     	System.out.println("asldkfjasldjf :" + board);
     	int lc = 0;
     	switch(lcode){
-    	case 10 : lc=10; break;
-    	case 20 : lc=20; break;
-    	case 30 : lc=30; break;
-    	case 40 : lc=40; break;
-    	case 50 : lc=50; break;
-    	case 60 : lc=60; break;
+    	case "서울특별시" : lc=10; break;
+    	case "경기도" : lc=20; break;
+    	case "강원도" : lc=30; break;
+    	case "충청도" : lc=40; break;
+    	case "경상도" : lc=50; break;
+    	case "전라도" : lc=60; break;
     	}
     	
     	String[] selected = new String[6];
-    	selected[(lc/10)-1] = "selected";
+    	selected[(lc/10)] = "selected";
     	
     	
     %>
@@ -127,25 +128,25 @@ label{
 			내용 수정</h1>
 
 		<!-- 파일 업로드를 위해서는 enctype을 지정해줘야 함 -->
-		<form action="<%= contextPath %>/update.fe" method="post"
-			enctype="multipart/form-data"> 
+		<form action="<%= contextPath %>/update.fe" method="post">
 			<div class="insertArea">
 				<table align="center">
 					<br>
 					<tr>
-						<td width="100px" style="font-family: 'Do Hyeon', sans-serif;">제목<input type="hidden" name="bId" value="<%=board.getbId() %>"></td>
+						<td width="100px" style="font-family: 'Do Hyeon', sans-serif;">제목<input type="hidden" name="bId" value="<%= board.getbId() %>"></td>
+						
 						<td colspan="3"><input type="text" size="100" name="title" value="<%= board.getbTitle() %>"></td>
 					</tr>
 					<tr>
 						<td width="100px" style="font-family: 'Do Hyeon', sans-serif;">지역</td>
 						<td colspan="3"><select name="lcode">
 							<option>----</option>
-							<option value=10 <%= selected[0] %>>서울특별시</option>
-							<option value=20 <%= selected[1] %>>경기도</option>
-							<option value=30 <%= selected[2] %>>강원도</option>
-							<option value=40 <%= selected[3] %>>충청도</option>
-							<option value=50 <%= selected[4] %>>경상도</option>
-							<option value=60 <%= selected[5] %>>전라도</option>
+							<option value="10" <%= selected[0] %>>서울특별시</option>
+							<option value="20" <%= selected[1] %>>경기도</option>
+							<option value="30" <%= selected[2] %>>강원도</option>
+							<option value="40" <%= selected[3] %>>충청도</option>
+							<option value="50" <%= selected[4] %>>경상도</option>
+							<option value="60" <%= selected[5] %>>전라도</option>
 						</select></td>
 					</tr>
 					
@@ -273,8 +274,7 @@ label{
 			<div class="btnArea">
 			
 				<button type="submit" class="btn btn-outline-info"
-					style="font-family: 'Do Hyeon', sans-serif;"
-					onclick="updateBoard();">작성완료</button>
+					style="font-family: 'Do Hyeon', sans-serif;">작성완료</button>
 				<button type="button" class="btn btn-outline-danger"
 					style="font-family: 'Do Hyeon', sans-serif;"
 					onclick="javascript:history.back();">삭제하기</button>
