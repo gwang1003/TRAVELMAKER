@@ -1,373 +1,342 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"
-   import="member.model.vo.*, java.util.*,sleep.model.vo.*"%>
+	pageEncoding="UTF-8" import="java.util.*, sleep.model.vo.*"%>
 
 <%
-       ArrayList<Sleep> slist = (ArrayList<Sleep>) request.getAttribute("slist");
-       ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
-    
-    
-    %>
-
+	ArrayList<Sleep> list = (ArrayList<Sleep>)request.getAttribute("list");
+	ArrayList<Sleep> slist = (ArrayList<Sleep>) request.getAttribute("slist");
+	ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
+	
+	
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage(); 
+%>
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-   crossorigin="anonymous">
-<script type="text/javascript"
-   src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<link
-   href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-   rel="stylesheet"
-   integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-   crossorigin="anonymous">
-   
-<script type="text/javascript"
-   src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="external.css">
-<style>
-body {
-   background: white;
-   display: table;
-   margin-top: 0;
-   margin-left: auto;
-   margin-right: auto;
-   width: 100%;
-   height: 100%;
-}
-
-#main-wrap {
-   margin-left: 8%;
-   float: left;
-   width: 50%;
-   height: 100%;
-}
-
-.travel, .festival, .lodg {
-   width: 100%;
-   height: 30%;
-}
-
-.travel {
-   margin-left: 10%;
-}
-
-#choice {
-   margin: 40px 31px 0px 31px;
-   border-radius: 5px;
-   float: right;
-   margin-right: 15%;
-   border: 1px solid orangered;
-   background-color: orangered;
-   color: white;
-   width: 18%;
-   height: 70%;
-   text-align: center;
-}
-
-div {
-   box-sizing: border-box;
-}
-
-.tag {
-   box-shadow: 2px 1px 2px 1px gray;
-   background-color: orangered;
-   border-radius: 10px;
-   opacity: 0.8;
-   position: relative;
-   width: 120px;
-   height: 45px;
-   border: 1px solid red;
-}
-
-.tag>h3 {
-   color: white;
-   margin: auto;
-   margin-top: auto;
-   text-align: center;
-   margin: 6px 0px;
-   height: 20px;
-   font-size: 25px;
-}
-
-.info-btn {
-   float: right;
-   font-weight: 700;
-   color: black;
-   background-color: white;
-   border-radius: 10px;
-   margin-left: 10px;
-   height: 38px;
-}
-
-.in-wrap {
-   width: 100%;
-   height: 100%;
-}
-
-.thumb-pic {
-   box-sizing: border-box;
-   margin: auto;
-   width: 30%;
-   height: 100%;
-}
-
-.stage {
-   box-sizing: border-box;
-   width: 70%;
-   height: 150px;
-}
-
-.stage>h2, p {
-   color: black;
-   vertical-align: top;
-   text-align: center;
-}
-
-.stage>h2 {
-   margin: auto;
-}
-
-.thumb-pic>img {
-   box-sizing: border-box;
-   width: 100%;
-   height: 200px;
-}
-
-img {
-   width: 950px;
-   height: 950px;
-}
-
-.wrap>a>* {
-   padding: 16px 0 16px;
-   float: left;
-}
-
-.wrap {
-   width: 100%;
-   height: 75%;
-   border-top: solid 1px rgba(128, 128, 128, 0.356);
-   border-bottom: solid 1px rgba(128, 128, 128, 0.356);
-}
-
-.btn {
-   background-color: white;
-}
-
-.btn-danger {
-   color: red;
-}
-
-#minus {
-   width: 30px;
-   height: 30px;
-}
-
-/* Paging Style Set */
-.howtopag {
-   display: table;
-   margin-left: 45%;
-   height: 50px;
-   font-size: 23px;
-}
-
-.howtopag_item {
-   display: table-cell;
-   width: 50px;
-   text-align: center;
-   padding-top: 7px;
-   padding-bottom: 7px;
-   cursor: pointer;
-   text-decoration: none;
-   border: none !important;
-   color: black;
-}
-
-.howtopag_item.pagactive {
-   background-color: rgb(241, 104, 41) !important;
-   color: white !important;
-}
-
-.howtopag_item:hover:not (.pagactive ) {
-   background-color: #ddd;
-   color: #000;
-}
-
-.howtopag_item.pagdisabled, .howtopag_item.pagdisabled:hover {
-   background-color: transparent;
-   color: #dddddd;
-   cursor: auto;
-}
-
-select {
-   text-align: center;
-   text-align-last: center;
-}
-
-option {
-   text-align: left;
-}
-
-nav {
-   position: fixed;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100px;
-   padding: 10px 90px;
-   box-sizing: border-box;
-   background: rgba(187, 188, 190, 0.959);
-   z-index: 1;
-}
-
-nav .logo {
-   padding: 22px 20px;
-   height: 80px;
-   float: left;
-   font-size: 24px;
-   font-weight: bold;
-   text-transform: uppercase;
-   color: #fff;
-}
-
-nav ul {
-   list-style-type: none;
-   float: right;
-   padding: 0;
-   margin: 0;
-   display: flex;
-   z-index: 1;
-}
-
-nav li {
-   z-index: 1;
-}
-
-nav ul li a {
-   line-height: 80px;
-   color: #fff;
-   padding: 12px 30px;
-   text-decoration: none;
-   text-transform: uppercase;
-   font-size: 15px;
-   font-weight: bold;
-   z-index: 1;
-}
-
-nav ul li a:hover {
-   background: rgba(0, 0, 0, 0.7);
-   border-radius: 5px;
-   text-decoration: none;
-   color: #fff;
-}
-
-nav ul li a.active {
-   background: #e2472f;
-   color: #fff;
-   border-radius: 6px;
-}
-
-#admin{
-	width:100px;
-	height:40px;
-	float:left;
-}
-
-</style>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link
+	href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap"
+	rel="stylesheet">
+
+<style>
+body {
+	width: 1500px;
+	height: 1500px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#total {
+	width: 20%;
+	height: 950px;
+}
+
+#choice1 {
+	float: left;
+	width: 1050px;
+	height: 1200px;
+	margin-left: 120px;
+	border-bottom: 1px solid black;
+	padding: 0;
+	background:white;
+	box-shadow: 10px 5px 15px 15px gray;
+	border-radius: 10px;
+}
+
+#ct {
+	width: 380px;
+}
+
+#choice2 {
+	position: fixed;
+	margin-left: 1200px;
+	top: 150px;
+	border-radius: 12px;
+	border: 3px solid aliceblue;
+	background-color: aliceblue;
+	color: black;
+	width: 20%;
+	height: 500px;
+	text-align: center;
+}
+
+.btn-outline-info {
+	width: 70px;
+	height: 50px;
+	margin: auto;
+	font-size: 17px;
+	border: none;
+}
+
+.tag>h3 {
+	color: white;
+	margin: auto;
+	margin-top: auto;
+	text-align: center;
+	margin: 6px 0px;
+	height: 20px;
+	font-size: 25px;
+}
+
+.info-btn {
+	float: right;
+	font-weight: 700;
+	color: black;
+	background-color: white;
+	border-radius: 10px;
+	margin: 6px 0px;
+	height: 38px;
+}
+
+.in-wrap {
+	width: 100%;
+	height: 100%;
+}
+
+.thumb-pic {
+	box-sizing: border-box;
+	margin: auto;
+	width: 30%;
+	height: 100%;
+}
+
+.stage {
+	box-sizing: border-box;
+	width: 70%;
+	height: 150px;
+}
+
+.stage>h2, p {
+	color: black;
+	vertical-align: top;
+	text-align: center;
+}
+
+.stage>h2 {
+	margin: auto;
+}
+
+.thumb-pic>img {
+	box-sizing: border-box;
+	width: 100%;
+	height: 30%;
+}
+
+.wrap>a>* {
+	padding: 16px 0 16px;
+	float: left;
+}
+
+.count {
+	width: 100%;
+	margin-right: 20px;
+}
+
+.count p {
+	width: 50%;
+	float: left;
+}
+
+#good {
+	float: right;
+}
+
+#festivalTable {
+	width: 100%;
+	height: 800px;
+	margin-left: 20px;
+	magin-right: 20px;
+}
+
+#month-choice {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+#write {
+	float: right;
+}
+
+#insertBtn {
+	border: none;
+	background-color: ghostwhite;
+}
+
+button {
+	font-family: 'Do Hyeon', sans-serif;
+}
+
+span, p {
+	font-family: 'Do Hyeon', sans-serif;
+}
+
+</style>
 </head>
+
 <body>
-   <%@ include file="../../views/common/menubar.jsp"%>
+	<%@ include file="../common/menubar.jsp"%>
+	<h1
+		style="color: black; color: black; margin-top: 120px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">숙박
+		ALL</h1>
+	<br>
+	<br>
+	<div id="total">
+
+		<div id="choice1">
+
+			<div id="search" align="center" style="display: inline;">
+				<div>
+					<select>
+						<option>----</option>
+						<option>제목</option>
+						<option>작성자</option>
+					</select> <input type="search"
+						style="width: 500px; height: 40px; margin-top: 20px;">
+					<button
+						style="width: 100px; height: 40px; background-color: orangered; color: white; border-radius: 10px; font-size: 25px;">검색</button>
 
 
-   <h1
-      style="color: black; font-weight: 900; color: black; margin-top: 140px; margin-left: 40%;">지역별
-      숙박</h1>
+				</div>
 
-   <br>
-   <br>
+			</div>
 
-   <div id="main-wrap">
-      <div class="travel">
-         <div class="tag">
-            <h3>숙박 ALL</h3>
-         </div>
-         <div herf="#"
-            style="float: right; font-size: 20px; color: gray; cursor: pointer">추천수</div>
-         <div href="#"
-            style="float: right; font-size: 20px; color: gray; cursor: pointer">가격순&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-
-         <br>
-         <br>
-
-
-
-         <div class="wrap">
-            <a class="in-wrap" href="<%=contextPath%>/views/Sleep/SleepDetail.jsp">
-               <div class="thumb-pic">
-               <%for(Sleep s : slist){ %>
-               <%for(Attachment at : flist){ %>
-                  <img src="<%=contextPath%>/resources/festival_uploadFile/<%=at.getChangeName()%>">
-                  <%}%>
-                  
-                  
-               </div>
-               <div class="stage gra_black_vertical">
-                  <div class="name">
-                     <div class="badge">
-                        <span class="build_badge"
-                           style="color: rgba(255, 255, 255, 1); background-color: rgba(97, 95, 184, 1);">5성급</span>
-                     </div>
-                     <strong>신라 서울</strong>
-
-                  </div>
-
-                  <h2><%=s.getsName() %></h2>
-                  <div class="price">
-                     <div class="map_html">
-                        <p>
-                           <em class="mark"><span><b>남은 객실 2개</b><i>&nbsp;</i></span></em><b>459,800원~</b>
-                        </p>
-                     </div>
-                  </div>
-               </div>
-            </a>
-	<%} %>
-
-         </div>
-
-         <div class="wrap"></div>
+			<br> <br>
 
 
 
-         <div class="wrap"></div>
-         <br>
-         <br>
-         <br>
+			<!-- 전체 글수 최신순 인기순 새로고침 -->
+			<div class="count">
+				<span style="text-align: left; margin-left: 20px;">전체 글 수 :
+					여기넣어</span>
+				<div id="good">
+					<button type="button" class="btn btn-outline-primary">최신순</button>
+					&emsp;
+					<button type="button" class="btn btn-outline-primary">인기순</button>
+					&emsp; <a href="javascript:" class="btn_represch"><img
+						src="<%=contextPath%>/resources/images/새로고침.png" id="represch"
+						width="30px" height="30px"></a>&emsp;
+				</div>
 
-         <div class="howtopag">
-            <a class="howtopag_item pagdisabled" href="default.asp">❮</a><a
-               class="howtopag_item pagactive"
-               href="<%=request.getContextPath()%>/views/Sleep/SleepAll.jsp">1</a>
-            <a class="howtopag_item" href="default_page2.asp">2</a> <a
-               class="howtopag_item" href="default_page3.asp">3</a> <a
-               class="howtopag_item" href="default_page4.asp">4</a> <a
-               class="howtopag_item" href="default_page5.asp">5</a> <a
-               class="howtopag_item" href="default_page2.asp">❯</a>
-         </div>
+			</div>
+			<br> <br>
+			<%
+				if (loginUser != null) {
+			%>
+			<div id="write">
+				<button type="button" id="insertBtn"
+					onclick="location.href='<%=contextPath%>/views/Sleep/SleepInsert.jsp'">
+					<img src="<%=contextPath%>/resources/images/edit.png" width="40px"
+						height="40px">
+				</button>
+			</div>
+			<%
+				}
+			%>
 
-      </div>
 
- <button id="admin" onclick="location.href='SleepInsert.jsp'">작성하기</button>
+			<br> <br>
+
+			<hr>
+
+			<div id="festivalTable">
+
+				<div class="thumbnailArea" style="width: 1000px; height: 1000px;">
+					<%
+						for (Sleep s : slist) {
+					%>
+					
+					<div class="cli" style="height:210px;">
+					<input type="hidden" value="<%=s.getsName()%>">
+					<div style="float: left; width: 300px; box-sizing: border-box;">
+
+						<%
+							for (Attachment at : flist) {
+						%>
+						
+						
+						<img
+							src="<%=contextPath%>/resources/sleep_uploadFile/<%=at.getChangeName()%>"
+							width="300px" height="200px">
+					
+						<%
+							}
+						%>
+					</div>
+					<div
+						style="float: left; width: 550px; height: 200px; box-sizing: border-box;">
+						<span><%=s.getsName()%>111번 게시글 </span>
+						<%-- <p><%=b.getbTitle()%></p>
+						<p><%=b.getbContent()%></p> --%>
+					</div>
+					<div
+						style="float: left; width: 150px; height: 200px; box-sizing: border-box; margin-bottom: 40px;">
+					<%-- 	<p><%=b.getbWriter()%></p> --%>
+						<p>
+							3번째 :
+							<%=s.getsName()%>
+							<br> 좋아요 :
+							<%-- <%=b.getGood()%> --%>
+						</p>
+					</div>
+					</div>
+					<hr>
+					<% } %>
+				</div>
+				<hr>
+			</div>
+			
+			<!-- 페이징 바 -->
+		<div class="pagingArea" align="center">
+			<!-- 맨 처음으로 (<<) -->
+			<button onclick="location.href='<%= contextPath %>/list.sl?currentPage=1'"> &lt;&lt; </button>
+			
+			<!-- 이전 페이지로 (<) -->
+			<% if(currentPage == 1){ %>
+				<button disabled> &lt; </button>
+			<% } else { %>
+				<button onclick="location.href='<%= contextPath %>/list.sl?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
+			<% } %>
+			
+			<!-- 10개의 페이지 목록 -->
+			<% for(int p = startPage; p <= endPage; p++){ %>
+				<% if(p == currentPage){ %>
+					<button disabled> <%= p %> </button>
+				<% } else { %>
+					<button onclick="location.href='<%= contextPath %>/list.sl?currentPage=<%= p %>'"><%= p %></button>
+				<% } %>
+			<% } %>
+			
+			<!-- 다음 페이지로 (>) -->
+			<% if(currentPage == maxPage){ %>
+				<button disabled> &gt; </button>
+			<% } else { %>
+				<button onclick="location.href='<%= contextPath %>/list.sl?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
+			<% } %>
+			
+			<!-- 맨 끝으로 (>>) -->
+			<button onclick="location.href='<%= contextPath %>/list.sl?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
+		</div>
+		</div>
 
 
 
 
-      <!-- 인워수 늘리고 줄이기 -->
+		   <!-- 인워수 늘리고 줄이기 -->
       <script>
         $(function(){
             $('#decreaseQuantity').click(function(e){
@@ -499,13 +468,19 @@ nav ul li a.active {
       </div>
    </div>
 
+	<script>
+		$(function(){
+			$(".cli").click(function(){
+				var bId =  $(this).children().eq(0).val();
+				location.href="<%=contextPath%>/detail.fe?bId=" + bId;
+			});
+		});
+	</script>
 
 
-
-
-   <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
 </body>
 </html>

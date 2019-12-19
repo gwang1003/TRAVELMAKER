@@ -7,12 +7,13 @@ public class Sleep {
 	private String sContent; // 숙박업체 설명
 	private int rId; //방 번호
 	private int lCode; // 지역코드
+	private int price;
 	
 	
 	public  Sleep() {}
 
 
-	public Sleep(int sId, String sType, String sName, String sContent, int rId, int lCode) {
+	public Sleep(int sId, String sType, String sName, String sContent, int rId, int lCode,int price) {
 		super();
 		this.sId = sId;
 		this.sType = sType;
@@ -20,8 +21,35 @@ public class Sleep {
 		this.sContent = sContent;
 		this.rId = rId;
 		this.lCode = lCode;
+		this.price = price;
 	}
 
+
+	public Sleep(String sType, String sName, String sContent, int lCode,int price) {
+		super();
+		this.sType = sType;
+		this.sName = sName;
+		this.sContent = sContent;
+		this.lCode = lCode;
+		this.price = price;
+	}
+	
+	public Sleep(int sId,String sType, String sName, String sContent, int lCode) {
+		super();
+		this.sId = sId;
+		this.sType = sType;
+		this.sName = sName;
+		this.sContent = sContent;
+		this.lCode = lCode;
+	}
+
+	public int getprice() {
+		return price;
+	}
+	
+	public void setprice(int price) {
+		this.price = price;
+	}
 
 	public int getsId() {
 		return sId;
@@ -86,7 +114,7 @@ public class Sleep {
 	@Override
 	public String toString() {
 		return "Sleep [sId=" + sId + ", sType=" + sType + ", sName=" + sName + ", sContent=" + sContent + ", rId=" + rId
-				+ ", lCode=" + lCode + "]";
+				+ ", lCode=" + lCode + ",price"+price+"]";
 	}
 	
 	

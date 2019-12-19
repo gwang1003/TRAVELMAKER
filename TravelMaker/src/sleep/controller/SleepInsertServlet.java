@@ -108,9 +108,9 @@ public class SleepInsertServlet extends HttpServlet {
 			// 타이틀 이미지인 경우 fileLevel을 0으로, 일반 이미지면 fileLevel이 1
 			// 타이틀 이미지가 originFiles에서 마지막 인덱스이기 때문에
 			if (i == originFiles.size() - 1) {
-				at.setFileLevel(0);
-			} else {
 				at.setFileLevel(1);
+			} else {
+				at.setFileLevel(2);
 			}
 
 			fileList.add(at);
