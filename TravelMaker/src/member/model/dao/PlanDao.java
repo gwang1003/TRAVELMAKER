@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import member.model.vo.MyPlan;
@@ -27,7 +28,7 @@ public class PlanDao {
 	}
 	
 	// 계획 넣기 
-	public int insertPlan(Connection conn, MyPlan mp) {
+	public int insertPlan(Connection conn, MyPlan mp, int userSeq) {
 		int result = 0;
 
 		PreparedStatement pstmt = null;
@@ -38,13 +39,15 @@ public class PlanDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, mp.getpId());
-			pstmt.setString(2, mp.getmId());
-			pstmt.setString(3, mp.getpName());
-			pstmt.setDate(4, (java.sql.Date) mp.getDate());
+			pstmt.setInt(1, userSeq);
+			pstmt.setString(2, mp.getpName());
+			Date sqlDate1 = new java.sql.Date(mp.getStartDate().getTime());
+			pstmt.setDate(3, sqlDate1);
+			Date sqlDate2 = new java.sql.Date(mp.getEndDate().getTime());
+			pstmt.setDate(4, sqlDate2);
 			pstmt.setString(5, mp.getStartTime());
 			pstmt.setString(6, mp.getEndTime());
-			pstmt.setString(7, mp.getContent());
+			pstmt.setString(7, mp.getFileName());
 
 			result = pstmt.executeUpdate();
 
@@ -57,35 +60,8 @@ public class PlanDao {
 		return result;
 	}
 
-	// 계획 조회 
-	public MyPlan selectPlan(Connection conn, int getpId) {
-		MyPlan mp = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectPlan");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, getpId);
-			
-			rset = pstmt.executeQuery();
-			
-			if (rset.next()) {
-				mp = new MyPlan(rset.getInt("pId"), rset.getString("m_Id"), rset.getString("p_name"),
-						rset.getDate("date"), rset.getString("starttitme"), rset.getString("endtime"), rset.getString("content"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return mp;
-	}
-
 	// 계획 삭제 
-	public int deletePlan(Connection conn, int pId, String mId) {
+	public int deletePlan(Connection conn, int pId) {
 		PreparedStatement pstmt = null;
 		
 		int result = 0;
@@ -135,6 +111,33 @@ public class PlanDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public ArrayList<MyPlan> selectAllPlan(Connection conn) {
+		ArrayList<MyPlan> mp = new ArrayList<MyPlan>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectPlan");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while (rset.next()) {
+				MyPlan m = new MyPlan(rset.getInt("p_seq"), rset.getInt("m_seq"), rset.getString("p_name"),
+						rset.getDate("start_date"), rset.getDate("end_date"), rset.getString("start_time"), 
+						rset.getString("end_time"), rset.getString("filename"));
+				mp.add(m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return mp;
 	}
 
 	

@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,22 +18,21 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
-import member.model.service.MemberService;
 import member.model.service.PlanService;
 import member.model.vo.Member;
 import member.model.vo.MyPlan;
 
 /**
- * Servlet implementation class PlanUpdateServlet
+ * Servlet implementation class PlanInsertServlet
  */
-@WebServlet("/update.pl")
-public class PlanUpdateServlet extends HttpServlet {
+@WebServlet("/insert.pl")
+public class PlanInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PlanUpdateServlet() {
+    public PlanInsertServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,19 +44,22 @@ public class PlanUpdateServlet extends HttpServlet {
 		boolean isMulti = ServletFileUpload.isMultipartContent(request);
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		if(isMulti) {
-			String planName = request.getParameter("plan-name");
-			String planContent = request.getParameter("plan-content");
-			String startDate = request.getParameter("plan-start-date");
-			String endDate = request.getParameter("plan-end-date");
-			String planStartTime = request.getParameter("plan-start-time");
-			String planEndTime = request.getParameter("plan-start-time");
-			String fileName = request.getParameter("plan-image");
-			
+			int maxSize = 1024 * 1024 * 10;
+			String root = request.getSession().getServletContext().getRealPath("/");
+			String saveDir = root + "resources/myplan_upload/";
+			MultipartRequest multi = new MultipartRequest(request, saveDir, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+		
+			String planName = multi.getParameter("plan-name");
+			String startDate = multi.getParameter("plan-start-date");
+			String endDate = multi.getParameter("plan-end-date");
+			String planStartTime = multi.getParameter("plan-start-time");
+			String planEndTime = multi.getParameter("plan-start-time");
+			String fileName = multi.getFilesystemName("thumbnailImg1");
 			int userSeq = loginUser.getM_seq();
-			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date planStartDate = null;
 			Date planEndDate = null;
+			
 			try {
 				planStartDate = sdf.parse(startDate);
 				planEndDate = sdf.parse(endDate);
@@ -67,31 +68,19 @@ public class PlanUpdateServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			MyPlan p = new MyPlan(loginUser.getM_seq(), planName, planContent, planStartDate
+			MyPlan p = new MyPlan(loginUser.getM_seq(), planName, planStartDate
 						, planEndDate, planStartTime, planEndTime, fileName);
-			int maxSize = 1024 * 1024 * 10;
-			ServletContext context = getServletContext();
-			String saveDir = context.getRealPath("myplan_upload");
-			MultipartRequest multi = new MultipartRequest(request, saveDir, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+			
 			
 			 try {
-				 int result = new PlanService().updatePlan(p, userSeq);
+				 int result = new PlanService().insertPlan(p, userSeq);
                  if (result > 0) {
-                       System.out.println("저장완료");
+                       ArrayList<MyPlan> list = new PlanService().selectAllPlan();
                        
-                       ArrayList<MyPlan> list = new PlanService().selectAll();
-                       
-                       if(list!=null) {
-                             request.setAttribute("myplan", list);
-                                                  
-                       }else {
-                             System.out.println("비었습니다");
-                       }
-                       
-                       response.sendRedirect(request.getContextPath() + "PlanList.jsp");
+                       request.setAttribute("planList", list);
+                       response.sendRedirect(request.getContextPath() + "/views/myPage/PlanList.jsp");
                  } else {
-                       System.out.println("저장실패");
-                       response.sendRedirect(request.getContextPath() + "views/myPage/PlanList.jsp");
+                       response.sendRedirect(request.getContextPath() + "/views/myPage/PlanList.jsp");
                  }
            } catch (Exception e) {
                  e.printStackTrace();

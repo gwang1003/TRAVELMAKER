@@ -52,4 +52,30 @@ public class PlanService {
 		return result;
 	}
 
+	public int insertPlan(MyPlan p, int userSeq) {
+		Connection conn = getConnection();
+
+		int result = new PlanDao().insertPlan(conn, p, userSeq);
+
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+
+		close(conn);
+
+		return result;
+	}
+
+	public ArrayList<MyPlan> selectAllPlan() {
+		Connection conn = getConnection();
+
+		ArrayList<MyPlan> result = new PlanDao().selectAllPlan(conn);
+
+		close(conn);
+
+		return result;
+	}
+
 }
