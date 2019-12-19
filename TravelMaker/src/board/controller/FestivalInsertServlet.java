@@ -54,6 +54,7 @@ public class FestivalInsertServlet extends HttpServlet {
 
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 
+			System.out.println("savePath : " + savePath);
 			ArrayList<String> changeFiles = new ArrayList<String>();
 			ArrayList<String> originFiles = new ArrayList<String>();
 
@@ -82,7 +83,7 @@ public class FestivalInsertServlet extends HttpServlet {
 			// 3_1. 파일 외에 게시판 제목, 내용, 작성자 회원 번호 받아와서 Board 객체 생성
 			String title = multiRequest.getParameter("title");
 			String content = multiRequest.getParameter("content");
-			int lcode = Integer.parseInt(multiRequest.getParameter("lcode"));
+			String lcode = multiRequest.getParameter("lcode");
 			String sdate = multiRequest.getParameter("sdate");
 			String edate = multiRequest.getParameter("edate");
 			String tel = multiRequest.getParameter("tel");

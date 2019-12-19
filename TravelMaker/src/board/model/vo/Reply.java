@@ -1,27 +1,26 @@
 package board.model.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
-public class Reply {
-	
+public class Reply implements java.io.Serializable{
+	private static final long serialVersionUID = -7801635027847112446L;
 	private int rId;
 	private String rContent;
 	private int refbId;
-	private int rWriter;
-	private String userName;
+	private String rWriter;
 	private Date createDate;
-	private Date modifyDate;
 	private String status;
-	public Reply(int rId, String rContent, int refbId, int rWriter, String userName, Date createDate, Date modifyDate,
-			String status) {
+	
+	public Reply() {}
+	
+	
+	public Reply(int rId, String rContent, int refbId, String rWriter, Date createDate, String status) {
 		super();
 		this.rId = rId;
 		this.rContent = rContent;
 		this.refbId = refbId;
 		this.rWriter = rWriter;
-		this.userName = userName;
 		this.createDate = createDate;
-		this.modifyDate = modifyDate;
 		this.status = status;
 	}
 	public int getrId() {
@@ -42,17 +41,11 @@ public class Reply {
 	public void setRefbId(int refbId) {
 		this.refbId = refbId;
 	}
-	public int getrWriter() {
+	public String getrWriter() {
 		return rWriter;
 	}
-	public void setrWriter(int rWriter) {
+	public void setrWriter(String rWriter) {
 		this.rWriter = rWriter;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 	public Date getCreateDate() {
 		return createDate;
@@ -60,25 +53,38 @@ public class Reply {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	public Date getModifyDate() {
-		return modifyDate;
-	}
-	public void setModifyDate(Date modifyDate) {
-		this.modifyDate = modifyDate;
-	}
 	public String getStatus() {
 		return status;
 	}
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	@Override
 	public String toString() {
 		return "Reply [rId=" + rId + ", rContent=" + rContent + ", refbId=" + refbId + ", rWriter=" + rWriter
-				+ ", userName=" + userName + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", status="
-				+ status + "]";
+				+ ", createDate=" + createDate + ", status=" + status + "]";
 	}
 	
+	/*R_ID	NUMBER
+	R_CONTENT	VARCHAR2(300 BYTE)
+	WRITE_DATE	DATE
+	GOOD	NUMBER
+	NOTGOOD	NUMBER
+	VIEW_CNT	NUMBER
+	B_ID	NUMBER
+	M_SEQ	NUMBER
+	
+	RID	NUMBER
+	RCONTENT	VARCHAR2(400 BYTE)
+	REF_BID	NUMBER
+	RWRITER	NUMBER
+	CREATE_DATE	DATE
+	MODIFY_DATE	DATE
+	STATUS	VARCHAR2(1 BYTE)*/
+
 	
 
 }

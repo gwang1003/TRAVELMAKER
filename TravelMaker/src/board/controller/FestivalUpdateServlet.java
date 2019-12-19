@@ -7,6 +7,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+
+import board.model.service.BoardService;
+import board.model.vo.Attachment;
+import board.model.vo.Board;
+import board.model.vo.Information;
+import common.MyFileRenamePolicy;
+
 /**
  * Servlet implementation class FestivalUpdateServlet
  */
@@ -26,8 +34,40 @@ public class FestivalUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("utf-8");
+		
+		BoardService bs = new BoardService();
+		/*MultipartRequest multiRequest = new MultipartRequest(request,"utf-8");*/
+		
+		int bId = Integer.parseInt(request.getParameter("bId"));
+		
+		
+		Board board = new Board();
+		board.setbTitle(request.getParameter("title"));
+		board.setbContent(request.getParameter("content"));
+		board.setlCode(request.getParameter("lcode"));
+		board.setbId(bId);
+		
+		Information info = new Information();
+		info.setsDay(request.getParameter("sdate"));
+		info.seteDay(request.getParameter("edate"));
+		info.setTel(request.getParameter("tel"));
+		info.setPrice(Integer.parseInt(request.getParameter("price")));
+		info.setAddress(request.getParameter("address"));
+		info.setPage(request.getParameter("home"));
+		info.setbId(bId);
+		
+		int result = bs.updateBoard(board);
+		int result1 = bs.updateInformation(info);
+		
+		if(result>0 && result1>0) {
+			request.setAttribute("bId", bId);
+			request.getRequestDispatcher("detail.fe").forward(request, response);
+		}else {
+			request.setAttribute("msg", "게시글 수정 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			
+		}
 	}
 
 	/**

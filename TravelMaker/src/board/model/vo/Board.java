@@ -13,7 +13,7 @@ public class Board {
 	private int ngood;
 	private String bWriter; // 게시글 작성자 이름
 	private String status; 	// 게시글 상태(Y, N)
-	private int lCode;
+	private String lCode;
 	private int sType;  // 숙박 타입(1.호텔  2. 모텔  3. 펜션)
 	private int bType;  // 게시글 타입(1. 여행 게시판, 2. 축제 게시판  3. 숙박게시판  4.커뮤니티)
 	private int mId;
@@ -21,7 +21,7 @@ public class Board {
 	public Board() {}
 
 	public Board(int bId, Date wDate, Date uDate, String bTitle, String bContent, int bCount, int good, int ngood,
-			String bWriter, String status, int lCode, int sType, int bType, int mId) {
+			String bWriter, String status, String lCode, int sType, int bType, int mId) {
 		super();
 		this.bId = bId;
 		this.wDate = wDate;
@@ -56,7 +56,7 @@ public class Board {
 	
 
 	public Board(int bId, Date wDate, Date uDate, String bTitle, String bContent, int bCount, String bWriter,
-			String status, int lCode, int bType) {
+			String status, String lCode, int bType) {
 		this.bId = bId;
 		this.wDate = wDate;
 		this.uDate = uDate;
@@ -149,11 +149,11 @@ public class Board {
 		this.status = status;
 	}
 
-	public int getlCode() {
+	public String getlCode() {
 		return lCode;
 	}
 
-	public void setlCode(int lCode) {
+	public void setlCode(String lCode) {
 		this.lCode = lCode;
 	}
 

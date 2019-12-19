@@ -20,30 +20,29 @@ public class BoardService {
 	public int getListCount() {
 		Connection con = getConnection();
 		int result = new BoardDao().getListCount(con);
-		
+
 		close(con);
 
 		return result;
 	}
 
-
 	// 3. 게시판 상세보기(조회수 증가)
 	public Board selectBoard(int bid) {
 		Connection con = getConnection();
 		BoardDao bDao = new BoardDao();
-		Board b =null;
-		
-		int result = bDao.increaseCount(con,bid);
-		
-		if(result>0) {
+		Board b = null;
+
+		int result = bDao.increaseCount(con, bid);
+
+		if (result > 0) {
 			commit(con);
 			b = bDao.selectBoard(con, bid);
-		}else {
+		} else {
 			rollback(con);
 		}
-		
+
 		close(con);
-		
+
 		return b;
 	}
 
@@ -59,27 +58,27 @@ public class BoardService {
 	public int deleteBoard(int bid) {
 		Connection con = getConnection();
 		int result = new BoardDao().deleteBoard(con, bid);
-		
-		if(result>0) {
+
+		if (result > 0) {
 			commit(con);
-		}else {
+		} else {
 			rollback(con);
 		}
-		
+
 		close(con);
 		return result;
 	}
-	
+
 	public int deleteAttachment(int bid) {
 		Connection con = getConnection();
 		int result = new BoardDao().deleteAttachment(con, bid);
-		
-		if(result>0) {
+
+		if (result > 0) {
 			commit(con);
-		}else {
+		} else {
 			rollback(con);
 		}
-		
+
 		close(con);
 		return result;
 	}
@@ -96,7 +95,29 @@ public class BoardService {
 
 		Connection con = getConnection();
 		int result = new BoardDao().updateBoard(con, b);
-		return 0;
+
+		if (result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+
+		close(con);
+		return result;
+	}
+
+	public int updateInformation(Information info) {
+		Connection con = getConnection();
+		int result = new BoardDao().updateInformation(con, info);
+
+		if (result > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+
+		close(con);
+		return result;
 	}
 
 	// 사진 게시판 리스트에 보여질 게시판 리스트 조회용 서비스
@@ -109,9 +130,9 @@ public class BoardService {
 		BoardDao bDao = new BoardDao();
 
 		if (flag == 1) {
-			list = bDao.selectBList(con,currentPage,boardLimit);
+			list = bDao.selectBList(con, currentPage, boardLimit);
 		} else {
-			list = bDao.selectFList(con,currentPage,boardLimit);
+			list = bDao.selectFList(con, currentPage, boardLimit);
 		}
 
 		close(con);
@@ -124,12 +145,12 @@ public class BoardService {
 		Connection conn = getConnection();
 
 		BoardDao bDao = new BoardDao();
- 
+
 		int result1 = bDao.insertThBoard(conn, b);
 		int result2 = bDao.insertAttachment(conn, fileList);
-		int result3 = bDao.insertInformation(conn,in);
+		int result3 = bDao.insertInformation(conn, in);
 
-		if (result1 > 0 && result2 > 0 && result3>0) {
+		if (result1 > 0 && result2 > 0 && result3 > 0) {
 			commit(conn);
 		} else {
 			rollback(conn);
@@ -144,41 +165,59 @@ public class BoardService {
 	public ArrayList<Attachment> selectThumbnail(int bId) {
 		Connection con = getConnection();
 		ArrayList<Attachment> list = new BoardDao().selectThumbnail(con, bId);
-		
+
 		close(con);
-		
+
 		return list;
-		
-		
+
 	}
-	
+
 	// 게시판 상세보기 정보가져오기
 	public Information selectInformation(int bId) {
 		Connection con = getConnection();
 		Information in = new BoardDao().selectInformtion(con, bId);
-		
+
 		close(con);
 		return in;
 	}
 
 	public ArrayList<Reply> selectReplyList(int bId) {
 		Connection con = getConnection();
-		ArrayList<Reply> list = new BoardDao().selectReplyList(con, bId);
+		ArrayList<Reply> rlist = new BoardDao().selectReplyList(con, bId);
 
-		return new ArrayList<Reply>();
+		close(con);
+		
+		return rlist;
 
 	}
 
 	public ArrayList<Reply> insertReply(Reply r) {
-		Connection con = getConnection();
-		ArrayList<Reply> list = new BoardDao().insertReply(con);
+		Connection conn = getConnection();
 
-		return new ArrayList<Reply>();
+		BoardDao bDao = new BoardDao();
+
+		int result = bDao.insertReply(conn, r);
+
+		ArrayList<Reply> rlist = null;
+
+		if (result > 0) {
+			commit(conn);
+			rlist = bDao.selectReplyList(conn, r.getRefbId());
+		} else {
+			rollback(conn);
+		}
+
+		close(conn);
+
+		return rlist;
 	}
 
+	public ArrayList<Board> selectSearchList(String search, String searchCondition, int currentPage, int boardLimit) {
+		Connection con = getConnection();
+		ArrayList<Board> list = new BoardDao().selectSearchList(con, search, searchCondition, currentPage, boardLimit);
 
-	
-
-	
+		close(con);
+		return list;
+	}
 
 }

@@ -7,6 +7,8 @@
 	ArrayList<Attachment> fileList = (ArrayList<Attachment>) request.getAttribute("fileList");
 	Attachment titleImg = fileList.get(0);
 	Information in = (Information) request.getAttribute("in");
+
+	ArrayList<Reply> rlist = (ArrayList<Reply>) request.getAttribute("rlist");
 %>
 <!DOCTYPE html>
 <html>
@@ -126,9 +128,17 @@ body {
 	margin-top: 20px;
 }
 
+#b1 li {
+	margin-left: 80px;
+}
+
 #b2 {
 	float: right;
 	margin-top: 20px;
+}
+
+#b2 li {
+	margin-right: 80px;
 }
 
 #b {
@@ -169,13 +179,14 @@ td {
 }
 
 .detail td {
-		text-align:center;
-		width:1000px;
-		height: 300px;
-	}
-.detail img{
-	width:310px;
-	height:220px;
+	text-align: center;
+	width: 1000px;
+	height: 300px;
+}
+
+.detail img {
+	width: 310px;
+	height: 220px;
 }
 </style>
 </head>
@@ -191,7 +202,7 @@ td {
 		</div>
 		<br> <br>
 
-		<div id="festival"  align="center">
+		<div id="festival" align="center">
 
 			<img src="<%=request.getContextPath()%>/resources/images/목록.png"
 				style="float: right; height: 30px;">
@@ -205,17 +216,17 @@ td {
 				<button type="button" class="btn btn-outline-info"
 					style="width: 100px; height: 35px; margin: 0;"
 					onclick="updateBoard();">수정하기</button>
-				<br>
-				<br>
+				<br> <br>
 
 			</div>
-			
-			<h4 style="font-family: 'Do Hyeon', sans-serif;">
-					위치 :
-					<%=in.getAddress()%></h4>
 
-			<div style="border: 1px solid black; text-align: center; border-radius: 10px; font-family: 'Do Hyeon', sans-serif; width:80%;">대표사진</div>
-				<br>
+			<h4 style="font-family: 'Do Hyeon', sans-serif;">
+				위치 :
+				<%=in.getAddress()%></h4>
+
+			<div
+				style="border: 1px solid black; text-align: center; border-radius: 10px; font-family: 'Do Hyeon', sans-serif; width: 80%;">대표사진</div>
+			<br>
 
 			<div align="center">
 				<img
@@ -225,7 +236,7 @@ td {
 			<br>
 
 			<div
-				style="border: 1px solid black; text-align: center; border-radius: 10px; width:80%;">
+				style="border: 1px solid black; text-align: center; border-radius: 10px; width: 80%;">
 				<details>
 					<summary
 						style="margin-top: 30px; font-family: 'Do Hyeon', sans-serif;">
@@ -256,24 +267,30 @@ td {
 				</div>
 			</div>
 			<br>
-			
+
 			<div
-				style="border: 1px solid black; text-align: center; border-radius: 10px; font-family: 'Do Hyeon', sans-serif;  width:80%;">내용 사진</div>
+				style="border: 1px solid black; text-align: center; border-radius: 10px; font-family: 'Do Hyeon', sans-serif; width: 80%;">내용
+				사진</div>
 			<table class="detail">
-			
-			<tr>
-				<% for(int i = 1; i < fileList.size(); i++){ %>
-				<td>
-					<div class="detailImgArea">
-						<img id="detailImg" class="detailImg" src="<%= contextPath %>/resources/festival_uploadFile/<%= fileList.get(i).getChangeName() %>">
-					</div>
-				</td>
-				<% } %>
-			</tr>
-		</table>
+				<tr>
+					<%
+						for (int i = 1; i < fileList.size(); i++) {
+					%>
+					<td>
+						<div class="detailImgArea">
+							<img id="detailImg" class="detailImg"
+								src="<%=contextPath%>/resources/festival_uploadFile/<%=fileList.get(i).getChangeName()%>">
+						</div>
+					</td>
+					<%
+						}
+					%>
+				</tr>
+			</table>
 		</div>
 
 		<hr>
+
 
 
 		<div class="replyArea">
@@ -281,44 +298,111 @@ td {
 			<div class="replyWriterArea">
 				<table align="center" id="replyTable">
 					<tr>
-						<td><img
-							src="<%=contextPath%>/resources/images/speech-bubble.png"
-							width="110px" height="70px">&emsp;</td>
-						<td><textarea rows="2" cols="105" id="replyContent"></textarea>
+						<td width="200px" align="center" style="font-family: 'Do Hyeon', sans-serif; font-size:25px;"><span><%=loginUser.getmName() %></span></td>
+						<td><textarea rows="2" cols="85" id="replyContent"></textarea>
+						<td><button type="button" class="btn btn-outline-info" id="addReply"
+								style="font-family: 'Do Hyeon', sans-serif; font-size: 20px; width: 100px; height: 50px;">작성완료</button></td>
 						<td><button type="button" class="btn btn-outline-info"
-								style="font-family: 'Do Hyeon', sans-serif; font-size: 15px; width: 100px; height: 50px;">작성완료</button></td>
+				style="font-family: 'Do Hyeon', sans-serif; font-size: 20px; width: 100px; height: 50px;"
+				onclick="returnToList();">목록으로</button></td>
 					</tr>
 				</table>
 			</div>
+			
+			<div id="replySelectArea">
+			<table id="replySelectTable" border="1" align="center">
+				<%
+					if (rlist != null) {
+				%>
+				<%
+					for (Reply r : rlist) {
+				%>
+				<tr align="center" >
+					<td width="300px"><p style="font-family: 'Do Hyeon', sans-serif; font-size:20px; margin:auto;"><%=r.getrWriter()%></p><p style="font-family: 'Do Hyeon', sans-serif; font-size:13px; color:gray;">작성일자 : <%=r.getCreateDate()%></p></td>
+					<td width="700px"><p style="font-family: 'Do Hyeon', sans-serif; font-size:20px; margin:auto;"><%=r.getrContent()%></p></td>
+					<td width="200px"><button type="button" class="btn btn-outline-danger"
+					style="width: 70px; height: 45px;"onclick="deleteReply();">삭제</button></td>
+				</tr>
+				<%
+					}
+				%>
+				<%
+					}
+				%>
+			</table>
+			</div>
 		</div>
 
-		<div align="center">
-			<button type="button" class="btn btn-outline-info"
-				style="width: 100px; height: 35px; margin: 0; font-family: 'Do Hyeon', sans-serif; font-size: 15px;"
-				onclick="returnToList();">목록으로</button>
-
-		</div>
-
+		
 	</div>
+
 
 	<form action="" id="detailForm" method="post">
 		<input type="hidden" name="bId" value="<%=b.getbId()%>">
 	</form>
 
 	<script>
-			function returnToList(){
-				location.href="<%=contextPath%>/festivalall.fe";
-			}
+		function returnToList(){
+			location.href="<%=contextPath%>/festivalall.fe";
+		}
 			
-			function updateBoard(){
-				$("#detailForm").attr("action", "<%=contextPath %>/updateForm.fe");
-				$("#detailForm").submit();
-			}
+		function updateBoard(){
+			$("#detailForm").attr("action", "<%=contextPath%>/updateForm.fe");
+			$("#detailForm").submit();
+		}
 			
-			function deleteBoard(){
-				$("#detailForm").attr("action", "<%= contextPath %>/delete.fe");
-				$("#detailForm").submit();
-			}
+		function deleteBoard(){
+			$("#detailForm").attr("action", "<%=contextPath%>/delete.fe");
+			$("#detailForm").submit();
+		}
+		
+		$(function(){
+			$("#addReply").click(function() {
+				var writer =<%=loginUser.getM_seq()%>;
+				var bid =<%=b.getbId()%>;
+				var content = $("#replyContent").val();
+
+				$.ajax({
+					url : "insertReply.fe",
+					type : "post",
+					dataType : "json",
+					data : {writer : writer,
+							content : content,
+							bid : bid},
+					success : function(data) {
+							var $table = $("#replySelectTable");
+							$table.html("");
+
+							// 새로 받아온 갱신 된 댓글 리스트를 반복문을 통해 table에 추가
+							for ( var key in data) {
+
+								var $tr = $("<tr>");
+								var $writerTd = $("<td>").text(
+										data[key].rWriter)
+								var $contentTd = $("<td>").text(
+										data[key].rContent)
+								var $dateTd = $("<td>").text(
+										data[key].createDate)
+
+								$tr.append($writerTd);
+								$tr.append($contentTd);
+								$tr.append($dateTd);
+
+								$table.append($tr);
+							}
+
+							// 댓글 작성 부분 리셋
+							$("#replyContent").val("");
+
+						},
+						error : function() {
+							console.log("통신 실패!");
+						}
+					});
+				});
+		});
+
+		
 	</script>
 
 

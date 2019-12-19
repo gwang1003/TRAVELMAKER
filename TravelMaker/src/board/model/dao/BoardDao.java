@@ -35,26 +35,26 @@ public class BoardDao {
 
 	public int getListCount(Connection con) {
 		int listCount = 0;
-		
+
 		Statement stmt = null;
 		ResultSet rset = null;
-		
+
 		String sql = prop.getProperty("getListCount");
-		
+
 		try {
 			stmt = con.createStatement();
 			rset = stmt.executeQuery(sql);
-			
-			if(rset.next()) {
+
+			if (rset.next()) {
 				listCount = rset.getInt(1);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close(rset);
 			close(stmt);
-		}		
+		}
 		return listCount;
 	}
 
@@ -75,7 +75,8 @@ public class BoardDao {
 			if (rset.next()) {
 				b = new Board(rset.getInt("b_id"), rset.getDate("write_date"), rset.getDate("update_date"),
 						rset.getString("title"), rset.getString("content"), rset.getInt("view_cnt"),
-						rset.getString("writer"), rset.getString("status"), rset.getInt("l_code"), rset.getInt("b_type"));
+						rset.getString("writer"), rset.getString("status"), rset.getString("l_code"),
+						rset.getInt("b_type"));
 
 			}
 
@@ -112,7 +113,7 @@ public class BoardDao {
 
 		return result;
 	}
-	
+
 	public int deleteAttachment(Connection con, int bid) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -133,15 +134,58 @@ public class BoardDao {
 		return result;
 	}
 
-
 	public int insertBoard(Connection con, Board b) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int updateBoard(Connection con, Board b) {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateBoard");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			pstmt.setInt(1, Integer.parseInt(b.getlCode()));
+			pstmt.setString(2, b.getbTitle());
+			pstmt.setString(3, b.getbContent());
+			pstmt.setInt(4, b.getbId());
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateInformation(Connection con, Information info) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = prop.getProperty("updateInformation");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			pstmt.setString(1, info.getsDay());
+			pstmt.setString(2, info.geteDay());
+			pstmt.setString(3, info.getTel());
+			pstmt.setInt(4, info.getPrice());
+			pstmt.setString(5, info.getAddress());
+			pstmt.setString(6, info.getPage());
+			pstmt.setInt(7, info.getbId());
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 	// 게시판 조회용
@@ -154,7 +198,7 @@ public class BoardDao {
 
 		try {
 			pstmt = con.prepareStatement(query);
-			
+
 			int startRow = (currentPage - 1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 
@@ -168,7 +212,7 @@ public class BoardDao {
 			while (rs.next()) {
 				list.add(new Board(rs.getInt("b_id"), rs.getDate("write_date"), rs.getDate("update_date"),
 						rs.getString("title"), rs.getString("content"), rs.getInt("view_cnt"), rs.getInt("good"),
-						rs.getInt("notgood"), rs.getString("writer"), rs.getString("status"), rs.getInt("l_code"),
+						rs.getInt("notgood"), rs.getString("writer"), rs.getString("status"), rs.getString("l_code"),
 						rs.getInt("s_type"), rs.getInt("b_type"), rs.getInt("m_seq")));
 			}
 		} catch (SQLException e) {
@@ -190,13 +234,13 @@ public class BoardDao {
 
 		try {
 			pstmt = con.prepareStatement(query);
-			
+
 			int startRow = (currentPage - 1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			
+
 			rset = pstmt.executeQuery();
 
 			while (rset.next()) {
@@ -297,48 +341,88 @@ public class BoardDao {
 	}
 
 	public ArrayList<Reply> selectReplyList(Connection con, int bId) {
-		// TODO Auto-generated method stub
-		return new ArrayList<Reply>();
-	}
-
-	public ArrayList<Reply> insertReply(Connection con) {
-		// TODO Auto-generated method stub
-		return new ArrayList<Reply>();
-	}
-
-	public ArrayList<Board> selectList(Connection con, int currentPage, int boardLimit) {
-		ArrayList<Board> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
+		ResultSet rs = null;
+		ArrayList<Reply> rlist = null;
 		
-		String sql = prop.getProperty("selectList");
+		String sql = prop.getProperty("selectReplyList");
 		
 		try {
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bId);
 			
-			int startRow = (currentPage-1) * boardLimit +1;
-			int endRow = startRow + boardLimit -1;
+			rs = pstmt.executeQuery();
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			rlist = new ArrayList<Reply>();
 			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				list.add(new Board(rset.getInt(2), rset.getDate(3), rset.getDate(4),rset.getString(5),rset.getString(6), rset.getInt(7),rset.getInt(8),rset.getInt(9),rset.getString(10),rset.getString(11),rset.getInt(12),rset.getInt(13),rset.getInt(14),rset.getInt(15)));
+			while(rs.next()) {
+				rlist.add(new Reply(rs.getInt("r_id"),
+									rs.getString("r_content"),
+									rs.getInt("b_id"),
+									rs.getString("m_name"),
+									rs.getDate("write_date"),
+									rs.getString("status")));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			close(rset);
+		} finally {
+			close(rs);
 			close(pstmt);
 		}
 		
-		
-		
-		return list;
+		return rlist;
 	}
+
+	public int insertReply(Connection con, Reply r) {
+		PreparedStatement pstmt = null;
+
+		int result = 0;
+
+		String sql = prop.getProperty("insertReply");
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, r.getrContent());
+			pstmt.setInt(2, r.getRefbId());
+			pstmt.setInt(3, Integer.parseInt(r.getrWriter()));
+
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	/*
+	 * public ArrayList<Board> selectList(Connection con, int currentPage, int
+	 * boardLimit) { ArrayList<Board> list = new ArrayList<>(); PreparedStatement
+	 * pstmt = null; ResultSet rset = null;
+	 * 
+	 * String sql = prop.getProperty("selectList");
+	 * 
+	 * try { pstmt = con.prepareStatement(sql);
+	 * 
+	 * int startRow = (currentPage-1) * boardLimit +1; int endRow = startRow +
+	 * boardLimit -1;
+	 * 
+	 * pstmt.setInt(1, startRow); pstmt.setInt(2, endRow);
+	 * 
+	 * rset = pstmt.executeQuery();
+	 * 
+	 * while(rset.next()) { list.add(new Board(rset.getInt(2), rset.getDate(3),
+	 * rset.getDate(4),rset.getString(5),rset.getString(6),
+	 * rset.getInt(7),rset.getInt(8),rset.getInt(9),rset.getString(10),rset.
+	 * getString(11),rset.getInt(12),rset.getInt(13),rset.getInt(14),rset.getInt(15)
+	 * )); } } catch (SQLException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); }finally { close(rset); close(pstmt); }
+	 * 
+	 * 
+	 * 
+	 * return list; }
+	 */
 
 	public int insertThBoard(Connection conn, Board b) {
 		PreparedStatement pstmt = null;
@@ -353,7 +437,7 @@ public class BoardDao {
 			pstmt.setString(1, b.getbTitle());
 			pstmt.setString(2, b.getbContent());
 			pstmt.setString(3, b.getbWriter());
-			pstmt.setInt(4, b.getlCode());
+			pstmt.setInt(4, Integer.parseInt(b.getlCode()));
 			pstmt.setInt(5, b.getmId());
 
 			result = pstmt.executeUpdate();
@@ -447,5 +531,76 @@ public class BoardDao {
 		return result;
 	}
 
-	
+	/*
+	 * public ArrayList<Board> selectList(Connection con, String search, String
+	 * searchCondition) { ArrayList<Board> list = new ArrayList<>();
+	 * PreparedStatement pstmt = null; ResultSet rset = null;
+	 * 
+	 * String sql= "";
+	 * 
+	 * if(searchCondition.equals("title")) {
+	 * sql=prop.getProperty("selectSearchTitleList");
+	 * 
+	 * }else { sql = prop.getProperty("selectSearchContentList"); }
+	 * 
+	 * try { pstmt = con.prepareStatement(sql); pstmt.setString(1, search);
+	 * 
+	 * rset = pstmt.executeQuery();
+	 * 
+	 * while(rset.next()) { list.add(new
+	 * Board(rset.getInt("b_id"),rset.getDate("write_date"),rset.getDate(
+	 * "update_date"),rset.getString("title")
+	 * ,rset.getString("content"),rset.getInt("view_cnt"),rset.getInt("good"),rset.
+	 * getInt("notgood"),rset.getString("writer")
+	 * ,rset.getString("status"),rset.getString("l_code"),rset.getInt("s_type"),rset
+	 * .getInt("b_type"),rset.getInt("m_seq"))); } } catch (SQLException e) { //
+	 * TODO Auto-generated catch block e.printStackTrace(); }finally { close(rset);
+	 * close(pstmt); }
+	 * 
+	 * return list; }
+	 */
+
+	public ArrayList<Board> selectSearchList(Connection con, String search, String searchCondition, int currentPage,
+			int boardLimit) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Board> list = null;
+		String sql = "";
+
+		if (searchCondition.equals("title")) {
+			sql = prop.getProperty("selectSearchTitleList");
+
+		} else {
+			sql = prop.getProperty("selectSearchContentList");
+		}
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setString(1, search);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rs = pstmt.executeQuery();
+
+			list = new ArrayList<Board>();
+
+			while (rs.next()) {
+				list.add(new Board(rs.getInt("b_id"), rs.getDate("write_date"), rs.getDate("update_date"),
+						rs.getString("title"), rs.getString("content"), rs.getInt("view_cnt"), rs.getInt("good"),
+						rs.getInt("notgood"), rs.getString("writer"), rs.getString("status"), rs.getString("l_code"),
+						rs.getInt("s_type"), rs.getInt("b_type"), rs.getInt("m_seq")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
 }

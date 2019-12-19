@@ -2,18 +2,17 @@
 	pageEncoding="UTF-8" import="java.util.*, board.model.vo.*"%>
 
 <%
+	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
 	ArrayList<Board> blist = (ArrayList<Board>) request.getAttribute("blist");
 	ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
-	System.out.println(blist);
-	System.out.println(flist);
-	
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	
+
+	PageInfo pi = (PageInfo) request.getAttribute("pi");
+
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage(); 
+	int endPage = pi.getEndPage();
 %>
 <!DOCTYPE html>
 <html>
@@ -53,8 +52,8 @@ body {
 	margin-left: 120px;
 	border-bottom: 1px solid black;
 	padding: 0;
-	background:white;
-	box-shadow: 10px 5px 15px 15px gray;
+	background: white;
+	box-shadow: 10px 5px 15px 5px gray;
 	border-radius: 10px;
 }
 
@@ -181,10 +180,34 @@ button {
 	font-family: 'Do Hyeon', sans-serif;
 }
 
-span, p {
+span, p, input {
 	font-family: 'Do Hyeon', sans-serif;
 }
 
+.navbar .navbar-search .dropdown-menu {
+	min-width: 25px;
+}
+
+.dropdown-menu .label-icon {
+	margin-left: 5px;
+}
+
+.btn-outline {
+	background-color: transparent;
+	color: inherit;
+	transition: all .5s;
+}
+
+.nav {
+	margin: auto; 
+	ailgn : center;
+	width: 600px;
+	ailgn: center;
+}
+
+.form-control {
+	border: 1px solid black;
+}
 </style>
 </head>
 
@@ -199,21 +222,35 @@ span, p {
 
 		<div id="choice1">
 
-			<div id="search" align="center" style="display: inline;">
-				<div>
-					<select>
-						<option>----</option>
-						<option>제목</option>
-						<option>작성자</option>
-					</select> <input type="search"
-						style="width: 500px; height: 40px; margin-top: 20px;">
-					<button
-						style="width: 100px; height: 40px; background-color: orangered; color: white; border-radius: 10px; font-size: 25px;">검색</button>
+			<div class="nav nav-justified navbar-nav">
+				<form class="navbar-form navbar-search" action="<%=contextPath%>/search.fe" method="get" onsubmit="return checkSearchCondition();">
+					<div class="input-group" >
+						<select id="searchCondition" name="searchCondition">
+							<option value="----">----</option>
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+						</select> <input type="search" name="search" class="form-control"
+							placeholder="검색어 입력">
+
+						<div class="input-group-btn">
+							<button type="submit" class="btn btn-search btn-default"
+								style="border: 1px solid black;">검색</button>
 
 
-				</div>
-
+						</div>
+					</div>
+				</form>
 			</div>
+			<script>
+				function checkSearchCondition(){
+					if($("#searchCondition option:selected").val() == '----'){
+						alert("검색할 분야 선택");
+						return false;
+					}
+					return true;
+				}
+			</script>
+
 
 			<br> <br>
 
@@ -256,84 +293,120 @@ span, p {
 			<div id="festivalTable">
 
 				<div class="thumbnailArea" style="width: 1000px; height: 1600px;">
+
 					<%
 						for (Board b : blist) {
 					%>
-					
-					<div class="cli" style="height:210px;">
-					<input type="hidden" value="<%=b.getbId()%>">
-					<div style="float: left; width: 300px; box-sizing: border-box;">
 
-						<%
-							for (Attachment at : flist) {
-						%>
-						<%
-							if (b.getbId() == at.getbId()) {
-						%>
-						<img
-							src="<%=contextPath%>/resources/festival_uploadFile/<%=at.getChangeName()%>"
-							width="300px" height="200px">
-						<%
-							}
-						%>
-						<%
-							}
-						%>
-					</div>
-					<div
-						style="float: left; width: 550px; height: 200px; box-sizing: border-box;">
-						<span><%=b.getbId()%>번 게시글 </span>
-						<p><%=b.getbTitle()%></p>
-						<p><%=b.getbContent()%></p>
-					</div>
-					<div
-						style="float: left; width: 150px; height: 200px; box-sizing: border-box; margin-bottom: 40px;">
-						<p><%=b.getbWriter()%></p>
-						<p>
-							조회수 :
-							<%=b.getbCount()%>
-							<br> 좋아요 :
-							<%=b.getGood()%>
-						</p>
-					</div>
+					<div class="cli" style="height: 210px;">
+						<input type="hidden" value="<%=b.getbId()%>">
+						<div style="float: left; width: 300px; box-sizing: border-box;">
+
+							<%
+								for (Attachment at : flist) {
+							%>
+							<%
+								if (b.getbId() == at.getbId()) {
+							%>
+							<img
+								src="<%=contextPath%>/resources/festival_uploadFile/<%=at.getChangeName()%>"
+								width="300px" height="200px">
+							<%
+								}
+							%>
+							<%
+								}
+							%>
+						</div>
+						<div
+							style="float: left; width: 550px; height: 200px; box-sizing: border-box;">
+							<span><%=b.getbId()%>번 게시글 </span>
+							<p><%=b.getbTitle()%></p>
+							<p><%=b.getbContent()%></p>
+						</div>
+						<div
+							style="float: left; width: 150px; height: 200px; box-sizing: border-box; margin-bottom: 40px;">
+							<p><%=b.getbWriter()%></p>
+							<p>
+								조회수 :
+								<%=b.getbCount()%>
+								<br> 좋아요 :
+								<%=b.getGood()%>
+							</p>
+						</div>
 					</div>
 					<hr>
-					<% } %>
+					<%
+						}
+					%>
 				</div>
 				<hr>
 			</div>
-			
+
 			<!-- 페이징 바 -->
-		<div class="pagingArea" align="center">
-			<!-- 맨 처음으로 (<<) -->
-			<button onclick="location.href='<%= contextPath %>/festivalall.fe?currentPage=1'"> &lt;&lt; </button>
-			
-			<!-- 이전 페이지로 (<) -->
-			<% if(currentPage == 1){ %>
-				<button disabled> &lt; </button>
-			<% } else { %>
-				<button onclick="location.href='<%= contextPath %>/festivalall.fe?currentPage=<%= currentPage - 1 %>'"> &lt; </button>
-			<% } %>
-			
-			<!-- 10개의 페이지 목록 -->
-			<% for(int p = startPage; p <= endPage; p++){ %>
-				<% if(p == currentPage){ %>
-					<button disabled> <%= p %> </button>
-				<% } else { %>
-					<button onclick="location.href='<%= contextPath %>/festivalall.fe?currentPage=<%= p %>'"><%= p %></button>
-				<% } %>
-			<% } %>
-			
-			<!-- 다음 페이지로 (>) -->
-			<% if(currentPage == maxPage){ %>
-				<button disabled> &gt; </button>
-			<% } else { %>
-				<button onclick="location.href='<%= contextPath %>/festivalall.fe?currentPage=<%= currentPage + 1 %>'"> &gt; </button>
-			<% } %>
-			
-			<!-- 맨 끝으로 (>>) -->
-			<button onclick="location.href='<%= contextPath %>/festivalall.fe?currentPage=<%= maxPage %>'"> &gt;&gt; </button>
-		</div>
+			<div class="pagingArea" align="center">
+				<!-- 맨 처음으로 (<<) -->
+				<button
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=1'">
+					&lt;&lt;</button>
+
+				<!-- 이전 페이지로 (<) -->
+				<%
+					if (currentPage == 1) {
+				%>
+				<button disabled>&lt;</button>
+				<%
+					} else {
+				%>
+				<button
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage - 1%>'">
+					&lt;</button>
+				<%
+					}
+				%>
+
+				<!-- 10개의 페이지 목록 -->
+				<%
+					for (int p = startPage; p <= endPage; p++) {
+				%>
+				<%
+					if (p == currentPage) {
+				%>
+				<button disabled>
+					<%=p%>
+				</button>
+				<%
+					} else {
+				%>
+				<button
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=p%>'"><%=p%></button>
+				<%
+					}
+				%>
+				<%
+					}
+				%>
+
+				<!-- 다음 페이지로 (>) -->
+				<%
+					if (currentPage == maxPage) {
+				%>
+				<button disabled>&gt;</button>
+				<%
+					} else {
+				%>
+				<button
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage + 1%>'">
+					&gt;</button>
+				<%
+					}
+				%>
+
+				<!-- 맨 끝으로 (>>) -->
+				<button
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=maxPage%>'">
+					&gt;&gt;</button>
+			</div>
 		</div>
 
 
@@ -391,6 +464,18 @@ span, p {
 				var bId =  $(this).children().eq(0).val();
 				location.href="<%=contextPath%>/detail.fe?bId=" + bId;
 			});
+		});
+		
+		$(function(){
+		    
+		    $(".input-group-btn .dropdown-menu li a").click(function(){
+
+		        var selText = $(this).html();
+		    
+		       $(this).parents('.input-group-btn').find('.btn-search').html(selText);
+
+		   });
+
 		});
 	</script>
 
