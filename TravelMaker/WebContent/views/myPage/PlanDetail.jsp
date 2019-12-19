@@ -2,6 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
+<%@page import="member.model.vo.Member" %>
+<%
+	String contextPath = request.getContextPath();
+	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+	System.out.println(loginUser);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,11 +35,11 @@
 }
 
 .card-plan {
-	width: 100px;
+	width: 200px;
 	height: 100px;
 	float: left;
-	margin-top: 3%;
-	margin-left: 35%;
+	margin-top: 5%;
+	margin-left: 37%;
 }
 
 h2 {
@@ -240,20 +246,19 @@ opacity: 0;
     </script>
 </head>
 <body>
-	<form  method="post" action="<%=request.getContextPath()%>/update.pl" enctype="multipart/form-data">
+	<form  method="post" action="<%=request.getContextPath()%>/insert.pl" enctype="multipart/form-data">
 		<div class="container">
 			<div class="container-scroll">
 				<div id="titleImgArea">
 					<img class="card-plan" name="plan-img" id="plan-img" width="100px"
 						height="100px;">
 				</div>
-				<input type="text" class="plan-name" name="plan-name" placeholder="계획명" width="200px" height="100px" style="font-size:25px; margin-top:35px;">
 				<div class="week">
 					<div class="week-day">
-						<p class="week-day-name">내용</p>
+						<p class="week-day-name">계획</p>
 						<div class="holder">
 							<div class="week-day-task">
-								<input type="text" name="plan-content" class="plan-content"
+								<input type="text" name="plan-name" class="plan-name"
 									style="border: none; border-right: 0px; border-top: 0px; boder-left: 0px; boder-bottom: 0px; width: 100%; height: 100%;">
 							</div>
 						</div>
@@ -279,10 +284,10 @@ opacity: 0;
 							<div class="box">
 								<div class="week-day-task">
 									<p class="week-day-task-difficulty">
-										시작 : <input type="time" name="plan-start-time">
+										시작 : <input type="time" name="plan-start-time" min="00:00" max="24:00">
 									</p>
 									<p class="week-day-task-difficulty">
-										종료 : <input type="time" name="plan-end-time">
+										종료 : <input type="time" name="plan-end-time" min="00:00" max="24:00">
 									</p>
 								</div>
 							</div>
@@ -298,15 +303,18 @@ opacity: 0;
 		</div>
 		<div id="fileArea">
 			<input type="file" id="thumbnailImg1" name="thumbnailImg1"
-				onchange="LoadImg(this,1)">
+				onchange="LoadImg(this,1)" style="display:none">
 		</div>
 		<script>
 		$(function() {
-			$("#fileArea").hide();
-
 			$("#titleImgArea").click(function() {
 				$("#thumbnailImg1").click();
 			});
+			
+			$('input[name=plan-start-date]').val(new Date().toISOString().substring(0,10));
+			$('input[name=plan-end-date]').val(new Date().toISOString().substring(0,10));
+			$('input[name=plan-start-time]').val(new Date().toISOString().slice(11,14) + "00");
+			$('input[name=plan-end-time]').val(new Date().toISOString().slice(11,14) + "00");
 		});
 		
 		function LoadImg(value, num) {
@@ -320,7 +328,6 @@ opacity: 0;
 						// e.target.result -> data:URL (파일의 컨텐츠)
 						$("#plan-img").attr("src", e.target.result);
 						console.log(e.target.result);
-						console.log("쉿");
 						break;
 					};
 				}

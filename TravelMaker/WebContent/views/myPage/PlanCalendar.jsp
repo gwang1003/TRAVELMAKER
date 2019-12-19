@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -91,7 +93,9 @@
           imageurl: '<%= request.getContextPath() %>/resources/images/강원도.jpg'
         }
       ]
-      ,dateClick: function() {
+      ,dateClick: function(info) {
+    	  request.getSession().setAttribute("clickday", info.dateStr);
+    	  
     	  var left = (screen.width/2)-300;
     	  var top = (screen.height/2)-225;
     	  var url = "<%= request.getContextPath() %>/views/myPage/PlanList.jsp";
@@ -105,6 +109,13 @@
           }
       }
       , eventClick:function(event) {
+    	  var yy=date.format("YYYY");
+   	   	  var mm=date.format("MM");
+   	      var dd=date.format("DD");
+   	      var ss=date.format("dd");
+   	      System.out.println("yymmdd : " + yy + mm + dd);
+   	       request.getSession().setAttribute("clickdate", new date(yy + mm + dd));
+   	       
     	  var left = (screen.width/2)-300;
     	  var top = (screen.height/2)-225;
     	  var url = "<%= request.getContextPath() %>/views/myPage/PlanList.jsp";

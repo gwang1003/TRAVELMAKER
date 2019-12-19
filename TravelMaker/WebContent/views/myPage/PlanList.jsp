@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member"%>
+<%
+	String contextPath = request.getContextPath();
+	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +12,6 @@
 <link href='<%= request.getContextPath() %>/resources/fullcalendar-4.3.1/packages/list/main.css' rel='stylesheet' />
 <script src='<%= request.getContextPath() %>/resources/fullcalendar-4.3.1/packages/core/main.js'></script>
 <script src='<%= request.getContextPath() %>/resources/fullcalendar-4.3.1/packages/list/main.js'></script>
-<script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous">
-</script>
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -33,8 +32,11 @@
         listDay: { buttonText: 'list day' },
         listWeek: { buttonText: 'list week' }
       },
+      
+      <%-- var clickday = <%= request.getSession().getAttribute("clickdate") %>;
+      System.out.println("clickday : " + clickday); --%>
 
-      defaultView: 'listWeek',
+      defaultView: 'listDay',
       defaultDate: '2019-08-12',
       navLinks: true, // can click day/week names to navigate views
       editable: true,
@@ -116,13 +118,17 @@
     margin: 0 auto;
   }
 
-  .fc-listWeek-button, .fc-listDay-button {
+  .fc-listWeek-button , .fc-listDay-button {
   	display:none;
   }
   
   .fc-today-button {
   	position:absolute;
   	left:89%;
+  }
+  
+  .fc-listWeek-view {
+  	display:none;
   }
 </style>
 </head>
@@ -132,8 +138,11 @@
   <button onclick="location.href='<%= request.getContextPath() %>/views/myPage/PlanDetail.jsp'">추가</button>
   <script>
   $(function() {
-	  $('.active-listWeek-button').removeClass('.fc-button-active');
-	  $('.active-listDay-button').addClass('.fc-button-active');
+	  /* $('.fc-listWeek-button').removeClass('fc-button-active');
+	  $('.fc-listDay-button').addClass('fc-button-active'); */
+	  $(".fc-listDay-button").trigger("click");
+	  $("#calendar").datepicker().datepicker("defaultDate", new Date());
+	  
   });
   
 

@@ -26,8 +26,7 @@ public class PlanListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("ㄴㅇㅁㅇㄴ");
-		request.getRequestDispatcher("/views/myPage/Plan.jsp").forward(request, response);
+		
 	}
 
 	/**
