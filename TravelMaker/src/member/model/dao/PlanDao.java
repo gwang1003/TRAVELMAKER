@@ -48,7 +48,6 @@ public class PlanDao {
 			pstmt.setString(5, mp.getStartTime());
 			pstmt.setString(6, mp.getEndTime());
 			pstmt.setString(7, mp.getFileName());
-
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {

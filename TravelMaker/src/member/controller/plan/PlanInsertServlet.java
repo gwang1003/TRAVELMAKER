@@ -71,7 +71,6 @@ public class PlanInsertServlet extends HttpServlet {
 			MyPlan p = new MyPlan(loginUser.getM_seq(), planName, planStartDate
 						, planEndDate, planStartTime, planEndTime, fileName);
 			
-			
 			 try {
 				 int result = new PlanService().insertPlan(p, userSeq);
                  if (result > 0) {

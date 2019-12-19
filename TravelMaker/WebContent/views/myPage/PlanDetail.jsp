@@ -3,10 +3,12 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="member.model.vo.Member" %>
+<%@page import="member.model.vo.MyPlan" %>
+<%@page import="java.util.ArrayList" %>
 <%
 	String contextPath = request.getContextPath();
 	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
-	System.out.println(loginUser);
+	ArrayList<MyPlan> planList = (ArrayList)request.getSession().getAttribute("planList");
 %>
 <!DOCTYPE html>
 <html lang="en">
