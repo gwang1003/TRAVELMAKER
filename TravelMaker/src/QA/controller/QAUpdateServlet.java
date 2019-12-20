@@ -32,7 +32,7 @@ public class QAUpdateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String content = request.getParameter("content");
 		String title = request.getParameter("title");
-		int type = Integer.parseInt(request.getParameter("type"));
+		String type = request.getParameter("type");
 		int qId = Integer.parseInt(request.getParameter("qId"));
 		QA q = new QA(qId, type, title, content);
 		

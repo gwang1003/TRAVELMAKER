@@ -33,7 +33,7 @@ public class QAInsertServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String content = request.getParameter("content");
 		String title = request.getParameter("title");
-		int type = Integer.parseInt(request.getParameter("type"));
+		String type = request.getParameter("type");
 		Member m = (Member)request.getSession().getAttribute("loginUser");
 		QA q = new QA(type, title, content);
 		

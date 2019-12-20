@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class QA {
 	private int qId;
-	private int qType;
+	private String qType;
 	private String qTitle;
 	private String qContent;
 	private String status;
@@ -15,7 +15,7 @@ public class QA {
 	
 	public QA() {}
 
-	public QA(int qId, int qType, String qTitle, String qContent, String status, Date enrollDate, String answer,
+	public QA(int qId, String qType, String qTitle, String qContent, String status, Date enrollDate, String answer,
 			Date answerDate, String writer) {
 		super();
 		this.qId = qId;
@@ -31,7 +31,7 @@ public class QA {
 	
 	
 
-	public QA(int qType, String qTitle, String qContent, String status, Date enrollDate, String answer,
+	public QA(String qType, String qTitle, String qContent, String status, Date enrollDate, String answer,
 			Date answerDate, String writer) {
 		super();
 		this.qType = qType;
@@ -46,7 +46,7 @@ public class QA {
 	
 	
 
-	public QA(int qId, int qType, String qTitle, String qContent) {
+	public QA(int qId, String qType, String qTitle, String qContent) {
 		super();
 		this.qId = qId;
 		this.qType = qType;
@@ -54,7 +54,7 @@ public class QA {
 		this.qContent = qContent;
 	}
 
-	public QA(int qType, String qTitle, String qContent) {
+	public QA(String qType, String qTitle, String qContent) {
 		super();
 		this.qType = qType;
 		this.qTitle = qTitle;
@@ -62,7 +62,7 @@ public class QA {
 	}
 	
 	
-	public QA(int qId, int qType, String qTitle, String status, Date enrollDate) {
+	public QA(int qId, String qType, String qTitle, String status, Date enrollDate) {
 		super();
 		this.qId = qId;
 		this.qType = qType;
@@ -71,7 +71,7 @@ public class QA {
 		this.enrollDate = enrollDate;
 	}
 
-	public QA(int qId, int qType, String qTitle, String status, Date enrollDate, String writer) {
+	public QA(int qId, String qType, String qTitle, String status, Date enrollDate, String writer) {
 		super();
 		this.qId = qId;
 		this.qType = qType;
@@ -84,7 +84,7 @@ public class QA {
 	
 	
 
-	public QA(int qType, String qTitle, String status, Date enrollDate, String writer) {
+	public QA(String qType, String qTitle, String status, Date enrollDate, String writer) {
 		super();
 		this.qType = qType;
 		this.qTitle = qTitle;
@@ -101,11 +101,11 @@ public class QA {
 		this.qId = qId;
 	}
 
-	public int getqType() {
+	public String getqType() {
 		return qType;
 	}
 
-	public void setqType(int qType) {
+	public void setqType(String qType) {
 		this.qType = qType;
 	}
 
