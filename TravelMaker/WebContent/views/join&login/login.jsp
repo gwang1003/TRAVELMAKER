@@ -150,7 +150,7 @@
     </style>
 </head>
 <body>
-    <form action="<%= request.getContextPath() %>/login.me" method="post">
+    <form action="<%= request.getContextPath() %>/login.me" method="post" class="loginForm">
         <div class="loginForm">
             <div id=mimg><img src="image/피카츄.gif" alt=""></div>
             <div id="p">
@@ -162,12 +162,16 @@
 
                 <input type="password" id="pwd" placeholder="****" name="loginPass"> <br> <br> 
             </div>
-            <div id="loginBtn"> <button id="lo">로그인</button> &nbsp;&nbsp; 
+            <div id="loginBtn"> <button id="lo" onclick="goLogin();">로그인</button> &nbsp;&nbsp; 
             <input type="button" onclick="goJoin();" id="insert" value="회원가입">
             <script>
+            	function goLogin() {
+            		$()
+            		alert('<%= request.getSession().getAttribute("msg")%>');
+            	}
+            
             	function goJoin() {
             		location.href="<%= request.getContextPath() %>/views/join&login/Join.jsp";
-            		System.out.println("<%= request.getContextPath() %>/views/join&login/Join.jsp");
             	}
             </script>
             </div> <br>

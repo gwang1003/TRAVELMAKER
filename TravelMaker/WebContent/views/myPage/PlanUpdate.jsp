@@ -248,12 +248,12 @@ opacity: 0;
     </script>
 </head>
 <body>
-	<form  method="post" action="<%=request.getContextPath()%>/insert.pl" enctype="multipart/form-data">
+	<form  method="post" action="<%=request.getContextPath()%>/update.pl" enctype="multipart/form-data">
 		<div class="container">
 			<div class="container-scroll">
 				<div id="titleImgArea">
-					<img class="card-plan" name="plan-img" id="plan-img" width="100px"
-						height="100px;">
+					<img class="card-plan" name="up-plan-img" id="plan-img" width="100px"
+						height="100px;" value="<%= planList.get(index)%>">
 				</div>
 				<div class="week">
 					<div class="week-day">
@@ -298,7 +298,7 @@ opacity: 0;
 					<button class="btn btn-success"
 						style="margin-left: 45%"
 						onclick="location.href='<%=request.getContextPath()%>'">취소</button>
-					<button class="btn btn-success">추가</button>
+					<button class="btn btn-success">변경</button>
 				</div>
 				<div class="week-space"></div>
 			</div>
@@ -314,7 +314,7 @@ opacity: 0;
 			});
 			
 			$('input[name=plan-start-date]').val(new Date().toISOString().substring(0,10));
-			$('input[name=plan-end-date]').val((new Date().toISOString().substring(0,9)) + ((Number)(new Date().toISOString().substring(9,10)) + 1));
+			$('input[name=plan-end-date]').val(new Date().toISOString().substring(0,10));
 			$('input[name=plan-start-time]').val(new Date().toISOString().slice(11,14) + "00");
 			$('input[name=plan-end-time]').val(new Date().toISOString().slice(11,14) + "00");
 		});
