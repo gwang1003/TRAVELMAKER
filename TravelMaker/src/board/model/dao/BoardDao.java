@@ -603,4 +603,41 @@ public class BoardDao {
 		return list;
 	}
 
+	public ArrayList<Attachment> selectSearchAttachment(Connection con, String search, String searchCondition,
+			int currentPage, int boardLimit) {
+		ArrayList<Attachment> list = new ArrayList<Attachment>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String query = prop.getProperty("selectSearchAttachment");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setString(1, search);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Attachment at = new Attachment();
+				at.setbId(rset.getInt("b_id"));
+				at.setChangeName(rset.getString("newfilename"));
+
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
 }

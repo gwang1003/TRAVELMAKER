@@ -287,7 +287,53 @@ td {
 					%>
 				</tr>
 			</table>
+			
+			    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7ca88425a9b2838d03cea5da7be46498&libraries=services"></script>
+    <div id="map" style="width:800px;height:600px; z-index:0;" ></div>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7ca88425a9b2838d03cea5da7be46498"></script>
+	<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+geocoder.addressSearch('<%= in.getAddress() %>', function(result, status) {
+
+    // 정상적으로 검색이 완료됐으면 
+     if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x),
+        	content = '<div style="padding:5px;"><%=b.getbTitle()%><br><a href="https://map.kakao.com/link/search/<%=in.getAddress() %>" style="color:blue" text-decoration="none" target="_blank">검색하기</a></div>';
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            position : coords,
+            content : content
+        });
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+});    
+</script>
 		</div>
+		
+		
 
 		<hr>
 
@@ -376,13 +422,13 @@ td {
 							// 새로 받아온 갱신 된 댓글 리스트를 반복문을 통해 table에 추가
 							for ( var key in data) {
 
-								var $tr = $("<tr>");
-								var $writerTd = $("<td>").text(
-										data[key].rWriter)
-								var $contentTd = $("<td>").text(
-										data[key].rContent)
-								var $dateTd = $("<td>").text(
-										data[key].createDate)
+								var $tr = $("<tr align>");
+								var $writerTd = $("<td><p>").text(
+										data[key].rWriter).css({"font-family": 'Do Hyeon, sans-serif', "font-size":"20px" , "margin":"auto" , "width":"300px"});
+								var $contentTd = $("<td><p>").text(
+										data[key].rContent).css({"font-family": 'Do Hyeon, sans-serif', "font-size":"20px" ,"color":"black", "width":"700px"});
+								var $dateTd = $("<td><p>").text(
+										data[key].createDate).css({"font-family": 'Do Hyeon, sans-serif', "font-size":"20px" ,"color":"gray", "width":"200px"});
 
 								$tr.append($writerTd);
 								$tr.append($contentTd);

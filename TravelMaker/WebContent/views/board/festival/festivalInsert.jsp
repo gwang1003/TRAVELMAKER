@@ -102,8 +102,8 @@ label{
 			내용 작성</h1>
 
 		<!-- 파일 업로드를 위해서는 enctype을 지정해줘야 함 -->
-		<form action="<%= contextPath %>/insert.fe" method="post"
-			enctype="multipart/form-data"> 
+		<form onsubmit="return checkImg();" action="<%= contextPath %>/insert.fe" method="post"
+			enctype="multipart/form-data" id="insertForm" > 
 			<div class="insertArea">
 				<table align="center">
 					<br>
@@ -162,9 +162,8 @@ label{
 
 				<!-- 파일 업로드 하는 부분 -->
 				<div id="fileArea">
-					<input type="file" id="thumbnailImg1" name="thumbnailImg1"
-						onchange="LoadImg(this,1)"> <input type="file"
-						id="thumbnailImg2" name="thumbnailImg2" onchange="LoadImg(this,2)">
+					<input type="file" id="thumbnailImg1" name="thumbnailImg1" onchange="LoadImg(this,1)"> 
+					<input type="file"id="thumbnailImg2" name="thumbnailImg2" onchange="LoadImg(this,2)">
 					<input type="file" id="thumbnailImg3" name="thumbnailImg3"
 						onchange="LoadImg(this,3)"> <input type="file"
 						id="thumbnailImg4" name="thumbnailImg4" onchange="LoadImg(this,4)">
@@ -172,8 +171,8 @@ label{
 				<br><br>
 
 				<div align="center" id="detailArea">
-						<label>시작일&emsp; </label><input type="text" name="sdate">&emsp;
-						<label>종료일&emsp; </label><input type="text" name="edate">&emsp;
+						<label>시작일&emsp; </label><input type="date" name="sdate">&emsp;
+						<label>종료일&emsp; </label><input type="date" name="edate">&emsp;
 						<label>전화번호&emsp; </label><input type="text" name="tel"><br>
 						
 						&emsp;<label>가 격&emsp; </label><input type="text" name="price">&emsp;&nbsp;&nbsp;
@@ -244,10 +243,27 @@ label{
 			</div>
 			<br>
 			<div class="btnArea">
-				<button type="button" onclick="javascript:history.back();" style="font-family: 'Black Han Sans', sans-serif;">취소하기</button>
-				<button type="submit" style="font-family: 'Black Han Sans', sans-serif;">작성완료</button>
+				<button type="submit" class="btn btn-outline-info" style="font-family: 'Do Hyeon', sans-serif;">작성완료</button>
+				<button type="button" class="btn btn-outline-danger"style="font-family: 'Do Hyeon', sans-serif;" onclick="javascript:history.back();">취소하기</button>
+			
 			</div>
+			
+		
 		</form>
+		<script>
+			function checkImg(){
+			if($("#thumbnailImg1").val()== "" || $("#thumbnailImg2").val()== "" || $("#thumbnailImg3").val()== "" || $("#thumbnailImg4").val()== ""){
+		               //사진 유효성검사 하는 부분
+		               console.log($("#thumbnailImg1").val());
+		               console.log($("#thumbnailImg2").val());
+		               console.log($("#thumbnailImg3").val());
+		               console.log($("#thumbnailImg4").val());
+		               alert("메인사진과 서브사진 3장을 모두 넣어주세요");
+		               return false;
+		           }
+				
+			}
+		</script>
 
 
 	</div>
