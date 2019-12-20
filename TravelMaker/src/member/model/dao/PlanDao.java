@@ -28,7 +28,7 @@ public class PlanDao {
 	}
 	
 	// 계획 넣기 
-	public int insertPlan(Connection conn, MyPlan mp, int userSeq) {
+	public int insertPlan(Connection conn, MyPlan mp) {
 		int result = 0;
 
 		PreparedStatement pstmt = null;
@@ -39,15 +39,16 @@ public class PlanDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, userSeq);
-			pstmt.setString(2, mp.getpName());
+			pstmt.setInt(1, mp.getpSeq());
+			pstmt.setInt(2, mp.getmSeq());
+			pstmt.setString(3, mp.getpName());
 			Date sqlDate1 = new java.sql.Date(mp.getStartDate().getTime());
-			pstmt.setDate(3, sqlDate1);
+			pstmt.setDate(4, sqlDate1);
 			Date sqlDate2 = new java.sql.Date(mp.getEndDate().getTime());
-			pstmt.setDate(4, sqlDate2);
-			pstmt.setString(5, mp.getStartTime());
-			pstmt.setString(6, mp.getEndTime());
-			pstmt.setString(7, mp.getFileName());
+			pstmt.setDate(5, sqlDate2);
+			pstmt.setString(6, mp.getStartTime());
+			pstmt.setString(7, mp.getEndTime());
+			pstmt.setString(8, mp.getFileName());
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -60,7 +61,7 @@ public class PlanDao {
 	}
 
 	// 계획 삭제 
-	public int deletePlan(Connection conn, int pId) {
+	public int deletePlan(Connection conn, int pSeq, int mSeq) {
 		PreparedStatement pstmt = null;
 		
 		int result = 0;
@@ -69,8 +70,8 @@ public class PlanDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, pId);
-			pstmt.setString(2, mId);
+			pstmt.setInt(1, pSeq);
+			pstmt.setInt(2, mSeq);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -84,7 +85,7 @@ public class PlanDao {
 
 	
 	// 계획 수정 
-	public int updatePlan(Connection conn, MyPlan mp, int userSeq) {
+	public int updatePlan(Connection conn, MyPlan mp) {
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
@@ -95,12 +96,15 @@ public class PlanDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, mp.getpName());
-			pstmt.setDate(2, (Date) mp.getDate());
-			pstmt.setString(3, mp.getStartTime());
-			pstmt.setString(4, mp.getEndTime());
-			pstmt.setString(5, mp.getContent());
-			pstmt.setInt(6, mp.getpId());
-			pstmt.setString(7, mp.getmId());
+			Date sqlDate1 = new java.sql.Date(mp.getStartDate().getTime());
+			pstmt.setDate(2, sqlDate1);
+			Date sqlDate2 = new java.sql.Date(mp.getEndDate().getTime());
+			pstmt.setDate(3, sqlDate2);
+			pstmt.setString(4, mp.getStartTime());
+			pstmt.setString(5, mp.getEndTime());
+			pstmt.setString(6, mp.getFileName());
+			pstmt.setInt(7, mp.getpSeq());
+			pstmt.setInt(8, mp.getmSeq());
 			
 			result = pstmt.executeUpdate();
 			

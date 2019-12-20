@@ -5,6 +5,7 @@
 <%@page import="java.util.ArrayList" %>
 <%
 	ArrayList<MyPlan> planList = (ArrayList)request.getSession().getAttribute("planList");	
+	Member loginUser2 = (Member)request.getSession().getAttribute("loginUser");
 	if(planList != null) {
 		System.out.println(planList);
 	}
@@ -34,6 +35,18 @@
 	});
 
   document.addEventListener('DOMContentLoaded', function() {
+	  var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		if(dd<10) {
+		    dd='0'+dd
+		} 
+		if(mm<10) {
+		    mm='0'+mm
+		} 
+		today = yyyy + '-' + mm + '-' + dd;
+
     var initialLocaleCode = 'ko';
     var localeSelectorEl = document.getElementById('locale-selector');
     var calendarEl = document.getElementById('calendar');
@@ -45,7 +58,7 @@
         center: 'title',
         right: 'dayGridMonth,listMonth'
       },
-      defaultDate: '2019-08-12',
+      defaultDate: today,
       locale: initialLocaleCode,
       buttonIcons: false, // show the prev/next text
       weekNumbers: true,
@@ -106,6 +119,20 @@
           start: '2019-08-28',
           imageurl: '<%= request.getContextPath() %>/resources/images/강원도.jpg'
         }
+        <% if(planList != null) { %>
+    	<% for(MyPlan p : planList) { %>
+    		<% if(p.getmSeq() == loginUser2.getM_seq()) {%>
+    			,{
+    				title: '<%= p.getpName()%>',
+    				start: '<%= p.getStartDate() + "T" + p.getStartTime() %>',
+    				end: '<%= p.getEndDate() + "T" + p.getEndTime() %>',
+    				imageurl: '<%= request.getContextPath() %>/resources/myplan_upload/<%= p.getFileName() %>',
+    				id: '<%= p.getpSeq() %>',
+    				locationid: '<%= p.getmSeq() %>'
+    			}
+    		<% }%>
+    	<% }%>
+    <% }%>
       ]
       ,dateClick: function(info) {
     	  sessionStorage.setItem("clickday", info.dateStr);
@@ -118,7 +145,8 @@
 	  }
       , eventRender:function(info) {    
     	  if (info.event.extendedProps.imageurl) {
-              info.el.firstChild.innerHTML = info.el.firstChild.innerHTML + "<img src='" + info.event.extendedProps.imageurl +"' width='60' height='40' style='margin-left:25px;'>" + "<div style='text-align:center'><%= planList.get(0).getpName() %></div>"; 
+              info.el.firstChild.innerHTML = "<img src='" + info.event.extendedProps.imageurl +"' width='60' height='40' style='display:block; margin-left:auto; margin-right:auto;'>" + "<div style='text-align:center'><%= planList.get(0).getpName() %></div>";
+              
     	  }
       }
       , eventClick:function(info) {
@@ -136,6 +164,7 @@
     	  uploadWin.moveTo(left, top);
     	  uploadWin.focus();
       }
+      
     });
 
     calendar.render();
