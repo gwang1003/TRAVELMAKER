@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -26,7 +27,7 @@ public class QADao {
 	}
 	
 	// 내가 문의한 내역 리스트
-	public ArrayList<QA> selectQAList(Connection conn, int mSeq) {
+	public ArrayList<QA> selectQAList(Connection conn, int mSeq, int currentPage, int boardLimit) {
 		ArrayList<QA> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -34,18 +35,25 @@ public class QADao {
 		String query = prop.getProperty("selectQAList");
 		
 		try {
+			
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+			System.out.println("mSeq, startRow, endRow : " + mSeq + ", " + startRow + ", " + endRow);
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, mSeq);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				list.add(new QA(rset.getInt("qa_id"),
-								rset.getInt("QA_TYPE"),
+								rset.getString("QA_TYPE_NAME"),
 								rset.getString("QA_TITLE"),
 								rset.getString("QA_STATUS"),
 								rset.getDate("ENROLL_DATE")));
 				 
 			}
+			System.out.println("list : " + list);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -56,26 +64,30 @@ public class QADao {
 	}
 	
 	// 전체 회원이 문의한 내역 리스트(m_id로 m_name 조인해서 가져옴)
-	public ArrayList<QA> selectAllQAList(Connection conn) {
+	public ArrayList<QA> selectAllQAList(Connection conn, int currentPage, int boardLimit) {
 		ArrayList<QA> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		
 		String query = prop.getProperty("selectAllQAList");
 		
 		try {
+			
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+			
 			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
 				list.add(new QA(rset.getInt("QA_ID"),
-								rset.getInt("QA_TYPE"),
+								rset.getString("QA_TYPE_NAME"),
 								rset.getString("QA_TITLE"),
 								rset.getString("QA_STATUS"),
 								rset.getDate("ENROLL_DATE"),
 								rset.getString("M_NAME")));
-				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -83,7 +95,6 @@ public class QADao {
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println("dao list : " + list);
 		return list;
 	}
 
@@ -101,7 +112,7 @@ public class QADao {
 			pstmt.setString(1, q.getqTitle());
 			pstmt.setString(2, q.getqContent());
 			pstmt.setInt(3, mSeq);
-			pstmt.setInt(4, q.getqType());
+			pstmt.setString(4, q.getqType());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -143,7 +154,7 @@ public class QADao {
 		try {
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setInt(1, q.getqType());
+			pstmt.setString(1, q.getqType());
 			pstmt.setString(2, q.getqTitle());
 			pstmt.setString(3, q.getqContent());
 			pstmt.setInt(4, q.getqId());
@@ -173,7 +184,7 @@ public class QADao {
 			
 			while(rset.next()) {
 				q = new QA(rset.getInt("QA_ID"),
-							rset.getInt("QA_TYPE"),
+							rset.getString("QA_TYPE"),
 								rset.getString("QA_TITLE"),
 								rset.getString("QA_CONTENT"),
 								rset.getString("QA_STATUS"),
@@ -232,6 +243,57 @@ public class QADao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int getListCount(Connection con, int mSeq) {
+		int listCount = 0;
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("getListCount");
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, mSeq);
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+
+	public int getAllListCount(Connection con) {
+		int listCount = 0;
+
+		Statement stmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("getAllListCount");
+
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(sql);
+
+			if (rset.next()) {
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		return listCount;
 	}
 
 }

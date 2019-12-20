@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,18 +16,18 @@ body {
 	margin-top: 0;
 	margin-left: auto;
 	margin-right: auto;
-	width: 1000px;
-	height: 100%;
+	width: 1200px;
+	height: 1000px;
 }
 
 .outer {
-	width: 500px;
-	height: 650px;
+	width: 50%;
+	height: 80%;
 	background: white;
 	color: black;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 150px;
+	margin-top: 100px;
 	border: 1px solid black;
 }
 
@@ -194,14 +195,16 @@ tr {
 				<tr>
 					<td>이메일</td>
 					<td><input type="text" name="email" id="email">@<select
-						id="email" name="email2">
+						id="email2" name="email2">
 							<option value="naver.com">naver.com</option>
 							<option value="naver.com">daum.net</option>
 							<option value="naver.com">hanmail.net</option>
 							<option value="naver.com">google.com</option>
 					</select></td>
-					<td width="200px"><button id="emailCheck" type="button"
-							onclick="checkEmail()">이메일 인증</button></td>
+					<td width="200px">
+						<div><button id="emailCheck" type="button">이메일 인증</button></div>
+						<div><input type="text" id="key" style="width:100px;" placeholder="인증번호입력"></div>
+					</td>
 				</tr>
 			</table>
 			<div class="btns" align="center">
@@ -213,6 +216,39 @@ tr {
 
 
 	<script>
+	var key;
+		$(function() {
+			$("#emailCheck").click(function(){
+				var email = $("#email").val() + '@' + $("#email2").val();
+				$.ajax({
+					// url : 데이터를 전송할 url(필수!!!)
+					url : "<%= request.getContextPath() %>/mail.mo",
+					
+					// data : 요청 시 전달할 파라미터 설정
+					data : {email:email},
+					// key:value
+					
+					// type : 전송 방식(GET / POST)
+					type : "get",
+					
+					// success : Ajax 통신 성공 시 처리할 함수를 지정하는 속성
+					success : function(result){
+						// result 매개변수 : 서버에서 응답이 왔을 때 그 값이 저장 되는 변수
+						// 매개변수명 임의 지정 가능
+						key = result;
+					},
+					
+					// error : Ajax 통신 실패 시 처리할 함수를 지정하는 속성
+					error : function(){
+						console.log('Ajax 통신 실패...');
+					}					
+				});
+				
+				
+				
+			});
+		})
+	
 		var checkId, checkPwd1, checkPwd2, checkName, checkNo1, checkNo2, checkNickName, checkPhone, checkEmail; 
 		checkId = false;
 		checkPwd1 = false;
@@ -373,7 +409,8 @@ tr {
 	    	 $("#joinBtn").click(function() {
 	    		 console.log(checkId + checkPwd1 + checkPwd2 + checkName + checkNo1 + checkNo2 + checkNickName + checkPhone);
 	    		 if(checkId == true && checkPwd1 == true && checkPwd2 == true && checkName == true 
-		    				&& checkNo1 == true && checkNo2 == true && checkNickName == true && checkPhone == true) {
+		    				&& checkNo1 == true && checkNo2 == true && checkNickName == true && checkPhone == true
+		    				&& $("#key").val() == key) {
 		    			$("#joinForm").attr("method", "post");
 		    			$("#joinForm").attr("action", "<%= request.getContextPath() %>/insert.me");
 		    			alert("회원가입에 성공하였습니다");
@@ -394,6 +431,8 @@ tr {
 		    				alert("닉네임을 체크해주세요");
 		    			}else if(checkPhone == false) {
 		    				alert("연락처를 체크해주세요");
+		    			}else if($("#key").val() != key){
+		    				alert("인증번호를 체크해주세요")
 		    			}else {
 		    				
 		    			}
@@ -402,6 +441,9 @@ tr {
 	    	 
 	    		
       });
+      
+      
+      
    </script>
 
 </body>

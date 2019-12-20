@@ -378,8 +378,6 @@ geocoder.addressSearch('<%= in.getAddress() %>', function(result, status) {
 			</table>
 			</div>
 		</div>
-
-		
 	</div>
 
 

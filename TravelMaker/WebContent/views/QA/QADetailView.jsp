@@ -402,11 +402,49 @@ table {
 	margin-top: 2.5%;
 	margin-left: 2%;
 }
+
+
 </style>
 </head>
 <body>
 	<%@ include file="../common/menubar.jsp"%>
 	<section id="body">
+		
+		<% if(loginUser.getmId().equals("admin")) {%>
+		<aside>
+			<section id="my-info-section1">
+				<div class="my-info" id="my-info">
+					<h3 id="my-info-text">관리자페이지</h3>
+					<img src="<%= request.getContextPath() %>/resources/images/smile.jpg"><br>
+					<p id="name">&nbsp;&nbsp;&nbsp;관리자</p>
+					<br>
+					<br>
+					<button class="myinfo-button" id="my-info-logout"
+						onclick="logout();">로그아웃</button>
+				</div>
+				<script>
+                	function logout() {
+                		location.href="<%= request.getContextPath() %>/logout.me";
+                	}
+                </script>
+			</section>
+			<section id="my-info-section2">
+				<div id="mypage-menu">
+					<ul>
+						<li class="bigContent"><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.mo'">회원 관리</a></li>
+						
+						<hr>
+						
+						<li class="bigContent"><a href="#" onclick="location.href=''">게시글 관리</a></li>
+						
+						<hr>
+						
+						<li class="bigContent"><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.qa'">회원 문의 내역</a></li>
+					</ul>
+				</div>
+			</section>
+		</aside>
+		<% } else {%>
 		<aside>
 			<section id="my-info-section1">
 				<div class="my-info" id="my-info">
@@ -441,6 +479,7 @@ table {
 				</div>
 			</section>
 		</aside>
+		<% } %>
 
 		<section id="marginBody">
 

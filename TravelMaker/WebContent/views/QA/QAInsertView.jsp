@@ -84,9 +84,9 @@ label {
 </head>
 <body>
 	<% if(Up == null) { %>
-	<form action="<%= request.getContextPath() %>/insert.qa">
+	<form action="<%= request.getContextPath() %>/insert.qa" onsubmit="return joinValidate();">
 	<% } else { %>
-	<form action="<%= request.getContextPath() %>/update.qa">	
+	<form action="<%= request.getContextPath() %>/update.qa" onsubmit="return joinValidate();">	
 	<% } %>
 		<div class="titleDiv">
 			<div class="top1">
@@ -121,6 +121,7 @@ label {
 
 	<script>
 		$(document).ready(function() {
+			
 			<% if(q != null) { %>
 				$("#qId").val(<%= q.getqId() %>)
     	  		<% if(q.getqContent() != null) { %>
@@ -137,6 +138,20 @@ label {
             $("#HC").val($(".note-editable").html())
           })
       })
+      function joinValidate(){
+			if($("input[name=title]").val().length < 1){
+				alert('제목을 입력해주세요');
+				$("input[name=title]").select();
+				return false;
+			}
+			
+			if($(".note-editable").html().length < 15){
+				alert("내용을 입력해주세요")
+				return false;
+			}
+			
+			return true;
+		}
   </script>
 </body>
 </html>
