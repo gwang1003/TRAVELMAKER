@@ -220,4 +220,13 @@ public class BoardService {
 		return list;
 	}
 
+	public ArrayList<Attachment> selectSearchAttachment(String search, String searchCondition, int currentPage,
+			int boardLimit) {
+		Connection con = getConnection();
+		ArrayList<Attachment> list = new BoardDao().selectSearchAttachment(con, search, searchCondition, currentPage, boardLimit);
+
+		close(con);
+		return list;
+	}
+
 }

@@ -47,7 +47,6 @@ public class FestivalSearchServlet extends HttpServlet {
 		// 1_1. 게시판 리스트 총 갯수 구하기
 		int listCount = bs.getListCount();
 
-		// System.out.println("listCount : " + listCount);
 
 		// 1_2. 페이징 처리 추가
 
@@ -80,14 +79,16 @@ public class FestivalSearchServlet extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 
 		ArrayList<Board> list = new BoardService().selectSearchList(search,searchCondition, currentPage, boardLimit);
+		ArrayList<Attachment> list2 = bs.selectSearchAttachment(search,searchCondition,currentPage,boardLimit);
 		
 		ArrayList<Board> blist = bs.selectList(1, currentPage, boardLimit);
 		ArrayList<Attachment> flist = bs.selectList(2, currentPage, boardLimit);
 
 		if (blist != null && flist != null) {
 			request.setAttribute("blist", list);
-			request.setAttribute("flist", flist);
+			request.setAttribute("flist", list2);
 			request.setAttribute("pi", pi);
+			request.setAttribute("listCount", listCount);
 			RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");
 
 			view.forward(request, response);

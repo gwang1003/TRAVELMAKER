@@ -48,7 +48,7 @@ body {
 #choice1 {
 	float: left;
 	width: 1050px;
-	height: 1800px;
+	height: 1830px;
 	margin-left: 120px;
 	border-bottom: 1px solid black;
 	padding: 0;
@@ -66,21 +66,29 @@ body {
 	margin-left: 1200px;
 	top: 150px;
 	border-radius: 12px;
-	border: 3px solid aliceblue;
-	background-color: aliceblue;
+	border: 3px solid white;
+	background-color: white;
 	color: black;
-	width: 20%;
-	height: 500px;
+	width: 17%;
+	height: 550px;
 	text-align: center;
+	box-shadow: 5px 5px 5px 5px gray;
 }
 
 .btn-outline-info {
-	width: 70px;
+	width: 120px;
 	height: 50px;
 	margin: auto;
-	font-size: 17px;
+	font-size: 20px;
 	border: none;
+	color:black;
 }
+
+.btn-outline-info:hover{
+	background-color : black;
+	color:white;
+}
+
 
 .tag>h3 {
 	color: white;
@@ -163,19 +171,36 @@ body {
 }
 
 #month-choice {
-	margin-top: 50px;
+	font-family: 'Do Hyeon', sans-serif;
+	margin-top: 20px;
 	margin-bottom: 50px;
+}
+
+ul{
+	list-style-type:none;
+	padding:0;
+}
+li{
+	margin-top:3px;
+}
+li button{
+	width:50px;
+}
+
+th{
+	font-size:25px;
+	font-weight:400;
 }
 
 #write {
 	float: right;
+	background:white;
 }
 
 #insertBtn {
-	border: none;
-	background-color: ghostwhite;
+	border:none;
+	background-color:white;
 }
-
 button {
 	font-family: 'Do Hyeon', sans-serif;
 }
@@ -208,6 +233,32 @@ span, p, input {
 .form-control {
 	border: 1px solid black;
 }
+
+.pagingArea {
+	margin-top: 15px;
+	text-align: center;
+	font-size: 0;
+}
+.pagingArea button {
+	background-color:white;
+	display: inline-block;
+	width: 30px;
+	height: 28px;
+	margin: 0 1px;
+	border: 1px solid #dbdbdb;
+	color: #767676;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 20px;
+	vertical-align: middle;
+  text-decoration: none;
+}
+.pagingArea button:hover,
+.pagingArea button:active,
+.pagingArea button:focus {
+	border: 1px solid #4c8500;	
+}
+
 </style>
 </head>
 
@@ -224,7 +275,7 @@ span, p, input {
 
 			<div class="nav nav-justified navbar-nav">
 				<form class="navbar-form navbar-search" action="<%=contextPath%>/search.fe" method="get" onsubmit="return checkSearchCondition();">
-					<div class="input-group" >
+					<div class="input-group" style="margin-top:20px;">
 						<select id="searchCondition" name="searchCondition">
 							<option value="----">----</option>
 							<option value="title">제목</option>
@@ -259,7 +310,7 @@ span, p, input {
 			<!-- 전체 글수 최신순 인기순 새로고침 -->
 			<div class="count">
 				<span style="text-align: left; margin-left: 20px;">전체 글 수 :
-					여기넣어</span>
+					<%= listCount %></span>
 				<div id="good">
 					<button type="button" class="btn btn-outline-primary">최신순</button>
 					&emsp;
@@ -271,22 +322,26 @@ span, p, input {
 
 			</div>
 			<br> <br>
+			
 			<%
 				if (loginUser != null) {
 			%>
 			<div id="write">
 				<button type="button" id="insertBtn"
 					onclick="location.href='<%=contextPath%>/views/board/festival/festivalInsert.jsp'">
-					<img src="<%=contextPath%>/resources/images/edit.png" width="40px"
-						height="40px">
+					<img src="<%=contextPath%>/resources/images/write.png" width="50px"
+						height="50px">
 				</button>
 			</div>
 			<%
 				}
 			%>
+			
+			<div>
+				<span style="font-size:30px; margin-left:20px;">축제 목록</span>
+			</div>
 
 
-			<br> <br>
 
 			<hr>
 
@@ -320,9 +375,9 @@ span, p, input {
 						</div>
 						<div
 							style="float: left; width: 550px; height: 200px; box-sizing: border-box;">
-							<span><%=b.getbId()%>번 게시글 </span>
-							<p><%=b.getbTitle()%></p>
-							<p><%=b.getbContent()%></p>
+							<span style="margin-left:10px;"> No.<%=b.getbId()%></span>
+							<p style="font-size:25px;"><%=b.getbTitle()%></p>
+							<p style="color:gray;"><%=b.getbContent()%></p>
 						</div>
 						<div
 							style="float: left; width: 150px; height: 200px; box-sizing: border-box; margin-bottom: 40px;">
@@ -372,7 +427,7 @@ span, p, input {
 				<%
 					if (p == currentPage) {
 				%>
-				<button disabled>
+				<button disabled style="background-color:black; color:white;">
 					<%=p%>
 				</button>
 				<%
@@ -414,45 +469,33 @@ span, p, input {
 
 		<div id="ct">
 			<div id="choice2">
-				<table align="center" id="month-choice">
+				<table id="month-choice">
 					<tr>
-						<td><button type="button" class="btn btn-outline-info">#1월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#2월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#3월</button></td>
+						<th colspan="4">정렬</th>
 					</tr>
 					<tr>
-						<td><button type="button" class="btn btn-outline-info">#4월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#5월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#6월</button></td>
+						<td colspan="2"><button type="button" class="btn btn-outline-info">#1~3월</button></td>
+						<td colspan="2"><button type="button" class="btn btn-outline-info">#4~6월</button></td>
 					</tr>
 					<tr>
-						<td><button type="button" class="btn btn-outline-info">#7월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#8월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#9월</button></td>
-					</tr>
-					<tr>
-						<td><button type="button" class="btn btn-outline-info">#10월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#11월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#12월</button></td>
+						<td colspan="2"><button type="button" class="btn btn-outline-info">#7~9월</button></td>
+						<td colspan="2"><button type="button" class="btn btn-outline-info">#10~12월</button></td>
 					</tr>
 				</table>
 
 
 				<hr>
-				<table align="center" id="month-choice">
-					<tr>
-						<td><button type="button" class="btn btn-outline-info">
-								서울<br>특별시
-							</button></td>
-						<td><button type="button" class="btn btn-outline-info">강원도</button></td>
-						<td><button type="button" class="btn btn-outline-info">경기도</button></td>
-					</tr>
-					<tr>
-						<td><button type="button" class="btn btn-outline-info">충청도</button></td>
-						<td><button type="button" class="btn btn-outline-info">경상도</button></td>
-						<td><button type="button" class="btn btn-outline-info">전라도</button></td>
-					</tr>
-				</table>
+				<div class="location-choice">
+					<ul>
+						<li><button type="button" class="btn btn-outline-info" id="seoul">서울</button><input type="hidden" value="10"></li>
+						<li><button type="button" class="btn btn-outline-info" id="kyeongi">경기도</button><input type="hidden" value="20"></li>
+						<li><button type="button" class="btn btn-outline-info" id="kangwon">강원도</button><input type="hidden" value="30"></li>
+						<li><button type="button" class="btn btn-outline-info" id="chung">충청도</button><input type="hidden" value="40"></li>
+						<li><button type="button" class="btn btn-outline-info" id="gyeong">경상도</button><input type="hidden" value="50"></li>
+						<li><button type="button" class="btn btn-outline-info" id="jeon">전라도</button><input type="hidden" value="60"></li>
+					</ul>
+				</div>
+					
 			</div>
 		</div>
 
@@ -460,9 +503,22 @@ span, p, input {
 
 	<script>
 		$(function(){
+			$(".location-choice li").click(function(){
+				var lId = $(this).children().eq(1).val();
+				location.href="<%= contextPath %>/location.fe"
+				
+			})
+		})
+	
+		$(function(){
 			$(".cli").click(function(){
 				var bId =  $(this).children().eq(0).val();
+				<% if(loginUser != null){ %>
 				location.href="<%=contextPath%>/detail.fe?bId=" + bId;
+				<% } else { %>
+				alert('상세보기는 로그인이 필요합니다');
+				location.href="<%= contextPath %>/views/join&login/login.jsp";
+				<% } %>
 			});
 		});
 		
