@@ -25,7 +25,7 @@
 <style>
 body {
 	width: 1400px;
-	height: 1200px;
+	height: 1200px; 
 	margin-left: auto;
 	margin-right: auto;
 }

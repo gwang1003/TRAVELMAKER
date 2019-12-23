@@ -125,7 +125,7 @@
 				</table>
 			</div>
 			
-			<div id="replySelectArea">
+			<div id="replySelectArea"> 
 			<table id="replySelectTable" border="1" align="center">
 				<%
 					if (rlist != null) {

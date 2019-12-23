@@ -23,7 +23,7 @@
 <title>Insert title here</title>
 <style>
 body {
-	font-family: Arial;
+	font-family: Arial; 
 	width: 1500px;
 	margin-top: 10%;
 	margin-left: auto;

@@ -49,7 +49,7 @@ body {
 }
 
 #top {
-	width:100%;
+	width:100%; 
 	height:20%;
 	border-bottom:1px solid rgba(31, 10, 10, 0.162);
 }

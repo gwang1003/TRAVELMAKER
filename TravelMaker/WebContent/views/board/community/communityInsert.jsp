@@ -70,7 +70,7 @@ label {
 }
 
 .top1 select {
-	height: 50%;
+	height: 50%; 
 }
 
 .sub {

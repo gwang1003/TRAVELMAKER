@@ -98,7 +98,7 @@ label {
 						<option value="40">회원</option>
 						<option value="50">시스템</option>
 					</select>
-				</div>
+				</div> 
 				<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목
 					&nbsp;&nbsp;&nbsp;</label><input type="text" name="title"> <br>
 			</div>

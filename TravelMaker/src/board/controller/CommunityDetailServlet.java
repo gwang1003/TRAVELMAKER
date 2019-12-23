@@ -45,7 +45,7 @@ public class CommunityDetailServlet extends HttpServlet {
 		boolean flag = false;
 		Cookie[] cookies = request.getCookies();
 		
-		if (cookies != null) {
+		if (cookies  != null) {
 			for (Cookie c : cookies) {
 				// bId 쿠키가 있는 경우
 				if (c.getName().equals("bId" + bId)) {
