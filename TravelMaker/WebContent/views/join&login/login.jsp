@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +55,7 @@
             width:100px;
             height:100px;
             margin-top:10px;
-            
+            cursor:pointer;
         }
 
         #mimg img {
@@ -150,11 +151,11 @@
     </style>
 </head>
 <body>
-    <form action="<%= request.getContextPath() %>/login.me" method="post" class="loginForm">
-        <div class="loginForm">
-            <div id=mimg><img src="image/피카츄.gif" alt=""></div>
+    <form method="post" class="loginForm" id="loginForm" action="<%= request.getContextPath() %>/login.me">
+        <div class="login-form">
+            <div id=mimg><img src="<%= request.getContextPath() %>/resources/images/로고.png" alt="" onclick="goMain();"></div>
             <div id="p">
-            <p>TRAVEL MAKER</p> 
+            <p style="cursor:pointer" onclick="goMain();">TRAVEL MAKER</p> 
             </div>
             <br>
             <div id="login">
@@ -165,13 +166,17 @@
             <div id="loginBtn"> <button id="lo" onclick="goLogin();">로그인</button> &nbsp;&nbsp; 
             <input type="button" onclick="goJoin();" id="insert" value="회원가입">
             <script>
-            	function goLogin() {
-            		$()
-            		alert('<%= request.getSession().getAttribute("msg")%>');
-            	}
-            
+            	<% if(request.getSession().getAttribute("msg") != null) { %>
+        			alert('<%=request.getSession().getAttribute("msg") %>');
+        			<% request.getSession().setAttribute("msg", null); %>
+        		<% } %>
+        		
             	function goJoin() {
             		location.href="<%= request.getContextPath() %>/views/join&login/Join.jsp";
+            	}
+            	
+            	function goMain() {
+            		location.href="<%= request.getContextPath() %>";
             	}
             </script>
             </div> <br>
