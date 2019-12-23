@@ -145,7 +145,7 @@ body {
 	margin: auto;
 	border-radius: 10px;
 	height: 180px;
-	width: 50%;
+	width: 70%;
 	border-style: double;
 	font-family: 'Do Hyeon', sans-serif;
 }
@@ -197,7 +197,7 @@ td {
 
 	<div id="choice1">
 		<div class="tag">
-			<h1 align="center" style="font-family: 'Black Han Sans', sans-serif;">축제
+			<h1 align="center" style="font-family: 'Black Han Sans', sans-serif; color:black;">축제
 				상세 설명</h1>
 		</div>
 		<br> <br>

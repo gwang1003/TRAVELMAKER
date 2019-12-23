@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import board.model.service.BoardService;
 import board.model.vo.Attachment;
 import board.model.vo.Board;
+import board.model.vo.Information;
 import board.model.vo.PageInfo;
 
 /**
@@ -36,11 +37,12 @@ public class FestivalAllList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		int flag = Integer.parseInt(request.getParameter("flag"));
 		BoardService bs = new BoardService();
 
 		
 		// 1_1. 게시판 리스트 총 갯수 구하기
-		int listCount = bs.getListCount();
+		int listCount = bs.getListCount(flag);
 		
 		// System.out.println("listCount : " + listCount);
 		
@@ -96,16 +98,26 @@ public class FestivalAllList extends HttpServlet {
 		// 페이지 정보를 공유할 vo 객체 PageInfo 클래스를 만들고 오자
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 		
-		ArrayList<Board> blist = bs.selectList(1,currentPage, boardLimit);
-		ArrayList<Attachment> flist = bs.selectList(2,currentPage, boardLimit);
+		ArrayList<Board> blist = bs.selectList(flag,currentPage, boardLimit, 1);
+		ArrayList<Attachment> flist = bs.selectList(flag,currentPage, boardLimit, 2);
+		
 		
 		if (blist != null && flist != null) {
 			request.setAttribute("blist", blist);
 			request.setAttribute("flist", flist);
 			request.setAttribute("pi", pi);
-			RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");
+			if(flag == 1) {
+				
+			}else if(flag == 2){
+				RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");				
+				view.forward(request, response);
+			}else if(flag == 3){
+				
+			}else {
+				RequestDispatcher view = request.getRequestDispatcher("views/board/community/communityAllList.jsp");				
+				view.forward(request, response);
+			}
 			
-			view.forward(request, response);
 
 		} else {
 			request.setAttribute("msg", "사진 게시판 조회 실패!!");

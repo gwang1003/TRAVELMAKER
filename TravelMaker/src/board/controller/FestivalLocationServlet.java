@@ -16,30 +16,30 @@ import board.model.vo.Board;
 import board.model.vo.PageInfo;
 
 /**
- * Servlet implementation class FestivalSearchServlet
+ * Servlet implementation class FestivalLocationServlet
  */
-@WebServlet("/search.fe")
-public class FestivalSearchServlet extends HttpServlet {
+@WebServlet("/location.fe")
+public class FestivalLocationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public FestivalLocationServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public FestivalSearchServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		BoardService bs = new BoardService();
 
-		String search = request.getParameter("search");
+		String lname = "";
+		
+		int lId = Integer.parseInt(request.getParameter("lId"));
 
 		// 1_1. 게시판 리스트 총 갯수 구하기
 		int listCount = bs.getListCount();
@@ -75,11 +75,22 @@ public class FestivalSearchServlet extends HttpServlet {
 
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 
-		ArrayList<Board> list = new BoardService().selectSearchList(search, currentPage, boardLimit);
-		ArrayList<Attachment> list2 = bs.selectSearchAttachment(search,currentPage,boardLimit);
+		ArrayList<Board> list = new BoardService().selectLocationList(lId, currentPage, boardLimit);
+		ArrayList<Attachment> list2 = bs.selectLocationAttachment(lId,currentPage,boardLimit);
 		
+		
+		switch(lId) {
+		case 10 : lname="서울 지역"; break;
+		case 20 : lname="경기도 지역"; break;
+		case 30 : lname="강원도 지역"; break;
+		case 40 : lname="충청도 지역"; break;
+		case 50 : lname="경상도 지역"; break;
+		case 60 : lname="전라도 지역"; break;
+		
+		}
 
 		if (list != null && list2 != null) {
+			request.setAttribute("lname", lname);
 			request.setAttribute("blist", list);
 			request.setAttribute("flist", list2);
 			request.setAttribute("pi", pi);
@@ -89,18 +100,15 @@ public class FestivalSearchServlet extends HttpServlet {
 			view.forward(request, response);
 
 		} else {
-			request.setAttribute("msg", "사진 게시판 조회 실패!!");
+			request.setAttribute("msg", "지역별 조회 실패!!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

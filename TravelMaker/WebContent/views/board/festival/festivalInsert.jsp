@@ -98,12 +98,13 @@ label{
 
 	<div class="outer">
 		<br>
-		<h1 align="center" style="font-family: 'Do Hyeon', sans-serif;">축제
+		<h1 align="center" style="font-family: 'Black Han Sans', sans-serif; color:black;">축제
 			내용 작성</h1>
 
 		<!-- 파일 업로드를 위해서는 enctype을 지정해줘야 함 -->
 		<form onsubmit="return checkImg();" action="<%= contextPath %>/insert.fe" method="post"
 			enctype="multipart/form-data" id="insertForm" > 
+			<input type="hidden" value="2" name="flag">
 			<div class="insertArea">
 				<table align="center">
 					<br>
