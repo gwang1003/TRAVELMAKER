@@ -33,17 +33,18 @@ public class BoardDao {
 
 	}
 
-	public int getListCount(Connection con) {
+	public int getListCount(Connection con, int flag) {
 		int listCount = 0;
 
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 
 		String sql = prop.getProperty("getListCount");
 
 		try {
-			stmt = con.createStatement();
-			rset = stmt.executeQuery(sql);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, flag);
+			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
 				listCount = rset.getInt(1);
@@ -53,7 +54,7 @@ public class BoardDao {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		return listCount;
 	}
@@ -135,8 +136,26 @@ public class BoardDao {
 	}
 
 	public int insertBoard(Connection con, Board b) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = prop.getProperty("insertBoard");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, b.getbTitle());
+			pstmt.setString(2, b.getbContent());
+			pstmt.setString(3, b.getbWriter());
+			pstmt.setInt(4, b.getmId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 	public int updateBoard(Connection con, Board b) {
@@ -189,7 +208,7 @@ public class BoardDao {
 	}
 
 	// 게시판 조회용
-	public ArrayList<Board> selectBList(Connection con, int currentPage, int boardLimit) {
+	public ArrayList<Board> selectBList(Connection con, int currentPage, int boardLimit, int flag) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Board> list = null;
@@ -202,8 +221,9 @@ public class BoardDao {
 			int startRow = (currentPage - 1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, flag);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 
 			rs = pstmt.executeQuery();
 
@@ -224,7 +244,7 @@ public class BoardDao {
 		return list;
 	}
 
-	public ArrayList selectFList(Connection con, int currentPage, int boardLimit) {
+	public ArrayList selectFList(Connection con, int currentPage, int boardLimit, int flag) {
 		ArrayList<Attachment> list = new ArrayList<Attachment>();
 
 		PreparedStatement pstmt = null;
@@ -238,8 +258,9 @@ public class BoardDao {
 			int startRow = (currentPage - 1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, flag);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 
 			rset = pstmt.executeQuery();
 
@@ -560,19 +581,13 @@ public class BoardDao {
 	 * return list; }
 	 */
 
-	public ArrayList<Board> selectSearchList(Connection con, String search, String searchCondition, int currentPage,
+	public ArrayList<Board> selectSearchList(Connection con, String search, int currentPage,
 			int boardLimit) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Board> list = null;
-		String sql = "";
+		String sql = prop.getProperty("selectSearchTitleList");
 
-		if (searchCondition.equals("title")) {
-			sql = prop.getProperty("selectSearchTitleList");
-
-		} else {
-			sql = prop.getProperty("selectSearchContentList");
-		}
 
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -603,8 +618,7 @@ public class BoardDao {
 		return list;
 	}
 
-	public ArrayList<Attachment> selectSearchAttachment(Connection con, String search, String searchCondition,
-			int currentPage, int boardLimit) {
+	public ArrayList<Attachment> selectSearchAttachment(Connection con, String search, int currentPage, int boardLimit) {
 		ArrayList<Attachment> list = new ArrayList<Attachment>();
 
 		PreparedStatement pstmt = null;
@@ -621,6 +635,167 @@ public class BoardDao {
 			pstmt.setString(1, search);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Attachment at = new Attachment();
+				at.setbId(rset.getInt("b_id"));
+				at.setChangeName(rset.getString("newfilename"));
+
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Board> selectLocationList(Connection con, int lId, int currentPage, int boardLimit) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Board> list = null;
+		
+		String sql = prop.getProperty("selectLocationList");
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setInt(1, lId);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rs = pstmt.executeQuery();
+
+			list = new ArrayList<Board>();
+
+			while (rs.next()) {
+				list.add(new Board(rs.getInt("b_id"), rs.getDate("write_date"), rs.getDate("update_date"),
+						rs.getString("title"), rs.getString("content"), rs.getInt("view_cnt"), rs.getInt("good"),
+						rs.getInt("notgood"), rs.getString("writer"), rs.getString("status"), rs.getString("l_code"),
+						rs.getInt("s_type"), rs.getInt("b_type"), rs.getInt("m_seq")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Attachment> selectLocationAttachment(Connection con, int lId, int currentPage, int boardLimit) {
+		ArrayList<Attachment> list = new ArrayList<Attachment>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String query = prop.getProperty("selectLocationAttachment");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setInt(1, lId);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Attachment at = new Attachment();
+				at.setbId(rset.getInt("b_id"));
+				at.setChangeName(rset.getString("newfilename"));
+
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Board> selectMonthList(Connection con, int month, int currentPage, int boardLimit) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Board> list = null;
+		String sql = "";
+		
+		if(month==1) {
+			sql = prop.getProperty("selectMonth1");
+		}else if(month==2) {
+			sql = prop.getProperty("selectMonth2");
+		}else if(month==3) {
+			sql = prop.getProperty("selectMonth3");
+		}else if(month==4) {
+			sql = prop.getProperty("selectMonth4");
+		}
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rs = pstmt.executeQuery();
+
+			list = new ArrayList<Board>();
+
+			while (rs.next()) {
+				list.add(new Board(rs.getInt("b_id"), rs.getDate("write_date"), rs.getDate("update_date"),
+						rs.getString("title"), rs.getString("content"), rs.getInt("view_cnt"), rs.getInt("good"),
+						rs.getInt("notgood"), rs.getString("writer"), rs.getString("status"), rs.getString("l_code"),
+						rs.getInt("s_type"), rs.getInt("b_type"), rs.getInt("m_seq")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Attachment> selectMonthAttachment(Connection con, int month, int currentPage, int boardLimit) {
+		ArrayList<Attachment> list = new ArrayList<Attachment>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = "";
+		
+		if(month==1) {
+			sql = prop.getProperty("selectMonthAttachment1");
+		}else if(month==2) {
+			sql = prop.getProperty("selectMonthAttachment2");
+		}else if(month==3) {
+			sql = prop.getProperty("selectMonthAttachment3");
+		}else if(month==4) {
+			sql = prop.getProperty("selectMonthAttachment4");
+		}
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 
 			rset = pstmt.executeQuery();
 

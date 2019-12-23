@@ -16,30 +16,30 @@ import board.model.vo.Board;
 import board.model.vo.PageInfo;
 
 /**
- * Servlet implementation class FestivalSearchServlet
+ * Servlet implementation class FestivalMonthServlet
  */
-@WebServlet("/search.fe")
-public class FestivalSearchServlet extends HttpServlet {
+@WebServlet("/month.fe")
+public class FestivalMonthServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public FestivalMonthServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public FestivalSearchServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		BoardService bs = new BoardService();
 
-		String search = request.getParameter("search");
+		String mname = "";
+		
+		int month = Integer.parseInt(request.getParameter("month"));
 
 		// 1_1. 게시판 리스트 총 갯수 구하기
 		int listCount = bs.getListCount();
@@ -75,11 +75,20 @@ public class FestivalSearchServlet extends HttpServlet {
 
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 
-		ArrayList<Board> list = new BoardService().selectSearchList(search, currentPage, boardLimit);
-		ArrayList<Attachment> list2 = bs.selectSearchAttachment(search,currentPage,boardLimit);
+		ArrayList<Board> list = new BoardService().selectMonthList(month, currentPage, boardLimit);
+		ArrayList<Attachment> list2 = bs.selectMonthAttachment(month,currentPage,boardLimit);
 		
+		
+		switch(month) {
+		case 1 : mname="1~3월"; break;
+		case 2 : mname="4~6월"; break;
+		case 3 : mname="7~9월"; break;
+		case 4 : mname="10~12월"; break;
+		
+		}
 
 		if (list != null && list2 != null) {
+			request.setAttribute("mname", mname);
 			request.setAttribute("blist", list);
 			request.setAttribute("flist", list2);
 			request.setAttribute("pi", pi);
@@ -89,18 +98,15 @@ public class FestivalSearchServlet extends HttpServlet {
 			view.forward(request, response);
 
 		} else {
-			request.setAttribute("msg", "사진 게시판 조회 실패!!");
+			request.setAttribute("msg", "지역별 조회 실패!!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
