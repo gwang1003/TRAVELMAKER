@@ -24,7 +24,7 @@
 			margin-top:10%;
 			margin-left:auto;
 			margin-right:auto;
-        }
+        } 
 
     <!-- 영역 분할 -->
     <style>

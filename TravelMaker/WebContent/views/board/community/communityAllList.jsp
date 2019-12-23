@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.*, board.model.vo.*"%>
 
-<%-- <%
-	PageInfo pi = (PageInfo) request.getAttribute("pi");
+<%
+ 	PageInfo pi = (PageInfo) request.getAttribute("pi");
 
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
-%> --%>
+	
+	ArrayList<Board> blist = (ArrayList<Board>)request.getAttribute("blist");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +49,7 @@ body {
 }
 
 #top {
-	width:100%;
+	width:100%; 
 	height:20%;
 	border-bottom:1px solid rgba(31, 10, 10, 0.162);
 }
@@ -181,7 +184,7 @@ th {
 			<!-- 전체 글수 최신순 인기순 새로고침 -->
 			<div class="count">
 				<span style="text-align: left; margin-left: 20px;">전체 글 수 :
-					여기넣어</span>
+					<%= listCount %></span>
 				<div id="good">
 					<button type="button" class="btn btn-outline-primary">최신순</button>
 					&emsp;
@@ -197,7 +200,7 @@ th {
 			%>
 			<div id="write">
 				<button type="button" id="insertBtn"
-					onclick="location.href='<%=contextPath%>/views/board/festival/festivalInsert.jsp'">
+					onclick="location.href='<%=contextPath%>/views/board/community/communityInsert.jsp'">
 					<img src="<%=contextPath%>/resources/images/edit.png" width="40px"
 						height="40px">
 				</button>
@@ -219,23 +222,27 @@ th {
 						<th colspan="2" width="13%">추천/비추천</th>
 						<th width="9%">조회수</th>
 					</tr>
-					<tr>
-						<th>1</th>
-						<th>커뮤니티 게시판을 이렇게 만들면되겠지</th>
-						<th>옥종광</th>
-						<th>20191220</th>
-						<th>4</th>
-						<th>1</th>
-						<th>24</th>
-					<tr>					
+					<%  if(blist != null) { %>
+						<% for(Board b : blist) { %>
+							<tr class="bth">
+								<th><%=b.getbId() %></th>
+								<th><%=b.getbTitle() %></th>
+								<th><%=b.getbWriter() %></th>
+								<th><%=b.getwDate() %></th>
+								<th><%=b.getGood() %></th>
+								<th><%=b.getNgood() %></th>
+								<th><%=b.getbCount() %></th>
+							</tr>
+						<% } %>
+					<% } %>					
 				</table>
 			</div>
 		
 		<!-- 페이징 바 -->
-		<%-- <div class="pagingArea" align="center">
+		<div class="pagingArea" align="center">
 				<!-- 맨 처음으로 (<<) -->
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=1'">
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=1&flag=4'">
 					&lt;&lt;</button>
 
 				<!-- 이전 페이지로 (<) -->
@@ -247,7 +254,7 @@ th {
 					} else {
 				%>
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage - 1%>'">
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage - 1%>&flag=4'">
 					&lt;</button>
 				<%
 					}
@@ -267,7 +274,7 @@ th {
 					} else {
 				%>
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=p%>'"><%=p%></button>
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=p%>&flag=4'"><%=p%></button>
 				<%
 					}
 				%>
@@ -284,7 +291,7 @@ th {
 					} else {
 				%>
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage + 1%>'">
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage + 1%>&flag=4'">
 					&gt;</button>
 				<%
 					}
@@ -292,18 +299,17 @@ th {
 
 				<!-- 맨 끝으로 (>>) -->
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=maxPage%>'">
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=maxPage%>&flag=4'">
 					&gt;&gt;</button>
-			</div> --%>
+			</div>
 		</div>
 	</div>
 
 	<script>
 		$(function(){
-			$(".cli").click(function(){
-				var bId =  $(this).children().eq(0).val();
-				location.href="<%=contextPath%>
-				/detail.fe?bId=" + bId;
+			$(".bth").click(function(){
+				var bId =  $(this).children().eq(0).text();
+				location.href="<%=contextPath%>/detail.co?bId=" + bId
 			});
 		});
 
