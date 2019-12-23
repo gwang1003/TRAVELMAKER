@@ -332,7 +332,7 @@ color: #a3a3a3;
 		</div>
 		<div class="form-group">
 			<label class="label" for="">Password</label>
-			<input type="password" name="password" name="loginPass">
+			<input type="password" name="loginPass">
 			<span class="focus-border"></span>
 		</div>
 		<div class="form-group">
