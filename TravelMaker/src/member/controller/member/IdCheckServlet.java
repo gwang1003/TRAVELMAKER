@@ -30,6 +30,7 @@ public class IdCheckServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String mId = request.getParameter("mId");
 		
 		int result = new MemberService().idCheck(mId);

@@ -367,8 +367,8 @@ aside {
 			<section id="my-info-section1">
 				<div class="my-info" id="my-info">
 					<h3 id="my-info-text">마이페이지</h3>
-					<img
-						src="<%= request.getContextPath() %>/resources/images/smile.jpg"><br>
+					<img onclick="profileUpdate();"
+						src="<%= request.getContextPath() %>/resources/myplan_upload/<%= loginUser.getProfile() %>"><br>
 					<p id="name">
 						&nbsp;&nbsp;&nbsp;<%= loginUser.getmName() %></p>
 					<br>
@@ -379,13 +379,25 @@ aside {
 						onclick="infoModify();">회원정보 수정</button>
 				</div>
 				<script>
+					// 로그아웃 이동 
                 	function logout() {
                 		location.href="<%= request.getContextPath() %>/logout.me";
                 	}
                 	
+					// 정보수정 이동 
                 	function infoModify() {
-                		location.href="<%= request.getContextPath() %>/views/myPage/info-update.jsp"
+                		location.href="<%= request.getContextPath() %>/views/myPage/Info-update.jsp"
                 	}
+            		
+            		// 프로필 
+            		function profileUpdate() {
+            			var left = (screen.width/2)-135;
+            	    	var top = (screen.height/2)-115;
+            	   		var url = "<%= request.getContextPath() %>/views/myPage/ProfileUpdate.jsp";
+            	    	var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=270px, height=230px" + ",top=" + top + ",left=" + left);
+            	    	uploadWin.moveTo(left, top);
+            	    	uploadWin.focus();
+            		}
                 </script>
 			</section>
 
@@ -393,7 +405,8 @@ aside {
 				<div id="mypage-menu">
 					<ul>
 						<li class="bigContent no">나의 활동</li>
-						<li style="font-weight: bold" class="no">나의 계획</li>
+						<li style="font-weight: bold" class="no"><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/views/myPage/Plan.jsp';">나의 계획</a></li>
 						<li><a class="page"
 							onclick="location.href='<%= request.getContextPath() %>/views/myPage/Board.jsp';">내가
 								쓴 게시글</a></li>

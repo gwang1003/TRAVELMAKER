@@ -142,7 +142,7 @@ nav ul li a.active {
 	<header>
 		<div id="wrap">
 			<nav>
-				<div class="logo">Travel Maker</div>
+				<div class="logo" onclick="location.href='<%= contextPath %>'" style="cursor:pointer;">Travel Maker</div>
 				<div class="menuToggle"></div>
 				<ul id="navUl">
 					<li><a id="a0" class="active" href="<%= contextPath %>">Home</a></li>

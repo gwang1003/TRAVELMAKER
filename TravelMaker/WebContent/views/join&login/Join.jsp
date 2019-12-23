@@ -298,7 +298,7 @@ tr {
 	    	 });
 	    	 
 	    	 // 이름이 한글로 올바르게 적혀 있는지
-	    	 var nameExp = /^[가-힣]{2,3}$/;
+	    	 var nameExp = /^[가-힣]{2,4}$/;
 	    	 $("input[name=mName]").focusout(function() {
 	    		 if(nameExp.test($(this).val())) {	
 	    			 $('#nameExp').css('display', 'none');
@@ -396,10 +396,11 @@ tr {
 	    	 $("#joinBtn").click(function() {
 	    		 if(checkId == true && checkPwd1 == true && checkPwd2 == true && checkName == true 
 		    				&& checkNo1 == true && checkNickName == true && checkPhone == true
-		    				&& $("#key").val() == key) {
+		    				&& checkEmail) {
 		    			$("#joinForm").attr("method", "post");
 		    			$("#joinForm").attr("action", "<%= request.getContextPath() %>/insert.me");
 		    			alert("회원가입에 성공하였습니다");
+	        			<% request.getSession().setAttribute("msg", null); %>
 		    	}else { 
 		    			if(checkId == false) {
 		    				alert("아이디를 체크해주세요");

@@ -17,6 +17,7 @@ public class Member {
 	private String bIdArray;
 	private int report;
 	private String status;
+	private String profile;
 
 	public Member() {
 	}
@@ -55,6 +56,42 @@ public class Member {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
+
+	public String getProfile() {
+		return profile;
+	}
+
+
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
+
+
+	public Member(int m_seq, String mId, String pass, String mName, String phone, String mNo, String email,
+			Date joinDate, Date accessDate, String nickName, String bIdArray, int report, String status,
+			String profile) {
+		super();
+		this.m_seq = m_seq;
+		this.mId = mId;
+		this.pass = pass;
+		this.mName = mName;
+		this.phone = phone;
+		this.mNo = mNo;
+		this.email = email;
+		this.joinDate = joinDate;
+		this.accessDate = accessDate;
+		this.nickName = nickName;
+		this.bIdArray = bIdArray;
+		this.report = report;
+		this.status = status;
+		this.profile = profile;
+	}
+
+
 
 	public Member(int m_seq, String mId, String pass, String mName, String phone, String mNo, String email,
 			Date joinDate, Date accessDate, String nickName, String bIdArray, int report, String status) {

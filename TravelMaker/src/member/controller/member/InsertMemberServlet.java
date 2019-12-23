@@ -41,9 +41,7 @@ public class InsertMemberServlet extends HttpServlet {
 		String pass = request.getParameter("pass");
 		String phone = request.getParameter("phone");
 		
-		String mNo1 = request.getParameter("mNo1");
-		String mNo2 = request.getParameter("mNo2");
-		String mNo = mNo1 + "-" + mNo2;
+		String mNo = request.getParameter("mNo1");
 		
 		String email1 = request.getParameter("email");
 		String email2 = request.getParameter("email2");

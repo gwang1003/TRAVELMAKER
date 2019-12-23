@@ -142,7 +142,4 @@ public class PlanDao {
 		}
 		return mp;
 	}
-
-	
-
 }
