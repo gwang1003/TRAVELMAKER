@@ -84,9 +84,9 @@ label {
 </head>
 <body>
 	<% if(Up == null) { %>
-	<form action="<%= request.getContextPath() %>/insert.qa" onsubmit="return joinValidate();">
+	<form action="<%= request.getContextPath() %>/insert.qa" onsubmit="return joinValidate();" method="post">
 	<% } else { %>
-	<form action="<%= request.getContextPath() %>/update.qa" onsubmit="return joinValidate();">	
+	<form action="<%= request.getContextPath() %>/update.qa" onsubmit="return joinValidate();" method="post">	
 	<% } %>
 		<div class="titleDiv">
 			<div class="top1">
@@ -113,7 +113,29 @@ label {
 	</form>
 	<script>
     $(document).ready(function() {
-        $('#summernote').summernote();
+        $('#summernote').summernote({
+        	callbacks: {
+        		onlmageUpload: function(files) {
+        			sendFile(files[0]);
+        		}
+        	}
+        });
+        
+        function sendFile(file) {
+        	data = new FormData();
+        	data.append("file", file);
+        	$.ajax({
+        		url: 'GetFile.aspx',
+        		data: data,
+        		cache: false,
+        		type: "POST",
+        		contentType: false,
+        		processData: false,
+        		success: function(url){
+        			$("#summernote").summernote('insertImage', url);
+        		}
+        	});
+        }
     });
  
 
@@ -136,6 +158,7 @@ label {
 			<% } %> --%>
           $("button").mouseenter(function(){
             $("#HC").val($(".note-editable").html())
+            console.log($('#summernote').summernote('code'))
           })
       })
       function joinValidate(){
