@@ -524,7 +524,8 @@
                 <div class="my-info" id="my-info">
                     <h3 id="my-info-text">
                         마이페이지</h3>
-                    <img src="<%= request.getContextPath() %>/resources/images/smile.jpg"><br>
+                    <img onclick="profileUpdate();"
+						src="<%= request.getContextPath() %>/resources/myplan_upload/<%= loginUser.getProfile() %>"><br>
                     <p id="name">&nbsp;&nbsp;&nbsp;<%= loginUser.getmName() %></p>
                     <br><br>
                     <button class="myinfo-button" id="my-info-logout" onclick="logout();">로그아웃</button>
@@ -536,7 +537,17 @@
             		}
             	
             		function infoModify() {
-            			location.href="<%= request.getContextPath() %>/views/myPage/info-update.jsp"
+            			location.href="<%= request.getContextPath() %>/views/myPage/Info-update.jsp"
+            		}
+            		
+            		// 프로필 
+            		function profileUpdate() {
+            			var left = (screen.width/2)-135;
+            	    	var top = (screen.height/2)-115;
+            	   		var url = "<%= request.getContextPath() %>/views/myPage/ProfileUpdate.jsp";
+            	    	var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=270px, height=230px" + ",top=" + top + ",left=" + left);
+            	    	uploadWin.moveTo(left, top);
+            	    	uploadWin.focus();
             		}
                 </script>
             </section>
@@ -555,7 +566,8 @@
 
                         <hr>
                         <li class="bigContent no">고객센터</li>
-                        <li class="no" style="font-weight:bold">문의 내역</li>
+                        <li class="no" style="font-weight:bold"><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/views/myPage/ServiceCenter.jsp';">문의 내역</a></li>
                     </ul>
                 </div>
             </section>

@@ -136,12 +136,17 @@
     	  
     	  // 시간 처리
     	  if(calendar.getEventById(info.event.id).end != null) {
-    		  var minute = "";
+    		  var startMinute = "";
+    		  var endMinute = "";
         	  if(calendar.getEventById(info.event.id).start.getMinutes() < 10) {
-        		  minute = "0";
+        		  startMinute = "0";
         	  }
-        	  var startTime = calendar.getEventById(info.event.id).start.getHours() + ":" + minute + calendar.getEventById(info.event.id).start.getMinutes();
-    		  var endTime = calendar.getEventById(info.event.id).end.getHours() + ":" + calendar.getEventById(info.event.id).end.getMinutes(); 
+
+        	  if(calendar.getEventById(info.event.id).end.getMinutes() < 10) {
+        		  endMinute = "0";
+        	  }
+        	  var startTime = calendar.getEventById(info.event.id).start.getHours() + ":" + startMinute + calendar.getEventById(info.event.id).start.getMinutes();
+    		  var endTime = calendar.getEventById(info.event.id).end.getHours() + ":" + endMinute + calendar.getEventById(info.event.id).end.getMinutes(); 
     		  info.el.firstChild.innerHTML = info.el.firstChild.innerHTML + startTime + "~" + endTime;
     	  }else {
     		  var minute = "";

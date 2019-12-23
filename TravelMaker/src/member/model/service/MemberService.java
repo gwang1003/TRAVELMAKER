@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import member.model.dao.MemberDao;
+import member.model.dao.PlanDao;
 import member.model.vo.Member;
 import static common.JDBCTemplate.*;
 
@@ -120,4 +121,47 @@ public class MemberService {
 		return result;
 	}
 
+	public int insertProfile(int userSeq, String profile) {
+		Connection conn = getConnection();
+
+		int result = new MemberDao().insertProfile(conn, userSeq, profile);
+
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+
+		close(conn);
+
+		return result;
+	}
+
+	public String findMemberId(String findName, String findNo) {
+		Connection conn = getConnection();
+
+		String memberId = new MemberDao().findMemberId(conn, findName, findNo);
+		
+		if(memberId != null) {
+			commit(conn);
+		}
+		
+		close(conn);
+
+		return memberId;
+	}
+
+	public String findMemberPwd(String findId, String findName, String findNo) {
+		Connection conn = getConnection();
+
+		String memberPass = new MemberDao().findMemberPwd(conn, findId, findName, findNo);
+		
+		if(memberPass != null) {
+			commit(conn);
+		}
+		
+		close(conn);
+
+		return memberPass;
+	}
 }
