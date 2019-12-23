@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 		String loginPass = request.getParameter("loginPass");
 		System.out.println(loginId + loginPass);
 		Member loginUser = new MemberService().loginMember(loginId, loginPass);
-		
+		System.out.println(loginUser);
 		if(loginUser.getmId() != null && loginUser.getPass() != null) {
 			HttpSession session = request.getSession();
 			ArrayList<MyPlan> planList = new PlanService().selectAllPlan();

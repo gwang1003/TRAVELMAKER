@@ -42,13 +42,12 @@ public class EmailServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String email = request.getParameter("email");
-        System.out.println(email);
         //먼저 아이디로 회원정보를 받아오고 가져온 데이터에서 email값을 비교하여 존재하지 않으면 인증메일 보내지 못함
         Member m = (Member)request.getSession().getAttribute("loginUser");        
                 //mail server 설정
                 String host = "smtp.naver.com";
-                String user = ""; //자신의 네이버 계정
-                String password = "";//자신의 네이버 패스워드
+                String user = "xzxz3456@naver.com"; //자신의 네이버 계정
+                String password = "sprtms11!@";//자신의 네이버 패스워드
                 
                 //메일 받을 주소
                 String to_email = email;
@@ -82,7 +81,6 @@ public class EmailServlet extends HttpServlet {
                     }
                 }
                 String AuthenticationKey = temp.toString();
-                System.out.println(AuthenticationKey);
                 
                 javax.mail.Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {

@@ -6,7 +6,7 @@
 <%
 	ArrayList<MyPlan> planList = (ArrayList)request.getSession().getAttribute("planList");	
 	Member loginUser2 = (Member)request.getSession().getAttribute("loginUser");
-	if(planList != null) {
+	if(!planList.isEmpty()) {
 		System.out.println(planList);
 	}
 %>
@@ -119,20 +119,20 @@
           start: '2019-08-28',
           imageurl: '<%= request.getContextPath() %>/resources/images/강원도.jpg'
         }
-        <% if(planList != null) { %>
-    	<% for(MyPlan p : planList) { %>
-    		<% if(p.getmSeq() == loginUser2.getM_seq()) {%>
-    			,{
-    				title: '<%= p.getpName()%>',
-    				start: '<%= p.getStartDate() + "T" + p.getStartTime() %>',
-    				end: '<%= p.getEndDate() + "T" + p.getEndTime() %>',
-    				imageurl: '<%= request.getContextPath() %>/resources/myplan_upload/<%= p.getFileName() %>',
-    				id: '<%= p.getpSeq() %>',
-    				locationid: '<%= p.getmSeq() %>'
-    			}
+        <% if(!planList.isEmpty()) { %>
+    		<% for(MyPlan p : planList) { %>
+    			<% if(p.getmSeq() == loginUser2.getM_seq()) {%>
+    				,{
+    					title: '<%= p.getpName()%>',
+    					start: '<%= p.getStartDate() + "T" + p.getStartTime() %>',
+    					end: '<%= p.getEndDate() + "T" + p.getEndTime() %>',
+    					imageurl: '<%= request.getContextPath() %>/resources/myplan_upload/<%= p.getFileName() %>',
+    					id: '<%= p.getpSeq() %>',
+    					locationid: '<%= p.getmSeq() %>'
+    				}
+    			<% }%>
     		<% }%>
     	<% }%>
-    <% }%>
       ]
       ,dateClick: function(info) {
     	  sessionStorage.setItem("clickday", info.dateStr);
@@ -143,11 +143,12 @@
     	  uploadWin.moveTo(left, top);
     	  uploadWin.focus();
 	  }
-      , eventRender:function(info) {    
-    	  if (info.event.extendedProps.imageurl) {
-              info.el.firstChild.innerHTML = "<img src='" + info.event.extendedProps.imageurl +"' width='60' height='40' style='display:block; margin-left:auto; margin-right:auto;'>" + "<div style='text-align:center'><%= planList.get(0).getpName() %></div>";
-              
-    	  }
+      , eventRender:function(info) {   
+    	  <% if(!planList.isEmpty()) { %>
+    	  	if (info.event.extendedProps.imageurl) {
+           	   info.el.firstChild.innerHTML = "<img src='" + info.event.extendedProps.imageurl +"' width='60' height='40' style='display:block; margin-left:auto; margin-right:auto;'>" + "<div style='text-align:center'><%= planList.get(0).getpName() %></div>";
+    	  	}
+    	  <% } %>
       }
       , eventClick:function(info) {
     	  console.log(info.event.start);
