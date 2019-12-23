@@ -178,18 +178,11 @@
       /* localeSelectorEl.appendChild(optionEl); */
     });
 
-    // when the selected option changes, dynamically change the calendar option
-    localeSelectorEl.addEventListener('change', function() {
-      if (this.value) {
-        calendar.setOption('locale', this.value);
-      }
-    });
-
   });
 </script>
 <style>
 
-  body {
+  #calendar {
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;

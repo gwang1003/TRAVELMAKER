@@ -43,16 +43,13 @@ public class LoginServlet extends HttpServlet {
 		if(loginUser.getmId() != null && loginUser.getPass() != null) {
 			HttpSession session = request.getSession();
 			ArrayList<MyPlan> planList = new PlanService().selectAllPlan();
-			session.setAttribute("msg", "로그인에 성공하였습니다");
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("planList",  planList);
-			
 			response.sendRedirect(request.getContextPath());
 			
 		}else {
 			request.getSession().setAttribute("msg", "로그인에 실패하였습니다");
-			RequestDispatcher view = request.getRequestDispatcher("/views/join&login/login.jsp");
-			view.forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/views/join&login/login.jsp");
 		}	
 	}
 

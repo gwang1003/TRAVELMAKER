@@ -25,7 +25,7 @@ nav {
 	padding: 10px 90px;
 	box-sizing: border-box;
 	background: white;
-	z-index: 1;
+	z-index: 20;
 	border-bottom:2px solid gray;
 }
 
@@ -45,11 +45,11 @@ nav ul {
 	padding: 0;
 	margin: 0;
 	display: flex;
-	z-index: 1;
+	z-index: 20;
 }
 
 nav li {
-	z-index: 1;
+	z-index: 20;
 }
 
 nav ul li a {
@@ -60,7 +60,7 @@ nav ul li a {
 	text-transform: uppercase;
 	font-size: 15px;
 	font-weight: bold;
-	z-index: 1;
+	z-index: 20;
 }
 
 nav ul li a:hover {
