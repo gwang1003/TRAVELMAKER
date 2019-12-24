@@ -40,6 +40,7 @@ public class FestivalUpdateServlet extends HttpServlet {
 		/*MultipartRequest multiRequest = new MultipartRequest(request,"utf-8");*/
 		
 		int bId = Integer.parseInt(request.getParameter("bId"));
+		int flag = Integer.parseInt(request.getParameter("flag"));
 		
 		
 		Board board = new Board();
@@ -57,11 +58,13 @@ public class FestivalUpdateServlet extends HttpServlet {
 		info.setPage(request.getParameter("home"));
 		info.setbId(bId);
 		
-		int result = bs.updateBoard(board);
-		int result1 = bs.updateInformation(info);
+		int result = bs.updateBoard(board,flag);
+		int result1 = bs.updateInformation(info,flag);
 		
 		if(result>0 && result1>0) {
+			
 			request.setAttribute("bId", bId);
+			request.setAttribute("flag",flag);
 			request.getRequestDispatcher("detail.fe").forward(request, response);
 		}else {
 			request.setAttribute("msg", "게시글 수정 실패");

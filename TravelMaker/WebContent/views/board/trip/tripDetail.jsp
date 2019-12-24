@@ -197,8 +197,7 @@ td {
 
 	<div id="choice1">
 		<div class="tag">
-			<h1 align="center" style="font-family: 'Black Han Sans', sans-serif; color:black;">축제
-				상세 설명</h1>
+			<h1 align="center" style="font-family: 'Black Han Sans', sans-serif; color:black;">여행지 상세 설명</h1>
 		</div>
 		<br> <br>
 
@@ -387,11 +386,11 @@ geocoder.addressSearch('<%= in.getAddress() %>', function(result, status) {
 
 	<script>
 		function returnToList(){
-			location.href="<%=contextPath%>/festivalall.fe?flag=2";
+			location.href="<%=contextPath%>/festivalall.fe?flag=1";
 		}
 			
 		function updateBoard(){
-			$("#detailForm").attr("action", "<%=contextPath%>/updateForm.fe?flag=2");
+			$("#detailForm").attr("action", "<%=contextPath%>/updateForm.fe?flag=1");
 			$("#detailForm").submit();
 		}
 			

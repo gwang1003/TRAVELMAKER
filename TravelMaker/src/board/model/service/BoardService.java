@@ -97,10 +97,10 @@ public class BoardService {
 	}
 
 	// 7. 게시글 수정 서비스
-	public int updateBoard(Board b) {
+	public int updateBoard(Board b, int flag) {
 
 		Connection con = getConnection();
-		int result = new BoardDao().updateBoard(con, b);
+		int result = new BoardDao().updateBoard(con, b , flag);
 
 		if (result > 0) {
 			commit(con);
@@ -112,9 +112,9 @@ public class BoardService {
 		return result;
 	}
 
-	public int updateInformation(Information info) {
+	public int updateInformation(Information info, int flag) {
 		Connection con = getConnection();
-		int result = new BoardDao().updateInformation(con, info);
+		int result = new BoardDao().updateInformation(con, info ,flag);
 
 		if (result > 0) {
 			commit(con);
@@ -147,12 +147,12 @@ public class BoardService {
 	}
 
 	// 사진 게시판 글쓰기
-	public int insertThumbnail(Board b, Information in, ArrayList<Attachment> fileList) {
+	public int insertThumbnail(Board b, Information in, ArrayList<Attachment> fileList, int flag) {
 		Connection conn = getConnection();
 
 		BoardDao bDao = new BoardDao();
 
-		int result1 = bDao.insertThBoard(conn, b);
+		int result1 = bDao.insertThBoard(conn, b,flag);
 		int result2 = bDao.insertAttachment(conn, fileList);
 		int result3 = bDao.insertInformation(conn, in);
 
@@ -218,37 +218,37 @@ public class BoardService {
 		return rlist;
 	}
 
-	public ArrayList<Board> selectSearchList(String search, int currentPage, int boardLimit) {
+	public ArrayList<Board> selectSearchList(String search, int currentPage, int boardLimit, int flag) {
 		Connection con = getConnection();
-		ArrayList<Board> list = new BoardDao().selectSearchList(con, search, currentPage, boardLimit);
+		ArrayList<Board> list = new BoardDao().selectSearchList(con, search, currentPage, boardLimit,flag);
 
 		close(con);
 		return list;
 	}
 
-	public ArrayList<Attachment> selectSearchAttachment(String search, int currentPage, int boardLimit) {
+	public ArrayList<Attachment> selectSearchAttachment(String search, int currentPage, int boardLimit, int flag) {
 		Connection con = getConnection();
-		ArrayList<Attachment> list = new BoardDao().selectSearchAttachment(con, search, currentPage, boardLimit);
+		ArrayList<Attachment> list = new BoardDao().selectSearchAttachment(con, search, currentPage, boardLimit,flag);
 
 		close(con);
 		return list;
 	}
 
 	// 지역별 조회
-	public ArrayList<Board> selectLocationList(int lId, int currentPage, int boardLimit) {
+	public ArrayList<Board> selectLocationList(int lId, int currentPage, int boardLimit, int flag) {
 		Connection con = getConnection();
 
-		ArrayList<Board> list = new BoardDao().selectLocationList(con, lId, currentPage, boardLimit);
+		ArrayList<Board> list = new BoardDao().selectLocationList(con, lId, currentPage, boardLimit,flag);
 
 		close(con);
 
 		return list;
 	}
 
-	public ArrayList<Attachment> selectLocationAttachment(int lId, int currentPage, int boardLimit) {
+	public ArrayList<Attachment> selectLocationAttachment(int lId, int currentPage, int boardLimit, int flag) {
 		Connection con = getConnection();
 
-		ArrayList<Attachment> list = new BoardDao().selectLocationAttachment(con, lId, currentPage, boardLimit);
+		ArrayList<Attachment> list = new BoardDao().selectLocationAttachment(con, lId, currentPage, boardLimit,flag);
 
 		close(con);
 
@@ -282,5 +282,19 @@ public class BoardService {
 		close(con);
 		return in;
 	}
+	
+	
+	public int updateCBoard(Board b) {
+	      Connection con = getConnection();
+	      int result = new BoardDao().updateCBoard(con, b);
+	      
+	      if(result > 0) {
+	         commit(con);
+	      }else {
+	         rollback(con);
+	      }
+	      return result;
+	   }
+	
 
 }

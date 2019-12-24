@@ -148,7 +148,7 @@ nav ul li a.active {
 					<li><a id="a0" class="active" href="<%= contextPath %>">Home</a></li>
 					<li><a id = "a1" href="#aboutMe" onclick="goBest();">BEST</a></li>
 					<li><a id="a1" href="#" onclick="goFes();">축제</a></li>
-					<li><a id="a2" href="#guestBook" onclick="goTravel();">여행</a></li>
+					<li><a id="a2" href="#guestBook" onclick="goTrip();">여행</a></li>
 					<li><a id="a3" href="#"onclick="goSleep();">숙박</a></li>
 					<li><a id="a3" href="#gallery" onclick="goCom();">커뮤니티</a></li>
 					<% if(loginUser != null) { %>
@@ -300,12 +300,9 @@ nav ul li a.active {
 			location.href="<%= contextPath %>/best.th";
 		}
 		
-		// 축제 게시판 ㄱㄱ
 		
 		
-		function goTravel(){
-			location.href="<%= contextPath %>/travelall.th";
-		}
+		
 		--%>
 		function goSleep(){
 			location.href="<%= contextPath %>/list.sl";
@@ -326,6 +323,9 @@ nav ul li a.active {
 		}
 		function goFes(){
 			location.href="<%= contextPath %>/festivalall.fe?flag=" + 2;
+		}
+		function goTrip(){
+			location.href="<%= contextPath %>/festivalall.fe?flag=" + 1;
 		}
 	</script>
 

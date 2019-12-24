@@ -34,6 +34,7 @@ public class FestivalUpdateForm extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int bId = Integer.parseInt(request.getParameter("bId"));
+		int flag = Integer.parseInt(request.getParameter("flag"));
 		
 		BoardService bs = new BoardService();
 		
@@ -45,7 +46,12 @@ public class FestivalUpdateForm extends HttpServlet {
 			request.setAttribute("board", board);
 			request.setAttribute("info", info);
 			request.setAttribute("flist",fileList);
-			request.getRequestDispatcher("views/board/festival/festivalUpdateForm.jsp").forward(request, response);
+			if(flag == 1) {
+				request.getRequestDispatcher("views/board/trip/tripUpdateForm.jsp").forward(request, response);
+			} else if(flag ==2) {
+				request.getRequestDispatcher("views/board/festival/festivalUpdateForm.jsp").forward(request, response);
+			}
+			
 		}else {
 			request.setAttribute("msg", "수정할 게시글을 불러오는데 실패했습니다.");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

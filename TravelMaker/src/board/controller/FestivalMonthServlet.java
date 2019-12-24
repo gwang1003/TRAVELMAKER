@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import board.model.service.BoardService;
 import board.model.vo.Attachment;
 import board.model.vo.Board;
+import board.model.vo.Information;
 import board.model.vo.PageInfo;
 
 /**
@@ -79,7 +80,7 @@ public class FestivalMonthServlet extends HttpServlet {
 
 		ArrayList<Board> list = new BoardService().selectMonthList(month, currentPage, boardLimit);
 		ArrayList<Attachment> list2 = bs.selectMonthAttachment(month,currentPage,boardLimit);
-		
+		ArrayList<Information> in = bs.InformationAll();
 		
 		switch(month) {
 		case 1 : mname="1~3월"; break;
@@ -90,6 +91,7 @@ public class FestivalMonthServlet extends HttpServlet {
 		}
 
 		if (list != null && list2 != null) {
+			request.setAttribute("in", in);
 			request.setAttribute("mname", mname);
 			request.setAttribute("blist", list);
 			request.setAttribute("flist", list2);

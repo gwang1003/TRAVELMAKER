@@ -77,7 +77,7 @@ public class BoardDao {
 				b = new Board(rset.getInt("b_id"), rset.getDate("write_date"), rset.getDate("update_date"),
 						rset.getString("title"), rset.getString("content"), rset.getInt("view_cnt"),
 						rset.getString("writer"), rset.getString("status"), rset.getString("l_code"),
-						rset.getInt("b_type"));
+						rset.getInt("b_type"),rset.getInt("m_seq"));
 
 			}
 
@@ -158,7 +158,7 @@ public class BoardDao {
 		return result;
 	}
 
-	public int updateBoard(Connection con, Board b) {
+	public int updateBoard(Connection con, Board b, int flag) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("updateBoard");
@@ -170,6 +170,7 @@ public class BoardDao {
 			pstmt.setString(2, b.getbTitle());
 			pstmt.setString(3, b.getbContent());
 			pstmt.setInt(4, b.getbId());
+			pstmt.setInt(5, flag);
 
 			result = pstmt.executeUpdate();
 
@@ -181,7 +182,7 @@ public class BoardDao {
 		return result;
 	}
 
-	public int updateInformation(Connection con, Information info) {
+	public int updateInformation(Connection con, Information info, int flag) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("updateInformation");
@@ -445,7 +446,7 @@ public class BoardDao {
 	 * return list; }
 	 */
 
-	public int insertThBoard(Connection conn, Board b) {
+	public int insertThBoard(Connection conn, Board b, int flag) {
 		PreparedStatement pstmt = null;
 
 		int result = 0;
@@ -459,7 +460,8 @@ public class BoardDao {
 			pstmt.setString(2, b.getbContent());
 			pstmt.setString(3, b.getbWriter());
 			pstmt.setInt(4, Integer.parseInt(b.getlCode()));
-			pstmt.setInt(5, b.getmId());
+			pstmt.setInt(5, flag);
+			pstmt.setInt(6, b.getmId());
 
 			result = pstmt.executeUpdate();
 
@@ -582,7 +584,7 @@ public class BoardDao {
 	 */
 
 	public ArrayList<Board> selectSearchList(Connection con, String search, int currentPage,
-			int boardLimit) {
+			int boardLimit, int flag) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Board> list = null;
@@ -595,9 +597,10 @@ public class BoardDao {
 			int startRow = (currentPage - 1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 
-			pstmt.setString(1, search);
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+			pstmt.setInt(1, flag);
+			pstmt.setString(2, search);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
 
 			rs = pstmt.executeQuery();
 
@@ -618,7 +621,7 @@ public class BoardDao {
 		return list;
 	}
 
-	public ArrayList<Attachment> selectSearchAttachment(Connection con, String search, int currentPage, int boardLimit) {
+	public ArrayList<Attachment> selectSearchAttachment(Connection con, String search, int currentPage, int boardLimit, int flag) {
 		ArrayList<Attachment> list = new ArrayList<Attachment>();
 
 		PreparedStatement pstmt = null;
@@ -632,9 +635,10 @@ public class BoardDao {
 			int startRow = (currentPage - 1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 
-			pstmt.setString(1, search);
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+			pstmt.setInt(1, flag);
+			pstmt.setString(2, search);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
 
 			rset = pstmt.executeQuery();
 
@@ -654,7 +658,7 @@ public class BoardDao {
 		return list;
 	}
 
-	public ArrayList<Board> selectLocationList(Connection con, int lId, int currentPage, int boardLimit) {
+	public ArrayList<Board> selectLocationList(Connection con, int lId, int currentPage, int boardLimit, int flag) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Board> list = null;
@@ -667,9 +671,10 @@ public class BoardDao {
 			int startRow = (currentPage - 1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 
-			pstmt.setInt(1, lId);
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+			pstmt.setInt(1, flag);
+			pstmt.setInt(2, lId);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
 
 			rs = pstmt.executeQuery();
 
@@ -690,7 +695,7 @@ public class BoardDao {
 		return list;
 	}
 
-	public ArrayList<Attachment> selectLocationAttachment(Connection con, int lId, int currentPage, int boardLimit) {
+	public ArrayList<Attachment> selectLocationAttachment(Connection con, int lId, int currentPage, int boardLimit, int flag) {
 		ArrayList<Attachment> list = new ArrayList<Attachment>();
 
 		PreparedStatement pstmt = null;
@@ -704,9 +709,10 @@ public class BoardDao {
 			int startRow = (currentPage - 1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 
-			pstmt.setInt(1, lId);
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+			pstmt.setInt(1, flag);
+			pstmt.setInt(2, lId);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
 
 			rset = pstmt.executeQuery();
 
@@ -843,5 +849,27 @@ public class BoardDao {
 
 		return in;
 	}
+	
+	public int updateCBoard(Connection con, Board b) {
+	      PreparedStatement pstmt = null;
+	      int result = 0;
+	      String query = prop.getProperty("updateCBoard");
+
+	      try {
+	         pstmt = con.prepareStatement(query);
+
+	         pstmt.setString(1, b.getbTitle());
+	         pstmt.setString(2, b.getbContent());
+	         pstmt.setInt(3, b.getbId());
+
+	         result = pstmt.executeUpdate();
+
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(pstmt);
+	      }
+	      return result;
+	   }
 
 }

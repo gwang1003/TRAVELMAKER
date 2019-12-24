@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="board.model.vo.*, java.util.*"%>
+    pageEncoding="UTF-8" import="board.model.vo.*, java.util.* , java.text.SimpleDateFormat"%>
     <%
+    	SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd");
+    	String today = format.format(new Date());
     	Board board = (Board)request.getAttribute("board");
     	Information info = (Information)request.getAttribute("info");
     	ArrayList<Attachment> fileList = (ArrayList<Attachment>) request.getAttribute("flist");
@@ -11,7 +13,6 @@
     	System.out.println(fileList.get(1));
     
     	String lcode = board.getlCode();
-    	System.out.println("asldkfjasldjf :" + board);
     	int lc = 0;
     	switch(lcode){
     	case "서울특별시" : lc=10; break;
@@ -126,12 +127,11 @@ label{
 
 	<div class="outer">
 		<br>
-		<h1 align="center" style="font-family: 'Do Hyeon', sans-serif;">축제
-			내용 수정</h1>
+		<h1 align="center" style="font-family: 'Do Hyeon', sans-serif;">여행지 내용 수정</h1>
 
 		<!-- 파일 업로드를 위해서는 enctype을 지정해줘야 함 -->
 		<form action="<%= contextPath %>/update.fe" method="post">
-		<input type="hidden" value="2" name="flag">
+		<input type="hidden" value="1" name="flag">
 			<div class="insertArea">
 				<table align="center">
 					<br>
@@ -206,8 +206,8 @@ label{
 				<br><br>
 
 				<div align="center" id="detailArea">
-						<label>시작일&emsp; </label><input type="text" name="sdate" value="<%= info.getsDay() %>">&emsp;
-						<label>종료일&emsp; </label><input type="text" name="edate" value="<%= info.geteDay() %>">&emsp;
+						<label>시작일&emsp; </label><input type="text" name="sdate" value="<%= today %>">&emsp;
+						<label>종료일&emsp; </label><input type="text" name="edate" value="<%= today %>">&emsp;
 						<label>전화번호&emsp; </label><input type="text" name="tel" value="<%= info.getTel() %>"><br>
 						
 						&emsp;<label>가 격&emsp; </label><input type="text" name="price" value="<%= info.getPrice() %>">&emsp;&nbsp;&nbsp;

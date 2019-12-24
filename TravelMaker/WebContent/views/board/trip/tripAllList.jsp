@@ -72,7 +72,7 @@ body {
 	background-color: white;
 	color: black;
 	width: 17%;
-	height: 520px;
+	height: 270px;
 	text-align: center;
 	box-shadow: 5px 5px 5px 5px gray;
 }
@@ -273,7 +273,7 @@ span, p, input {
 	%>
 	<h1
 		style="color: black; margin-top: 120px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;"><%=mname%>
-		축제 목록
+		여행지 목록
 	</h1>
 
 	<%
@@ -281,14 +281,14 @@ span, p, input {
 	%>
 	<h1
 		style="color: black; margin-top: 120px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;"><%=lname%>
-		축제 목록
+		여행지 목록
 	</h1>
 	<%
 		} else if(lname == null && mname == null) {
 	%>
 	<h1
 		style="color: black; margin-top: 120px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">전체
-		축제 목록
+		여행지 목록
 	</h1>
 	<% } %>
 
@@ -301,7 +301,7 @@ span, p, input {
 			<div class="nav nav-justified navbar-nav">
 				<form class="navbar-form navbar-search"
 					action="<%=contextPath%>/search.fe" method="get">
-					<input type="hidden" name="flag" value="2">
+					<input type="hidden" name="flag" value="1">
 					<div class="input-group" style="margin-top: 20px;">
 						<input type="search" name="search" class="form-control"
 							placeholder="검색어 입력">
@@ -330,7 +330,7 @@ span, p, input {
 			%>
 			<div id="write">
 				<button type="button" id="insertBtn"
-					onclick="location.href='<%=contextPath%>/views/board/festival/festivalInsert.jsp'">
+					onclick="location.href='<%=contextPath%>/views/board/trip/tripInsert.jsp'">
 					<img src="<%=contextPath%>/resources/images/write.png" width="50px"
 						height="50px">
 				</button>
@@ -383,7 +383,7 @@ span, p, input {
 							<p style="color: gray;"><%=b.getbContent()%></p>
 							<% for(Information i : in) { %>
 							<% if(i.getbId()== b.getbId()){ %>
-							<span style="margin-left: 10px; color:gray;" >[<%=i.getsDay() %>-<%= i.geteDay() %>]</span>
+							<span style="margin-left: 10px; color:gray;" >[지역 : <%= i.getAddress() %>]</span>
 							<% } %>
 							<% } %>
 						</div>
@@ -416,7 +416,7 @@ span, p, input {
 			<div class="pagingArea" align="center">
 				<!-- 맨 처음으로 (<<) -->
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=1&flag=2'">
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=1&flag=1'">
 					&lt;&lt;</button>
 
 				<!-- 이전 페이지로 (<) -->
@@ -428,7 +428,7 @@ span, p, input {
 					} else {
 				%>
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage - 1%>&flag=2'">
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage - 1%>&flag=1'">
 					&lt;</button>
 				<%
 					}
@@ -448,7 +448,7 @@ span, p, input {
 					} else {
 				%>
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=p%>&flag=2'"><%=p%></button>
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=p%>&flag=1'"><%=p%></button>
 				<%
 					}
 				%>
@@ -465,7 +465,7 @@ span, p, input {
 					} else {
 				%>
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage + 1%>&flag=2'">
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage + 1%>&flag=1'">
 					&gt;</button>
 				<%
 					}
@@ -473,7 +473,7 @@ span, p, input {
 
 				<!-- 맨 끝으로 (>>) -->
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=maxPage%>&flag=2'">
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=maxPage%>&flag=1'">
 					&gt;&gt;</button>
 			</div>
 		</div>
@@ -483,25 +483,6 @@ span, p, input {
 
 		<div id="ct">
 			<div id="choice2">
-				<div class="month-choice">
-					<ul>
-						<li><button type="button" id="m1"
-								class="btn btn-outline-info">#1~3월</button>
-							<input type="hidden" value="1"></li>
-						<li><button type="button" id="m2"
-								class="btn btn-outline-info" value="2">#4~6월</button>
-							<input type="hidden" value="2"></li>
-						<li><button type="button" id="m3"
-								class="btn btn-outline-info" value="3">#7~9월</button>
-							<input type="hidden" value="3"></li>
-						<li><button type="button" id="m4"
-								class="btn btn-outline-info" value="4">#10~12월</button>
-							<input type="hidden" value="4"></li>
-
-					</ul>
-
-				</div>
-				<hr>
 				<div class="location-choice">
 					<ul>
 						<li><button type="button" class="btn btn-outline-info"
@@ -526,17 +507,11 @@ span, p, input {
 
 	<script>
 	
-		$(function(){
-			$(".month-choice li").click(function(){
-				var month = $(this).children().eq(1).val();
-				location.href="<%=contextPath%>/month.fe?month=" + month + "&flag=" + 2;
-			});
-		});
 	
 		$(function(){
 			$(".location-choice li").click(function(){
 				var lId = $(this).children().eq(1).val();
-				location.href="<%=contextPath%>/location.fe?lId=" + lId + "&flag=" +2;
+				location.href="<%=contextPath%>/location.fe?lId=" + lId + "&flag=" +1;
 			});
 		});
 	
@@ -544,7 +519,7 @@ span, p, input {
 			$(".cli").click(function(){
 				var bId =  $(this).children().eq(0).val();
 				<%if (loginUser != null) {%>
-				location.href="<%=contextPath%>/detail.fe?bId=" + bId + "&flag="+2;
+				location.href="<%=contextPath%>/detail.fe?bId=" + bId + "&flag="+1;
 				<%} else {%>
 				alert('상세보기는 로그인이 필요합니다');
 				location.href="<%=contextPath%>/views/join&login/login.jsp";

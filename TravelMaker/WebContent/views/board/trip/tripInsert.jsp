@@ -1,32 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="board.model.vo.*, java.util.*"%>
-    <%
-    	Board board = (Board)request.getAttribute("board");
-    	Information info = (Information)request.getAttribute("info");
-    	ArrayList<Attachment> fileList = (ArrayList<Attachment>) request.getAttribute("flist");
-    	
-    	System.out.println("fileList : " + fileList.get(0));
-    	Attachment titleImg = fileList.get(0);
-    	
-    	System.out.println(fileList.get(1));
-    
-    	String lcode = board.getlCode();
-    	System.out.println("asldkfjasldjf :" + board);
-    	int lc = 0;
-    	switch(lcode){
-    	case "서울특별시" : lc=10; break;
-    	case "경기도" : lc=20; break;
-    	case "강원도" : lc=30; break;
-    	case "충청도" : lc=40; break;
-    	case "경상도" : lc=50; break;
-    	case "전라도" : lc=60; break;
-    	}
-    	
-    	String[] selected = new String[6];
-    	selected[(lc/10)] = "selected";
-    	
-    	
-    %>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,35 +94,33 @@ label{
 </style>
 </head>
 <body>
-
-<%@ include file="../../common/menubar.jsp"%>
+	<%@ include file="../../common/menubar.jsp"%>
 
 	<div class="outer">
 		<br>
-		<h1 align="center" style="font-family: 'Do Hyeon', sans-serif;">축제
-			내용 수정</h1>
+		<h1 align="center" style="font-family: 'Black Han Sans', sans-serif; color:black;">여행지 내용 작성</h1>
 
 		<!-- 파일 업로드를 위해서는 enctype을 지정해줘야 함 -->
-		<form action="<%= contextPath %>/update.fe" method="post">
-		<input type="hidden" value="2" name="flag">
+		<form onsubmit="return checkImg();" action="<%= contextPath %>/insert.fe" method="post"
+			enctype="multipart/form-data" id="insertForm">
+			<input type="hidden" value="1" name="flag">
 			<div class="insertArea">
 				<table align="center">
 					<br>
 					<tr>
-						<td width="100px" style="font-family: 'Do Hyeon', sans-serif;">제목<input type="hidden" name="bId" value="<%= board.getbId() %>"></td>
-						
-						<td colspan="3"><input type="text" size="100" name="title" value="<%= board.getbTitle() %>"></td>
+						<td width="100px" style="font-family: 'Do Hyeon', sans-serif;">제목</td>
+						<td colspan="3"><input type="text" size="100" name="title"></td>
 					</tr>
 					<tr>
 						<td width="100px" style="font-family: 'Do Hyeon', sans-serif;">지역</td>
 						<td colspan="3"><select name="lcode">
 							<option>----</option>
-							<option value="10" <%= selected[0] %>>서울특별시</option>
-							<option value="20" <%= selected[1] %>>경기도</option>
-							<option value="30" <%= selected[2] %>>강원도</option>
-							<option value="40" <%= selected[3] %>>충청도</option>
-							<option value="50" <%= selected[4] %>>경상도</option>
-							<option value="60" <%= selected[5] %>>전라도</option>
+							<option value=10>서울특별시</option>
+							<option value=20>경기도</option>
+							<option value=30>강원도</option>
+							<option value=40>충청도</option>
+							<option value=50>경상도</option>
+							<option value=60>전라도</option>
 						</select></td>
 					</tr>
 					
@@ -157,7 +128,7 @@ label{
 						<td style="font-family: 'Do Hyeon', sans-serif;">메인 이미지</td>
 						<td colspan="3">
 							<div id="titleImgArea">
-								<img id="titleImg" src="<%=request.getContextPath()%>/resources/festival_uploadFile/<%=titleImg.getChangeName()%>" width="755" height="400">
+								<img id="titleImg" width="755" height="400">
 							</div>
 						</td>
 					</tr>
@@ -165,54 +136,48 @@ label{
 					<tr>
 						<td width="100px" style="font-family: 'Do Hyeon', sans-serif;">내용</td>
 						<td colspan="3"><textarea name="content" rows="7" cols="102"
-								style="resize: none;"><%= board.getbContent() %></textarea></td>
+								style="resize: none;"></textarea></td>
 					</tr>
-					
-					
+
 					<tr>
 						<td style="font-family: 'Do Hyeon', sans-serif;">내용 사진</td>
 						<td>
-						
 							<div id="contentImgArea1">
-								<img id="contentImg1" width="245" height="150" src="<%= contextPath %>/resources/festival_uploadFile/<%= fileList.get(1).getChangeName() %>">
+								<img id="contentImg1" width="245" height="150">
 							</div>
 						</td>
 						<td>
 							<div id="contentImgArea2">
-								<img id="contentImg2" width="245" height="150" src="<%= contextPath %>/resources/festival_uploadFile/<%= fileList.get(2).getChangeName() %>">
+								<img id="contentImg2" width="245" height="150">
 							</div>
 						</td>
 						<td>
 							<div id="contentImgArea3">
-								<img id="contentImg3" width="245" height="150" src="<%= contextPath %>/resources/festival_uploadFile/<%= fileList.get(3).getChangeName() %>">
+								<img id="contentImg3" width="245" height="150">
 							</div>
 						</td>
 					</tr>
-				
 
 				</table>
 
 				<!-- 파일 업로드 하는 부분 -->
 				<div id="fileArea">
-					<input type="file" id="thumbnailImg1" name="thumbnailImg1"
-						onchange="LoadImg(this,1)"> 
-					<input type="file"
-						id="thumbnailImg2" name="thumbnailImg2" onchange="LoadImg(this,2)">
+					<input type="file" id="thumbnailImg1" name="thumbnailImg1" onchange="LoadImg(this,1)"> 
+					<input type="file"id="thumbnailImg2" name="thumbnailImg2" onchange="LoadImg(this,2)">
 					<input type="file" id="thumbnailImg3" name="thumbnailImg3"
-						onchange="LoadImg(this,3)"> 
-					<input type="file"
+						onchange="LoadImg(this,3)"> <input type="file"
 						id="thumbnailImg4" name="thumbnailImg4" onchange="LoadImg(this,4)">
 				</div>
 				<br><br>
 
 				<div align="center" id="detailArea">
-						<label>시작일&emsp; </label><input type="text" name="sdate" value="<%= info.getsDay() %>">&emsp;
-						<label>종료일&emsp; </label><input type="text" name="edate" value="<%= info.geteDay() %>">&emsp;
-						<label>전화번호&emsp; </label><input type="text" name="tel" value="<%= info.getTel() %>"><br>
+						<label>시작일&emsp; </label><input type="date" name="sdate">&emsp;
+						<label>종료일&emsp; </label><input type="date" name="edate">&emsp;
+						<label>전화번호&emsp; </label><input type="text" name="tel"><br>
 						
-						&emsp;<label>가 격&emsp; </label><input type="text" name="price" value="<%= info.getPrice() %>">&emsp;&nbsp;&nbsp;
-						<label>주 소&emsp; </label><input type="text" name="address" value="<%= info.getAddress() %>">&emsp;
-						<label>홈페이지&emsp; </label><input type="text" name="home" value="<%= info.getPage() %>"><br>
+						&emsp;<label>가 격&emsp; </label><input type="text" name="price">&emsp;&nbsp;&nbsp;
+						<label>주 소&emsp; </label><input type="text" name="address">&emsp;
+						<label>홈페이지&emsp; </label><input type="text" name="home"><br>
 				</div>
 
 				<script>
@@ -278,16 +243,27 @@ label{
 			</div>
 			<br>
 			<div class="btnArea">
+				<button type="submit" class="btn btn-outline-info" style="font-family: 'Do Hyeon', sans-serif;">작성완료</button>
+				<button type="button" class="btn btn-outline-danger"style="font-family: 'Do Hyeon', sans-serif;" onclick="javascript:history.back();">취소하기</button>
 			
-				<button type="submit" class="btn btn-outline-info"
-					style="font-family: 'Do Hyeon', sans-serif;">작성완료</button>
-				<button type="button" class="btn btn-outline-danger"
-					style="font-family: 'Do Hyeon', sans-serif;"
-					onclick="javascript:history.back();">취소하기</button>
-				
 			</div>
-		</form>
+			
 		
+		</form>
+		<script>
+			function checkImg(){
+			if($("#thumbnailImg1").val()== "" || $("#thumbnailImg2").val()== "" || $("#thumbnailImg3").val()== "" || $("#thumbnailImg4").val()== ""){
+		               //사진 유효성검사 하는 부분
+		               console.log($("#thumbnailImg1").val());
+		               console.log($("#thumbnailImg2").val());
+		               console.log($("#thumbnailImg3").val());
+		               console.log($("#thumbnailImg4").val());
+		               alert("메인사진과 서브사진 3장을 모두 넣어주세요");
+		               return false;
+		           }
+				
+			}
+		</script>
 
 
 	</div>
