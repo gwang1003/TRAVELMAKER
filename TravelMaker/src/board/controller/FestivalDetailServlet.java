@@ -39,6 +39,7 @@ public class FestivalDetailServlet extends HttpServlet {
 
 		BoardService bService = new BoardService();
 
+		int detailflag = Integer.parseInt(request.getParameter("flag"));
 		// 1. 해당 게시판 정보 조회
 		Board board = null;
 
@@ -80,7 +81,13 @@ public class FestivalDetailServlet extends HttpServlet {
 			request.setAttribute("fileList", fileList);
 			request.setAttribute("in", in);
 			request.setAttribute("rlist",rlist);
-			request.getRequestDispatcher("views/board/festival/festivalDetail.jsp").forward(request, response);
+			if(detailflag == 2) {
+				request.getRequestDispatcher("views/board/festival/festivalDetail.jsp").forward(request, response);
+			}else if(detailflag ==1) {
+				request.getRequestDispatcher("views/board/trip/tripDetail.jsp").forward(request, response);
+				
+			}
+			
 		}else {
 			request.setAttribute("msg", "사진게시판 상세 보기 실패!!!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

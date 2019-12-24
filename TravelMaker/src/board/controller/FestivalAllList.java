@@ -107,12 +107,16 @@ public class FestivalAllList extends HttpServlet {
 			request.setAttribute("blist", blist);
 			request.setAttribute("flist", flist);
 			request.setAttribute("pi", pi);
+			System.out.println(flag);
 			if(flag == 1) {
+				RequestDispatcher view = request.getRequestDispatcher("views/board/trip/tripAllList.jsp");				
+				view.forward(request, response);
 				
 			}else if(flag == 2){
 				RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");				
 				view.forward(request, response);
 			}else if(flag == 3){
+				
 				
 			}else {
 				RequestDispatcher view = request.getRequestDispatcher("views/board/community/communityAllList.jsp");				

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import board.model.service.BoardService;
 import board.model.vo.Attachment;
 import board.model.vo.Board;
+import board.model.vo.Information;
 import board.model.vo.PageInfo;
 
 /**
@@ -77,9 +78,9 @@ public class FestivalLocationServlet extends HttpServlet {
 
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 
-		ArrayList<Board> list = new BoardService().selectLocationList(lId, currentPage, boardLimit);
-		ArrayList<Attachment> list2 = bs.selectLocationAttachment(lId,currentPage,boardLimit);
-		
+		ArrayList<Board> list = new BoardService().selectLocationList(lId, currentPage, boardLimit,flag);
+		ArrayList<Attachment> list2 = bs.selectLocationAttachment(lId,currentPage,boardLimit,flag);
+		ArrayList<Information> in = bs.InformationAll();
 		
 		switch(lId) {
 		case 10 : lname="서울 지역"; break;
@@ -92,14 +93,23 @@ public class FestivalLocationServlet extends HttpServlet {
 		}
 
 		if (list != null && list2 != null) {
+			
+			request.setAttribute("in", in);
 			request.setAttribute("lname", lname);
 			request.setAttribute("blist", list);
 			request.setAttribute("flist", list2);
 			request.setAttribute("pi", pi);
 			request.setAttribute("listCount", listCount);
-			RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");
-
-			view.forward(request, response);
+			if(flag==1) {
+				
+				RequestDispatcher view = request.getRequestDispatcher("views/board/trip/tripAllList.jsp");
+				view.forward(request, response);
+			}else if(flag ==2) {
+				
+				RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");
+				view.forward(request, response);
+			}
+			
 
 		} else {
 			request.setAttribute("msg", "지역별 조회 실패!!");

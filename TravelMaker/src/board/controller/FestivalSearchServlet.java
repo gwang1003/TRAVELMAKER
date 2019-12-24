@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import board.model.service.BoardService;
 import board.model.vo.Attachment;
 import board.model.vo.Board;
+import board.model.vo.Information;
 import board.model.vo.PageInfo;
 
 /**
@@ -42,8 +43,8 @@ public class FestivalSearchServlet extends HttpServlet {
 		String search = request.getParameter("search");
 
 		int flag = Integer.parseInt(request.getParameter("flag"));
+		System.out.println("flag123 : " + flag);
 		// 1_1. 게시판 리스트 총 갯수 구하기
-		System.out.println("flag  : " +flag);
 		int listCount = bs.getListCount(flag);
 
 
@@ -77,18 +78,24 @@ public class FestivalSearchServlet extends HttpServlet {
 
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 
-		ArrayList<Board> list = new BoardService().selectSearchList(search, currentPage, boardLimit);
-		ArrayList<Attachment> list2 = bs.selectSearchAttachment(search,currentPage,boardLimit);
-		
+		ArrayList<Board> list = bs.selectSearchList(search, currentPage, boardLimit,flag);
+		ArrayList<Attachment> list2 = bs.selectSearchAttachment(search,currentPage,boardLimit,flag);
+		ArrayList<Information> in = bs.InformationAll();
 
 		if (list != null && list2 != null) {
+			request.setAttribute("in", in);
 			request.setAttribute("blist", list);
 			request.setAttribute("flist", list2);
 			request.setAttribute("pi", pi);
 			request.setAttribute("listCount", listCount);
-			RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");
-
-			view.forward(request, response);
+			if(flag==1) {
+				RequestDispatcher view = request.getRequestDispatcher("views/board/trip/tripAllList.jsp");
+				view.forward(request, response);
+			}else if(flag==2) {
+				RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");
+				view.forward(request, response);
+			}
+			
 
 		} else {
 			request.setAttribute("msg", "사진 게시판 조회 실패!!");
