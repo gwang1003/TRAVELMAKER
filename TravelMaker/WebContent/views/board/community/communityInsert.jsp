@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8" import="board.model.vo.*"%>
 
 <%
-	Board b = (Board)request.getAttribute("b");
+	Board b = (Board)request.getAttribute("board");
+	System.out.println(b);
 %>
 <!DOCTYPE html>
 <html>
@@ -82,11 +83,15 @@ label {
 </style>
 </head>
 <body>
-	<form action="<%= request.getContextPath() %>/insert.co" onsubmit="return joinValidate();" method="post">
+	<% if(b != null) { %>
+		<form action="<%= request.getContextPath() %>/update.co" onsubmit="return joinValidate();" method="post">
+	<% } else { %>
+		<form action="<%= request.getContextPath() %>/insert.co" onsubmit="return joinValidate();" method="post">
+	<% } %>
 		<div class="titleDiv">
 			<div class="top1">
 				<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목
-					&nbsp;&nbsp;&nbsp;</label><input type="text" name="title"> <br>
+					&nbsp;&nbsp;&nbsp;</label><input type="text" name="title" id="title"> <br>
 			</div>
 			<input type="text" id="HC" name="content" hidden>
 			<input type="text" id="bId" name="bId" hidden>
@@ -108,15 +113,10 @@ label {
 	<script>
 		$(document).ready(function() {
 			
-			<%-- <% if(b != null) { %>
-				$("#qId").val(<%= b.getbId() %>)
-    	  		<% if(q.getqContent() != null) { %>
-					$(".note-editable").html('<%= q.getqContent() %>')
-				<% } %>
-				<% if(q.getqTitle() != null) { %>
-					$("input[name=title]").val('<%= q.getqTitle() %>')
-				<% } %>
-			<% } %> --%>
+			<% if(b != null) { %>
+				$("#title").val('<%= b.getbTitle() %>')
+				$(".note-editable").html('<%= b.getbContent() %>')
+			<% } %>
           $("button").mouseenter(function(){
             $("#HC").val($(".note-editable").html())
             console.log($('#summernote').summernote('code'))

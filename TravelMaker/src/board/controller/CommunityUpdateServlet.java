@@ -13,39 +13,31 @@ import board.model.vo.Board;
 import member.model.vo.Member;
 
 /**
- * Servlet implementation class CommunityInsertServlet
+ * Servlet implementation class CommunityUpdateServlet
  */
-@WebServlet("/insert.co")
-public class CommunityInsertServlet extends HttpServlet {
+@WebServlet("/update.co")
+public class CommunityUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CommunityInsertServlet() {
+    public CommunityUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
- 
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		int bId = Integer.parseInt(request.getParameter("bId"));
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
-		Member loginUser =(Member)request.getSession().getAttribute("loginUser");
-		int mSeq = loginUser.getM_seq();
-		String writer = loginUser.getNickName();
-		Board b = new Board(title, content, writer, mSeq);
+		Board b = new Board(bId, title, content);
 		
-		int result = new BoardService().insertBoard(b);
-		
-		if(result > 0) {
-			response.sendRedirect("festivalall.fe?flag=4");
-		}else {
-			System.out.println("실패");
-		}
+		int result = new BoardService().updateCBoard(b);
 	}
 
 	/**
