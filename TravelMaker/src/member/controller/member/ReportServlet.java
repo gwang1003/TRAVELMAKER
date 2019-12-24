@@ -1,4 +1,4 @@
-package board.controller;
+package member.controller.member;
 
 import java.io.IOException;
 
@@ -8,43 +8,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import board.model.service.BoardService;
-import board.model.vo.Board;
-import member.model.vo.Member;
+import member.model.service.MemberService;
 
 /**
- * Servlet implementation class CommunityInsertServlet
+ * Servlet implementation class ReportServlet
  */
-@WebServlet("/insert.co")
-public class CommunityInsertServlet extends HttpServlet {
+@WebServlet("/report.me")
+public class ReportServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CommunityInsertServlet() {
+    public ReportServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
- 
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		Member loginUser =(Member)request.getSession().getAttribute("loginUser");
-		int mSeq = loginUser.getM_seq();
-		String writer = loginUser.getNickName();
-		Board b = new Board(title, content, writer, mSeq);
+		int mSeq = Integer.parseInt(request.getParameter("mSeq"));
+		int bId = Integer.parseInt(request.getParameter("bId"));
 		
-		int result = new BoardService().insertBoard(b);
+		int result = new MemberService().report(mSeq);
 		
 		if(result > 0) {
-			response.sendRedirect("festivalall.fe?flag=4");
-		}else {
-			System.out.println("실패");
+			response.sendRedirect("detail.co?bId=" + bId);
 		}
 	}
 

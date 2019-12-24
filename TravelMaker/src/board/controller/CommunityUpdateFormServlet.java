@@ -10,42 +10,37 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.model.service.BoardService;
 import board.model.vo.Board;
-import member.model.vo.Member;
 
 /**
- * Servlet implementation class CommunityInsertServlet
+ * Servlet implementation class CommunityUpdateFormServlet
  */
-@WebServlet("/insert.co")
-public class CommunityInsertServlet extends HttpServlet {
+@WebServlet("/form.co")
+public class CommunityUpdateFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CommunityInsertServlet() {
+    public CommunityUpdateFormServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
- 
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		Member loginUser =(Member)request.getSession().getAttribute("loginUser");
-		int mSeq = loginUser.getM_seq();
-		String writer = loginUser.getNickName();
-		Board b = new Board(title, content, writer, mSeq);
+		int bId = Integer.parseInt(request.getParameter("bId"));
 		
-		int result = new BoardService().insertBoard(b);
+		Board board = new BoardService().selectBoardNoCnt(bId);
 		
-		if(result > 0) {
-			response.sendRedirect("festivalall.fe?flag=4");
+		if(board != null) {
+			request.setAttribute("board", board);
+			request.getRequestDispatcher("views/board/community/communityInsert.jsp").forward(request, response);
 		}else {
-			System.out.println("실패");
+			
 		}
+		
 	}
 
 	/**

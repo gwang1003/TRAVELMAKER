@@ -152,19 +152,17 @@ th {
 		<div id="top">
 			<div class="nav nav-justified navbar-nav">
 				<form class="navbar-form navbar-search"
-					action="<%=contextPath%>/search.fe" method="get"
-					onsubmit="return checkSearchCondition();">
-					<div class="input-group">
-						<select id="searchCondition" name="searchCondition">
-							<option value="----">----</option>
-							<option value="title">제목</option>
-							<option value="content">내용</option>
-						</select> <input type="search" name="search" class="form-control"
+					action="<%=contextPath%>/search.fe" method="get">
+					<input type="hidden" name="flag" value="4">
+					<div class="input-group" style="margin-top: 20px;">
+						<input type="search" name="search" class="form-control"
 							placeholder="검색어 입력">
 
 						<div class="input-group-btn">
 							<button type="submit" class="btn btn-search btn-default"
 								style="border: 1px solid black;">검색</button>
+
+
 						</div>
 					</div>
 				</form>
@@ -179,19 +177,14 @@ th {
 				}
 			</script>
 
-
+			<br><br>
 
 			<!-- 전체 글수 최신순 인기순 새로고침 -->
 			<div class="count">
 				<span style="text-align: left; margin-left: 20px;">전체 글 수 :
 					<%= listCount %></span>
 				<div id="good">
-					<button type="button" class="btn btn-outline-primary">최신순</button>
-					&emsp;
-					<button type="button" class="btn btn-outline-primary">인기순</button>
-					&emsp; <a href="javascript:" class="btn_represch"><img
-						src="<%=contextPath%>/resources/images/새로고침.png" id="represch"
-						width="30px" height="30px"></a>&emsp;
+				
 				</div>
 
 			</div>
