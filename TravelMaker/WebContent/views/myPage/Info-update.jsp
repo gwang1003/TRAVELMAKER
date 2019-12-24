@@ -169,7 +169,6 @@ nav ul li a.active {
 	width: 1500px;
 	height: 1000px;
 	display: flex;
-	overflow: auto;
 	flex-direction: row;
 	margin-left: auto;
 	margin-right: auto;
@@ -799,6 +798,7 @@ h2 {
 			</script>
 		</section>
 	</section>
+	<%@ include file="../common/footer.jsp" %>
 </body>
 
 </html>

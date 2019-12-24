@@ -13,10 +13,16 @@
 
         footer {
             font-family: Rubik, sans-serif;
-            position: relative;
+            position: absolute;
             font-weight: 400;
             font-size: 15px;
             width:1700px;
+            height:440px;
+            left:0;
+        }
+        
+        .footer-area {
+        	position: absolute;
         }
 
         footer-area ul {
@@ -190,7 +196,6 @@
         }
 
         #sm1 {
-            margin-left: 15%;
         }
 
         #sm1, #sm2, #sm3{
@@ -222,10 +227,11 @@
                         <div class="footer-widget">
                             <div class="widget-about">
                                 <img src="<%= request.getContextPath() %>/resources/images/로고.png" alt="" class="img-fluid">
+                                <br>
                                 <p class="logo-about">국내 여행지를 소개해드립니다.<br>
                                    원하는 지역과 여행지를 선택하고, 자기만의 계획을 만들어 보세요.
                                 </p>
-                                <ul class="contact-details">
+                                <ul class="contact-details" style="margin-top:0">
                                     <li>
                                         <span class="icon-earphones"></span> Call Us:
                                         <a href="tel:344-755-111">010-2824-8934</a>
@@ -246,16 +252,19 @@
                                 <h4 class="footer-widget-title">Category</h4>
                                 <ul>
                                     <li>
-                                        <a href="#">Travel</a>
+                                        <a href="<%= request.getContextPath() %>">Home</a>
                                     </li>
                                     <li>
-                                        <a href="#">Festival</a>
+                                    	<a href="<%= request.getContextPath() %>">Travel</a>
                                     </li>
                                     <li>
-                                        <a href="#">Stay</a>
+                                        <a href="<%= request.getContextPath() %>/views/board/festival/festivalAllList.jsp">Festival</a>
                                     </li>
                                     <li>
-                                        <a href="#">Community</a>
+                                        <a href="<%= request.getContextPath() %>/views/Sleep/SleepAll.jsp">Stay</a>
+                                    </li>
+                                    <li>
+                                        <a href="<%= request.getContextPath() %>/views/board/community/communityAllList.jsp">Community</a>
                                     </li>
                                 </ul>
                             </div>
@@ -271,19 +280,16 @@
                                 <h4 class="footer-widget-title">My Page</h4>
                                 <ul>
                                     <li>
-                                        <a href="#">Plan</a>
+                                        <a href="<%= request.getContextPath() %>/views/myPage/Plan.jsp">Plan</a>
                                     </li>
                                     <li>
-                                        <a href="#">Post</a>
+                                        <a href="<%= request.getContextPath() %>/views/myPage/Board.jsp">Post</a>
                                     </li>
                                     <li>
-                                        <a href="#">Basket</a>
+                                        <a href="<%= request.getContextPath() %>/views/myPage/Basket.jsp">Basket</a>
                                     </li>
                                     <li>
-                                        <a href="#">Information Modify</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Contact Us</a>
+                                        <a href="<%= request.getContextPath() %>/views/myPage/Info-update.jsp">Information Modify</a>
                                     </li>
                                 </ul>
                             </div>
@@ -293,7 +299,7 @@
                     </div>
                     <!-- end /.col-lg-3 -->
 
-                    <div class="col-md-3 col-sm-4" id="sm4">
+                    <div class="col-md-3 col-sm-4" id="sm4" style="padding-top:1px;">
                         <div class="footer-widget">
                             <div class="footer-menu no-padding">
                                 <h4 class="footer-widget-title">Help Support</h4>
@@ -313,7 +319,9 @@
                                     <li>
                                         <a href="#">FAQs</a>
                                     </li>
-                                    <li style="height:40px"></li>
+                                    <li>
+                                        <a href="#">Contact Us</a>
+                                    </li>
                                 </ul>
                             </div>
                             <!-- end /.footer-menu -->
@@ -339,9 +347,9 @@
                         </p>
                       </div>
             
-                      <div class="go_top">
+                      <!-- <div class="go_top">
                         <span class="icon-arrow-up"></span>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
