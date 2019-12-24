@@ -182,7 +182,7 @@
         #body {
             margin-top: 180px;
             width: 1500px;
-            height: 1000px;
+            height: 800px;
             display: flex;
             overflow: auto;
             flex-direction: row;
@@ -642,6 +642,7 @@
             </section>
         </section>
     </section>
+    <%@ include file="../common/footer.jsp" %>
 </body>
 
 </html>
