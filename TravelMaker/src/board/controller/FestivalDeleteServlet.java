@@ -34,7 +34,7 @@ public class FestivalDeleteServlet extends HttpServlet {
 		int result1 = new BoardService().deleteAttachment(bid);
 		
 		if(result>0 && result1>0) {
-			response.sendRedirect("festivalall.fe");
+			response.sendRedirect("festivalall.fe?flag=2");
 		}else {
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			request.setAttribute("msg", "게시글 삭제에 실패했습니다.");

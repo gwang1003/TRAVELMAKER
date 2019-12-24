@@ -40,9 +40,11 @@ public class FestivalLocationServlet extends HttpServlet {
 		String lname = "";
 		
 		int lId = Integer.parseInt(request.getParameter("lId"));
-
+		
+		int flag =Integer.parseInt(request.getParameter("flag"));
+		System.out.println(flag);
 		// 1_1. 게시판 리스트 총 갯수 구하기
-		int listCount = bs.getListCount();
+		int listCount = bs.getListCount(flag);
 
 
 		// 1_2. 페이징 처리 추가
