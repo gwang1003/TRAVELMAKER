@@ -325,7 +325,7 @@ nav ul li a.active {
 			location.href="<%= contextPath %>/views/join&login/login.jsp";
 		}
 		function goFes(){
-			location.href="<%= contextPath %>/festivalall.fe";
+			location.href="<%= contextPath %>/festivalall.fe?flag=" + 2;
 		}
 	</script>
 

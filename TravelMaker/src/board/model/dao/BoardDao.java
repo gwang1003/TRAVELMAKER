@@ -815,4 +815,33 @@ public class BoardDao {
 		return list;
 	}
 
+	public ArrayList<Information> InformationAll(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Information> in = new ArrayList<Information>();
+
+		String query = prop.getProperty("InformationAll");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				in.add(new Information(rs.getInt("b_id"),rs.getString("to_char(sday)"),
+						rs.getString("to_char(eday)"), rs.getString("tel"),rs.getInt("price"),
+						rs.getString("address"),rs.getString("pageaddress")));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+
+		return in;
+	}
+
 }

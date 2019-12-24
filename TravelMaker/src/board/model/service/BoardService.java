@@ -275,4 +275,12 @@ public class BoardService {
 		return list;
 	}
 
+	public ArrayList<Information> InformationAll() {
+		Connection con = getConnection();
+		ArrayList<Information> in = new BoardDao().InformationAll(con);
+
+		close(con);
+		return in;
+	}
+
 }

@@ -41,8 +41,10 @@ public class FestivalSearchServlet extends HttpServlet {
 
 		String search = request.getParameter("search");
 
+		int flag = Integer.parseInt(request.getParameter("flag"));
 		// 1_1. 게시판 리스트 총 갯수 구하기
-		int listCount = bs.getListCount();
+		System.out.println("flag  : " +flag);
+		int listCount = bs.getListCount(flag);
 
 
 		// 1_2. 페이징 처리 추가

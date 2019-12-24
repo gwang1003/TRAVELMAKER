@@ -100,9 +100,10 @@ public class FestivalAllList extends HttpServlet {
 		
 		ArrayList<Board> blist = bs.selectList(flag,currentPage, boardLimit, 1);
 		ArrayList<Attachment> flist = bs.selectList(flag,currentPage, boardLimit, 2);
-		
+		ArrayList<Information> in = bs.InformationAll();
 		
 		if (blist != null && flist != null) {
+			request.setAttribute("in", in);
 			request.setAttribute("blist", blist);
 			request.setAttribute("flist", flist);
 			request.setAttribute("pi", pi);

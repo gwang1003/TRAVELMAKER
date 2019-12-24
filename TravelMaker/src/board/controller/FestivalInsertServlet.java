@@ -44,7 +44,6 @@ public class FestivalInsertServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		int flag = Integer.parseInt(request.getParameter("flag"));
 
 		if (ServletFileUpload.isMultipartContent(request)) {
 			int maxSize = 1024 * 1024 * 10;
@@ -93,6 +92,7 @@ public class FestivalInsertServlet extends HttpServlet {
 			String page = multiRequest.getParameter("home");
 			String bWriter = ((Member) request.getSession().getAttribute("loginUser")).getNickName();
 			int mId = ((Member)request.getSession().getAttribute("loginUser")).getM_seq();
+			int flag = Integer.parseInt(multiRequest.getParameter("flag"));
 
 			
 			Board b = new Board();
@@ -132,22 +132,6 @@ public class FestivalInsertServlet extends HttpServlet {
 
 				fileList.add(at);
 			}
-			/*int result = new BoardService().insertThumbnail(b, fileList);
- 
-			if (result > 0) {
-				response.sendRedirect("festivalall.fe");
-			}else {
-				// 실패 시 저장된 사진 삭제
-				for (int i = 0; i < changeFiles.size(); i++) {
-					// 파일 시스템에 저장 된 이름으로 파일 객체 생성함
-					File failedFile = new File(savePath + changeFiles.get(i));
-					failedFile.delete();
-				}
-
-				request.setAttribute("msg", "사진 게시판 등록 실패!!");
-				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-
-			}*/
 
 			// 4. 사진 게시판 작성용 비즈니스 로직을 처리할 서비스 요청
 			// (board 객체, Attachment 리스트 전달)

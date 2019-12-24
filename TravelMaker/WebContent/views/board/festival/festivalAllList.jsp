@@ -6,7 +6,8 @@
 	ArrayList<Board> blist = (ArrayList<Board>) request.getAttribute("blist");
 	ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
 	PageInfo pi = (PageInfo) request.getAttribute("pi");
-
+	ArrayList<Information> in = (ArrayList<Information>)request.getAttribute("in");
+	System.out.println("in :" +in);
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
@@ -300,6 +301,7 @@ span, p, input {
 			<div class="nav nav-justified navbar-nav">
 				<form class="navbar-form navbar-search"
 					action="<%=contextPath%>/search.fe" method="get">
+					<input type="hidden" name="flag" value="2">
 					<div class="input-group" style="margin-top: 20px;">
 						<input type="search" name="search" class="form-control"
 							placeholder="검색어 입력">
@@ -356,7 +358,7 @@ span, p, input {
 					<div class="cli" style="height: 210px;">
 						<input type="hidden" value="<%=b.getbId()%>">
 						<div style="float: left; width: 300px; box-sizing: border-box;">
-
+						
 							<%
 								for (Attachment at : flist) {
 							%>
@@ -373,11 +375,17 @@ span, p, input {
 								}
 							%>
 						</div>
+						
 						<div
 							style="float: left; width: 550px; height: 200px; box-sizing: border-box;">
 							<span style="margin-left: 10px;"> No.<%=b.getbId()%></span>
 							<p style="font-size: 25px;"><%=b.getbTitle()%></p>
 							<p style="color: gray;"><%=b.getbContent()%></p>
+							<% for(Information i : in) { %>
+							<% if(i.getbId()== b.getbId()){ %>
+							<span style="margin-left: 10px; color:gray;" >[<%=i.getsDay() %>-<%= i.geteDay() %>]</span>
+							<% } %>
+							<% } %>
 						</div>
 						<div
 							style="float: left; width: 150px; height: 200px; box-sizing: border-box; margin-bottom: 40px;">
@@ -521,14 +529,14 @@ span, p, input {
 		$(function(){
 			$(".month-choice li").click(function(){
 				var month = $(this).children().eq(1).val();
-				location.href="<%=contextPath%>/month.fe?month=" + month;
+				location.href="<%=contextPath%>/month.fe?month=" + month + "&flag=" + 2;
 			});
 		});
 	
 		$(function(){
 			$(".location-choice li").click(function(){
 				var lId = $(this).children().eq(1).val();
-				location.href="<%=contextPath%>/location.fe?lId=" + lId;
+				location.href="<%=contextPath%>/location.fe?lId=" + lId + "&flag=" +2;
 			});
 		});
 	
@@ -540,7 +548,7 @@ span, p, input {
 				<%} else {%>
 				alert('상세보기는 로그인이 필요합니다');
 				location.href="<%=contextPath%>/views/join&login/login.jsp";
-	<%}%>
+				<%}%>
 		});
 		});
 
