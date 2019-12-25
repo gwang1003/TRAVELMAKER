@@ -35,7 +35,7 @@ public class FestivalMemberListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int flag = Integer.parseInt(request.getParameter("flag"));
+		int flag = 2;
 		BoardService bs = new BoardService();
 
 		
@@ -64,12 +64,9 @@ public class FestivalMemberListServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		// * pageLimit : 한 페이지 하단에 보여질 페이지 수
 		pageLimit = 5;
 		
 		// * maxPage : 총 페이지의 마지막 수
-		// 예를 들어 글 개수가 101개이면 페이지 수는 10 페이지가 아닌 짜투리 1개까지 한페이지로
-		// 쳐서 11페이지가 되어야 함
 		// (전체 게시글 수 / 한 페이지에 보여질 개수) 결과를 올림 처리
 		maxPage = (int)Math.ceil((double)listCount/boardLimit);
 		

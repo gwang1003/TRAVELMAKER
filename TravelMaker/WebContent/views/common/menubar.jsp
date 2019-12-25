@@ -311,7 +311,7 @@ nav ul li a.active {
 			location.href="<%= contextPath %>/communityall.th";
 		} 
 		function goMyPage() {
-			location.href="<%= contextPath %>/views/myPage/Plan.jsp";
+			location.href="<%= contextPath %>/festivalMember.fe?=" + 2;
 		}
 		
 		function goManager() {
