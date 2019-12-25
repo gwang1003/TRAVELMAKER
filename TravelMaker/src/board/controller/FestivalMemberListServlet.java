@@ -67,8 +67,6 @@ public class FestivalMemberListServlet extends HttpServlet {
 		pageLimit = 5;
 		
 		// * maxPage : 총 페이지의 마지막 수
-		// 예를 들어 글 개수가 101개이면 페이지 수는 10 페이지가 아닌 짜투리 1개까지 한페이지로
-		// 쳐서 11페이지가 되어야 함
 		// (전체 게시글 수 / 한 페이지에 보여질 개수) 결과를 올림 처리
 		maxPage = (int)Math.ceil((double)listCount/boardLimit);
 		

@@ -682,7 +682,7 @@ section4 li button {
 		</section>
 		<section id="section4" class="margin-body">
 			<h1 style="color: black;  margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">장바구니</h1>
-			<br> <br><>
+			<br> <br>
 			<div id="total">
 				<div id="choice1" class="no-drag">
 					<div class="nav nav-justified navbar-nav no-drag">
