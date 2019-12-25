@@ -5,7 +5,7 @@
 	ArrayList<Board> blist = (ArrayList<Board>) request.getAttribute("blist");
 	ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
 	PageInfo pi = (PageInfo) request.getAttribute("pi");
-
+	ArrayList<Information> in = (ArrayList<Information>)request.getAttribute("in");
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
@@ -228,10 +228,10 @@ aside {
 }
 
 #section4 {
-	width: 900px;
+	width: 600px;
 	height: 400px;
 	position:absolute;
-	left:36%;
+	left:45%;
 	top:115%;
 }
 </style>
@@ -381,7 +381,7 @@ aside {
 
 #choice1 {
 	float: left;
-	width: 900px;
+	width: 600px;
 	height: 300px;
 	border: 1px solid black;
 	padding: 0;
@@ -571,13 +571,11 @@ section4 li button {
 
 .pagingArea {
 	margin-top: 15px;
-	text-align: center;
 	font-size: 0;
 }
 
 .pagingArea button {
 	background-color: white;
-	display: inline-block;
 	width: 30px;
 	height: 28px;
 	margin: 0 1px;
@@ -586,13 +584,20 @@ section4 li button {
 	font-size: 15px;
 	font-weight: bold;
 	line-height: 20px;
-	vertical-align: middle;
 	text-decoration: none;
 }
 
 .pagingArea button:hover, .pagingArea button:active, .pagingArea button:focus
 	{
 	border: 1px solid #4c8500;
+}
+
+.no-drag {
+	-ms-user-select: none; 
+	-moz-user-select: -moz-none; 
+	-webkit-user-select: none; 
+	-khtml-user-select: none; 
+	user-select:none;
 }
 </style>
 
@@ -666,87 +671,29 @@ section4 li button {
 			</section>
 		</aside>
 
-		<section id="section3">
+		<section id="section3" class="margin-body">
 			<%@ include file="./PlanCalendar.jsp"%>
-			<!-- <ul class="basket">
-				<li style="display:block; cursor:pointer;" draggable="true">1</li>
-				<li>2</li>
-				<li>3</li>
-			</ul> -->
+			<form  action="<%= request.getContextPath() %>/dragDrop.pl" method="post" style=";"  enctype="multipart/form-data">
+				<input name="addtitle" value="0">
+				<input name="filename">
+				<input name="startDate" value="0">
+				<button class="drag-drop-form">btn</button>
+			</form>
 		</section>
-		<script>
-		$('#marginBody')
-		  .on("dragover", dragOver)
-		  .on("dragleave", dragLeave)
-		  .on("drop", uploadContent);
-
-		function dragOver(e){
-		    e.stopPropagation();
-		    e.preventDefault();
-		    if (e.type == "dragover") {
-		        $(e.target).css({
-		            "background-color": "black",
-		            "outline-offset": "-20px"
-		        });
-		    } else {
-		        $(e.target).css({
-		            "background-color": "gray",
-		            "outline-offset": "-10px"
-		        });
-		    }
-		}
-		
-		function dragLeave(e) {
-			e.stopPropagation();
-		    e.preventDefault();
-		        $(e.target).css("background-color", "white");
-		}
-
-		function uploadContent(e) {
-		    e.stopPropagation();
-		    e.preventDefault();
-		    dragOver(e);
-		    $(e.target).css("background-color", "white");
-		  
-		    e.dataTransfer = e.originalEvent.dataTransfer;
-		    console.log(e.dataTransfer);
-		    var files = e.target.files || e.dataTransfer.files;
-		    if (files.length > 1) {
-		        alert('하나만 올려라.');
-		        return;
-		    }
-		    if (files[0].type.match(/image.*/)) {
-		                $(e.target).css({
-		            "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
-		            "outline": "none",
-		            "background-size": "100% 100%"
-		        });
-		    }else{
-		      alert('이미지가 아닙니다.');
-		      return;
-		    }
-		}
-        </script>
-		<section id="section4">
-			
+		<section id="section4" class="margin-body">
 			<h1 style="color: black;  margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">장바구니</h1>
-
 			<br> <br>
 			<div id="total">
-
-				<div id="choice1">
-
-					<div class="nav nav-justified navbar-nav">
+				<div id="choice1" class="no-drag">
+					<div class="nav nav-justified navbar-nav no-drag">
 						<form class="navbar-form navbar-search"
 							action="<%=contextPath%>/search.fe" method="get">
 						
 						</form>
 					</div>
-
-					<br> <br>
-
+					<br>
 					<!-- 전체 글수 최신순 인기순 새로고침 -->
-					<div class="count">
+					<div class="count no-drag">
 						<span style="text-align: left; margin-left: 20px;">전체 글 수 :
 							<%=listCount%></span>
 
@@ -759,18 +706,14 @@ section4 li button {
 
 					</div>
 					<hr>
-
-					<div id="festivalTable">
-
-						<div class="thumbnailArea" style="width: 100px; height: 100px;">
-
+					<div id="festivalTable" class="no-drag">
+						<div class="thumbnailArea no-drag" style="width: 100px; height: 100px;">
 							<%
 								for (Board b : blist) {
 							%>
-
-							<div class="cli" style="height: 210px;">
+							<div class="cli" style="height: 210px; cursor:pointer;" draggable="true">
 								<input type="hidden" value="<%=b.getbId()%>">
-								<div style="float: left; width: 300px; box-sizing: border-box;">
+								<div class="board-img" style="float: left; width: 570px; box-sizing: border-box;">
 
 									<%
 										for (Attachment at : flist) {
@@ -780,7 +723,7 @@ section4 li button {
 									%>
 									<img
 										src="<%=contextPath%>/resources/festival_uploadFile/<%=at.getChangeName()%>"
-										width="300px" height="200px">
+										width="40px" height="40px">
 									<%
 										}
 									%>
@@ -788,39 +731,20 @@ section4 li button {
 										}
 									%>
 								</div>
-								<div
-									style="float: left; width: 550px; height: 200px; box-sizing: border-box;">
-									<span style="margin-left: 10px;"> No.<%=b.getbId()%></span>
-									<p style="font-size: 25px;"><%=b.getbTitle()%></p>
-									<p style="color: gray;"><%=b.getbContent()%></p>
-								</div>
-								<div
-									style="float: left; : 150 px; height: 200px; box-sizing: border-box; margin-bottom: 40px;">
-									<br>
-									<p>
-										작성자 :
-										<%=b.getbWriter()%>
-									</p>
-									<br>
-									<hr>
-									<br>
-
-									<p>
-										조회수 :
-										<%=b.getbCount()%>
-									</p>
+								<div class="board-title"
+									style="float: left; width: 350px; height: 150px; box-sizing: border-box;">
+									<p class="board-title2" style="font-size: 25px; margin-top:-40px;"><%=b.getbTitle()%></p>
+									<hr style="width:600px; margin-left:-20px;">
 								</div>
 							</div>
-							<hr>
 							<%
 								}
 							%>
 						</div>
-						<hr>
 					</div>
-
+					<hr>
 					<!-- 페이징 바 -->
-					<div class="pagingArea" align="center">
+					<div class="pagingArea" style="width:600px; transform:translateX(-150px)">
 						<!-- 맨 처음으로 (<<) -->
 						<button
 							onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=1&flag=2'">
@@ -884,9 +808,65 @@ section4 li button {
 							&gt;&gt;</button>
 					</div>
 				</div>
-
 			</div>
+			<!-- drag & drop evnet -->
+			<script>
+		$('.margin-body')
+		  .on("dragstart", dragStart)
+		  .on("dragover", dragOver)
+		  .on("dragleave", dragLeave)
+		  .on("drop", uploadContent);
 
+		var $startEvent;
+		var filename;
+		var title;
+		var arr;
+		var startDate;
+		function dragStart(e) {
+			$startEvent = $(e.target);
+			filename = $startEvent.children('.board-img').find('img').attr("src");
+			title = $startEvent.children('.board-title').find('.board-title2').html();
+			
+		}
+		
+		function dragOver(e){
+		    e.stopPropagation();
+		    e.preventDefault();
+		    
+		    if (e.type == "dragover") {
+		    	
+		    } else {
+		        $(e.target).css({
+		        });
+		    }
+		}
+		
+		function dragLeave(e) {
+			e.stopPropagation();
+		    e.preventDefault();
+		   /*  $(e.target).css("background-color", "white"); */
+		}
+
+		function uploadContent(e) {
+		    e.stopPropagation();
+		    e.preventDefault();
+		    dragOver(e);
+		    startDate = $(e.target).attr('data-date');
+		    
+		    var date = $(e.target).attr('data-date');
+		    arr = [{'title':title, 'imageurl':filename, 'start':startDate, 'end':startDate}];
+		    $('input[name=addtitle]').val(arr[0].title);
+		    $('input[name=filename]').val(arr[0].imageurl);
+		    $('input[name=startDate]').val(arr[0].start);
+		    console.log(arr[0].title + " " + arr[0].imageurl + " " + arr[0].start);
+		    calendar.addEvent(arr[0]);
+		    
+		    if(arr[0].title != null && arr[0].imageurl != null && arr[0].start != null) {
+		    	
+		    	$('.drag-drop-form').trigger("click");
+		    } 
+		}
+        </script>
 			<script>
         	
         		$(function(){
@@ -910,9 +890,8 @@ section4 li button {
         				location.href="<%=contextPath%>/detail.fe?bId=" + bId;
         				<%} else {%>
         				alert('상세보기는 로그인이 필요합니다');
-        				location.href="<%=contextPath%>
-				/views/join&login/login.jsp";
-			<%}%>
+        				location.href="<%= request.getContextPath() %>/views/join&login/login.jsp";
+						<%}%>
 				});
 				});
 

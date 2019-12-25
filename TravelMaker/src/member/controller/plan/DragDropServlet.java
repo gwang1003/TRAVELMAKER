@@ -1,32 +1,42 @@
-package board.controller;
+package member.controller.plan;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import board.model.service.BoardService;
 import board.model.vo.Attachment;
 import board.model.vo.Board;
 import board.model.vo.Information;
 import board.model.vo.PageInfo;
+import member.model.service.PlanService;
+import member.model.vo.Member;
+import member.model.vo.MyPlan;
 
 /**
- * Servlet implementation class FestivalMemberListServlet
+ * Servlet implementation class DragDropServlet
  */
-@WebServlet("/festivalMember.fe")
-public class FestivalMemberListServlet extends HttpServlet {
+@WebServlet("/dragDrop.pl")
+public class DragDropServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FestivalMemberListServlet() {
+    public DragDropServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +45,12 @@ public class FestivalMemberListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int flag = Integer.parseInt(request.getParameter("flag"));
+		
+		boolean isMulti = ServletFileUpload.isMultipartContent(request);
+		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		ArrayList<MyPlan> planList = (ArrayList)request.getSession().getAttribute("planList");
+		
+		int flag = 2;
 		BoardService bs = new BoardService();
 
 		
@@ -100,29 +115,63 @@ public class FestivalMemberListServlet extends HttpServlet {
 		ArrayList<Attachment> flist = bs.selectList(flag,currentPage, boardLimit, 2);
 		ArrayList<Information> in = bs.InformationAll();
 		
-		if (blist != null && flist != null) {
-			request.setAttribute("in", in);
-			request.setAttribute("blist", blist);
-			request.setAttribute("flist", flist);
-			request.setAttribute("pi", pi);
-			if(flag == 1) {
-				
-			}else if(flag == 2){
-				RequestDispatcher view = request.getRequestDispatcher("views/myPage/Plan.jsp");				
-				view.forward(request, response);
-			}else if(flag == 3){
-				
-			}else {
-				RequestDispatcher view = request.getRequestDispatcher("views/myPage/Plan.jsp");				
-				view.forward(request, response);
+		if(isMulti) {
+			int maxSize = 1024 * 1024 * 10;
+			String root = request.getSession().getServletContext().getRealPath("/");
+			String saveDir = root + "resources/myplan_upload/";
+			MultipartRequest multi = new MultipartRequest(request, saveDir, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+		
+			String planName = multi.getParameter("addtitle");
+			String startDate = multi.getParameter("startDate");
+			String endDate = multi.getParameter("startDate");
+			String planStartTime = "12:00";
+			String planEndTime = "12:00";
+			String fileName = multi.getParameter("filename");
+			fileName = fileName.substring(43, 66);
+			System.out.println("substring : " + fileName);
+			int userSeq = loginUser.getM_seq();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date planStartDate = null;
+			Date planEndDate = null;
+			try {
+				planStartDate = sdf.parse(startDate);
+				planEndDate = sdf.parse(endDate);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
-
-		} else {
-			request.setAttribute("msg", "사진 게시판 조회 실패!!");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			int pId = 1;
+			if(planList != null) {
+				int max = 1;
+				for(MyPlan p : planList) {
+					if(p.getmSeq() == userSeq && p.getpSeq() >= max) {
+						max = p.getpSeq();
+					}
+				}
+				pId = ++max;
+			}
+			MyPlan p = new MyPlan(pId, userSeq, planName, planStartDate
+						, planEndDate, planStartTime, planEndTime, fileName);
+			try {
+				 int result = new PlanService().insertPlan(p);
+                 if (result > 0) {
+                	 request.setAttribute("in", in);
+         			 request.setAttribute("blist", blist);
+         			 request.setAttribute("flist", flist);
+         			 request.setAttribute("pi", pi);
+                	 planList = new PlanService().selectAllPlan();
+                	 request.getSession().setAttribute("planList", planList);
+                	 request.getRequestDispatcher("views/myPage/Plan.jsp").forward(request, response);
+                 } else {
+                	 request.getRequestDispatcher("views/myPage/Plan.jsp").forward(request, response);
+                 }
+           } catch (Exception e) {
+                 e.printStackTrace();
+           }
+		}else {
+			
 		}
-		
 	}
 
 	/**

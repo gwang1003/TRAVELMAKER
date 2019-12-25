@@ -51,7 +51,7 @@
     var localeSelectorEl = document.getElementById('locale-selector');
     var calendarEl = document.getElementById('calendar');
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
       header: {
         left: 'prev,next today',
@@ -126,7 +126,11 @@
     					title: '<%= p.getpName()%>',
     					start: '<%= p.getStartDate() + "T" + p.getStartTime() %>',
     					end: '<%= p.getEndDate() + "T" + p.getEndTime() %>',
-    					imageurl: '<%= request.getContextPath() %>/resources/myplan_upload/<%= p.getFileName() %>',
+    					<% if(p.isFileBoard()) { %>
+							imageurl: '<%= request.getContextPath() %>/resources/festival_uploadFile/<%= p.getFileName() %>',
+						<% }else { %>
+							imageurl: '<%= request.getContextPath() %>/resources/myplan_upload/<%= p.getFileName() %>',
+						<% } %>
     					id: '<%= p.getpSeq() %>',
     					locationid: '<%= p.getmSeq() %>'
     				}
@@ -220,6 +224,7 @@
   .fc-week-number {
   	display:none;
   }
+  
 </style>
 </head>
 <body>
