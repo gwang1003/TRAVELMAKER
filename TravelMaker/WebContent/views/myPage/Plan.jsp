@@ -673,7 +673,7 @@ section4 li button {
 
 		<section id="section3" class="margin-body">
 			<%@ include file="./PlanCalendar.jsp"%>
-			<form  action="<%= request.getContextPath() %>/dragDrop.pl" method="post" style=";"  enctype="multipart/form-data">
+			<form  action="<%= request.getContextPath() %>/dragDrop.pl" method="post" style="display:none;"  enctype="multipart/form-data" >
 				<input name="addtitle" value="0">
 				<input name="filename">
 				<input name="startDate" value="0">

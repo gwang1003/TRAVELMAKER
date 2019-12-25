@@ -35,7 +35,7 @@ public class FestivalMemberListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int flag = Integer.parseInt(request.getParameter("flag"));
+		int flag = 2;
 		BoardService bs = new BoardService();
 
 		
