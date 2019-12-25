@@ -119,7 +119,11 @@
         				title: '<%= p.getpName()%>',
         				start: '<%= p.getStartDate() + "T" + p.getStartTime() %>',
         				end: '<%= p.getEndDate() + "T" + p.getEndTime() %>',
-        				imageurl: '<%= request.getContextPath() %>/resources/myplan_upload/<%= p.getFileName() %>',
+        				<% if(p.isFileBoard()) { %>
+							imageurl: '<%= request.getContextPath() %>/resources/festival_uploadFile/<%= p.getFileName() %>',
+						<% }else { %>
+							imageurl: '<%= request.getContextPath() %>/resources/myplan_upload/<%= p.getFileName() %>',
+						<% } %>
         				id: '<%= p.getpSeq() %>',
         				locationid: '<%= p.getmSeq() %>'
         			}

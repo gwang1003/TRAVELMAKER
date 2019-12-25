@@ -99,6 +99,18 @@ public class MyPlan {
 	public String getFileName() {
 		return fileName;
 	}
+	
+	public boolean isFileBoard() {
+		if(fileName != null) {
+			if(fileName.length() > 4) {
+				if(fileName.substring(0, 4).equals("2019")) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
