@@ -64,7 +64,6 @@ public class FestivalMemberListServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		// * pageLimit : 한 페이지 하단에 보여질 페이지 수
 		pageLimit = 5;
 		
 		// * maxPage : 총 페이지의 마지막 수
