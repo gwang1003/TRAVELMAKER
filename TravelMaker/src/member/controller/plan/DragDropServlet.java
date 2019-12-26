@@ -127,6 +127,8 @@ public class DragDropServlet extends HttpServlet {
 			String planStartTime = "12:00";
 			String planEndTime = "12:00";
 			String fileName = multi.getParameter("filename");
+			String url = multi.getParameter("url");
+			
 			fileName = fileName.substring(43, 66);
 			System.out.println("substring : " + fileName);
 			int userSeq = loginUser.getM_seq();
@@ -152,7 +154,7 @@ public class DragDropServlet extends HttpServlet {
 				pId = ++max;
 			}
 			MyPlan p = new MyPlan(pId, userSeq, planName, planStartDate
-						, planEndDate, planStartTime, planEndTime, fileName);
+						, planEndDate, planStartTime, planEndTime, fileName, url);
 			try {
 				 int result = new PlanService().insertPlan(p);
                  if (result > 0) {

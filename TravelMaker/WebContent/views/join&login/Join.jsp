@@ -6,9 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link
+	href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
+	rel="stylesheet">
 <style>
 body {
 	background: white;
@@ -17,12 +22,12 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	width: 1200px;
-	height: 1000px;
+	height: 1050px;
 }
 
 .outer {
 	width: 50%;
-	height: 80%;
+	height: 83%; 
 	background: white;
 	color: black;
 	margin-left: auto;
@@ -36,10 +41,10 @@ table {
 }
 
 #joinForm {
-	height: 70%;
+	height: 67%;
 }
 
-#passExp, #passCorrect, #nameExp, #noExp, #nickNameExp, #phoneExp {
+#passExp, #passCorrect, #nameExp, #noExp, #nickNameExp, #nickNameExp2, #phoneExp {
 	font-size: 12px;
 	color: red;
 	display: none;
@@ -50,7 +55,7 @@ input {
 }
 
 button {
-	height: 22px;
+	height: 26px;
 	width: 90px;
 	background: darkgray;
 	border: darkgray;
@@ -74,14 +79,16 @@ button:hover {
 .mimg {
 	margin-left: auto;
 	margin-right: auto;
+	margin-top:30px;
 	width: 150px;
 	height: 30%;
 }
 
 .mimg img {
-	width: 150px;
+	width: 300px;
 	height: 60%;
 	border-radius: 50%;
+	transform:translateX(-75px);
 }
 
 #email {
@@ -115,9 +122,8 @@ tr input {
 	height: 10px; /* 높이값 초기화 */ 
 	line-height : normal; /* line-height 초기화 */ 
 	padding: .8em .5em; /* 원하는 여백 설정, 상하단 여백으로 높이를 조절 */ 
-	font-family: inherit; /* 폰트 상속 */ 
 	border: 1px solid #999; 
-	border-radius: 4px; /* iSO 둥근모서리 제거 */ 
+	border-radius: 4px;
 	/* outline-style: none; */ 
 	-webkit-appearance: none; /* 브라우저별 기본 스타일링 제거 */ 
 	-moz-appearance: none; 
@@ -128,8 +134,17 @@ tr input {
 td:first-child {
 	padding: .8em .5em;
 	cursor: text;
-	width:250px;
+	width:300px;
 	text-align:right;
+	font-family: fontAwesome;
+}
+
+#logo {
+	margin-bottom:30px;
+}
+
+#title {
+	font-size:30px;
 }
 </style>
 </head>
@@ -141,7 +156,7 @@ td:first-child {
 	<div class="outer">
 		<div class="mimg">
 			<img id="logo" src="<%= request.getContextPath() %>/resources/images/로고.png" width="100px" onclick="location.href='<%= request.getContextPath() %>'">
-			<h2 align="center" style="user-select:none;">회원가입</h2>
+			<span style="user-select:none;" class="label label-default" id="title">회원가입</span>
 		</div>
 
 
@@ -152,7 +167,7 @@ td:first-child {
 					<td width="200px"><label>* </label>아이디</td>
 					<td><input type="text" maxlength="13" name="mId" required></td>
 					<td width="200px">
-						<button id="idCheck" type="button">중복확인</button>
+						<button id="idCheck" type="button" style="margin-top:2px; margin-left:10px;">중복확인</button>
 					</td>
 				</tr>
 
@@ -186,7 +201,8 @@ td:first-child {
 				<tr>
 					<td><label>* </label>닉네임</td>
 					<td><input type="text" maxlength="6" name="nickName" id="nickName" required></td>
-					<td><label id="nickNameExp">이미 존재하는 닉네임입니다</label></td>
+					<td><label id="nickNameExp">이미 존재하는 닉네임입니다</label><label id="nickNameExp2">한글, 숫자, 영어로 2~6글자까지 작성할 수 있습니다</label></td>
+					
 				</tr>
 
 				<tr>
@@ -198,18 +214,18 @@ td:first-child {
 
 				<tr>
 					<td><label>* </label>이메일</td>
-					<td><input type="text" name="email" id="email" required>@<select
-						id="email2" name="email2">
+					<td><input type="text" name="email" id="email" required> @ <select
+						id="email2" name="email2" style="height:30px;">
 							<option value="naver.com">naver.com</option>
 							<option value="naver.com">daum.net</option>
 							<option value="naver.com">hanmail.net</option>
 							<option value="naver.com">google.com</option>
 					</select></td>
 					<td>
-						<input type="text" id="key" style="width:100px;" placeholder="인증번호입력">
+						<input type="text" id="key" style="margin-left:-40px;width:100px; margin-top:-2px; background:#d3d3d3" placeholder="인증번호입력" disabled>
 					</td>	
 					<td>
-					<button id="emailCheck" type="button">이메일 인증</button>	
+					<button id="emailCheck" type="button" style="margin-left:-80px; margin-top:-1px">이메일 인증</button>	
 					</td>
 				</tr>
 			</table>
@@ -330,17 +346,16 @@ td:first-child {
 	    	 // 닉네임 길이 확인 및 중복확인
 	    	 $("input[name=nickName]").focusout(function() {
 	    		 var nick = $("#joinForm input[name=nickName]");
+	    		 console.log(nick.val());
 	    		 $.ajax({
 						url : "<%= request.getContextPath() %>/nicknameCheck.me",
 						type : "post",
-						data : {nick:nick.val()},
+						data : nick,
 						success : function(data) {
 							if(nick.val().length < 2) {
-								
 							}else {
 								if(data == "fail") {
 									$("#nickNameExp").css('display', 'unset');
-									nick.focus();
 									checkNickName = false;
 								}else {
 									$("#nickNameExp").css('display', 'none');
@@ -352,6 +367,18 @@ td:first-child {
 							console.log('서버 통신 안됨');
 						}
 					});
+	    	 });
+	    	 
+	    	// 닉네임 제약조건
+	    	 var nickExp = /^[0-9a-zA-Z가-힣]{2,6}$/;
+	    	 $("input[name=nickName]").focusout(function() {
+	    		 if(nickExp.test($(this).val())) {	
+	    			$('#nickNameExp2').css('display', 'none');
+	    			checkNickName = true;  
+	    		 }else {
+	    			 $('#nickNameExp2').css('display', 'unset');
+	    			 checkNickName = false;
+	    		 }
 	    	 });
 	    	 
 	    	 // 연락처 11자리, 앞은 010 또는 011로 시작
@@ -370,6 +397,9 @@ td:first-child {
 	    	 var key;
 	 		$(function() {
 	 			$("#emailCheck").click(function(){
+	 				alert("이메일이 전송되었습니다");
+	 				$("#key").css("background", "white");
+	 				$("#key").attr("disabled", false);
 	 				var email = $("#email").val() + '@' + $("#email2").val();
 	 				$.ajax({
 	 					// url : 데이터를 전송할 url(필수!!!)
@@ -405,8 +435,6 @@ td:first-child {
 		    				&& checkEmail) {
 		    			$("#joinForm").attr("method", "post");
 		    			$("#joinForm").attr("action", "<%= request.getContextPath() %>/insert.me");
-		    			alert("회원가입에 성공하였습니다");
-	        			<% request.getSession().setAttribute("msg", null); %>
 		    	}else { 
 		    			if(checkId == false) {
 		    				alert("아이디를 체크해주세요");
@@ -420,6 +448,8 @@ td:first-child {
 		    				alert("생년월일을 체크해주세요");
 		    			}else if(checkNickName == false) {
 		    				alert("닉네임을 체크해주세요");
+		    			}else if(checkNickName2 == false) {
+		    				alert("닉네임을 체크해주세요");
 		    			}else if(checkPhone == false) {
 		    				alert("연락처를 체크해주세요");
 		    			}else if($("#key").val() != key){
@@ -431,6 +461,6 @@ td:first-child {
 	    	 });
       });
    </script>
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>

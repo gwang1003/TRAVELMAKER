@@ -38,7 +38,7 @@ public class FindIdServlet extends HttpServlet {
 		String findName = request.getParameter("findName1");
 		String findNo = request.getParameter("findNo1");
 		String memberId = new MemberService().findMemberId(findName, findNo);
-		if(memberId != null) {
+		if(memberId != "") {
 			HttpSession session = request.getSession();
 			session.setAttribute("memberId", "사용자의 ID는 " + memberId + "입니다");
 			response.sendRedirect(request.getContextPath() + "/views/join&login/FindIdPwd.jsp");

@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>마이페이지</title>
-
+	<link
+	href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
+	rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.css">
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -173,10 +175,6 @@
 		.page {
 			cursor:pointer;
 		}
-		
-		.no {
-			user-select:none;
-		}
 	</style>
 
     <!-- 영역 분할 -->
@@ -198,7 +196,7 @@
         }
     
         aside {
-            margin-left: 15%;
+            margin-left: 5%;
             width: 15%;
             height: 100%;
             margin-right: 5%;
@@ -211,12 +209,14 @@
         #my-info-section1 {
             width: 80%;
             height: 220px;
+            font-family: 'Do Hyeon', sans-serif;
         }
     
         /* aside -> my-info-section2 */
         #my-info-section2 {
             width: 80%;
-            height: 520px;
+            height: 460px;
+            font-family: 'Do Hyeon', sans-serif;
         }
                             
         #my-info-section4 {
@@ -362,6 +362,10 @@
         .btn-toolbar {
             transform: translate(0, -15px);
         }
+        
+        #profile {
+			cursor:pointer;
+		}
     </style>
 </head>
 
@@ -372,7 +376,7 @@
             <section id="my-info-section1">
                 <div class="my-info" id="my-info">
                     <h3 id="my-info-text">마이페이지</h3>
-                    <img onclick="profileUpdate();"
+                    <img onclick="profileUpdate();" id="profile"
 						src="<%= request.getContextPath() %>/resources/myplan_upload/<%= loginUser.getProfile() %>"><br>
                     <p id="name">&nbsp;&nbsp;&nbsp;<%= loginUser.getmName() %></p>
                     <br><br>
@@ -404,18 +408,21 @@
                 <div id="mypage-menu">
                     <ul>
                         <li class="bigContent no">나의 활동</li>
-                        <li><a class="page" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Plan.jsp';">나의 계획</a></li>
-                        <li><a class="page" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Board.jsp';">내가 쓴 게시글</a></li>
-                        <li class="no" style="font-weight:bold"><a class="page"
-							onclick="location.href='<%= request.getContextPath() %>/views/myPage/Basket.jsp';">장바구니</a></li>
-
-                        <hr>
-                        <li class="bigContent no">개인정보 관리</li>
-                        <li><a class="page" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp';">회원정보 수정</a></li>
-
-                        <hr>
-                        <li class="bigContent no">고객센터</li>
-                        <li><a class="page" onclick="location.href='<%= request.getContextPath() %>/views/myPage/ServiceCenter.jsp';"">문의 내역</a></li>
+						<li style="font-weight: bold" class="no"><a class="page" onclick="location.href='<%= contextPath %>/festivalMember.fe?=' + 2">
+							나의계획</a></li>
+						<li><a class="page"
+							onclick="location.href='<%= contextPath %>/festivalall.fe?flag=4&no=1'">내가
+								쓴 게시글</a></li>
+						<hr>
+						<li class="bigContent no">개인정보 관리</li>
+						<li><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp';">회원정보
+								수정</a></li>
+						<hr>
+						<li class="bigContent no">고객센터</li>
+						<li><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/select.qa?mSeq=' + <%= loginUser.getM_seq()%>">문의
+								내역</a></li>
                     </ul>
                 </div>
             </section>

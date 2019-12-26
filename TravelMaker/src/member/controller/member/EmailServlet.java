@@ -95,12 +95,11 @@ public class EmailServlet extends HttpServlet {
                     msg.addRecipient(Message.RecipientType.TO, new InternetAddress(to_email));
                     
                     //메일 제목
-                    msg.setSubject("안녕하세요 KH BOOKS 인증 메일입니다.");
+                    msg.setSubject("Travel Maker 인증 메일");
                     //메일 내용
-                    msg.setText("인증 번호는 :"+temp);
+                    msg.setText("인증 번호 : "+temp);
                     
                     Transport.send(msg);
-                    System.out.println("이메일 전송");
                     
                 }catch (Exception e) {
                     e.printStackTrace();// TODO: handle exception

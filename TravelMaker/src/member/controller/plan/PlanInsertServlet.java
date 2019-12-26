@@ -57,6 +57,7 @@ public class PlanInsertServlet extends HttpServlet {
 			String planStartTime = multi.getParameter("plan-start-time");
 			String planEndTime = multi.getParameter("plan-start-time");
 			String fileName = multi.getFilesystemName("thumbnailImg1");
+			String url = "";
 			int userSeq = loginUser.getM_seq();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date planStartDate = null;
@@ -82,7 +83,7 @@ public class PlanInsertServlet extends HttpServlet {
 			}
 			
 			MyPlan p = new MyPlan(pId, userSeq, planName, planStartDate
-						, planEndDate, planStartTime, planEndTime, fileName);
+						, planEndDate, planStartTime, planEndTime, fileName, url);
 			
 			try {
 				 int result = new PlanService().insertPlan(p);

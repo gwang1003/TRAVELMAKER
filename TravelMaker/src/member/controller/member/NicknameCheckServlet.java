@@ -31,8 +31,9 @@ public class NicknameCheckServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nick = request.getParameter("nickName");
+		System.out.println("nickname : " + nick);
 		int result = new MemberService().nicknameCheck(nick);
-
+		
 		PrintWriter out = response.getWriter();
 		if(result > 0) {
 			out.print("fail");

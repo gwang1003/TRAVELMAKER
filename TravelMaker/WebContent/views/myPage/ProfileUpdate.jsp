@@ -172,8 +172,8 @@ center, center * {
 
 					<div class="item-1">
 						<div class="img-container" id="titleImgArea">
-							<img name="member-profile" id="img" width="100" height="100" style="margin-top:20px;"
-								src="<%= request.getContextPath() %>/resources/images/<%= loginUser.getProfile() %>" />
+							<img name="member-profile" id="img" width="100" height="100" style="margin-top:20px; cursor:pointer;"
+								src="<%= request.getContextPath() %>/resources/myplan_upload/<%= loginUser.getProfile() %>" />
 						</div>
 						<div class="robin-key">
 							<p><%= loginUser.getmName() %></p>

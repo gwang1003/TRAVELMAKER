@@ -49,6 +49,8 @@ public class PlanDao {
 			pstmt.setString(6, mp.getStartTime());
 			pstmt.setString(7, mp.getEndTime());
 			pstmt.setString(8, mp.getFileName());
+			pstmt.setString(9, mp.getUrl());
+			
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -131,7 +133,7 @@ public class PlanDao {
 			while (rset.next()) {
 				MyPlan m = new MyPlan(rset.getInt("p_seq"), rset.getInt("m_seq"), rset.getString("p_name"),
 						rset.getDate("start_date"), rset.getDate("end_date"), rset.getString("start_time"), 
-						rset.getString("end_time"), rset.getString("filename"));
+						rset.getString("end_time"), rset.getString("filename"), rset.getString("url"));
 				mp.add(m);
 			}
 		} catch (SQLException e) {
