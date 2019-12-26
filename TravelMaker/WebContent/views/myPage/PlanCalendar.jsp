@@ -141,9 +141,9 @@
       ,dateClick: function(info) {
     	  sessionStorage.setItem("clickday", info.dateStr);
     	  var left = (screen.width/2)-300;
-    	  var top = (screen.height/2)-225;
+    	  var top = (screen.height/2)-300;
     	  var url = "<%= request.getContextPath() %>/views/myPage/PlanList.jsp";
-    	  var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=450" + ",top=" + top + ",left=" + left);
+    	  var uploadWin = window.open(url,"Calendar","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=600" + ",top=" + top + ",left=" + left);
     	  uploadWin.moveTo(left, top);
     	  uploadWin.focus();
 	  }
@@ -163,9 +163,9 @@
     	  }
     	  
     	  var left = (screen.width/2)-300;
-    	  var top = (screen.height/2)-225;
+    	  var top = (screen.height/2)-300;
     	  var url = "<%= request.getContextPath() %>/views/myPage/PlanList.jsp";
-    	  var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=450" + ",top=" + top + ",left=" + left);
+    	  var uploadWin = window.open(url,"Calendar","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=600" + ",top=" + top + ",left=" + left);
     	  uploadWin.moveTo(left, top);
     	  uploadWin.focus();
       }

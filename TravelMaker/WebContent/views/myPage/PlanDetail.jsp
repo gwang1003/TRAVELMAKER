@@ -312,11 +312,13 @@ opacity: 0;
 			$("#titleImgArea").click(function() {
 				$("#thumbnailImg1").click();
 			});
+			var date = new Date();
+			var hour = date.getHours();
 			
 			$('input[name=plan-start-date]').val(new Date().toISOString().substring(0,10));
-			$('input[name=plan-end-date]').val((new Date().toISOString().substring(0,9)) + ((Number)(new Date().toISOString().substring(9,10)) + 1));
-			$('input[name=plan-start-time]').val(new Date().toISOString().slice(11,14) + "00");
-			$('input[name=plan-end-time]').val(new Date().toISOString().slice(11,14) + "00");
+			$('input[name=plan-end-date]').val(new Date().toISOString().substring(0,10));
+			$('input[name=plan-start-time]').val(hour + ":00");
+			$('input[name=plan-end-time]').val((hour + 1) + ":00");
 		});
 		
 		function LoadImg(value, num) {

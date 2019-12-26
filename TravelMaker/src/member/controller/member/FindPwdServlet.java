@@ -33,10 +33,9 @@ public class FindPwdServlet extends HttpServlet {
 		String findId = request.getParameter("findID2");
 		String findName = request.getParameter("findName2");
 		String findNo = request.getParameter("findNo2");
-		System.out.println(findId + " " + findName + " " + findNo);
 		String memberPass = new MemberService().findMemberPwd(findId, findName, findNo);
 		
-		if(memberPass != null) {
+		if(memberPass != "") {
 			HttpSession session = request.getSession();
 			session.setAttribute("memberPwd", "사용자의 비밀번호는 " + memberPass + "입니다");
 			response.sendRedirect(request.getContextPath() + "/views/join&login/FindIdPwd.jsp");
