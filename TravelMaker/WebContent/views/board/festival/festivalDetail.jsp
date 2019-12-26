@@ -40,6 +40,7 @@ body {
 	width: 1200px;
 	height: 1300px;
 	padding: 50px;
+	
 }
 
 .travel {
