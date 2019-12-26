@@ -168,7 +168,7 @@ label {
 				return false;
 			}
 			
-			if($(".note-editable").html().length < 15){
+			if($(".note-editable").html().length < 10){
 				alert("내용을 입력해주세요")
 				return false;
 			}
