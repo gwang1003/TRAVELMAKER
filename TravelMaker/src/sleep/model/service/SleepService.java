@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import board.model.dao.BoardDao;
+import board.model.vo.Board;
 
 import static common.JDBCTemplate.*;
 
@@ -35,10 +36,10 @@ public class SleepService {
 	}
 	
 	// 타입별 방보여주기
-	public ArrayList<Room> selectrList(String sName){
+	public ArrayList<Room> selectrList(int sId){
 		Connection conn = getConnection();
-		ArrayList<Room> rlist = new SleepDao().selectrList(conn,sName);
-		
+		ArrayList<Room> rlist = new SleepDao().selectrList(conn,sId);
+
 		close(conn);
 		return rlist;
 		
@@ -51,7 +52,18 @@ public class SleepService {
 	public Sleep detailSleep(int sId) {
 		Connection conn = getConnection();
 		SleepDao sdao = new SleepDao();
-		Sleep s = sdao.detailSleep(conn,sId);
+		Sleep s = null;
+		
+		int result = sdao.increaseCount(conn,sId);
+		
+		if (result > 0) {
+			commit(conn);
+			s = sdao.detailSleep(conn, sId);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
 		
 		return s;
 	}
@@ -87,7 +99,7 @@ public class SleepService {
 	}
 	
 	// 수정부분
-	public int updateSleep(int sId , Sleep s) {
+	/*public int updateSleep(int sId , Sleep s) {
 		Connection conn = getConnection();
 		SleepDao sdao = new SleepDao();
 		int result = 0;
@@ -101,15 +113,15 @@ public class SleepService {
 		close(conn);
 		
 		return result;
-	}
+	}*/
 	
 	
 	// 삭제
-	public int deleteSleep(int sId) {
+	public int deleteSleep(int sid) {
 		Connection conn = getConnection();
 		SleepDao sdao = new SleepDao();
 		int result =0;
-		result = sdao.deleteSleep(conn,sId);
+		result = sdao.deleteSleep(conn,sid);
 		
 		if(result > 0) {
 			commit(conn);
@@ -122,12 +134,21 @@ public class SleepService {
 	}
 	
 	// 예약하기
-	public int reservation(String mId, String rId ) {
+	public int reservation(String mId, int sId ) {
 		Connection conn = getConnection();
 		SleepDao sdao = new SleepDao();
-		int result = 0;
-		result = sdao.reservation(conn,mId,rId);
+		Sleep s = null;
 		
+		int result = sdao.increaseCount(conn,sId);
+		
+		if (result > 0) {
+			commit(conn);
+			s = sdao.reservation(conn, sId);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
 		
 		return result;
 		
@@ -142,6 +163,107 @@ public class SleepService {
 
 			return result;
 		}
+
+		public Sleep selectSleepNoCnt(int sId) {
+			Connection con = getConnection();
+			Sleep s = new SleepDao().selectSleep(con, sId);
+			close(con);
+			return s;
+		}
+
+		public ArrayList<Attachment> selectThumbnail(int sId) {
+		Connection conn = getConnection();
+		ArrayList<Attachment> list = new SleepDao().selectThumbnail(conn, sId);
+
+		close(conn);
+
+		return list;
+		}
+		
+		public Sleep reservation(int sId) {
+			Connection conn = getConnection();
+			SleepDao sdao = new SleepDao();
+			Sleep s = null;
+			
+			int result = sdao.increaseCount(conn,sId);
+			
+			if (result > 0) {
+				commit(conn);
+				s = sdao.reservation(conn, sId);
+			} else {
+				rollback(conn);
+			}
+			
+			close(conn);
+			
+			return s;
+		}
+
+		public int insertRoom(ArrayList<Room> R, int sId) {
+			Connection conn = getConnection();
+			
+			int result = new SleepDao().insertRoom(conn, R, sId);
+			
+			if(result > 0 ) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			return result;
+		}
+
+		public int selectsId() {
+			Connection conn = getConnection();
+			
+			int sId = new SleepDao().selectsId(conn);
+			
+			if(sId > 0 ) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			return sId;
+		}
+
+		public Room selectreservationNoCnt(int rId, int sId) {
+			Connection con = getConnection();
+			Room r = new SleepDao().selectreservation(con, rId,sId);
+			close(con);
+			return r;
+		}
+
+		public int deleteAttachment(int sid) {
+		Connection conn = getConnection();
+		SleepDao sdao = new SleepDao();
+		int result =0;
+		result = sdao.deleteAttachment(conn,sid);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+		}
+
+		public int deleteroom(int sid) {
+			Connection conn = getConnection();
+			SleepDao sdao = new SleepDao();
+			int result =0;
+			result = sdao.deleteRoom(conn,sid);
+			
+			if(result > 0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			close(conn);
+			
+			return result;
+		}
+
 
 
 	

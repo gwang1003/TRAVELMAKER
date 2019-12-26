@@ -12,8 +12,8 @@
 <title>Insert title here</title>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="external.css">
+    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+ -->    <link rel="stylesheet" type="text/css" href="external.css">
 <style>
 
 /*nav part*/
@@ -26,7 +26,7 @@ nav {
 	padding: 10px 90px;
 	box-sizing: border-box;
 	background: white;
-	z-index: 1;
+	z-index: 20;
 	border-bottom:2px solid gray;
 }
 
@@ -147,7 +147,6 @@ nav ul li a.active {
 				<div class="menuToggle"></div>
 				<ul id="navUl">
 					<li><a id="a0" class="active" href="<%= contextPath %>">Home</a></li>
-					<li><a id = "a1" href="#aboutMe" onclick="goBest();">BEST</a></li>
 					<li><a id="a1" href="#" onclick="goFes();">축제</a></li>
 					<li><a id="a2" href="#guestBook" onclick="goTravel();">여행</a></li>
 					<li><a id="a3" href="#"onclick="goSleep();">숙박</a></li>
@@ -309,25 +308,28 @@ nav ul li a.active {
 		}
 		--%>
 		function goSleep(){
-			location.href="<%= contextPath %>/list.sl";
-		}
-		function goCom(){
-			location.href="<%= contextPath %>/communityall.th";
-		} 
-		function goMyPage() {
-			location.href="<%= contextPath %>/views/myPage/Plan.jsp";
-		}
-		
-		function goManager() {
-			location.href="<%= contextPath %>/select.mo";
-		}
-		
-		function goLogin() {
-			location.href="<%= contextPath %>/views/join&login/login.jsp";
-		}
-		function goFes(){
-			location.href="<%= contextPath %>/festivalall.fe";
-		}
+	         location.href="<%= contextPath %>/list.sl";
+	      }
+	      function goCom(){
+	         location.href="<%= contextPath %>/festivalall.fe?flag="+4;
+	      } 
+	      function goMyPage() {
+	         location.href="<%= contextPath %>/festivalMember.fe?=" + 2;
+	      }
+	      
+	      function goManager() {
+	         location.href="<%= contextPath %>/select.mo";
+	      }
+	      
+	      function goLogin() {
+	         location.href="<%= contextPath %>/views/join&login/login.jsp";
+	      }
+	      function goFes(){
+	         location.href="<%= contextPath %>/festivalall.fe?flag=" + 2;
+	      }
+	      function goTrip(){
+	         location.href="<%= contextPath %>/festivalall.fe?flag=" + 1;
+	      }
 	</script>
 
 
