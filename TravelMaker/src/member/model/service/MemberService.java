@@ -10,7 +10,7 @@ import static common.JDBCTemplate.*;
 
 public class MemberService {
 
-	// 로그인 
+	// 로그인 .
 	public Member loginMember(String userId, String userPwd) {
 		Connection conn = getConnection();
 

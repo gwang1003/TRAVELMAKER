@@ -43,7 +43,7 @@ public class MemberDao {
 		}
 	}
 	
-	// 1. �쉶�썝 濡쒓렇�씤�슜 dao
+	// 1. 
 	public Member loginMember(Connection conn, String id, String pwd) {
 		Member loginUser = new Member();
 		PreparedStatement pstmt = null;
