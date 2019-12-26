@@ -649,8 +649,7 @@ th {
 		$(function(){
 			$(".bth").click(function(){
 				var bId =  $(this).children().eq(0).text();
-				location.href="<%=contextPath%>
-				/detail.co?bId=" + bId
+					location.href="<%=contextPath%>/detail.co?bId=" + bId;
 					});
 				});
 
