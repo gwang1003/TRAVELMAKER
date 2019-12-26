@@ -343,4 +343,24 @@ public class MemberDao {
 		}
 		return memberPass;
 	}
+	
+	public int report(Connection conn, int mSeq) {
+	      PreparedStatement pstmt = null;
+	      int result = 0;
+	      String sql = prop.getProperty("report");
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+
+	         pstmt.setInt(1, mSeq);
+	         
+
+	         result = pstmt.executeUpdate();
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } finally {
+	         close(pstmt);
+	      }
+	      return result;
+	   }
 }

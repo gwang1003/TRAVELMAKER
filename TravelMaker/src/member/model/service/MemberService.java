@@ -164,4 +164,17 @@ public class MemberService {
 
 		return memberPass;
 	}
+	
+	public int report(int mSeq) {
+	      Connection conn = getConnection();
+	      
+	      int result = new MemberDao().report(conn, mSeq);
+	      
+	      if(result > 0) {
+	         commit(conn);
+	      }else {
+	         rollback(conn);
+	      }
+	      return result;
+	   }
 }

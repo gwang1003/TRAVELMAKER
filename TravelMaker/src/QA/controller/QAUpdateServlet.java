@@ -30,6 +30,7 @@ public class QAUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String content = request.getParameter("content");
 		String title = request.getParameter("title");
 		String type = request.getParameter("type");
