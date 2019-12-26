@@ -11,9 +11,40 @@ public class MyPlan {
 	private String startTime;
 	private String endTime;
 	private String fileName;
+	private String url;
 
 	public MyPlan() {
 	}
+	
+	
+
+	public String getUrl() {
+		return url;
+	}
+
+
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+
+
+	public MyPlan(int pSeq, int mSeq, String pName, Date startDate, Date endDate, String startTime, String endTime,
+			String fileName, String url) {
+		super();
+		this.pSeq = pSeq;
+		this.mSeq = mSeq;
+		this.pName = pName;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.fileName = fileName;
+		this.url = url;
+	}
+
+
 
 	public MyPlan(int pSeq, int mSeq, String pName, Date startDate, Date endDate, String startTime, String endTime,
 			String fileName) {
@@ -116,11 +147,13 @@ public class MyPlan {
 		this.fileName = fileName;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "MyPlan [pSeq=" + pSeq + ", mSeq=" + mSeq + ", pName=" + pName + ", startDate=" + startDate
 				+ ", endDate=" + endDate + ", startTime=" + startTime + ", endTime=" + endTime + ", fileName="
-				+ fileName + "]";
+				+ fileName + ", url=" + url + "]";
 	}
 
 	

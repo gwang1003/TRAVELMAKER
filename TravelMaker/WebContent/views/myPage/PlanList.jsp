@@ -249,7 +249,10 @@ body {
 	  $(".fc-listDay-button").trigger("click");
   });
   
-  
+  <% if(request.getSession().getAttribute("msg") != null) { %>
+	alert('<%=request.getSession().getAttribute("msg") %>');
+	<% request.getSession().setAttribute("msg", null); %>
+<% } %>
   </script>
 </body>
 </html>

@@ -23,7 +23,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>마이페이지</title>
-
+<link
+	href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
+	rel="stylesheet">
 <link rel="stylesheet" href="css/bootstrap.css">
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script
@@ -194,7 +196,7 @@ nav ul li a.active {
 #body {
 	margin-top: 180px;
 	width: 1500px;
-	height: 2000px;
+	height: 1400px;
 	display: flex;
 	overflow: auto;
 	flex-direction: row;
@@ -203,7 +205,7 @@ nav ul li a.active {
 }
 
 aside {
-	margin-left: 15%;
+	margin-left:10%;
 	width: 15%;
 	height: 100%;
 	margin-right: 5%;
@@ -212,27 +214,30 @@ aside {
 #my-info-section1 {
 	width: 80%;
 	height: 220px;
+	font-family: 'Do Hyeon', sans-serif;
 }
 
 /* aside -> my-info-section2 */
 #my-info-section2 {
 	width: 80%;
-	height: 520px;
+	height: 460px;
+	font-family: 'Do Hyeon', sans-serif;
 }
 
 #section3 {
 	width: 900px;
 	height: 800px;
 	position:absolute;
-	left:36%;
+	margin-left:400px;
 }
 
 #section4 {
 	width: 600px;
 	height: 400px;
 	position:absolute;
-	left:45%;
+	left:38%;
 	top:115%;
+	font-family: 'Do Hyeon', sans-serif;
 }
 </style>
 
@@ -496,7 +501,7 @@ aside {
 
 #festivalTable {
 	width: 100%;
-	height: 100px;
+	height: 50px;
 	margin-left: 20px;
 	magin-right: 20px;
 }
@@ -570,8 +575,10 @@ section4 li button {
 }
 
 .pagingArea {
-	margin-top: 15px;
-	font-size: 0;
+	position:absolute;
+	top:116%;
+	left:36%;
+	
 }
 
 .pagingArea button {
@@ -583,7 +590,6 @@ section4 li button {
 	color: #767676;
 	font-size: 15px;
 	font-weight: bold;
-	line-height: 20px;
 	text-decoration: none;
 }
 
@@ -599,6 +605,10 @@ section4 li button {
 	-khtml-user-select: none; 
 	user-select:none;
 }
+
+#profile {
+	cursor:pointer;
+}
 </style>
 
 </head>
@@ -610,10 +620,9 @@ section4 li button {
 			<section id="my-info-section1">
 				<div class="my-info" id="my-info">
 					<h3 id="my-info-text">마이페이지</h3>
-					<img onclick="profileUpdate();"
+					<img onclick="profileUpdate();" id="profile"
 						src="<%= request.getContextPath() %>/resources/myplan_upload/<%= loginUser.getProfile() %>"><br>
-					<p id="name">
-						&nbsp;&nbsp;&nbsp;<%= loginUser.getmName() %></p>
+					<p id="name"><%= loginUser.getmName() %></p>
 					<br> <br>
 					<button class="myinfo-button" id="my-info-logout"
 						onclick="logout();">로그아웃</button>
@@ -647,15 +656,11 @@ section4 li button {
 				<div id="mypage-menu">
 					<ul>
 						<li class="bigContent no">나의 활동</li>
-						<li style="font-weight: bold" class="no"><a class="page"
-							onclick="location.href='<%= request.getContextPath() %>/views/myPage/Plan.jsp';">나의
-								계획</a></li>
+						<li style="font-weight: bold" class="no"><a class="page" onclick="location.href='<%= contextPath %>/festivalMember.fe?=' + 2">
+							나의계획</a></li>
 						<li><a class="page"
-							onclick="location.href='<%= contextPath %>/festivalMember.fe?flag=' + 2">내가
+							onclick="location.href='<%= contextPath %>/festivalall.fe?flag=4&no=1'">내가
 								쓴 게시글</a></li>
-						<li><a class="page"
-							onclick="location.href='<%= contextPath %>/festivalMember.fe?flag=' + 2">장바구니</a></li>
-
 						<hr>
 						<li class="bigContent no">개인정보 관리</li>
 						<li><a class="page"
@@ -677,14 +682,15 @@ section4 li button {
 				<input name="addtitle" value="0">
 				<input name="filename">
 				<input name="startDate" value="0">
+				<input name="url" value="0">
 				<button class="drag-drop-form">btn</button>
 			</form>
 		</section>
 		<section id="section4" class="margin-body">
-			<h1 style="color: black;  margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">장바구니</h1>
+			<h1 style="color: black;  margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">게시글</h1>
 			<br> <br>
 			<div id="total">
-				<div id="choice1" class="no-drag">
+				<div id="choice1" class="no-drag" style="height:400px">
 					<div class="nav nav-justified navbar-nav no-drag">
 						<form class="navbar-form navbar-search"
 							action="<%=contextPath%>/search.fe" method="get">
@@ -706,12 +712,12 @@ section4 li button {
 
 					</div>
 					<hr>
-					<div id="festivalTable" class="no-drag">
+					<div id="festivalTable" class="no-drag"">
 						<div class="thumbnailArea no-drag" style="width: 100px; height: 100px;">
 							<%
 								for (Board b : blist) {
 							%>
-							<div class="cli" style="height: 210px; cursor:pointer;" draggable="true">
+							<div class="cli" style="height: 50px; width:580px; cursor:pointer; margin-bottom:15px;" draggable="true">
 								<input type="hidden" value="<%=b.getbId()%>">
 								<div class="board-img" style="float: left; width: 570px; box-sizing: border-box;">
 
@@ -732,7 +738,7 @@ section4 li button {
 									%>
 								</div>
 								<div class="board-title"
-									style="float: left; width: 350px; height: 150px; box-sizing: border-box;">
+									style="float: left; width: 350px; box-sizing: border-box;">
 									<p class="board-title2" style="font-size: 25px; margin-top:-40px;"><%=b.getbTitle()%></p>
 									<hr style="width:600px; margin-left:-20px;">
 								</div>
@@ -742,9 +748,9 @@ section4 li button {
 							%>
 						</div>
 					</div>
-					<hr>
+					
 					<!-- 페이징 바 -->
-					<div class="pagingArea" style="width:600px; transform:translateX(-150px)">
+					<div class="pagingArea">
 						<!-- 맨 처음으로 (<<) -->
 						<button
 							onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=1&flag=2'">
@@ -809,66 +815,9 @@ section4 li button {
 					</div>
 				</div>
 			</div>
-			<!-- drag & drop evnet -->
-			<script>
-		$('.margin-body')
-		  .on("dragstart", dragStart)
-		  .on("dragover", dragOver)
-		  .on("dragleave", dragLeave)
-		  .on("drop", uploadContent);
-
-		var $startEvent;
-		var filename;
-		var title;
-		var arr;
-		var startDate;
-		function dragStart(e) {
-			$startEvent = $(e.target);
-			filename = $startEvent.children('.board-img').find('img').attr("src");
-			title = $startEvent.children('.board-title').find('.board-title2').html();
 			
-		}
-		
-		function dragOver(e){
-		    e.stopPropagation();
-		    e.preventDefault();
-		    
-		    if (e.type == "dragover") {
-		    	
-		    } else {
-		        $(e.target).css({
-		        });
-		    }
-		}
-		
-		function dragLeave(e) {
-			e.stopPropagation();
-		    e.preventDefault();
-		   /*  $(e.target).css("background-color", "white"); */
-		}
-
-		function uploadContent(e) {
-		    e.stopPropagation();
-		    e.preventDefault();
-		    dragOver(e);
-		    startDate = $(e.target).attr('data-date');
-		    
-		    var date = $(e.target).attr('data-date');
-		    arr = [{'title':title, 'imageurl':filename, 'start':startDate, 'end':startDate}];
-		    $('input[name=addtitle]').val(arr[0].title);
-		    $('input[name=filename]').val(arr[0].imageurl);
-		    $('input[name=startDate]').val(arr[0].start);
-		    console.log(arr[0].title + " " + arr[0].imageurl + " " + arr[0].start);
-		    calendar.addEvent(arr[0]);
-		    
-		    if(arr[0].title != null && arr[0].imageurl != null && arr[0].start != null) {
-		    	
-		    	$('.drag-drop-form').trigger("click");
-		    } 
-		}
-        </script>
 			<script>
-        	
+				var bId;
         		$(function(){
         			$(".month-choice li").click(function(){
         				var month = $(this).children().eq(1).val();
@@ -884,8 +833,13 @@ section4 li button {
         		});
         	
         		$(function(){
+        			
+        			$(".cli").mouseenter(function() {
+        				bId =  $(this).children().eq(0).val();
+        			});
+        			
         			$(".cli").click(function(){
-        				var bId =  $(this).children().eq(0).val();
+        				bId =  $(this).children().eq(0).val();
         				<%if (loginUser != null) {%>
         				location.href="<%=contextPath%>/detail.fe?bId=" + bId;
         				<%} else {%>
@@ -908,6 +862,62 @@ section4 li button {
 							});
 
 				});
+				
+				
+				<!-- drag & drop evnet -->
+				$('.margin-body')
+				  .on("dragstart", dragStart)
+				  .on("dragover", dragOver)
+				  .on("dragleave", dragLeave)
+				  .on("drop", uploadContent);
+
+				var $startEvent;
+				var filename;
+				var title;
+				var arr;
+				var startDate;
+				var url;
+				function dragStart(e) {
+					$startEvent = $(e.target);
+					filename = $startEvent.children('.board-img').find('img').attr("src");
+					title = $startEvent.children('.board-title').find('.board-title2').html();
+				}
+				
+				function dragOver(e){
+				    e.stopPropagation();
+				    e.preventDefault();
+				    
+				}
+				
+				function dragLeave(e) {
+					e.stopPropagation();
+				    e.preventDefault();
+				   /*  $(e.target).css("background-color", "white"); */
+				}
+
+				function uploadContent(e) {
+				    e.stopPropagation();
+				    e.preventDefault();
+				    dragOver(e);
+				    startDate = $(e.target).attr('data-date');
+				    
+				    var date = $(e.target).attr('data-date');
+				    arr = [{'title':title, 'imageurl':filename, 'start':startDate, 'end':startDate, 
+				    	'url':<%if (loginUser != null) {%>
+								"<%=contextPath%>/detail.fe?bId=" + bId
+							  <%}%>}];
+				    $('input[name=addtitle]').val(arr[0].title);
+				    $('input[name=filename]').val(arr[0].imageurl);
+				    $('input[name=startDate]').val(arr[0].start);
+				    $('input[name=url]').val(arr[0].url);
+				   	console.log("event : " + arr[0]);
+				    calendar.addEvent(arr[0]);
+				    
+				    if(arr[0].title != null && arr[0].imageurl != null && arr[0].start != null && arr[0].url != null) {
+				    	
+				    	$('.drag-drop-form').trigger("click");
+				    } 
+				}
 			</script>
 		</section>
 	</section>

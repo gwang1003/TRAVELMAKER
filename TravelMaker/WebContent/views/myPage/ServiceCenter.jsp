@@ -191,7 +191,7 @@
         }
 
         aside {
-            margin-left: 15%;
+            margin-left: 5%;
             width: 15%;
             height: 100%;
         }
@@ -208,7 +208,7 @@
         /* aside -> my-info-section2 */
         #my-info-section2 {
             width: 80%;
-            height: 520px;
+            height: 460px;
         }
 
         ul a {
@@ -313,7 +313,7 @@
 
     <!-- .notice -->
     <style>
-            table {
+            .notice table {
               border-collapse: collapse;
               border-spacing: 0;
             }
@@ -513,6 +513,10 @@
               margin-top: 2.5%;
               margin-left: 2%;
             }
+            
+            #profile {
+			cursor:pointer;
+		}
           </style>
 </head>
 
@@ -524,7 +528,7 @@
                 <div class="my-info" id="my-info">
                     <h3 id="my-info-text">
                         마이페이지</h3>
-                    <img onclick="profileUpdate();"
+                    <img onclick="profileUpdate();" id="profile"
 						src="<%= request.getContextPath() %>/resources/myplan_upload/<%= loginUser.getProfile() %>"><br>
                     <p id="name">&nbsp;&nbsp;&nbsp;<%= loginUser.getmName() %></p>
                     <br><br>
@@ -556,18 +560,21 @@
                 <div id="mypage-menu">
                     <ul>
                         <li class="bigContent no">나의 활동</li>
-                        <li><a class="page" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Plan.jsp';">나의 계획</a></li>
-                        <li><a class="page" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Board.jsp';">내가 쓴 게시글</a></li>
-                        <li><a class="page" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Basket.jsp';">장바구니</a></li>
-
-                        <hr>
-                        <li class="bigContent no">개인정보 관리</li>
-                        <li><a class="page" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp';">회원정보 수정</a></li>
-
-                        <hr>
-                        <li class="bigContent no">고객센터</li>
-                        <li class="no" style="font-weight:bold"><a class="page"
-							onclick="location.href='<%= request.getContextPath() %>/views/myPage/ServiceCenter.jsp';">문의 내역</a></li>
+						<li class="no"><a class="page" onclick="location.href='<%= contextPath %>/festivalMember.fe?=' + 2">
+							나의계획</a></li>
+						<li><a class="page"
+							onclick="location.href='<%= contextPath %>/festivalall.fe?flag=4&no=1'">내가
+								쓴 게시글</a></li>
+						<hr>
+						<li class="bigContent no">개인정보 관리</li>
+						<li><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp';">회원정보
+								수정</a></li>
+						<hr>
+						<li class="bigContent no">고객센터</li>
+						<li style="font-weight: bold"><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/select.qa?mSeq=' + <%= loginUser.getM_seq()%>">문의
+								내역</a></li>
                     </ul>
                 </div>
             </section>

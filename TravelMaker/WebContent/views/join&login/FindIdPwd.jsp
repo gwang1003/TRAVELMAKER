@@ -4,11 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link
+	href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
+	rel="stylesheet">
 <title>Insert title here</title>
 <style>
 	#mimg {
-            margin-left:auto;
-            margin-right:auto;
+            margin-left:23%;
             width:100px;
             height:100px;
             margin-top:10px;
@@ -16,7 +18,7 @@
         }
 
         #mimg img {
-            width: 100px;
+            width: 200px;
             height:100px;
             border-radius: 50%;
         }
@@ -132,8 +134,12 @@ color: #a3a3a3;
 	cursor: pointer;
 }
 button {
+	margin-top: 10px;
 	width:100px;
-	margin-left:115px;
+	height:30px;
+	margin-left:210px;
+	font-family: fontAwesome;
+	
 }
 	</style>
 </head>
@@ -141,7 +147,7 @@ button {
 	<div class="phone">
 		<div id=mimg><img src="<%= request.getContextPath() %>/resources/images/로고.png" alt="" onclick="goMain();"></div>
 		<p id="p" style="cursor:pointer" onclick="goMain();">ID 찾기</p> 
-	<form method="post" class="loginForm" id="loginForm1">
+	<form method="post" class="loginForm" id="loginForm1" style="margin-bottom: 40px;">
 		<div class="form-group">
 			<label class="label">이름</label>
 			<input type="text" name="findName1">

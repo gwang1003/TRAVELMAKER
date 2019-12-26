@@ -132,7 +132,10 @@
 							imageurl: '<%= request.getContextPath() %>/resources/myplan_upload/<%= p.getFileName() %>',
 						<% } %>
     					id: '<%= p.getpSeq() %>',
-    					locationid: '<%= p.getmSeq() %>'
+    					locationid: '<%= p.getmSeq() %>',
+    					<% if(p.getUrl() != null && p.getUrl() != "") { %>
+    					url: '<%= p.getUrl() %>'
+    					<% } %>
     				}
     			<% }%>
     		<% }%>
@@ -150,7 +153,7 @@
       , eventRender:function(info) {   
     	  <% if(!planList.isEmpty()) { %>
     	  	if (info.event.extendedProps.imageurl) {
-           	   info.el.firstChild.innerHTML = "<img src='" + info.event.extendedProps.imageurl +"' width='60' height='40' style='display:block; margin-left:auto; margin-right:auto;'>" + "<div style='text-align:center'><%= planList.get(0).getpName() %></div>";
+           	   info.el.firstChild.innerHTML = "<img src='" + info.event.extendedProps.imageurl +"' width='60' height='40' style='display:block; margin-left:auto; margin-right:auto;'>" + "<div style='text-align:center'>" + info.event.title + "</div>";
     	  	}
     	  <% } %>
       }

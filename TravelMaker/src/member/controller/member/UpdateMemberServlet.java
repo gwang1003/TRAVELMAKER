@@ -48,7 +48,7 @@ public class UpdateMemberServlet extends HttpServlet {
 		if(updateMember != null) {
 			request.getSession().setAttribute("msg", "회원정보 변경");
 			request.getSession().setAttribute("loginUser", updateMember);
-			response.sendRedirect(request.getContextPath() + "/views/myPage/info-update");
+			response.sendRedirect(request.getContextPath() + "/views/myPage/Info-update.jsp");
 		} else {
 			request.setAttribute("msg", "회원정보 변경 실패");
 			response.sendRedirect(request.getContextPath());

@@ -7,6 +7,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link
+	href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
+	rel="stylesheet">
+	<!-- font-family: fontAwesome; -->
     <title>Document</title>
     <!-- <style>
            body {
@@ -152,8 +156,7 @@
  -->
 	<style>
 	#mimg {
-            margin-left:auto;
-            margin-right:auto;
+		margin-left: 23%;
             width:100px;
             height:100px;
             margin-top:10px;
@@ -161,7 +164,7 @@
         }
 
         #mimg img {
-            width: 100px;
+            width: 200px;
             height:100px;
             border-radius: 50%;
         }
@@ -186,6 +189,7 @@
 	width: 1500px;
 	margin: 0;
 	background: #f8f8f8;
+	font-family: 'Do Hyeon', sans-serif;
 }
 .phone{
 	width: 375px;
@@ -324,8 +328,8 @@ color: #a3a3a3;
     
     <form method="post" class="loginForm" id="loginForm" action="<%= request.getContextPath() %>/login.me">
 	<div class="phone">
-		<div id=mimg><img src="<%= request.getContextPath() %>/resources/images/로고.png" alt="" onclick="goMain();"></div>
-		<p id="p" style="cursor:pointer" onclick="goMain();">LOGIN</p> 
+		<div id=mimg style="margin-bottom:30px"><img src="<%= request.getContextPath() %>/resources/images/로고.png" alt="" onclick="goMain();"></div>
+		<!-- <p id="p" style="cursor:pointer" onclick="goMain();">로그인</p>  -->
 		<div class="form-group">
 			<label class="label" for="">ID</label>
 			<input type="text" name="loginId">
@@ -337,11 +341,11 @@ color: #a3a3a3;
 			<span class="focus-border"></span>
 		</div>
 		<div class="form-group">
-			<button>Log in</button>
+			<button>로그인</button>
 		</div>
-		<h4 onclick="goJoin();">Don’t have an acoount ?   Sign Up</h4>
+		<h4 onclick="goJoin();">회원가입</h4>
 		<br>
-		<h4 onclick="goIdPwdFind();" style="margin-left: 90px;">ID/PWD 찾기</h4>
+		<h4 onclick="goIdPwdFind();" style="margin-left: 90px;">아이디/비밀번호 찾기</h4>
 	</div>
 	<!-- <div class="log">
                 <button name="fb">FaceBook 로그인</button>
