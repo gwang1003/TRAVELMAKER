@@ -11,7 +11,7 @@ public class Attachment {
 	private Date modifyDate; // 게시글 수정일
 	private String status;		// 삭제여부
 	private Date createDate; // 게시글 작성일
-	private int fileLevel;		// 메인 사진 0, 일반 사진 1
+	private int fileLevel;		// 메인 사진 0, 일반 사진 1 
 
 	
 	public Attachment() {

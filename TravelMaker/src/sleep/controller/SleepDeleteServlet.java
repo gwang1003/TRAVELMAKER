@@ -30,7 +30,7 @@ public class SleepDeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int sid = Integer.parseInt(request.getParameter("sId"));
 		
-		System.out.println("sid : " +sid);
+		System.out.println("sid : " +sid); 
 
     
     int result = new SleepService().deleteSleep(sid);

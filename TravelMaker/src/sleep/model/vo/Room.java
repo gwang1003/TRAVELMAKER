@@ -9,7 +9,7 @@ public class Room {
 	private int sType;
 	
 	public Room() {}
-
+ 
 	public Room(int rId, int price, String rName, String rContent, int sId, int sType) {
 		super();
 		this.rId = rId;

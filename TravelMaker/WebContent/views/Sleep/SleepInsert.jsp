@@ -16,7 +16,7 @@
    rel="stylesheet">
    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
 <style>
-.outer {
+.outer { 
    width: 1500px;
    height: 3000px;
    background: white;

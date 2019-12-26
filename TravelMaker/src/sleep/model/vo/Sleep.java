@@ -7,7 +7,7 @@ public class Sleep {
 	private String sContent; // 숙박업체 설명
 	private String lCode; // 지역코드
 	private int price;
-	private int mId;
+	private int mId; 
 	private String sWriter;
 	private int sCount;
 	private String status;

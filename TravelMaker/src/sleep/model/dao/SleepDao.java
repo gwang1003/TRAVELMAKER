@@ -546,7 +546,7 @@ public class SleepDao {
 
 	PreparedStatement pstmt = null;
 	String sql = prop.getProperty("deleteRoom");
-
+ 
 	try {
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, sid);

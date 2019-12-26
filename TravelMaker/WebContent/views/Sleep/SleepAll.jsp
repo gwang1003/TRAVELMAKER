@@ -381,7 +381,7 @@ span, p {
 
 
 		<!-- 인워수 늘리고 줄이기 -->
-		<script>
+		<script> 
         $(function(){
             $('#decreaseQuantity').click(function(e){
                 e.preventDefault();

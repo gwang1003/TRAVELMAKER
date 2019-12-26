@@ -91,7 +91,7 @@ public class SleepListServlet extends HttpServlet {
 		ArrayList<Sleep> slist = sService.selectList(1,currentPage, boardLimit);
 		ArrayList<Attachment> flist = sService.selectList(2,currentPage, boardLimit);
 		
-		if (slist != null && flist != null) {
+		if (slist != null && flist != null) { 
 			request.setAttribute("slist", slist);
 			request.setAttribute("flist", flist);
 			request.setAttribute("pi", pi);
