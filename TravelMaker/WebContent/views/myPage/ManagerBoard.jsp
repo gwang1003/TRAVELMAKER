@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8" import="java.util.*, member.model.vo.*, board.model.vo.*"%>
 	
 <% 
-	ArrayList<Member> mList = (ArrayList<Member>)request.getAttribute("mList"); 
+	ArrayList<Board> blist = (ArrayList<Board>)request.getAttribute("blist"); 
 	PageInfo pi = (PageInfo) request.getAttribute("pi");
 
 	int listCount = pi.getListCount();
@@ -10,10 +10,7 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
-
 %>
-
-
 	
 <!DOCTYPE html>
 <html>
@@ -49,7 +46,7 @@
         }
 
         aside {
-
+			margin-left: 10%;
             width: 15%;
             height: 100%;
         }
@@ -137,7 +134,6 @@
         }
 
         aside {
-        margin-left: 10%;
             float: left;
         }
 
@@ -436,49 +432,37 @@
 		<section id="marginBody">
 			<div class="mTop" align="center" style="height:10%;">
 				<br>
-				<h2>회원 정보</h3>
+				<h2>게시글 목록</h3>
 			</div>
 			<table border="1" class="mTable">
 				<tr height="60">
 					<th>선택</th>
 					<th>번호</th>
-					<th>이름</th>
-					<th>아이디</th>
-					<th>닉네임</th>
-					<th>생년월일</th>
-					<th>전화번호</th>
-					<th>이메일</th>
-					<th>가입일</th>
-					<th>최근접속일</th>
-					<th>경고횟수</th> 
+					<th>작성자</th>
+					<th>제목</th>
+					<th>조회수</th>
 					<th>STATUS</th>
 				</tr>
-				<% if(mList != null) {%>
-					<% for(Member m : mList) { %>
+				<% if(blist != null) {%>
+					<% for(Board b : blist) { %>
 						<tr height="40">
-							<th><input type="checkbox" value="<%= m.getmId()%>" name="mSeq" id="mSeq"></th>
-							<th><%= m.getM_seq()%></th>
-							<th><%= m.getmName()%></th>
-							<th><%= m.getmId()%></th>
-							<th><%= m.getNickName()%></th>
-							<th><%= m.getmNo()%></th>
-							<th><%= m.getPhone() %></th>
-							<th><%= m.getEmail()%></th>
-							<th><%= m.getJoinDate()%></th>
-							<th><%= m.getAccessDate() %></th>
-							<th><%= m.getReport() %></th>
-							<th><%= m.getStatus() %></th>
+							<th><input type="checkbox" value="<%= b.getbId()%>" name="bId" id="bId"></th>
+							<th><%= b.getbId()  %></th>
+							<th><%= b.getbWriter() %></th>
+							<th><%= b.getbTitle() %></th>
+							<th><%= b.getbCount() %></th>
+							<th><%= b.getStatus() %></th>
 						</tr>
 					<% } %>
 				<% }else { %>
 					<th colspan="8">회원 정보가 존재하지 않습니다.</th>
 				<% } %>
 			</table>
-			<div class="btn1"><button type="button" class="deleteM">회원삭제</button></div>
+			<div class="btn1"><button type="button" class="deleteM">게시글삭제</button></div>
 			<div class="pagingArea" align="center">
 						<!-- 맨 처음으로 (<<) -->
 						<button
-							onclick="location.href='<%=contextPath%>/select.mo?currentPage=1'">
+							onclick="location.href='<%=contextPath%>/festivalall.fe?flag=4&no=2&currentPage=1'">
 							&lt;&lt;</button>
 
 						<!-- 이전 페이지로 (<) -->
@@ -490,7 +474,7 @@
 							} else {
 						%>
 						<button
-							onclick="location.href='<%=contextPath%>/select.mo?currentPage=<%=currentPage - 1%>'">
+							onclick="location.href='<%=contextPath%>/festivalall.fe?flag=4&no=2&currentPage=<%=currentPage - 1%>'">
 							&lt;</button>
 						<%
 							}
@@ -509,7 +493,7 @@
 							} else {
 						%>
 						<button
-							onclick="location.href='<%=contextPath%>/select.mo?currentPage=<%=p%>'">
+							onclick="location.href='<%=contextPath%>/festivalall.fe?flag=4&no=2&currentPage=<%=p%>'">
 							<%=p%>
 						</button>
 						<%
@@ -528,7 +512,7 @@
 							} else {
 						%>
 						<button
-							onclick="location.href='<%=contextPath%>/select.mo?currentPage=<%=currentPage + 1%>'">
+							onclick="location.href='<%=contextPath%>/festivalall.fe?flag=4&no=2&currentPage=<%=currentPage + 1%>'">
 							&gt;</button>
 						<%
 							}
@@ -536,7 +520,7 @@
 
 						<!--  맨 끝으로 (>>) -->
 						<button
-							onclick="location.href='<%=contextPath%>/select.mo?currentPage=<%=maxPage%>'">
+							onclick="location.href='<%=contextPath%>/festivalall.fe?flag=4&no=2&currentPage=<%=maxPage%>'">
 							&gt;&gt;</button>
 
 					</div>
@@ -548,9 +532,8 @@
 		
 	$(function(){
 		$(".deleteM").click(function(){
-			var a = $("input:checkbox[name='mSeq']:checked").val()
-			console.log(a);
-			location.href="<%= request.getContextPath() %>/drop.me?mId=" + a;
+			var a = $("input:checkbox[name='bId']:checked").val()
+			location.href="<%= request.getContextPath() %>/delete.co?bId="+a+"&no=1";
 		})
 	})
 	

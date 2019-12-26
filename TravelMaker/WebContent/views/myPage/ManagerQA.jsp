@@ -44,6 +44,7 @@ body {
 }
 
 aside {
+	margin-left: 10%;
 	width: 15%;
 	height: 100%;
 }
@@ -60,7 +61,7 @@ aside {
 /* aside -> my-info-section2 */
 #my-info-section2 {
 	width: 80%;
-	height: 520px;
+	height: 250px;
 }
 
 ul a {
@@ -111,7 +112,7 @@ ul a {
 
 .myinfo-button {
 	border: 1px solid white;
-	width: 50%;
+	width: 100%;
 	background-color: cornflowerblue;
 	color: white;
 	font-size: 13px;
@@ -369,11 +370,11 @@ table {
 		<aside>
 			<section id="my-info-section1">
 				<div class="my-info" id="my-info">
-					<h3 id="my-info-text">마이페이지</h3>
+					<h3 id="my-info-text">관리자페이지</h3>
 					<img src="<%=request.getContextPath()%>/resources/images/smile.jpg"><br>
 					<p id="name">
 						&nbsp;&nbsp;&nbsp;<%=loginUser.getmName()%></p>
-					<br> <br>
+					<br>
 					<button class="myinfo-button" id="my-info-logout"
 						onclick="logout();">로그아웃</button>
 					<script>
@@ -393,9 +394,7 @@ table {
 
 						<hr>
 
-						<li class="bigContent"><a href="#"
-							onclick="location.href='<%=request.getContextPath()%>/select.qa?mSeq=' + <%=loginUser.getM_seq()%>">게시글
-								관리</a></li>
+						<li class="bigContent"><a href="#" onclick="location.href='<%= request.getContextPath() %>/festivalall.fe?flag=4&no=2'">게시글 관리</a></li>
 
 						<hr>
 
@@ -570,5 +569,6 @@ table {
 		});
 	
 	</script>
+	<%@ include file="../common/footer.jsp"%>
 </body>
 </html>

@@ -29,11 +29,17 @@ public class CommunityDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int bId = Integer.parseInt(request.getParameter("bId"));
+		int no = Integer.parseInt(request.getParameter("no"));
+		
 		
 		int result = new BoardService().deleteBoard(bId);
 		
 		if(result > 0) {
+			if(no != 1) {
 			response.sendRedirect("festivalall.fe?flag=4");
+			}else {
+			response.sendRedirect("festivalall.fe?flag=4&no=2");
+			}
 		}else {
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			request.setAttribute("msg", "게시글 삭제에 실패했습니다.");

@@ -307,6 +307,18 @@ public class BoardService {
 	      }
 	      return result;
 	}
+
+	public ArrayList<Board> selectAllList(int flag, int currentPage, int boardLimit) {
+		Connection con = getConnection();
+		ArrayList list = null;
+		
+		list = new BoardDao().selectAllList(con, currentPage, boardLimit, flag);
+		
+
+		close(con);
+
+		return list;
+	}
 	
 
 }

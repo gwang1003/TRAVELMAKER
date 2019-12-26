@@ -59,7 +59,7 @@ public class CommunityDetailServlet extends HttpServlet {
 				// 쿠키 객체 생성
 				Cookie c1 = new Cookie("bId" + bId, String.valueOf(bId));
 				// 하루동안 저장
-				c1.setMaxAge(5);
+				c1.setMaxAge(300);
 				response.addCookie(c1);
 			} else {
 				// bId 쿠키가 있는 경우는 게시글을 하루 안에 다시 클릭하는 것이므로
