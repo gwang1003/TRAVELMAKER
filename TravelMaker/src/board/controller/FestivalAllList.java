@@ -39,9 +39,9 @@ public class FestivalAllList extends HttpServlet {
 			throws ServletException, IOException {
 		int flag = Integer.parseInt(request.getParameter("flag"));
 		BoardService bs = new BoardService();
-		
-		String no = request.getParameter("no");
-
+		String no = "5";
+		no = request.getParameter("no");
+		System.out.println("no : " + no);
 		
 		// 1_1. 게시판 리스트 총 갯수 구하기
 		int listCount = bs.getListCount(flag);
@@ -99,8 +99,13 @@ public class FestivalAllList extends HttpServlet {
 		// 위에서 계산 된 모든 페이지 관련 변수들을 따로 관리하기는 어려우므로
 		// 페이지 정보를 공유할 vo 객체 PageInfo 클래스를 만들고 오자
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
+		ArrayList<Board> blist = new ArrayList<>();
+		if(no != null && no.equals("2")) {
+			blist = bs.selectAllList(flag,currentPage, boardLimit);
+		}else {
+			blist = bs.selectList(flag,currentPage, boardLimit, 1);
+		}
 		
-		ArrayList<Board> blist = bs.selectList(flag,currentPage, boardLimit, 1);
 		ArrayList<Attachment> flist = bs.selectList(flag,currentPage, boardLimit, 2);
 		ArrayList<Information> in = bs.InformationAll();
 		
@@ -110,23 +115,30 @@ public class FestivalAllList extends HttpServlet {
 			request.setAttribute("flist", flist);
 			request.setAttribute("pi", pi);
 			System.out.println(flag);
-			if(flag == 1) {
-				RequestDispatcher view = request.getRequestDispatcher("views/board/trip/tripAllList.jsp");				
-				view.forward(request, response);
-				
-			}else if(flag == 2){
-				RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");				
-				view.forward(request, response);
-			}else if(flag == 3){
-				
-				
-			}else if(flag == 4){
-				RequestDispatcher view = request.getRequestDispatcher("views/board/community/communityAllList.jsp");				
-				view.forward(request, response);
-			}else if(no != null) {
-				RequestDispatcher view = request.getRequestDispatcher("views/myPage/Board.jsp");				
-				view.forward(request, response);
+			if(no != null) {
+				if(no.equals("1")) {
+					RequestDispatcher view = request.getRequestDispatcher("views/myPage/Board.jsp");				
+					view.forward(request, response);
+				}else if(no.equals("2")) {
+					RequestDispatcher view = request.getRequestDispatcher("views/myPage/ManagerBoard.jsp");				
+					view.forward(request, response);
+				}
+			}else {
+				if(flag == 1) {
+					RequestDispatcher view = request.getRequestDispatcher("views/board/trip/tripAllList.jsp");				
+					view.forward(request, response);		
+				}else if(flag == 2){
+					RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");				
+					view.forward(request, response);
+				}else if(flag == 3){
+					
+					
+				}else if(flag == 4){
+					RequestDispatcher view = request.getRequestDispatcher("views/board/community/communityAllList.jsp");				
+					view.forward(request, response);
+				}
 			}
+			
 			
 
 		} else {

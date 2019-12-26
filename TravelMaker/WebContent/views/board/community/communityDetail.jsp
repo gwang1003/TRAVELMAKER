@@ -4,12 +4,14 @@
 <%
 	Board b = (Board)request.getAttribute("board");
 	ArrayList<Reply> rlist = (ArrayList<Reply>) request.getAttribute("rlist");
+	String message = (String)request.getAttribute("msg");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <style>
 	body {
 		width:1500px;
@@ -120,6 +122,14 @@
 </head>
 <body>
 	<%@ include file="../../common/menubar.jsp"%>
+	<script>
+	var msg = "<%= message %>";
+	$(function(){
+		if(msg != "null"){
+			alert(msg);
+		}
+	});
+</script>
  	<div class="board">
  		<div class="top">
  			<div class="top1">
@@ -178,7 +188,7 @@
 					<td width="300px"><p class="replyP1"><%=r.getrWriter()%></p><p class="replyP2">작성일자 : <%=r.getCreateDate()%></p></td>
 					<td width="700px"><p class="replyP1"><%=r.getrContent()%></p></td>
 					<td width="200px"><button type="button" class="btn btn-outline-danger replyBtn"
-						onclick="deleteReply();">삭제</button></td>
+						onclick="deleteReply();">삭제</button><input type="hidden" value="<%=r.getrId() %>" id="deleteBtn"></td>
 				</tr>
 				<%
 					}
@@ -197,12 +207,18 @@
 	</form>
 
 	<script>
+		function deleteReply(){
+			var rId = $("#deleteBtn").val();
+			var bId= $("input[name=bId]").val();
+			location.href="<%=contextPath%>/deleteReply.fe?rId="+ rId + "&bId="+bId + "&flag=4";
+		}	
+	
 		function updateBtn() {
 			location.href="<%=contextPath%>/form.co?bId=<%= b.getbId()%>"	
 		}
 		
 		function deleteBtn() {
-			location.href="<%=contextPath%>/delete.co?bId=<%= b.getbId()%>"
+			location.href="<%=contextPath%>/delete.co?bId=<%= b.getbId()%>&no=10"
 		}
 	
 		function returnToList(){
@@ -220,6 +236,7 @@
 		}
 		
 		$(function(){
+			
 			$("#addReply").click(function() {
 				var writer =<%=loginUser.getM_seq()%>;
 				var bid =<%=b.getbId()%>;

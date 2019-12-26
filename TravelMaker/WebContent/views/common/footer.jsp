@@ -16,7 +16,7 @@
             position: absolute;
             font-weight: 400;
             font-size: 15px;
-            width:1700px;
+            width:100%;
             height:440px;
             left:0;
         }

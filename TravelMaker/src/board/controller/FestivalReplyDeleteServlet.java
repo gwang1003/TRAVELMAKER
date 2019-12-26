@@ -38,7 +38,11 @@ public class FestivalReplyDeleteServlet extends HttpServlet {
 		if(result>0) {
 			request.setAttribute("bId", bId);
 			request.setAttribute("flag", flag);
-			request.getRequestDispatcher("detail.fe").forward(request, response);
+			if(flag == 2) {
+				request.getRequestDispatcher("detail.fe").forward(request, response);
+			}else {
+				request.getRequestDispatcher("detail.co").forward(request, response);
+			}
 		}else {
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			request.setAttribute("msg", "댓글 삭제 실패");

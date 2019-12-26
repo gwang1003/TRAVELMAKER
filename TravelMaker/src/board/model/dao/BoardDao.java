@@ -892,4 +892,41 @@ public class BoardDao {
 	      return result;
 	}
 
+	public ArrayList selectAllList(Connection con, int currentPage, int boardLimit, int flag) {
+			
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			ArrayList<Board> list = null;
+			String sql = prop.getProperty("selectAllList");
+
+
+			try {
+				pstmt = con.prepareStatement(sql);
+
+				int startRow = (currentPage - 1) * boardLimit + 1;
+				int endRow = startRow + boardLimit - 1;
+
+				pstmt.setInt(1, flag);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);				
+
+				rs = pstmt.executeQuery();
+
+				list = new ArrayList<Board>();
+
+				while (rs.next()) {
+					list.add(new Board(rs.getInt("b_id"), rs.getDate("write_date"), rs.getDate("update_date"),
+							rs.getString("title"), rs.getString("content"), rs.getInt("view_cnt"), rs.getInt("good"),
+							rs.getInt("notgood"), rs.getString("writer"), rs.getString("status"), rs.getString("l_code"),
+							rs.getInt("s_type"), rs.getInt("b_type"), rs.getInt("m_seq")));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rs);
+				close(pstmt);
+			}
+			return list;
+	}
+
 }
