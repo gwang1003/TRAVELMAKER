@@ -59,6 +59,9 @@ body {
 	border-radius: 10px;
 }
 
+.footer-area{
+	margin-top : 900px;
+}
 #ct {
 	width: 380px;
 }
@@ -75,6 +78,8 @@ body {
 	height: 270px;
 	text-align: center;
 	box-shadow: 5px 5px 5px 5px gray;
+	z-index:15;
+	
 }
 
 .btn-outline-info {
@@ -355,7 +360,7 @@ span, p, input {
 						for (Board b : blist) {
 					%>
 
-					<div class="cli" style="height: 210px;">
+					<div class="cli" style="height: 220px;">
 						<input type="hidden" value="<%=b.getbId()%>">
 						<div style="float: left; width: 300px; box-sizing: border-box;">
 						
@@ -547,5 +552,6 @@ span, p, input {
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
+		<%@ include file="../../common/footer.jsp"%>
 </body>
 </html>

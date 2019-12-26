@@ -140,9 +140,7 @@ public class FestivalInsertServlet extends HttpServlet {
 			int result = new BoardService().insertThumbnail(b, in, fileList,flag);
 
 			if (result > 0) {
-					response.sendRedirect("festivalall.fe?flag=" + flag);
-
-				
+					response.sendRedirect("festivalall.fe?flag=" + flag);	
 			} else {
 				// 실패 시 저장된 사진 삭제
 				for (int i = 0; i < changeFiles.size(); i++) {
