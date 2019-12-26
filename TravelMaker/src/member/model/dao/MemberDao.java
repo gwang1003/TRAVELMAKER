@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 import static common.JDBCTemplate.*;
@@ -139,7 +140,6 @@ public class MemberDao {
 			pstmt.setString(3, m.getPhone());
 			pstmt.setString(4, m.getNickName());
 			pstmt.setString(5, m.getEmail());
-			System.out.println("updateId : " + updateId);
 			pstmt.setString(6, updateId);
 
 			result = pstmt.executeUpdate();
@@ -345,22 +345,74 @@ public class MemberDao {
 	}
 	
 	public int report(Connection conn, int mSeq) {
-	      PreparedStatement pstmt = null;
-	      int result = 0;
-	      String sql = prop.getProperty("report");
-	      try {
-	         pstmt = conn.prepareStatement(sql);
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String sql = prop.getProperty("report");
+        try {
+           pstmt = conn.prepareStatement(sql);
 
-	         pstmt.setInt(1, mSeq);
-	         
+           pstmt.setInt(1, mSeq);
+           
 
-	         result = pstmt.executeUpdate();
-	      } catch (SQLException e) {
-	         // TODO Auto-generated catch block
-	         e.printStackTrace();
-	      } finally {
-	         close(pstmt);
-	      }
-	      return result;
-	   }
+           result = pstmt.executeUpdate();
+        } catch (SQLException e) {
+           // TODO Auto-generated catch block
+           e.printStackTrace();
+        } finally {
+           close(pstmt);
+        }
+        return result;
+     }
+
+  public Member reportNo(Connection conn, int mSeq) {
+     PreparedStatement pstmt = null;
+     ResultSet rset = null;
+     String sql = prop.getProperty("reportNo");
+     Member report = new Member();
+     try {
+        pstmt = conn.prepareStatement(sql);
+
+        pstmt.setInt(1, mSeq);
+
+
+        rset = pstmt.executeQuery();
+        if (rset.next()) {
+           report = new Member(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getString(4),
+                 rset.getString(5), rset.getString(6), rset.getString(7), rset.getDate(8), rset.getDate(9), 
+                 rset.getString(10), rset.getString(11), rset.getInt(12), rset.getString(13), rset.getString(14));
+        }
+     } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+     } finally {
+        close(rset);
+        close(pstmt);
+     }
+     return report;
+  }
+
+  public int getAllListCount(Connection con) {
+     int listCount = 0;
+
+     Statement stmt = null;
+     ResultSet rset = null;
+
+     String sql = prop.getProperty("getAllListCount");
+
+     try {
+        stmt = con.createStatement();
+        rset = stmt.executeQuery(sql);
+
+        if (rset.next()) {
+           listCount = rset.getInt(1);
+        }
+     } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+     } finally {
+        close(rset);
+        close(stmt);
+     }
+     return listCount;
+  }
 }
