@@ -541,7 +541,11 @@ span, p, input {
 		});
 	
 		$(function(){
-			$(".cli").click(function(){
+			$(".cli").hover(function(){
+				$(this).css({"background":"#CBC4C4", "cursor":"pointer"});
+			}).mouseout(function(){
+				$(this).css({"background":"white"});
+			}).click(function(){
 				var bId =  $(this).children().eq(0).val();
 				<%if (loginUser != null) {%>
 				location.href="<%=contextPath%>/detail.fe?bId=" + bId + "&flag="+2;

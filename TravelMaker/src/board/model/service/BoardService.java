@@ -295,6 +295,18 @@ public class BoardService {
 	      }
 	      return result;
 	   }
+
+	public int deleteReply(int rId) {
+		Connection con = getConnection();
+	      int result = new BoardDao().deleteReply(con, rId);
+	      
+	      if(result > 0) {
+	         commit(con);
+	      }else {
+	         rollback(con);
+	      }
+	      return result;
+	}
 	
 
 }

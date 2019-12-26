@@ -34,7 +34,7 @@
 <style>
 body {
 	width: 1500px;
-	height: 2000px;
+	height: 1600px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -177,7 +177,7 @@ th {
 				}
 			</script>
 
-			<br><br>
+			<br>
 
 			<!-- 전체 글수 최신순 인기순 새로고침 -->
 			<div class="count">
@@ -326,5 +326,8 @@ th {
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
+		<br><br><br><br><br><br>
+		<%@ include file="../../common/footer.jsp"%>
+		
 </body>
 </html>

@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import board.model.vo.PageInfo;
+
 import sleep.model.service.SleepService;
 import sleep.model.vo.Attachment;
+import sleep.model.vo.PageInfo;
 import sleep.model.vo.Sleep;
 
 /**
@@ -44,7 +45,7 @@ public class SleepListServlet extends HttpServlet {
 		int startPage;			// 한 페이지 하단에 보여질 시작 페이지
 		int endPage;			// 한 페이지 하단에 보여질 끝 페이지
 		
-		int boardLimit = 6;	// 한 페이지에 보여질 게시글 최대 수
+		int boardLimit = 4;	// 한 페이지에 보여질 게시글 최대 수
 		
 		// * currentPage : 현재 페이지
 		// 기본적으로 게시판은 1페이지부터 시작함
@@ -90,7 +91,7 @@ public class SleepListServlet extends HttpServlet {
 		ArrayList<Sleep> slist = sService.selectList(1,currentPage, boardLimit);
 		ArrayList<Attachment> flist = sService.selectList(2,currentPage, boardLimit);
 		
-		if (slist != null && flist != null) {
+		if (slist != null && flist != null) { 
 			request.setAttribute("slist", slist);
 			request.setAttribute("flist", flist);
 			request.setAttribute("pi", pi);
@@ -103,7 +104,7 @@ public class SleepListServlet extends HttpServlet {
 	}
 		
 	
-
+ 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

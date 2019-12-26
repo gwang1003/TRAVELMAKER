@@ -5,55 +5,56 @@ public class Sleep {
 	private String sType; // 숙박업체 타입(1.호텔 2.모텔 3.펜션)
 	private String sName; // 숙박업체명
 	private String sContent; // 숙박업체 설명
-	private int rId; //방 번호
-	private int lCode; // 지역코드
+	private String lCode; // 지역코드
 	private int price;
+	private int mId; 
+	private String sWriter;
+	private int sCount;
+	private String status;
+	private String address;
+	private String enName;
+	
 	
 	
 	public  Sleep() {}
 
 
-	public Sleep(int sId, String sType, String sName, String sContent, int rId, int lCode,int price) {
-		super();
-		this.sId = sId;
-		this.sType = sType;
-		this.sName = sName;
-		this.sContent = sContent;
-		this.rId = rId;
-		this.lCode = lCode;
-		this.price = price;
-	}
-
-
-	public Sleep(String sType, String sName, String sContent, int lCode,int price) {
-		super();
-		this.sType = sType;
-		this.sName = sName;
-		this.sContent = sContent;
-		this.lCode = lCode;
-		this.price = price;
-	}
 	
-	public Sleep(int sId,String sType, String sName, String sContent, int lCode) {
+
+	
+
+	public Sleep(int sId, String sType, String sName, String sContent, String lCode, int price, int mId, String sWriter,
+			int sCount, String status, String address, String enName) {
 		super();
 		this.sId = sId;
 		this.sType = sType;
 		this.sName = sName;
 		this.sContent = sContent;
 		this.lCode = lCode;
+		this.price = price;
+		this.mId = mId;
+		this.sWriter = sWriter;
+		this.sCount = sCount;
+		this.status = status;
+		this.address = address;
+		this.enName = enName;
 	}
 
-	public int getprice() {
-		return price;
-	}
+
+
+
+
+
 	
-	public void setprice(int price) {
-		this.price = price;
-	}
+
 
 	public int getsId() {
 		return sId;
 	}
+
+
+
+
 
 
 	public void setsId(int sId) {
@@ -61,9 +62,17 @@ public class Sleep {
 	}
 
 
+
+
+
+
 	public String getsType() {
 		return sType;
 	}
+
+
+
+
 
 
 	public void setsType(String sType) {
@@ -71,9 +80,17 @@ public class Sleep {
 	}
 
 
+
+
+
+
 	public String getsName() {
 		return sName;
 	}
+
+
+
+
 
 
 	public void setsName(String sName) {
@@ -81,9 +98,17 @@ public class Sleep {
 	}
 
 
+
+
+
+
 	public String getsContent() {
 		return sContent;
 	}
+
+
+
+
 
 
 	public void setsContent(String sContent) {
@@ -91,31 +116,174 @@ public class Sleep {
 	}
 
 
-	public int getrId() {
-		return rId;
-	}
 
 
-	public void setrId(int rId) {
-		this.rId = rId;
-	}
 
 
-	public int getlCode() {
+	public String getlCode() {
 		return lCode;
 	}
 
 
-	public void setlCode(int lCode) {
+
+
+
+
+	public void setlCode(String lCode) {
 		this.lCode = lCode;
 	}
 
 
+
+
+
+
+	public int getPrice() {
+		return price;
+	}
+
+
+
+
+
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+
+
+
+
+
+	public int getmId() {
+		return mId;
+	}
+
+
+
+
+
+
+	public void setmId(int mId) {
+		this.mId = mId;
+	}
+
+
+
+
+
+
+	public String getsWriter() {
+		return sWriter;
+	}
+
+
+
+
+
+
+	public void setsWriter(String sWriter) {
+		this.sWriter = sWriter;
+	}
+
+
+
+
+
+
+	public int getsCount() {
+		return sCount;
+	}
+
+
+
+
+
+
+	public void setsCount(int sCount) {
+		this.sCount = sCount;
+	}
+
+
+
+
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
+
+
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+
+
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+
+
+
+
+	public String getEnName() {
+		return enName;
+	}
+
+
+
+
+
+
+	public void setEnName(String enName) {
+		this.enName = enName;
+	}
+
+
+
+
+
+
 	@Override
 	public String toString() {
-		return "Sleep [sId=" + sId + ", sType=" + sType + ", sName=" + sName + ", sContent=" + sContent + ", rId=" + rId
-				+ ", lCode=" + lCode + ",price"+price+"]";
+		return "Sleep [sId=" + sId + ", sType=" + sType + ", sName=" + sName + ", sContent=" + sContent + ", lCode="
+				+ lCode + ", price=" + price + ", mId=" + mId + ", sWriter=" + sWriter + ", sCount=" + sCount
+				+ ", status=" + status + ", address=" + address + ", enName=" + enName + "]";
 	}
+
+
+
+
+
+
+
+
+	
+	
+	
+
+
+	
 	
 	
 

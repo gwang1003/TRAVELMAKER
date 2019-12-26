@@ -540,5 +540,7 @@ table {
 			location.href="<%= request.getContextPath() %>/delete.qa?qId=<%= q.getqId()%>";
 		}
 	</script>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<%@ include file="../common/footer.jsp"%>
 </body>
 </html>
