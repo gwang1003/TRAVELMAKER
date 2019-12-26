@@ -15,11 +15,11 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
 
-
 import common.MyFileRenamePolicy;
 import member.model.vo.Member;
 import sleep.model.service.SleepService;
 import sleep.model.vo.Attachment;
+import sleep.model.vo.Room;
 import sleep.model.vo.Sleep;
 
 /**
@@ -28,7 +28,7 @@ import sleep.model.vo.Sleep;
 @WebServlet("/insert.sl")
 public class SleepInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+ 
     /**
      * Default constructor. 
      */
@@ -76,21 +76,44 @@ public class SleepInsertServlet extends HttpServlet {
 			}
 		}
 
-		// 3_1. 파일 외에 게시판 제목, 내용, 작성자 회원 번호 받아와서 Board 객체 생성
+		// 3_1. 파일 외에 게시판 제목, 내용, 작성자 회원 번호 받아와서 Sleep 객체 생성
 		
 		String sType = multiRequest.getParameter("sType");
 		String sName = multiRequest.getParameter("sName");
 		String sContent  = multiRequest.getParameter("sContent");
-		int lCode =Integer.parseInt(multiRequest.getParameter("lCode"));
-		
+		String lcode = multiRequest.getParameter("lCode");
+		int price = Integer.parseInt(multiRequest.getParameter("price"));
+		String address = multiRequest.getParameter("address");
+		String enName = multiRequest.getParameter("enName");
+		int mId = ((Member)request.getSession().getAttribute("loginUser")).getM_seq();
+		String sWriter = ((Member) request.getSession().getAttribute("loginUser")).getNickName();
+		int price1 = Integer.parseInt(multiRequest.getParameter("price1"));
+		int price2 = Integer.parseInt(multiRequest.getParameter("price2"));
+		int price3 = Integer.parseInt(multiRequest.getParameter("price3"));
+		String rContent1  = multiRequest.getParameter("rContent1");
+		String rContent2 = multiRequest.getParameter("rContent2");
+		String rContent3  = multiRequest.getParameter("rContent3");
 
 		
 		Sleep s = new Sleep();
 		s.setsType(sType);
 		s.setsName(sName);
 		s.setsContent(sContent);
-		s.setlCode(lCode);
-
+		s.setlCode(lcode);
+		s.setPrice(price);
+		s.setmId(mId);
+		s.setsWriter(sWriter);
+		s.setAddress(address);
+		s.setEnName(enName);
+		
+		Room r1 = new Room(price1, rContent1);
+		Room r2 = new Room(price2, rContent2);
+		Room r3 = new Room(price3, rContent3);
+		ArrayList<Room> R = new ArrayList<>();
+		R.add(r1);
+		R.add(r2);
+		R.add(r3);
+		
 		
 
 		// 3_2. Attachment 테이블에 값 삽입할 것들 작업하기
@@ -105,12 +128,12 @@ public class SleepInsertServlet extends HttpServlet {
 			at.setOriginName(originFiles.get(i));
 			at.setChangeName(changeFiles.get(i));
 
-			// 타이틀 이미지인 경우 fileLevel을 0으로, 일반 이미지면 fileLevel이 1
+			// 타이틀 이미지인 경우 fileLevel을 2으로, 일반 이미지면 fileLevel이 3
 			// 타이틀 이미지가 originFiles에서 마지막 인덱스이기 때문에
 			if (i == originFiles.size() - 1) {
-				at.setFileLevel(1);
-			} else {
 				at.setFileLevel(2);
+			} else {
+				at.setFileLevel(3);
 			}
 
 			fileList.add(at);
@@ -135,10 +158,14 @@ public class SleepInsertServlet extends HttpServlet {
 		// 4. 사진 게시판 작성용 비즈니스 로직을 처리할 서비스 요청
 		// (board 객체, Attachment 리스트 전달)
 		int result = new SleepService().insertSleep(s,fileList);
-		System.out.println("ㅎㅇ");
+		int sId = new SleepService().selectsId();
+		System.out.println(sId);
+		int result1 = new SleepService().insertRoom(R, sId);
+		
 
-		if (result > 0) {
+		if (result > 0 && result1 > 0) {
 			response.sendRedirect("list.sl");
+			
 		} else {
 			// 실패 시 저장된 사진 삭제
 			for (int i = 0; i < changeFiles.size(); i++) {
