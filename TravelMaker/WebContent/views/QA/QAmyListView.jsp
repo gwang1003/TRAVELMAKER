@@ -51,7 +51,7 @@ aside {
 /* aside -> my-info-section2 */
 #my-info-section2 {
 	width: 80%;
-	height: 400px;
+	height: 460px;
 	font-family: 'Do Hyeon', sans-serif;
 }
 
