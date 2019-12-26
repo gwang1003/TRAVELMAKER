@@ -43,7 +43,7 @@ public class MemberDao {
 		}
 	}
 	
-	// 1. 
+	// 1.로그인
 	public Member loginMember(Connection conn, String id, String pwd) {
 		Member loginUser = new Member();
 		PreparedStatement pstmt = null;
