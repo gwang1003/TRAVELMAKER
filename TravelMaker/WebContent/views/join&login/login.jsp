@@ -185,16 +185,17 @@
 	height: 1000px;
 	width: 1500px;
 	margin: 0;
-	display: flex;
 	background: #f8f8f8;
 }
 .phone{
 	width: 375px;
-	height: auto;
+	height: 540px;
 	background-color: #ffffff;
 	border-radius: 10px;
-	margin-left:562px;
-	margin-top:40%;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin: -270px 0 0 -187px;
 }
 
 .phone h3{
@@ -340,8 +341,7 @@ color: #a3a3a3;
 		</div>
 		<h4 onclick="goJoin();">Don’t have an acoount ?   Sign Up</h4>
 		<br>
-		<h4 onclick="goIdFind();" style="margin-left: 40px;">ID 찾기</h4>
-		<h4 onclick="goPwdFind();" style="margin-left: 110px; margin-top: -20px;">PWD 찾기</h4>
+		<h4 onclick="goIdPwdFind();" style="margin-left: 90px;">ID/PWD 찾기</h4>
 	</div>
 	<!-- <div class="log">
                 <button name="fb">FaceBook 로그인</button>
@@ -365,6 +365,10 @@ color: #a3a3a3;
             	
             	function goMain() {
             		location.href="<%= request.getContextPath() %>";
+            	}
+            	
+            	function goIdPwdFind() {
+            		location.href="<%= request.getContextPath() %>/views/join&login/FindIdPwd.jsp"
             	}
     </script>
 	</form>
