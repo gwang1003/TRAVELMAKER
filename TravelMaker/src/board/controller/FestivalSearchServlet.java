@@ -94,6 +94,9 @@ public class FestivalSearchServlet extends HttpServlet {
 			}else if(flag==2) {
 				RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");
 				view.forward(request, response);
+			}else if(flag==4) {
+				RequestDispatcher view = request.getRequestDispatcher("views/board/community/communityAllList.jsp");
+				view.forward(request, response);
 			}
 			
 

@@ -98,7 +98,6 @@ public class MemberService {
 	// 6. 회원 탈퇴용 서비스
 	public int deleteMember(String userId) {
 		Connection conn = getConnection();
-		
 		int result = new MemberDao().deleteMember(conn, userId);
 		
 		if(result > 0) {
@@ -166,6 +165,7 @@ public class MemberService {
 	}
 	
 	public int report(int mSeq) {
+
         Connection conn = getConnection();
         
         int result = new MemberDao().report(conn, mSeq);
@@ -193,5 +193,25 @@ public class MemberService {
      close(con);
 
      return result;
+
+	      Connection conn = getConnection();
+	      
+	      int result = new MemberDao().report(conn, mSeq);
+	      
+	      if(result > 0) {
+	         commit(conn);
+	      }else {
+	         rollback(conn);
+	      }
+	      return result;
+	   }
+
+	public Member reportNo(int mSeq) {
+		Connection conn = getConnection();
+		Member report = new MemberDao().reportNo(conn, mSeq);
+		
+		close(conn);
+		return report;
+
 	}
 }

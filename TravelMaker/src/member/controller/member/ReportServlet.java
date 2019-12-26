@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import member.model.service.MemberService;
+import member.model.vo.Member;
 
 /**
  * Servlet implementation class ReportServlet
@@ -33,6 +34,12 @@ public class ReportServlet extends HttpServlet {
 		int bId = Integer.parseInt(request.getParameter("bId"));
 		
 		int result = new MemberService().report(mSeq);
+		
+		Member m = new MemberService().reportNo(mSeq);
+		System.out.println(m);
+		if(m.getReport() == 5) {
+			int delete = new MemberService().deleteMember(m.getmId());
+		}
 		
 		if(result > 0) {
 			response.sendRedirect("detail.co?bId=" + bId);

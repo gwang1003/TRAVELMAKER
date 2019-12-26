@@ -872,4 +872,24 @@ public class BoardDao {
 	      return result;
 	   }
 
+	public int deleteReply(Connection con, int rId) {
+		 PreparedStatement pstmt = null;
+	      int result = 0;
+	      String query = prop.getProperty("deleteReply");
+
+	      try {
+	         pstmt = con.prepareStatement(query);
+
+	         pstmt.setInt(1, rId);
+
+	         result = pstmt.executeUpdate();
+
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(pstmt);
+	      }
+	      return result;
+	}
+
 }
