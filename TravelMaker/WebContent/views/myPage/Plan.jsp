@@ -1,699 +1,918 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+	pageEncoding="UTF-8" import="java.util.*, board.model.vo.*"%>
+<%
+	ArrayList<Board> list = (ArrayList<Board>) request.getAttribute("list");
+	ArrayList<Board> blist = (ArrayList<Board>) request.getAttribute("blist");
+	ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
+	PageInfo pi = (PageInfo) request.getAttribute("pi");
+	ArrayList<Information> in = (ArrayList<Information>)request.getAttribute("in");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+
+	String lname = (String) request.getAttribute("lname");
+	String mname = (String) request.getAttribute("mname");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>마이페이지</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>마이페이지</title>
 
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.css">
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-    <!-- 영역 분할 -->
-    <style>
-        /* 몸체 */
-        body {
-            margin-top: 180px;
-            width: 1500px;
-            height: 1000px;
-            overflow: auto;
-            margin-left: auto;
-            margin-right: auto;
-        }
+<style>
+#mypage-menu li {
+	
+}
 
-        #body {
-            margin-top: 9%;
-            display: flex;
-            flex-direction: row;
-        }
+.page {
+	cursor: pointer;
+}
 
-        #aside1 {
-            margin-left: 15%;
-            width: 15%;
-            height: 100%;
-            margin-right: 5%;
-        }
+.no {
+	user-select: none;
+}
+</style>
 
-        #marginBody {
-            width: 65%;
-        }
+<!-- 메뉴바 -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<link
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet"
+	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+	crossorigin="anonymous">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="external.css">
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial;
+}
 
-        #my-info-section1 {
-            width: 80%;
-            height: 220px;
-        }
+/*nav part*/
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100px;
+	padding: 10px 90px;
+	box-sizing: border-box;
+	background: rgba(54, 51, 51, 0.5);
+	z-index: 1;
+}
 
-        /* aside -> my-info-section2 */
-        #my-info-section2 {
-            width: 80%;
-            height: 520px;
-        }
-    </style>
+nav .logo {
+	padding: 22px 20px;
+	height: 80px;
+	float: left;
+	font-size: 24px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #fff;
+}
 
-    <!-- aside->section1 css -->
-    <style>
-        #my-info {
-            width: 100%;
-            height: 100%;
-            background-color: cornflowerblue;
-        }
+nav ul {
+	list-style-type: none;
+	float: right;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	z-index: 1;
+}
 
-        #my-info-text {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-        }
+nav li {
+	z-index: 1;
+}
 
-        #my-info-section1 img {
-            margin-left: 35px;
-            width: 80px;
-            height: 80px;
-            float: left;
-        }
+nav ul li a {
+	line-height: 80px;
+	color: #fff;
+	padding: 12px 30px;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 15px;
+	font-weight: bold;
+	z-index: 1;
+}
 
-        #name {
-            font-size: 24px;
-            font-weight: bold;
-        }
+nav ul li a:hover {
+	background: rgba(0, 0, 0, 0.7);
+	border-radius: 5px;
+	text-decoration: none;
+	color: #fff;
+}
 
-        .myinfo-button {
-            border: 1px solid white;
-            width: 50%;
-            background-color: cornflowerblue;
-            color: white;
-            font-size: 13px;
-            height: 40px;
-        }
+nav ul li a.active {
+	background: #e2472f;
+	color: #fff;
+	border-radius: 6px;
+}
 
-        #my-info-logout {
-            float: left;
-        }
+#guestBook {
+	background: url("images/s3bg1.jpg");
+	position: relative;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
 
-        @media only screen and (max-width: 2000px) {
-            #my-info-section1 {
-                width: 220px;
-            }
+/* section2 timeline*/
+/*responsive web part*/
+@media ( max-width :820px) {
+	.menuToggle {
+		position: absolute;
+		width: 40px;
+		height: 40px;
+		display: block;
+		float: right;
+		top: 25px;
+		right: 35px;
+		text-align: center;
+		font-size: 35px;
+		cursor: pointer;
+	}
+	.menuToggle:before {
+		line-height: 40px;
+		content: '\f0c9';
+		font-family: fontAwesome;
+		color: white;
+	}
+	.menuToggle.active:before {
+		line-height: 40px;
+		content: '\f00d';
+		font-family: fontAwesome;
+		color: white;
+	}
+	.menuToggle:before {
+		line-height: 40px;
+		content: '\f0c9';
+		font-family: fontAwesome;
+		color: white;
+	}
+	#navUl {
+		display: none;
+	}
+	#navUl.active {
+		display: block;
+		width: 100%;
+		background: rgba(54, 51, 51, 0.5);
+		margin-top: 10px;
+	}
+	#navUl.active li {
+		text-align: center;
+	}
+	#navUl.active li a {
+		display: block;
+	}
+	nav {
+		padding: 10px 30px;
+	}
+}
 
-            #my-info-section2 {
-                width: 220px;
-            }
-        }
-    </style>
+/*time line*/
+</style>
 
-    <!-- aside->section2 css -->
-    <style>
-        #my-info-section2 {
-            margin-top: 50px;
-        }
 
-        #aside1 {
-            float: left;
-        }
+<!-- 영역 분할 -->
+<style>
+/* 몸체 */
+#body {
+	margin-top: 180px;
+	width: 1500px;
+	height: 2000px;
+	display: flex;
+	overflow: auto;
+	flex-direction: row;
+	margin-left: auto;
+	margin-right: auto;
+}
 
-        #mypage-menu {
-            border: 1px solid black;
-            margin-top: 30px;
-            width: 100%;
-            height: 80%;
-        }
+aside {
+	margin-left: 15%;
+	width: 15%;
+	height: 100%;
+	margin-right: 5%;
+}
 
-        #mypage-menu ul {
-            text-decoration: none;
-            list-style-type: none;
-            font-size: 18px;
-            padding-left: 20%;
-        }
+#my-info-section1 {
+	width: 80%;
+	height: 220px;
+}
 
-        #mypage-menu ul {
-            margin: 0;
-        }
+/* aside -> my-info-section2 */
+#my-info-section2 {
+	width: 80%;
+	height: 520px;
+}
 
-        #mypage-menu ul li {
-            margin-bottom: 15px;
-        }
+#section3 {
+	width: 900px;
+	height: 800px;
+	position:absolute;
+	left:36%;
+}
 
-        .bigContent {
-            font-size: 23px;
-            font-weight: bold;
-            margin-top: 13px;
-            color: cornflowerblue;
-        }
-    </style>
+#section4 {
+	width: 600px;
+	height: 400px;
+	position:absolute;
+	left:45%;
+	top:115%;
+}
+</style>
 
-    <style>
-        @import url(https://fonts.googleapis.com/css?family=Open+Sans:600);
-        @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css);
+<!-- aside->section1 css -->
+<style>
+#my-info {
+	width: 100%;
+	height: 100%;
+	background-color: cornflowerblue;
+}
 
-        .time {
-            box-sizing: border-box;
-            border-radius: 2px;
-            border: 1px solid #999;
-            cursor: pointer;
-            outline: none;
-            box-shadow: 3px 3px 0px #ddd;
-        }
+#my-info-text {
+	text-align: center;
+	color: white;
+	margin-bottom: 40px;
+}
 
-        .date {
-            font-family: 'Open Sans', sans-serif;
-            color: #111;
-            max-width: 110px;
-            min-height: 32px;
-            text-align: center;
-            font-size: 14px;
-            color: #222;
-            position: relative;
-        }
+#my-info-section1 img {
+	margin-left: 35px;
+	width: 80px;
+	height: 80px;
+	float: left;
+}
 
-        .time {
-            min-width: 110px;
-        }
+#name {
+	font-size: 24px;
+	font-weight: bold;
+}
 
-        .date:focus {
-            border-color: #333;
-        }
+.myinfo-button {
+	border: 1px solid white;
+	width: 50%;
+	background-color: cornflowerblue;
+	color: white;
+	font-size: 13px;
+	height: 40px;
+}
 
-        .date::-webkit-inner-spin-button,
-        .date::-webkit-outer-spin-button,
-        .date::-webkit-calendar-picker-indicator,
-        .date::-webkit-clear-button {
-            -webkit-appearance: none;
-            display: none;
-            margin: 0;
-        }
+#my-info-logout {
+	float: left;
+}
 
-        .date::-webkit-datetime-edit-text,
-        .date::-webkit-datetime-edit-hour-field,
-        .date::-webkit-datetime-edit-minute-field,
-        .date::-webkit-datetime-edit-second-field,
-        .date::-webkit-datetime-edit-ampm-field {
-            color: #666;
-        }
-    </style>
+@media only screen and (max-width: 2000px) {
+	#my-info-section1 {
+		width: 220px;
+	}
+	#my-info-section2 {
+		width: 220px;
+	}
+}
+</style>
 
-	<!-- <style>
-		#my-info-section4 {
-            width: 50%;
-            height: 50%;
-            margin-left: 2%;
-            float: left;
-        }
+<!-- aside->section2 css -->
+<style>
+#my-info-section2 {
+	margin-top: 50px;
+}
 
-        #my-info-section5 {
-            width: 48%;
-            height: 50%;
-            float: left;
-        }
+aside {
+	float: left;
+}
 
-        ul a {
-            color: black;
-        }
-	</style>
-	-->
+#mypage-menu {
+	border: 1px solid black;
+	margin-top: 30px;
+	width: 100%;
+	height: 80%;
+}
+
+#mypage-menu ul {
+	text-decoration: none;
+	list-style-type: none;
+	font-size: 18px;
+}
+
+#mypage-menu ul {
+	margin: 0;
+}
+
+#mypage-menu ul li {
+	margin-bottom: 15px;
+}
+
+.bigContent {
+	font-size: 23px;
+	font-weight: bold;
+	margin-top: 13px;
+	color: cornflowerblue;
+}
+</style>
+
+<!-- 캘린더 -->
+<style>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:600);
+
+@import
+	url(https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css)
+	;
+
+.time {
+	box-sizing: border-box;
+	border-radius: 2px;
+	border: 1px solid #999;
+	cursor: pointer;
+	outline: none;
+	box-shadow: 3px 3px 0px #ddd;
+}
+
+.date {
+	font-family: 'Open Sans', sans-serif;
+	color: #111;
+	max-width: 110px;
+	min-height: 32px;
+	text-align: center;
+	font-size: 14px;
+	color: #222;
+	position: relative;
+}
+
+.time {
+	min-width: 110px;
+}
+
+.date:focus {
+	border-color: #333;
+}
+
+.date::-webkit-inner-spin-button, .date::-webkit-outer-spin-button,
+	.date::-webkit-calendar-picker-indicator, .date::-webkit-clear-button {
+	-webkit-appearance: none;
+	display: none;
+	margin: 0;
+}
+
+.date::-webkit-datetime-edit-text, .date::-webkit-datetime-edit-hour-field,
+	.date::-webkit-datetime-edit-minute-field, .date::-webkit-datetime-edit-second-field,
+	.date::-webkit-datetime-edit-ampm-field {
+	color: #666;
+}
+</style>
+
+<!-- board -->
+<style>
+#total {
+}
+
+#choice1 {
+	float: left;
+	width: 600px;
+	height: 300px;
+	border: 1px solid black;
+	padding: 0;
+	background: white;
+	border-radius: 10px;
+}
+
+#ct {
+	width: 380px;
+}
+
+#choice2 {
+	position: fixed;
+	margin-left: 600px;
+	top: 220px;
+	border-radius: 12px;
+	border: 3px solid white;
+	background-color: white;
+	color: black;
+	width: 17%;
+	height: 520px;
+	text-align: center;
+	box-shadow: 5px 5px 5px 5px gray;
+}
+
+.btn-outline-info {
+	width: 100px;
+	height: 40px;
+	margin: auto;
+	font-size: 17px;
+	border: none;
+	color: black;
+}
+
+.btn-outline-info:hover {
+	background-color: black;
+	color: white;
+}
+
+.tag>h3 {
+	color: white;
+	margin: auto;
+	margin-top: auto;
+	text-align: center;
+	margin: 6px 0px;
+	height: 20px;
+	font-size: 25px;
+}
+
+.info-btn {
+	float: right;
+	font-weight: 700;
+	color: black;
+	background-color: white;
+	border-radius: 10px;
+	margin: 6px 0px;
+	height: 38px;
+}
+
+.in-wrap {
+	width: 100%;
+	height: 100%;
+}
+
+.thumb-pic {
+	box-sizing: border-box;
+	margin: auto;
+	width: 30%;
+	height: 100%;
+}
+
+.stage {
+	box-sizing: border-box;
+	width: 70%;
+	height: 150px;
+}
+
+.stage>h2, p {
+	color: black;
+	vertical-align: top;
+	text-align: center;
+}
+
+.stage>h2 {
+	margin: auto;
+}
+
+.thumb-pic>img {
+	box-sizing: border-box;
+	width: 100%;
+	height: 30%;
+}
+
+.wrap>a>* {
+	padding: 16px 0 16px;
+	float: left;
+}
+
+.count {
+	width: 100%;
+	margin-right: 20px;
+}
+
+.count p {
+	width: 50%;
+	float: left;
+}
+
+#good {
+	float: right;
+}
+
+#festivalTable {
+	width: 100%;
+	height: 100px;
+	margin-left: 20px;
+	magin-right: 20px;
+}
+
+.month-choice {
+	font-family: 'Do Hyeon', sans-serif;
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+
+#section4 ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+#section4 li {
+	margin-top: 3px;
+}
+
+$
+section4 li button {
+	width: 50px;
+}
+
+#section4 th {
+	font-size: 25px;
+	font-weight: 400;
+}
+
+#write {
+	float: right;
+	background: white;
+}
+
+#insertBtn {
+	border: none;
+	background-color: white;
+}
+
+#section4 button {
+	font-family: 'Do Hyeon', sans-serif;
+}
+
+#section4 span, p, input {
+	font-family: 'Do Hyeon', sans-serif;
+}
+
+.navbar .navbar-search .dropdown-menu {
+	min-width: 25px;
+}
+
+.dropdown-menu .label-icon {
+	margin-left: 5px;
+}
+
+.btn-outline {
+	background-color: transparent;
+	color: inherit;
+	transition: all .5s;
+}
+
+#section4 .nav {
+	margin: auto;
+	ailgn: center;
+	width: 600px;
+	ailgn: center;
+}
+
+.form-control {
+	border: 1px solid black;
+}
+
+.pagingArea {
+	margin-top: 15px;
+	font-size: 0;
+}
+
+.pagingArea button {
+	background-color: white;
+	width: 30px;
+	height: 28px;
+	margin: 0 1px;
+	border: 1px solid #dbdbdb;
+	color: #767676;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 20px;
+	text-decoration: none;
+}
+
+.pagingArea button:hover, .pagingArea button:active, .pagingArea button:focus
+	{
+	border: 1px solid #4c8500;
+}
+
+.no-drag {
+	-ms-user-select: none; 
+	-moz-user-select: -moz-none; 
+	-webkit-user-select: none; 
+	-khtml-user-select: none; 
+	user-select:none;
+}
+</style>
+
 </head>
 
 <body>
-	<%@ include file="../common/menubar.jsp" %>
-    <section id="body">
-        <aside id="aside1">
-            <section id="my-info-section1">
-                <div class="my-info" id="my-info">
-                    <h3 id="my-info-text">마이페이지</h3>
-                    <img src="<%= request.getContextPath() %>/resources/images/smile.jpg"><br>
-                    <p id="name">&nbsp;&nbsp;&nbsp;임세웅</p>
-                    <br><br>
-                    <button class="myinfo-button" id="my-info-logout" onclick="logout();">로그아웃</button>
-                    <button class="myinfo-button" id="my-info-modify" onclick="infoModify();">회원정보 수정</button>
-                </div>
-                <script>
+	<%@ include file="../common/menubar.jsp"%>
+	<section id="body">
+		<aside id="aside1">
+			<section id="my-info-section1">
+				<div class="my-info" id="my-info">
+					<h3 id="my-info-text">마이페이지</h3>
+					<img onclick="profileUpdate();"
+						src="<%= request.getContextPath() %>/resources/myplan_upload/<%= loginUser.getProfile() %>"><br>
+					<p id="name">
+						&nbsp;&nbsp;&nbsp;<%= loginUser.getmName() %></p>
+					<br> <br>
+					<button class="myinfo-button" id="my-info-logout"
+						onclick="logout();">로그아웃</button>
+					<button class="myinfo-button" id="my-info-modify"
+						onclick="infoModify();">회원정보 수정</button>
+				</div>
+				<script>
+					// 로그아웃 이동 
                 	function logout() {
                 		location.href="<%= request.getContextPath() %>/logout.me";
                 	}
+                	
+					// 정보수정 이동 
+                	function infoModify() {
+                		location.href="<%= request.getContextPath() %>/views/myPage/Info-update.jsp"
+                	}
+            		
+            		// 프로필 
+            		function profileUpdate() {
+            			var left = (screen.width/2)-135;
+            	    	var top = (screen.height/2)-115;
+            	   		var url = "<%= request.getContextPath() %>/views/myPage/ProfileUpdate.jsp";
+            	    	var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=270px, height=230px" + ",top=" + top + ",left=" + left);
+            	    	uploadWin.moveTo(left, top);
+            	    	uploadWin.focus();
+            		}
                 </script>
-            </section>
-
-            <section id="my-info-section2">
-                <div id="mypage-menu">
-                    <ul>
-                        <li class="bigContent">나의 활동</li>
-                        <li style="font-weight: bold">나의 계획</li>
-                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Board.jsp';">내가 쓴 게시글</a></li>
-                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Basket.jsp';">장바구니</a></li>
-
-                        <hr>
-                        <li class="bigContent">개인정보 관리</li>
-                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp';">회원정보 수정</a></li>
-                        <hr>
-                        <li class="bigContent">고객센터</li>
-                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/select.qa?mSeq=' + <%= loginUser.getM_seq()%>">문의 내역</a></li>
-                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/PlanCalendar.jsp'">새 마이페이지</a></li>
-                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/PlanDetail.jsp'">플랜창</a></li>
-                    </ul>
-                </div>
-            </section>
-        </aside>
-  	
-  		<section id="marginBody">
-  			<%@ include file="./PlanCalendar.jsp" %>
-  		</section>
-  
-  
-        <!-- <section id="marginBody">
-            <section id="my-info-section4">
-                <div class="mobile-header z-depth-1">
-
-                    <div class="row">
-                        <div class="col-2">
-                            <a href="#" data-activates="sidebar" class="button-collapse">
-                                <i class="material-icons">menu</i>
-                            </a>
-                        </div>
-                        <div class="col">
-                            <h4>Events</h4>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="main-wrapper">
-                    <div class="content-wrapper">
-                        <div class="container">
-
-                            <div class="calendar-wrapper z-depth-2">
-
-                                <div class="header-background">
-                                    <div class="calendar-header">
-
-                                        <a class="prev-button" id="prev">
-                                            <i class="material-icons">keyboard_arrow_left</i>
-                                        </a>
-                                        <a class="next-button" id="next">
-                                            <i class="material-icons">keyboard_arrow_right</i>
-                                        </a>
-
-                                        <div class="row header-title">
-
-                                            <div class="header-text">
-                                                <h3 id="month-name">February</h3>
-                                                <h5 id="todayDayName">Today is Friday 7 Feb</h5>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="calendar-content">
-                                    <div id="calendar-table" class="calendar-cells">
-
-                                        <div id="table-header">
-                                            <div class="row">
-                                                <div class="col">Mon</div>
-                                                <div class="col">Tue</div>
-                                                <div class="col">Wed</div>
-                                                <div class="col">Thu</div>
-                                                <div class="col">Fri</div>
-                                                <div class="col">Sat</div>
-                                                <div class="col">Sun</div>
-                                            </div>
-                                        </div>
-
-                                        <div id="table-body" class="">
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="calendar-footer">
-                                    <div class="emptyForm" id="emptyForm">
-                                        <h4 id="emptyFormTitle">No events now</h4>
-                                        <a class="addEvent" id="changeFormButton">추가</a>
-                                    </div>
-                                    <div class="addForm" id="addForm">
-                                        <h4>이벤트 추가</h4>
-
-                                        <div class="col">
-                                            <div class="input-field col s6">
-                                                <input id="eventTitleInput" type="text" class="validate">
-                                                <label for="eventTitleInput">주제</label>
-                                            </div>
-                                            <div class="input-field col s6">
-                                                <input id="eventDescInput" type="text" class="validate">
-                                                <label for="eventDescInput">내용</label>
-                                            </div>
-                                            <div>
-                                                <input type="text" placeholder="Start Date"
-                                                    class="date time start-time" />
-                                                -
-                                                <input type="text" placeholder="End Date(구현x)"
-                                                    class="date time end-time" />
-                                            </div>
-                                        </div>
-
-                                        <div class="addEventButtons">
-                                            <a class="waves-effect waves-light btn blue lighten-2"
-                                                id="addEventButton">Add</a>
-                                            <a class="waves-effect waves-light btn grey lighten-2"
-                                                id="cancelAdd">Cancel</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-            <section id="my-info-section5">
-                <div class="sidebar-wrapper z-depth-2 side-nav" id="sidebar">
-                    <div class="sidebar-title">
-                        <h4>Events</h4>
-                        <h5 id="eventDayName">Date</h5>
-                    </div>
-                    <div class="sidebar-events" id="sidebarEvents">
-                        <div class="empty-message">이벤트가 없습니다</div>
-                    </div>
-
-                </div>
-            </section>
-
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-                integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-                crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-                integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-                crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-            <script>
-                $(".button-collapse").sideNav();
-            </script>
-
-            <script>
-                var calendar = document.getElementById("calendar-table");
-                var gridTable = document.getElementById("table-body");
-                var currentDate = new Date();
-                var selectedDate = currentDate;
-                var selectedDayBlock = null;
-                var globalEventObj = {};
-
-                var sidebar = document.getElementById("sidebar");
-
-                function createCalendar(date, side) {
-                    var currentDate = date;
-                    var startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-
-                    var monthTitle = document.getElementById("month-name");
-                    var monthName = currentDate.toLocaleString("en-US", {
-                        month: "long"
-                    });
-                    var yearNum = currentDate.toLocaleString("en-US", {
-                        year: "numeric"
-                    });
-                    monthTitle.innerHTML = `${monthName} ${yearNum}`;
-
-                    if (side == "left") {
-                        gridTable.className = "animated fadeOutRight";
-                    } else {
-                        gridTable.className = "animated fadeOutLeft";
-                    }
-
-                    setTimeout(() => {
-                        gridTable.innerHTML = "";
-
-                        var newTr = document.createElement("div");
-                        newTr.className = "row";
-                        var currentTr = gridTable.appendChild(newTr);
-
-                        for (let i = 1; i < startDate.getDay(); i++) {
-                            let emptyDivCol = document.createElement("div");
-                            emptyDivCol.className = "col empty-day";
-                            currentTr.appendChild(emptyDivCol);
-                        }
-
-                        var lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-                        lastDay = lastDay.getDate();
-
-                        for (let i = 1; i <= lastDay; i++) {
-                            if (currentTr.children.length >= 7) {
-                                currentTr = gridTable.appendChild(addNewRow());
-                            }
-                            let currentDay = document.createElement("div");
-                            currentDay.className = "col";
-                            if (selectedDayBlock == null && i == currentDate.getDate() || selectedDate.toDateString() == new Date(currentDate.getFullYear(), currentDate.getMonth(), i).toDateString()) {
-                                selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), i);
-
-                                document.getElementById("eventDayName").innerHTML = selectedDate.toLocaleString("en-US", {
-                                    month: "long",
-                                    day: "numeric",
-                                    year: "numeric"
-                                });
-
-                                selectedDayBlock = currentDay;
-                                setTimeout(() => {
-                                    currentDay.classList.add("blue");
-                                    currentDay.classList.add("lighten-3");
-                                }, 900);
-                            }
-                            currentDay.innerHTML = i;
-
-                            //show marks
-                            if (globalEventObj[new Date(currentDate.getFullYear(), currentDate.getMonth(), i).toDateString()]) {
-                                let eventMark = document.createElement("div");
-                                eventMark.className = "day-mark";
-                                currentDay.appendChild(eventMark);
-                            }
-
-                            currentTr.appendChild(currentDay);
-                        }
-
-                        for (let i = currentTr.getElementsByTagName("div").length; i < 7; i++) {
-                            let emptyDivCol = document.createElement("div");
-                            emptyDivCol.className = "col empty-day";
-                            currentTr.appendChild(emptyDivCol);
-                        }
-
-                        if (side == "left") {
-                            gridTable.className = "animated fadeInLeft";
-                        } else {
-                            gridTable.className = "animated fadeInRight";
-                        }
-
-                        function addNewRow() {
-                            let node = document.createElement("div");
-                            node.className = "row";
-                            return node;
-                        }
-
-                    }, !side ? 0 : 270);
-                }
-
-                createCalendar(currentDate);
-
-                var todayDayName = document.getElementById("todayDayName");
-                todayDayName.innerHTML = "Today is " + currentDate.toLocaleString("en-US", {
-                    weekday: "long",
-                    day: "numeric",
-                    month: "short"
-                });
-
-                var prevButton = document.getElementById("prev");
-                var nextButton = document.getElementById("next");
-
-                prevButton.onclick = function changeMonthPrev() {
-                    currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1);
-                    createCalendar(currentDate, "left");
-                }
-                nextButton.onclick = function changeMonthNext() {
-                    currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1);
-                    createCalendar(currentDate, "right");
-                }
-
-                function addEvent(title, desc) {
-                    if (!globalEventObj[selectedDate.toDateString()]) {
-                        globalEventObj[selectedDate.toDateString()] = {};
-                    }
-                    globalEventObj[selectedDate.toDateString()][title] = desc;
-                }
-
-                function showEvents() {
-                    let sidebarEvents = document.getElementById("sidebarEvents");
-                    let objWithDate = globalEventObj[selectedDate.toDateString()];
-
-                    sidebarEvents.innerHTML = "";
-
-                    if (objWithDate) {
-                        let eventsCount = 0;
-                        for (key in globalEventObj[selectedDate.toDateString()]) {
-                            let eventContainer = document.createElement("div");
-                            eventContainer.className = "eventCard";
-
-                            let eventHeader = document.createElement("div");
-                            eventHeader.className = "eventCard-header";
-
-                            let eventDescription = document.createElement("div");
-                            eventDescription.className = "eventCard-description";
-
-                            eventHeader.appendChild(document.createTextNode(key));
-                            eventContainer.appendChild(eventHeader);
-
-                            eventDescription.appendChild(document.createTextNode(objWithDate[key]));
-                            eventContainer.appendChild(eventDescription);
-
-                            let markWrapper = document.createElement("div");
-                            markWrapper.className = "eventCard-mark-wrapper";
-                            let mark = document.createElement("div");
-                            mark.classList = "eventCard-mark";
-                            markWrapper.appendChild(mark);
-                            eventContainer.appendChild(markWrapper);
-
-                            sidebarEvents.appendChild(eventContainer);
-
-                            eventsCount++;
-                        }
-                        let emptyFormMessage = document.getElementById("emptyFormTitle");
-                        emptyFormMessage.innerHTML = `${eventsCount} events now`;
-                    } else {
-                        let emptyMessage = document.createElement("div");
-                        emptyMessage.className = "empty-message";
-                        emptyMessage.innerHTML = "이벤트가 없습니다";
-                        sidebarEvents.appendChild(emptyMessage);
-                        let emptyFormMessage = document.getElementById("emptyFormTitle");
-                        emptyFormMessage.innerHTML = "No events now";
-                    }
-                }
-
-                gridTable.onclick = function (e) {
-
-                    if (!e.target.classList.contains("col") || e.target.classList.contains("empty-day")) {
-                        return;
-                    }
-
-                    if (selectedDayBlock) {
-                        if (selectedDayBlock.classList.contains("blue") && selectedDayBlock.classList.contains("lighten-3")) {
-                            selectedDayBlock.classList.remove("blue");
-                            selectedDayBlock.classList.remove("lighten-3");
-                        }
-                    }
-                    selectedDayBlock = e.target;
-                    selectedDayBlock.classList.add("blue");
-                    selectedDayBlock.classList.add("lighten-3");
-
-                    selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), parseInt(e.target.innerHTML));
-
-                    showEvents();
-
-                    document.getElementById("eventDayName").innerHTML = selectedDate.toLocaleString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric"
-                    });
-
-                }
-
-                var changeFormButton = document.getElementById("changeFormButton");
-                var addForm = document.getElementById("addForm");
-                changeFormButton.onclick = function (e) {
-                    addForm.style.top = 0;
-                }
-
-                var cancelAdd = document.getElementById("cancelAdd");
-                cancelAdd.onclick = function (e) {
-                    addForm.style.top = "100%";
-                    let inputs = addForm.getElementsByTagName("input");
-                    for (let i = 0; i < inputs.length; i++) {
-                        inputs[i].value = "";
-                    }
-                    let labels = addForm.getElementsByTagName("label");
-                    for (let i = 0; i < labels.length; i++) {
-                        labels[i].className = "";
-                    }
-                }
-
-                var addEventButton = document.getElementById("addEventButton");
-                addEventButton.onclick = function (e) {
-                    let title = document.getElementById("eventTitleInput").value.trim();
-                    let desc = document.getElementById("eventDescInput").value.trim();
-
-                    if (!title || !desc) {
-                        document.getElementById("eventTitleInput").value = "";
-                        document.getElementById("eventDescInput").value = "";
-                        let labels = addForm.getElementsByTagName("label");
-                        for (let i = 0; i < labels.length; i++) {
-                            labels[i].className = "";
-                        }
-                        return;
-                    }
-
-                    addEvent(title, desc);
-                    showEvents();
-
-                    if (!selectedDayBlock.querySelector(".day-mark")) {
-                        selectedDayBlock.appendChild(document.createElement("div")).className = "day-mark";
-                    }
-
-                    let inputs = addForm.getElementsByTagName("input");
-                    for (let i = 0; i < inputs.length; i++) {
-                        inputs[i].value = "";
-                    }
-                    let labels = addForm.getElementsByTagName("label");
-                    for (let i = 0; i < labels.length; i++) {
-                        labels[i].className = "";
-                    }
-
-                }
-            </script>
-
-            <script>
-                const datePicker = (selector, type = "date") => {
-                    const types = { DATE: "date", TIME: "time", DATETIME: "datetime-local" };
-                    const elm = document.querySelector(selector);
-
-                    const applyFormatting = (dateString, type, format) => {
-                        if (type === types.TIME && dateString) {
-                            const [h, m] = dateString.split(":").map(s => parseInt(s, 10));
-                            return moment().hour(h).minutes(m).format(format);
-                        }
-                        return moment(dateString).format(format);
-                    }
-
-                    const prettifyDate = (dateString, type) => {
-                        const { DATE, TIME, DATETIME } = types;
-                        const format = { [DATE]: "ll", [TIME]: "hh:mm A", [DATETIME]: "ll hh:mm" }[type];
-                        return applyFormatting(dateString, type, format);
-                    }
-
-                    const uglifyDate = (dateString, type) => {
-                        const { DATE, TIME, DATETIME } = types;
-                        const format = { [DATE]: "YYYY-MM-DD", [TIME]: "hh:mm", [DATETIME]: "YYYY-MM-DDThh:mm" }[type];
-                        return applyFormatting(dateString, type, format);
-                    }
-
-                    elm.addEventListener("focus", function (e) {
-                        if (this.value) this.value = uglifyDate(this.value, type);
-                        this.setAttribute("_type", this.getAttribute("type"));
-                        this.setAttribute("type", type);
-                    });
-
-                    elm.addEventListener("blur", function () {
-                        this.setAttribute("type", this.getAttribute("_type"));
-                        this.removeAttribute("_type");
-                        if (this.value) this.value = prettifyDate(this.value, type);
-                    });
-
-                    elm.value = prettifyDate(undefined, type);
-                }
-                datePicker(".start-time", "time");
-                datePicker(".end-time", "time");
-
-            </script>
-        </section> -->
-    </section>
+			</section>
+
+			<section id="my-info-section2">
+				<div id="mypage-menu">
+					<ul>
+						<li class="bigContent no">나의 활동</li>
+						<li style="font-weight: bold" class="no"><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/views/myPage/Plan.jsp';">나의
+								계획</a></li>
+						<li><a class="page"
+							onclick="location.href='<%= contextPath %>/festivalMember.fe?flag=' + 2">내가
+								쓴 게시글</a></li>
+						<li><a class="page"
+							onclick="location.href='<%= contextPath %>/festivalMember.fe?flag=' + 2">장바구니</a></li>
+
+						<hr>
+						<li class="bigContent no">개인정보 관리</li>
+						<li><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp';">회원정보
+								수정</a></li>
+						<hr>
+						<li class="bigContent no">고객센터</li>
+						<li><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/select.qa?mSeq=' + <%= loginUser.getM_seq()%>">문의
+								내역</a></li>
+					</ul>
+				</div>
+			</section>
+		</aside>
+
+		<section id="section3" class="margin-body">
+			<%@ include file="./PlanCalendar.jsp"%>
+			<form  action="<%= request.getContextPath() %>/dragDrop.pl" method="post" style="display:none;"  enctype="multipart/form-data" >
+				<input name="addtitle" value="0">
+				<input name="filename">
+				<input name="startDate" value="0">
+				<button class="drag-drop-form">btn</button>
+			</form>
+		</section>
+		<section id="section4" class="margin-body">
+			<h1 style="color: black;  margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">장바구니</h1>
+			<br> <br>
+			<div id="total">
+				<div id="choice1" class="no-drag">
+					<div class="nav nav-justified navbar-nav no-drag">
+						<form class="navbar-form navbar-search"
+							action="<%=contextPath%>/search.fe" method="get">
+						
+						</form>
+					</div>
+					<br>
+					<!-- 전체 글수 최신순 인기순 새로고침 -->
+					<div class="count no-drag">
+						<span style="text-align: left; margin-left: 20px;">전체 글 수 :
+							<%=listCount%></span>
+
+						<%
+							if (loginUser != null) {
+						%>
+						<%
+							}
+						%>
+
+					</div>
+					<hr>
+					<div id="festivalTable" class="no-drag">
+						<div class="thumbnailArea no-drag" style="width: 100px; height: 100px;">
+							<%
+								for (Board b : blist) {
+							%>
+							<div class="cli" style="height: 210px; cursor:pointer;" draggable="true">
+								<input type="hidden" value="<%=b.getbId()%>">
+								<div class="board-img" style="float: left; width: 570px; box-sizing: border-box;">
+
+									<%
+										for (Attachment at : flist) {
+									%>
+									<%
+										if (b.getbId() == at.getbId()) {
+									%>
+									<img
+										src="<%=contextPath%>/resources/festival_uploadFile/<%=at.getChangeName()%>"
+										width="40px" height="40px">
+									<%
+										}
+									%>
+									<%
+										}
+									%>
+								</div>
+								<div class="board-title"
+									style="float: left; width: 350px; height: 150px; box-sizing: border-box;">
+									<p class="board-title2" style="font-size: 25px; margin-top:-40px;"><%=b.getbTitle()%></p>
+									<hr style="width:600px; margin-left:-20px;">
+								</div>
+							</div>
+							<%
+								}
+							%>
+						</div>
+					</div>
+					<hr>
+					<!-- 페이징 바 -->
+					<div class="pagingArea" style="width:600px; transform:translateX(-150px)">
+						<!-- 맨 처음으로 (<<) -->
+						<button
+							onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=1&flag=2'">
+							&lt;&lt;</button>
+
+						<!-- 이전 페이지로 (<) -->
+						<%
+							if (currentPage == 1) {
+						%>
+						<button disabled>&lt;</button>
+						<%
+							} else {
+						%>
+						<button
+							onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage - 1%>&flag=2'">
+							&lt;</button>
+						<%
+							}
+						%>
+
+						<!-- 10개의 페이지 목록 -->
+						<%
+							for (int p = startPage; p <= endPage; p++) {
+						%>
+						<%
+							if (p == currentPage) {
+						%>
+						<button disabled style="background-color: black; color: white;">
+							<%=p%>
+						</button>
+						<%
+							} else {
+						%>
+						<button
+							onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=p%>&flag=2'"><%=p%></button>
+						<%
+							}
+						%>
+						<%
+							}
+						%>
+
+						<!-- 다음 페이지로 (>) -->
+						<%
+							if (currentPage == maxPage) {
+						%>
+						<button disabled>&gt;</button>
+						<%
+							} else {
+						%>
+						<button
+							onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage + 1%>&flag=2'">
+							&gt;</button>
+						<%
+							}
+						%>
+
+						<!-- 맨 끝으로 (>>) -->
+						<button
+							onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=maxPage%>&flag=2'">
+							&gt;&gt;</button>
+					</div>
+				</div>
+			</div>
+			<!-- drag & drop evnet -->
+			<script>
+		$('.margin-body')
+		  .on("dragstart", dragStart)
+		  .on("dragover", dragOver)
+		  .on("dragleave", dragLeave)
+		  .on("drop", uploadContent);
+
+		var $startEvent;
+		var filename;
+		var title;
+		var arr;
+		var startDate;
+		function dragStart(e) {
+			$startEvent = $(e.target);
+			filename = $startEvent.children('.board-img').find('img').attr("src");
+			title = $startEvent.children('.board-title').find('.board-title2').html();
+			
+		}
+		
+		function dragOver(e){
+		    e.stopPropagation();
+		    e.preventDefault();
+		    
+		    if (e.type == "dragover") {
+		    	
+		    } else {
+		        $(e.target).css({
+		        });
+		    }
+		}
+		
+		function dragLeave(e) {
+			e.stopPropagation();
+		    e.preventDefault();
+		   /*  $(e.target).css("background-color", "white"); */
+		}
+
+		function uploadContent(e) {
+		    e.stopPropagation();
+		    e.preventDefault();
+		    dragOver(e);
+		    startDate = $(e.target).attr('data-date');
+		    
+		    var date = $(e.target).attr('data-date');
+		    arr = [{'title':title, 'imageurl':filename, 'start':startDate, 'end':startDate}];
+		    $('input[name=addtitle]').val(arr[0].title);
+		    $('input[name=filename]').val(arr[0].imageurl);
+		    $('input[name=startDate]').val(arr[0].start);
+		    console.log(arr[0].title + " " + arr[0].imageurl + " " + arr[0].start);
+		    calendar.addEvent(arr[0]);
+		    
+		    if(arr[0].title != null && arr[0].imageurl != null && arr[0].start != null) {
+		    	
+		    	$('.drag-drop-form').trigger("click");
+		    } 
+		}
+        </script>
+			<script>
+        	
+        		$(function(){
+        			$(".month-choice li").click(function(){
+        				var month = $(this).children().eq(1).val();
+        				location.href="<%=contextPath%>/month.fe?month=" + month;
+        			});
+        		});
+        	
+        		$(function(){
+        			$(".location-choice li").click(function(){
+        				var lId = $(this).children().eq(1).val();
+        				location.href="<%=contextPath%>/location.fe?lId=" + lId;
+        			});
+        		});
+        	
+        		$(function(){
+        			$(".cli").click(function(){
+        				var bId =  $(this).children().eq(0).val();
+        				<%if (loginUser != null) {%>
+        				location.href="<%=contextPath%>/detail.fe?bId=" + bId;
+        				<%} else {%>
+        				alert('상세보기는 로그인이 필요합니다');
+        				location.href="<%= request.getContextPath() %>/views/join&login/login.jsp";
+						<%}%>
+				});
+				});
+
+				$(function() {
+
+					$(".input-group-btn .dropdown-menu li a").click(
+							function() {
+
+								var selText = $(this).html();
+
+								$(this).parents('.input-group-btn').find(
+										'.btn-search').html(selText);
+
+							});
+
+				});
+			</script>
+		</section>
+	</section>
+
+	<%@ include file="../common/footer.jsp"%>
 </body>
 
 </html>

@@ -7,14 +7,15 @@ import java.util.ArrayList;
 
 import QA.model.dao.QADao;
 import QA.model.vo.QA;
+import board.model.dao.BoardDao;
 
 public class QAService {
 	
 	// 1. 나의 QA 리스트(회원)
-	public ArrayList<QA> selectQAList(int mSeq) {
+	public ArrayList<QA> selectQAList(int mSeq, int currentPage, int boardLimit) {
 		Connection conn = getConnection();
 		
-		ArrayList<QA> list = new QADao().selectQAList(conn, mSeq);
+		ArrayList<QA> list = new QADao().selectQAList(conn, mSeq, currentPage, boardLimit);
 		
 		close(conn);
 		System.out.println(list);
@@ -22,10 +23,9 @@ public class QAService {
 	}
 	 
 	// 2. 전체 QA 리스트(관리자가 회원들이 한 문의 내역 확인)
-	public ArrayList<QA> selectAllQAList() {
+	public ArrayList<QA> selectAllQAList(int currentPage, int boardLimit) {
 		Connection conn = getConnection();
-		
-		ArrayList<QA> list = new QADao().selectAllQAList(conn);
+		ArrayList<QA> list = new QADao().selectAllQAList(conn, currentPage, boardLimit);
 		
 		close(conn);
 		
@@ -142,6 +142,24 @@ public class QAService {
 		
 		close(conn);
 		
+		return result;
+	}
+
+	public int getListCount(int mSeq) {
+		Connection con = getConnection();
+		int result = new QADao().getListCount(con, mSeq);
+
+		close(con);
+
+		return result;
+	}
+
+	public int getAllListCount() {
+		Connection con = getConnection();
+		int result = new QADao().getAllListCount(con);
+
+		close(con);
+
 		return result;
 	}
 	

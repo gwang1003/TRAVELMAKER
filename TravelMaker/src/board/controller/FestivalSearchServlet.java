@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import board.model.service.BoardService;
 import board.model.vo.Attachment;
 import board.model.vo.Board;
+import board.model.vo.Information;
 import board.model.vo.PageInfo;
 
 /**
@@ -39,15 +40,13 @@ public class FestivalSearchServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		BoardService bs = new BoardService();
 
-		String searchCondition = request.getParameter("searchCondition");
 		String search = request.getParameter("search");
-		System.out.println("searchCondition : " + searchCondition);
-		System.out.println("search : " + search);
 
+		int flag = Integer.parseInt(request.getParameter("flag"));
+		System.out.println("flag123 : " + flag);
 		// 1_1. 게시판 리스트 총 갯수 구하기
-		int listCount = bs.getListCount();
+		int listCount = bs.getListCount(flag);
 
-		// System.out.println("listCount : " + listCount);
 
 		// 1_2. 페이징 처리 추가
 
@@ -79,18 +78,27 @@ public class FestivalSearchServlet extends HttpServlet {
 
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 
-		ArrayList<Board> list = new BoardService().selectSearchList(search,searchCondition, currentPage, boardLimit);
-		
-		ArrayList<Board> blist = bs.selectList(1, currentPage, boardLimit);
-		ArrayList<Attachment> flist = bs.selectList(2, currentPage, boardLimit);
+		ArrayList<Board> list = bs.selectSearchList(search, currentPage, boardLimit,flag);
+		ArrayList<Attachment> list2 = bs.selectSearchAttachment(search,currentPage,boardLimit,flag);
+		ArrayList<Information> in = bs.InformationAll();
 
-		if (blist != null && flist != null) {
+		if (list != null && list2 != null) {
+			request.setAttribute("in", in);
 			request.setAttribute("blist", list);
-			request.setAttribute("flist", flist);
+			request.setAttribute("flist", list2);
 			request.setAttribute("pi", pi);
-			RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");
-
-			view.forward(request, response);
+			request.setAttribute("listCount", listCount);
+			if(flag==1) {
+				RequestDispatcher view = request.getRequestDispatcher("views/board/trip/tripAllList.jsp");
+				view.forward(request, response);
+			}else if(flag==2) {
+				RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");
+				view.forward(request, response);
+			}else if(flag==4) {
+				RequestDispatcher view = request.getRequestDispatcher("views/board/community/communityAllList.jsp");
+				view.forward(request, response);
+			}
+			
 
 		} else {
 			request.setAttribute("msg", "사진 게시판 조회 실패!!");

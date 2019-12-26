@@ -1,6 +1,7 @@
 package member.controller.member;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import member.model.service.MemberService;
+import member.model.service.PlanService;
 import member.model.vo.Member;
+import member.model.vo.MyPlan;
 
 /**
  * Servlet implementation class LoginServlet
@@ -35,22 +38,18 @@ public class LoginServlet extends HttpServlet {
 		
 		String loginId = request.getParameter("loginId");
 		String loginPass = request.getParameter("loginPass");
-		
 		Member loginUser = new MemberService().loginMember(loginId, loginPass);
-		
-		if(loginUser != null) {
+		System.out.println(loginUser);
+		if(loginUser.getmId() != null && loginUser.getPass() != null) {
 			HttpSession session = request.getSession();
-			
-			session.setAttribute("msg", "로그인에 성공하였습니다");
+			ArrayList<MyPlan> planList = new PlanService().selectAllPlan();
 			session.setAttribute("loginUser", loginUser);
-			
+			session.setAttribute("planList",  planList);
 			response.sendRedirect(request.getContextPath());
 			
 		}else {
 			request.getSession().setAttribute("msg", "로그인에 실패하였습니다");
-			
-			RequestDispatcher view = request.getRequestDispatcher(request.getContextPath() + "/views/join&login/login.jsp");
-			view.forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/views/join&login/login.jsp");
 		}	
 	}
 

@@ -33,17 +33,18 @@ public class BoardDao {
 
 	}
 
-	public int getListCount(Connection con) {
+	public int getListCount(Connection con, int flag) {
 		int listCount = 0;
 
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 
 		String sql = prop.getProperty("getListCount");
 
 		try {
-			stmt = con.createStatement();
-			rset = stmt.executeQuery(sql);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, flag);
+			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
 				listCount = rset.getInt(1);
@@ -53,7 +54,7 @@ public class BoardDao {
 			e.printStackTrace();
 		} finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
 		return listCount;
 	}
@@ -76,7 +77,7 @@ public class BoardDao {
 				b = new Board(rset.getInt("b_id"), rset.getDate("write_date"), rset.getDate("update_date"),
 						rset.getString("title"), rset.getString("content"), rset.getInt("view_cnt"),
 						rset.getString("writer"), rset.getString("status"), rset.getString("l_code"),
-						rset.getInt("b_type"));
+						rset.getInt("b_type"),rset.getInt("m_seq"));
 
 			}
 
@@ -135,11 +136,29 @@ public class BoardDao {
 	}
 
 	public int insertBoard(Connection con, Board b) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String query = prop.getProperty("insertBoard");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, b.getbTitle());
+			pstmt.setString(2, b.getbContent());
+			pstmt.setString(3, b.getbWriter());
+			pstmt.setInt(4, b.getmId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
-	public int updateBoard(Connection con, Board b) {
+	public int updateBoard(Connection con, Board b, int flag) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("updateBoard");
@@ -151,6 +170,7 @@ public class BoardDao {
 			pstmt.setString(2, b.getbTitle());
 			pstmt.setString(3, b.getbContent());
 			pstmt.setInt(4, b.getbId());
+			pstmt.setInt(5, flag);
 
 			result = pstmt.executeUpdate();
 
@@ -162,7 +182,7 @@ public class BoardDao {
 		return result;
 	}
 
-	public int updateInformation(Connection con, Information info) {
+	public int updateInformation(Connection con, Information info, int flag) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = prop.getProperty("updateInformation");
@@ -189,7 +209,7 @@ public class BoardDao {
 	}
 
 	// 게시판 조회용
-	public ArrayList<Board> selectBList(Connection con, int currentPage, int boardLimit) {
+	public ArrayList<Board> selectBList(Connection con, int currentPage, int boardLimit, int flag) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Board> list = null;
@@ -202,8 +222,9 @@ public class BoardDao {
 			int startRow = (currentPage - 1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, flag);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 
 			rs = pstmt.executeQuery();
 
@@ -224,7 +245,7 @@ public class BoardDao {
 		return list;
 	}
 
-	public ArrayList selectFList(Connection con, int currentPage, int boardLimit) {
+	public ArrayList selectFList(Connection con, int currentPage, int boardLimit, int flag) {
 		ArrayList<Attachment> list = new ArrayList<Attachment>();
 
 		PreparedStatement pstmt = null;
@@ -238,8 +259,9 @@ public class BoardDao {
 			int startRow = (currentPage - 1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, flag);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 
 			rset = pstmt.executeQuery();
 
@@ -424,7 +446,7 @@ public class BoardDao {
 	 * return list; }
 	 */
 
-	public int insertThBoard(Connection conn, Board b) {
+	public int insertThBoard(Connection conn, Board b, int flag) {
 		PreparedStatement pstmt = null;
 
 		int result = 0;
@@ -438,7 +460,8 @@ public class BoardDao {
 			pstmt.setString(2, b.getbContent());
 			pstmt.setString(3, b.getbWriter());
 			pstmt.setInt(4, Integer.parseInt(b.getlCode()));
-			pstmt.setInt(5, b.getmId());
+			pstmt.setInt(5, flag);
+			pstmt.setInt(6, b.getmId());
 
 			result = pstmt.executeUpdate();
 
@@ -560,19 +583,13 @@ public class BoardDao {
 	 * return list; }
 	 */
 
-	public ArrayList<Board> selectSearchList(Connection con, String search, String searchCondition, int currentPage,
-			int boardLimit) {
+	public ArrayList<Board> selectSearchList(Connection con, String search, int currentPage,
+			int boardLimit, int flag) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Board> list = null;
-		String sql = "";
+		String sql = prop.getProperty("selectSearchTitleList");
 
-		if (searchCondition.equals("title")) {
-			sql = prop.getProperty("selectSearchTitleList");
-
-		} else {
-			sql = prop.getProperty("selectSearchContentList");
-		}
 
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -580,9 +597,10 @@ public class BoardDao {
 			int startRow = (currentPage - 1) * boardLimit + 1;
 			int endRow = startRow + boardLimit - 1;
 
-			pstmt.setString(1, search);
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
+			pstmt.setInt(1, flag);
+			pstmt.setString(2, search);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
 
 			rs = pstmt.executeQuery();
 
@@ -601,6 +619,277 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return list;
+	}
+
+	public ArrayList<Attachment> selectSearchAttachment(Connection con, String search, int currentPage, int boardLimit, int flag) {
+		ArrayList<Attachment> list = new ArrayList<Attachment>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String query = prop.getProperty("selectSearchAttachment");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setInt(1, flag);
+			pstmt.setString(2, search);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Attachment at = new Attachment();
+				at.setbId(rset.getInt("b_id"));
+				at.setChangeName(rset.getString("newfilename"));
+
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Board> selectLocationList(Connection con, int lId, int currentPage, int boardLimit, int flag) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Board> list = null;
+		
+		String sql = prop.getProperty("selectLocationList");
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setInt(1, flag);
+			pstmt.setInt(2, lId);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+
+			rs = pstmt.executeQuery();
+
+			list = new ArrayList<Board>();
+
+			while (rs.next()) {
+				list.add(new Board(rs.getInt("b_id"), rs.getDate("write_date"), rs.getDate("update_date"),
+						rs.getString("title"), rs.getString("content"), rs.getInt("view_cnt"), rs.getInt("good"),
+						rs.getInt("notgood"), rs.getString("writer"), rs.getString("status"), rs.getString("l_code"),
+						rs.getInt("s_type"), rs.getInt("b_type"), rs.getInt("m_seq")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Attachment> selectLocationAttachment(Connection con, int lId, int currentPage, int boardLimit, int flag) {
+		ArrayList<Attachment> list = new ArrayList<Attachment>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String query = prop.getProperty("selectLocationAttachment");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setInt(1, flag);
+			pstmt.setInt(2, lId);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Attachment at = new Attachment();
+				at.setbId(rset.getInt("b_id"));
+				at.setChangeName(rset.getString("newfilename"));
+
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Board> selectMonthList(Connection con, int month, int currentPage, int boardLimit) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Board> list = null;
+		String sql = "";
+		
+		if(month==1) {
+			sql = prop.getProperty("selectMonth1");
+		}else if(month==2) {
+			sql = prop.getProperty("selectMonth2");
+		}else if(month==3) {
+			sql = prop.getProperty("selectMonth3");
+		}else if(month==4) {
+			sql = prop.getProperty("selectMonth4");
+		}
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rs = pstmt.executeQuery();
+
+			list = new ArrayList<Board>();
+
+			while (rs.next()) {
+				list.add(new Board(rs.getInt("b_id"), rs.getDate("write_date"), rs.getDate("update_date"),
+						rs.getString("title"), rs.getString("content"), rs.getInt("view_cnt"), rs.getInt("good"),
+						rs.getInt("notgood"), rs.getString("writer"), rs.getString("status"), rs.getString("l_code"),
+						rs.getInt("s_type"), rs.getInt("b_type"), rs.getInt("m_seq")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Attachment> selectMonthAttachment(Connection con, int month, int currentPage, int boardLimit) {
+		ArrayList<Attachment> list = new ArrayList<Attachment>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = "";
+		
+		if(month==1) {
+			sql = prop.getProperty("selectMonthAttachment1");
+		}else if(month==2) {
+			sql = prop.getProperty("selectMonthAttachment2");
+		}else if(month==3) {
+			sql = prop.getProperty("selectMonthAttachment3");
+		}else if(month==4) {
+			sql = prop.getProperty("selectMonthAttachment4");
+		}
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Attachment at = new Attachment();
+				at.setbId(rset.getInt("b_id"));
+				at.setChangeName(rset.getString("newfilename"));
+
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Information> InformationAll(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Information> in = new ArrayList<Information>();
+
+		String query = prop.getProperty("InformationAll");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				in.add(new Information(rs.getInt("b_id"),rs.getString("to_char(sday)"),
+						rs.getString("to_char(eday)"), rs.getString("tel"),rs.getInt("price"),
+						rs.getString("address"),rs.getString("pageaddress")));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+
+		return in;
+	}
+	
+	public int updateCBoard(Connection con, Board b) {
+	      PreparedStatement pstmt = null;
+	      int result = 0;
+	      String query = prop.getProperty("updateCBoard");
+
+	      try {
+	         pstmt = con.prepareStatement(query);
+
+	         pstmt.setString(1, b.getbTitle());
+	         pstmt.setString(2, b.getbContent());
+	         pstmt.setInt(3, b.getbId());
+
+	         result = pstmt.executeUpdate();
+
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(pstmt);
+	      }
+	      return result;
+	   }
+
+	public int deleteReply(Connection con, int rId) {
+		 PreparedStatement pstmt = null;
+	      int result = 0;
+	      String query = prop.getProperty("deleteReply");
+
+	      try {
+	         pstmt = con.prepareStatement(query);
+
+	         pstmt.setInt(1, rId);
+
+	         result = pstmt.executeUpdate();
+
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(pstmt);
+	      }
+	      return result;
 	}
 
 }

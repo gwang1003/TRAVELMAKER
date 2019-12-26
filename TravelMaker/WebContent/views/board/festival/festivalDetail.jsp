@@ -145,7 +145,7 @@ body {
 	margin: auto;
 	border-radius: 10px;
 	height: 180px;
-	width: 50%;
+	width: 70%;
 	border-style: double;
 	font-family: 'Do Hyeon', sans-serif;
 }
@@ -188,6 +188,22 @@ td {
 	width: 310px;
 	height: 220px;
 }
+.replyP1 {
+      font-family: 'Do Hyeon', sans-serif;
+      font-size:20px;
+      margin:auto;
+   }
+   
+   .replyP2 {
+      font-family: 'Do Hyeon', sans-serif;
+      font-size:13px;
+      color:gray;
+   }
+   
+   .replyBtn {
+      width:70px;
+      height:45px;
+   }
 </style>
 </head>
 
@@ -197,7 +213,7 @@ td {
 
 	<div id="choice1">
 		<div class="tag">
-			<h1 align="center" style="font-family: 'Black Han Sans', sans-serif;">축제
+			<h1 align="center" style="font-family: 'Black Han Sans', sans-serif; color:black;">축제
 				상세 설명</h1>
 		</div>
 		<br> <br>
@@ -287,7 +303,53 @@ td {
 					%>
 				</tr>
 			</table>
+			
+			    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7ca88425a9b2838d03cea5da7be46498&libraries=services"></script>
+    <div id="map" style="width:800px;height:600px; z-index:0;" ></div>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7ca88425a9b2838d03cea5da7be46498"></script>
+	<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+geocoder.addressSearch('<%= in.getAddress() %>', function(result, status) {
+
+    // 정상적으로 검색이 완료됐으면 
+     if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x),
+        	content = '<div style="padding:5px;"><%=b.getbTitle()%><br><a href="https://map.kakao.com/link/search/<%=in.getAddress() %>" style="color:blue" text-decoration="none" target="_blank">검색하기</a></div>';
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            position : coords,
+            content : content
+        });
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+});    
+</script>
 		</div>
+		
+		
 
 		<hr>
 
@@ -317,12 +379,12 @@ td {
 				<%
 					for (Reply r : rlist) {
 				%>
-				<tr align="center" >
-					<td width="300px"><p style="font-family: 'Do Hyeon', sans-serif; font-size:20px; margin:auto;"><%=r.getrWriter()%></p><p style="font-family: 'Do Hyeon', sans-serif; font-size:13px; color:gray;">작성일자 : <%=r.getCreateDate()%></p></td>
-					<td width="700px"><p style="font-family: 'Do Hyeon', sans-serif; font-size:20px; margin:auto;"><%=r.getrContent()%></p></td>
-					<td width="200px"><button type="button" class="btn btn-outline-danger"
-					style="width: 70px; height: 45px;"onclick="deleteReply();">삭제</button></td>
-				</tr>
+				<tr align="center" id ="replyTr">
+               <td width="300px"><p class="replyP1"><%=r.getrWriter()%></p><p class="replyP2">작성일자 : <%=r.getCreateDate()%></p></td>
+               <td width="700px"><p class="replyP1"><%=r.getrContent()%></p></td>
+               <td width="200px"><button type="button" class="btn btn-outline-danger replyBtn"
+                  onclick="deleteReply();">삭제</button><input type="hidden" value="<%=r.getrId() %>" id="deleteBtn"></td>
+            </tr>
 				<%
 					}
 				%>
@@ -332,8 +394,6 @@ td {
 			</table>
 			</div>
 		</div>
-
-		
 	</div>
 
 
@@ -342,12 +402,18 @@ td {
 	</form>
 
 	<script>
+		function deleteReply(){
+			var rId = $("#deleteBtn").val();
+			var bId= $("input[name=bId]").val();
+			location.href="<%=contextPath%>/deleteReply.fe?rId="+ rId + "&bId="+bId + "&flag=2";
+		}
+	
 		function returnToList(){
-			location.href="<%=contextPath%>/festivalall.fe";
+			location.href="<%=contextPath%>/festivalall.fe?flag=2";
 		}
 			
 		function updateBoard(){
-			$("#detailForm").attr("action", "<%=contextPath%>/updateForm.fe");
+			$("#detailForm").attr("action", "<%=contextPath%>/updateForm.fe?flag=2");
 			$("#detailForm").submit();
 		}
 			
@@ -357,50 +423,44 @@ td {
 		}
 		
 		$(function(){
-			$("#addReply").click(function() {
-				var writer =<%=loginUser.getM_seq()%>;
-				var bid =<%=b.getbId()%>;
-				var content = $("#replyContent").val();
-
-				$.ajax({
-					url : "insertReply.fe",
-					type : "post",
-					dataType : "json",
-					data : {writer : writer,
-							content : content,
-							bid : bid},
-					success : function(data) {
-							var $table = $("#replySelectTable");
-							$table.html("");
-
-							// 새로 받아온 갱신 된 댓글 리스트를 반복문을 통해 table에 추가
-							for ( var key in data) {
-
-								var $tr = $("<tr>");
-								var $writerTd = $("<td>").text(
-										data[key].rWriter)
-								var $contentTd = $("<td>").text(
-										data[key].rContent)
-								var $dateTd = $("<td>").text(
-										data[key].createDate)
-
-								$tr.append($writerTd);
-								$tr.append($contentTd);
-								$tr.append($dateTd);
-
-								$table.append($tr);
-							}
-
-							// 댓글 작성 부분 리셋
-							$("#replyContent").val("");
-
-						},
-						error : function() {
-							console.log("통신 실패!");
-						}
-					});
-				});
-		});
+	         $("#addReply").click(function() {
+	            var writer =<%=loginUser.getM_seq()%>;
+	            var bid =<%=b.getbId()%>;
+	            var content = $("#replyContent").val();
+	            $.ajax({
+	               url : "insertReply.fe",
+	               type : "post",
+	               dataType : "json",
+	               data : {writer : writer,
+	                     content : content,
+	                     bid : bid},
+	               success : function(data) {
+	                     var $table = $("#replySelectTable");
+	                     $table.html("");
+	                     // 새로 받아온 갱신 된 댓글 리스트를 반복문을 통해 table에 추가
+	                     for ( var key in data) {
+	                        var $tr = $("<tr align='center'>");
+	                        var $writerTd = $("<td><p>").text(
+	                              data[key].rWriter).css({"font-family": 'Do Hyeon, sans-serif', "font-size":"20px" , "margin":"auto" , "width":"300px"});
+	                        var $contentTd = $("<td><p>").text(
+	                              data[key].rContent).css({"font-family": 'Do Hyeon, sans-serif', "font-size":"20px" ,"color":"black", "width":"700px"});
+	                        var $dateTd = $("<td><p>").text(
+	                              data[key].createDate).css({"font-family": 'Do Hyeon, sans-serif', "font-size":"20px" ,"color":"gray", "width":"200px"});
+	                        
+	                        $tr.append('<td width="300px"><p class="replyP1">'+ data[key].rWriter + '</p><p class="replyP2">작성일자 : ' + data[key].createDate + '</p></td>');
+	                        $tr.append('<td width="700px"><p class="replyP1">' + data[key].rContent + '</p></td>');  
+	                        $tr.append('<td width="200px"><button type="button" class="btn btn-outline-danger replyBtn" onclick="deleteReply();">삭제</button></td>');
+	                        $table.append($tr);
+	                     }
+	                     // 댓글 작성 부분 리셋
+	                     $("#replyContent").val("");
+	                  },
+	                  error : function() {
+	                     console.log("통신 실패!");
+	                  }
+	               });
+	            });
+	      });
 
 		
 	</script>

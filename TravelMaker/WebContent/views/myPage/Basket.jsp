@@ -164,6 +164,20 @@
 
         /*time line*/
     </style>
+    
+    <style>
+		#mypage-menu li {
+			
+		}
+		
+		.page {
+			cursor:pointer;
+		}
+		
+		.no {
+			user-select:none;
+		}
+	</style>
 
     <!-- 영역 분할 -->
     <style>
@@ -171,7 +185,7 @@
         body {
             margin-top: 180px;
             width: 1500px;
-            height: 1000px;
+            height: 800px;
             overflow: auto;
             margin-left: auto;
             margin-right: auto;
@@ -358,60 +372,352 @@
             <section id="my-info-section1">
                 <div class="my-info" id="my-info">
                     <h3 id="my-info-text">마이페이지</h3>
-                    <img src="<%= request.getContextPath() %>/resources/images/smile.jpg"><br>
-                    <p id="name">&nbsp;&nbsp;&nbsp;임세웅</p>
+                    <img onclick="profileUpdate();"
+						src="<%= request.getContextPath() %>/resources/myplan_upload/<%= loginUser.getProfile() %>"><br>
+                    <p id="name">&nbsp;&nbsp;&nbsp;<%= loginUser.getmName() %></p>
                     <br><br>
                     <button class="myinfo-button" id="my-info-logout" onclick="logout();">로그아웃</button>
                     <button class="myinfo-button" id="my-info-modify" onclick="infoModify();">회원정보 수정</button>
                 </div>
+                <script>
+                	function logout() {
+            			location.href="<%= request.getContextPath() %>/logout.me";
+            		}
+            	
+            		function infoModify() {
+            			location.href="<%= request.getContextPath() %>/views/myPage/Info-update.jsp"
+            		}
+            		
+            		// 프로필 
+            		function profileUpdate() {
+            			var left = (screen.width/2)-135;
+            	    	var top = (screen.height/2)-115;
+            	   		var url = "<%= request.getContextPath() %>/views/myPage/ProfileUpdate.jsp";
+            	    	var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=270px, height=230px" + ",top=" + top + ",left=" + left);
+            	    	uploadWin.moveTo(left, top);
+            	    	uploadWin.focus();
+            		}
+                </script>
             </section>
 
             <section id="my-info-section2">
                 <div id="mypage-menu">
                     <ul>
-                        <li class="bigContent">나의 활동</li>
-                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Plan.jsp';">나의 계획</a></li>
-                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Board.jsp';">내가 쓴 게시글</a></li>
-                        <li style="font-weight:bold">장바구니</li>
+                        <li class="bigContent no">나의 활동</li>
+                        <li><a class="page" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Plan.jsp';">나의 계획</a></li>
+                        <li><a class="page" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Board.jsp';">내가 쓴 게시글</a></li>
+                        <li class="no" style="font-weight:bold"><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/views/myPage/Basket.jsp';">장바구니</a></li>
 
                         <hr>
-                        <li class="bigContent">개인정보 관리</li>
-                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp';">회원정보 수정</a></li>
+                        <li class="bigContent no">개인정보 관리</li>
+                        <li><a class="page" onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp';">회원정보 수정</a></li>
 
                         <hr>
-                        <li class="bigContent">고객센터</li>
-                        <li><a href="#" onclick="location.href='<%= request.getContextPath() %>/views/myPage/ServiceCenter.jsp';"">문의 내역</a></li>
+                        <li class="bigContent no">고객센터</li>
+                        <li><a class="page" onclick="location.href='<%= request.getContextPath() %>/views/myPage/ServiceCenter.jsp';"">문의 내역</a></li>
                     </ul>
                 </div>
             </section>
         </aside>
-        <section id="my-info-section4">
-                <div id="my_post">
-                    <hr id="firstHr">
-                    <ul>
-                        <li><img src="<%= request.getContextPath() %>/resources/images/비렁길.jpg" class="my-post-img">나의 장바구니1<img src="<%= request.getContextPath() %>/resources/images/line.png" class="line"></li>
-                        <hr class="otherHr">
-                        <li><img src="<%= request.getContextPath() %>/resources/images/쌈짓길.jpg" class="my-post-img">나의 장바구니2<img src="<%= request.getContextPath() %>/resources/images/line.png" class="line"></li>
-                        <hr class="otherHr">
-                        <li><img src="<%= request.getContextPath() %>/resources/images/강원도.jpg" class="my-post-img">나의 장바구니3<img src="<%= request.getContextPath() %>/resources/images/line.png" class="line"></li>
-                        <hr class="otherHr">
-                        <li><img src="<%= request.getContextPath() %>/resources/images/전라도.jpg" class="my-post-img">나의 장바구니4<img src="<%= request.getContextPath() %>/resources/images/line.png" class="line"></li>
-                        <hr class="otherHr">
-                    </ul>
-                </div>
-                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group mr-2" role="group" aria-label="First group" style="margin-left: 230px";>
-                        <button type="button" class="btn btn-secondary">&lt;</button>
-                        <button type="button" class="btn btn-secondary">1</button>
-                        <button type="button" class="btn btn-secondary">2</button>
-                        <button type="button" class="btn btn-secondary">3</button>
-                        <button type="button" class="btn btn-secondary">4</button>
-                        <button type="button" class="btn btn-secondary">&gt;</button>
-                    </div>
-                </div>
+        <section id="my-info-section3">
+                <%
+				if (lname == null && mname != null) {
+			%>
+			<h1
+				style="color: black; margin-top: 120px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;"><%=mname%>
+				축제 목록
+			</h1>
+
+			<%
+				} else if (lname != null && mname == null) {
+			%>
+			<h1
+				style="color: black; margin-top: 120px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;"><%=lname%>
+				축제 목록
+			</h1>
+			<%
+				} else if (lname == null && mname == null) {
+			%>
+			<h1
+				style="color: black; margin-top: 120px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">전체
+				축제 목록</h1>
+			<%
+				}
+			%>
+
+			<br> <br>
+			<div id="total">
+
+				<div id="choice1">
+
+					<div class="nav nav-justified navbar-nav">
+						<form class="navbar-form navbar-search"
+							action="<%=contextPath%>/search.fe" method="get">
+							<div class="input-group" style="margin-top: 20px;">
+								<input type="search" name="search" class="form-control"
+									placeholder="검색어 입력">
+
+								<div class="input-group-btn">
+									<button type="submit" class="btn btn-search btn-default"
+										style="border: 1px solid black;">검색</button>
+
+
+								</div>
+							</div>
+						</form>
+					</div>
+
+
+					<br> <br>
+
+
+
+					<!-- 전체 글수 최신순 인기순 새로고침 -->
+					<div class="count">
+						<span style="text-align: left; margin-left: 20px;">전체 글 수 :
+							<%=listCount%></span>
+
+						<%
+							if (loginUser != null) {
+						%>
+						<div id="write">
+							<button type="button" id="insertBtn"
+								onclick="location.href='<%=contextPath%>/views/board/festival/festivalInsert.jsp'">
+								<img src="<%=contextPath%>/resources/images/write.png"
+									width="50px" height="50px">
+							</button>
+						</div>
+						<%
+							}
+						%>
+
+					</div>
+					<br> <br>
+
+
+
+
+					<hr>
+
+					<div id="festivalTable">
+
+						<div class="thumbnailArea" style="width: 1000px; height: 1600px;">
+
+							<%
+								for (Board b : blist) {
+							%>
+
+							<div class="cli" style="height: 210px;">
+								<input type="hidden" value="<%=b.getbId()%>">
+								<div style="float: left; width: 300px; box-sizing: border-box;">
+
+									<%
+										for (Attachment at : flist) {
+									%>
+									<%
+										if (b.getbId() == at.getbId()) {
+									%>
+									<img
+										src="<%=contextPath%>/resources/festival_uploadFile/<%=at.getChangeName()%>"
+										width="300px" height="200px">
+									<%
+										}
+									%>
+									<%
+										}
+									%>
+								</div>
+								<div
+									style="float: left; width: 550px; height: 200px; box-sizing: border-box;">
+									<span style="margin-left: 10px;"> No.<%=b.getbId()%></span>
+									<p style="font-size: 25px;"><%=b.getbTitle()%></p>
+									<p style="color: gray;"><%=b.getbContent()%></p>
+								</div>
+								<div
+									style="float: left; width: 150px; height: 200px; box-sizing: border-box; margin-bottom: 40px;">
+									<br>
+									<p>
+										작성자 :
+										<%=b.getbWriter()%>
+									</p>
+									<br>
+									<hr>
+									<br>
+
+									<p>
+										조회수 :
+										<%=b.getbCount()%>
+									</p>
+								</div>
+							</div>
+							<hr>
+							<%
+								}
+							%>
+						</div>
+						<hr>
+					</div>
+
+					<!-- 페이징 바 -->
+					<div class="pagingArea" align="center">
+						<!-- 맨 처음으로 (<<) -->
+						<button
+							onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=1&flag=2'">
+							&lt;&lt;</button>
+
+						<!-- 이전 페이지로 (<) -->
+						<%
+							if (currentPage == 1) {
+						%>
+						<button disabled>&lt;</button>
+						<%
+							} else {
+						%>
+						<button
+							onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage - 1%>&flag=2'">
+							&lt;</button>
+						<%
+							}
+						%>
+
+						<!-- 10개의 페이지 목록 -->
+						<%
+							for (int p = startPage; p <= endPage; p++) {
+						%>
+						<%
+							if (p == currentPage) {
+						%>
+						<button disabled style="background-color: black; color: white;">
+							<%=p%>
+						</button>
+						<%
+							} else {
+						%>
+						<button
+							onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=p%>&flag=2'"><%=p%></button>
+						<%
+							}
+						%>
+						<%
+							}
+						%>
+
+						<!-- 다음 페이지로 (>) -->
+						<%
+							if (currentPage == maxPage) {
+						%>
+						<button disabled>&gt;</button>
+						<%
+							} else {
+						%>
+						<button
+							onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage + 1%>&flag=2'">
+							&gt;</button>
+						<%
+							}
+						%>
+
+						<!-- 맨 끝으로 (>>) -->
+						<button
+							onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=maxPage%>&flag=2'">
+							&gt;&gt;</button>
+					</div>
+				</div>
+
+
+
+
+				<div id="ct">
+					<div id="choice2">
+						<div class="month-choice">
+							<ul>
+								<li><button type="button" id="m1"
+										class="btn btn-outline-info">#1~3월</button> <input
+									type="hidden" value="1"></li>
+								<li><button type="button" id="m2"
+										class="btn btn-outline-info" value="2">#4~6월</button> <input
+									type="hidden" value="2"></li>
+								<li><button type="button" id="m3"
+										class="btn btn-outline-info" value="3">#7~9월</button> <input
+									type="hidden" value="3"></li>
+								<li><button type="button" id="m4"
+										class="btn btn-outline-info" value="4">#10~12월</button> <input
+									type="hidden" value="4"></li>
+
+							</ul>
+
+						</div>
+						<hr>
+						<div class="location-choice">
+							<ul>
+								<li><button type="button" class="btn btn-outline-info"
+										id="seoul">서울</button> <input type="hidden" value="10"></li>
+								<li><button type="button" class="btn btn-outline-info"
+										id="kyeongi">경기도</button> <input type="hidden" value="20"></li>
+								<li><button type="button" class="btn btn-outline-info"
+										id="kangwon">강원도</button> <input type="hidden" value="30"></li>
+								<li><button type="button" class="btn btn-outline-info"
+										id="chung">충청도</button> <input type="hidden" value="40"></li>
+								<li><button type="button" class="btn btn-outline-info"
+										id="gyeong">경상도</button> <input type="hidden" value="50"></li>
+								<li><button type="button" class="btn btn-outline-info"
+										id="jeon">전라도</button> <input type="hidden" value="60"></li>
+							</ul>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+			<script>
+        	
+        		$(function(){
+        			$(".month-choice li").click(function(){
+        				var month = $(this).children().eq(1).val();
+        				location.href="<%=contextPath%>/month.fe?month=" + month;
+        			});
+        		});
+        	
+        		$(function(){
+        			$(".location-choice li").click(function(){
+        				var lId = $(this).children().eq(1).val();
+        				location.href="<%=contextPath%>/location.fe?lId=" + lId;
+        			});
+        		});
+        	
+        		$(function(){
+        			$(".cli").click(function(){
+        				var bId =  $(this).children().eq(0).val();
+        				<%if (loginUser != null) {%>
+        				location.href="<%=contextPath%>/detail.fe?bId=" + bId;
+        				<%} else {%>
+        				alert('상세보기는 로그인이 필요합니다');
+        				location.href="<%=contextPath%>
+				/views/join&login/login.jsp";
+			<%}%>
+				});
+				});
+
+				$(function() {
+
+					$(".input-group-btn .dropdown-menu li a").click(
+							function() {
+
+								var selText = $(this).html();
+
+								$(this).parents('.input-group-btn').find(
+										'.btn-search').html(selText);
+
+							});
+
+				});
+			</script>
         </section>
         
     </section>
+    <%@ include file="../common/footer.jsp" %>
 </body>
 
 </html>

@@ -84,9 +84,9 @@ label {
 </head>
 <body>
 	<% if(Up == null) { %>
-	<form action="<%= request.getContextPath() %>/insert.qa">
+	<form action="<%= request.getContextPath() %>/insert.qa" onsubmit="return joinValidate();" method="post">
 	<% } else { %>
-	<form action="<%= request.getContextPath() %>/update.qa">	
+	<form action="<%= request.getContextPath() %>/update.qa" onsubmit="return joinValidate();" method="post">	
 	<% } %>
 		<div class="titleDiv">
 			<div class="top1">
@@ -98,7 +98,7 @@ label {
 						<option value="40">회원</option>
 						<option value="50">시스템</option>
 					</select>
-				</div>
+				</div> 
 				<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목
 					&nbsp;&nbsp;&nbsp;</label><input type="text" name="title"> <br>
 			</div>
@@ -113,7 +113,29 @@ label {
 	</form>
 	<script>
     $(document).ready(function() {
-        $('#summernote').summernote();
+        $('#summernote').summernote({
+        	callbacks: {
+        		onlmageUpload: function(files) {
+        			sendFile(files[0]);
+        		}
+        	}
+        });
+        
+        function sendFile(file) {
+        	data = new FormData();
+        	data.append("file", file);
+        	$.ajax({
+        		url: 'GetFile.aspx',
+        		data: data,
+        		cache: false,
+        		type: "POST",
+        		contentType: false,
+        		processData: false,
+        		success: function(url){
+        			$("#summernote").summernote('insertImage', url);
+        		}
+        	});
+        }
     });
  
 
@@ -121,6 +143,7 @@ label {
 
 	<script>
 		$(document).ready(function() {
+			
 			<% if(q != null) { %>
 				$("#qId").val(<%= q.getqId() %>)
     	  		<% if(q.getqContent() != null) { %>
@@ -135,8 +158,23 @@ label {
 			<% } %> --%>
           $("button").mouseenter(function(){
             $("#HC").val($(".note-editable").html())
+            console.log($('#summernote').summernote('code'))
           })
       })
+      function joinValidate(){
+			if($("input[name=title]").val().length < 1){
+				alert('제목을 입력해주세요');
+				$("input[name=title]").select();
+				return false;
+			}
+			
+			if($(".note-editable").html().length < 10){
+				alert("내용을 입력해주세요")
+				return false;
+			}
+			
+			return true;
+		}
   </script>
 </body>
 </html>

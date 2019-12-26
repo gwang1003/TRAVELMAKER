@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="member.model.vo.Member" %>
-	<%
-		String contextPath = request.getContextPath();
-		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
-		System.out.println(loginUser);
-	%>
+<%
+	String contextPath = request.getContextPath();
+	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,11 +45,11 @@ nav ul {
 	padding: 0;
 	margin: 0;
 	display: flex;
-	z-index: 1;
+	z-index: 20;
 }
 
 nav li {
-	z-index: 1;
+	z-index: 20;
 }
 
 nav ul li a {
@@ -61,7 +60,7 @@ nav ul li a {
 	text-transform: uppercase;
 	font-size: 15px;
 	font-weight: bold;
-	z-index: 1;
+	z-index: 20;
 }
 
 nav ul li a:hover {
@@ -143,12 +142,12 @@ nav ul li a.active {
 	<header>
 		<div id="wrap">
 			<nav>
-				<div class="logo">Travel Maker</div>
+				<div class="logo" onclick="location.href='<%= contextPath %>'" style="cursor:pointer;">Travel Maker</div>
 				<div class="menuToggle"></div>
 				<ul id="navUl">
 					<li><a id="a0" class="active" href="<%= contextPath %>">Home</a></li>
 					<li><a id="a1" href="#" onclick="goFes();">축제</a></li>
-					<li><a id="a2" href="#guestBook" onclick="goTravel();">여행</a></li>
+					<li><a id="a2" href="#guestBook" onclick="goTrip();">여행</a></li>
 					<li><a id="a3" href="#"onclick="goSleep();">숙박</a></li>
 					<li><a id="a3" href="#gallery" onclick="goCom();">커뮤니티</a></li>
 					<% if(loginUser != null) { %>
@@ -300,14 +299,12 @@ nav ul li a.active {
 			location.href="<%= contextPath %>/best.th";
 		}
 		
-		// 축제 게시판 ㄱㄱ
 		
 		
-		function goTravel(){
-			location.href="<%= contextPath %>/travelall.th";
-		}
+		
 		--%>
 		function goSleep(){
+
 	         location.href="<%= contextPath %>/list.sl";
 	      }
 	      function goCom(){
@@ -330,6 +327,7 @@ nav ul li a.active {
 	      function goTrip(){
 	         location.href="<%= contextPath %>/festivalall.fe?flag=" + 1;
 	      }
+
 	</script>
 
 

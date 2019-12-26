@@ -2,17 +2,20 @@
 	pageEncoding="UTF-8" import="java.util.*, board.model.vo.*"%>
 
 <%
-	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+	ArrayList<Board> list = (ArrayList<Board>) request.getAttribute("list");
 	ArrayList<Board> blist = (ArrayList<Board>) request.getAttribute("blist");
 	ArrayList<Attachment> flist = (ArrayList<Attachment>) request.getAttribute("flist");
-
 	PageInfo pi = (PageInfo) request.getAttribute("pi");
-
+	ArrayList<Information> in = (ArrayList<Information>)request.getAttribute("in");
+	System.out.println("in :" +in);
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
+
+	String lname = (String) request.getAttribute("lname");
+	String mname = (String) request.getAttribute("mname");
 %>
 <!DOCTYPE html>
 <html>
@@ -48,12 +51,11 @@ body {
 #choice1 {
 	float: left;
 	width: 1050px;
-	height: 1800px;
+	height: 1830px;
 	margin-left: 120px;
-	border-bottom: 1px solid black;
+	border: 1px solid black;
 	padding: 0;
 	background: white;
-	box-shadow: 10px 5px 15px 5px gray;
 	border-radius: 10px;
 }
 
@@ -64,22 +66,29 @@ body {
 #choice2 {
 	position: fixed;
 	margin-left: 1200px;
-	top: 150px;
+	top: 220px;
 	border-radius: 12px;
-	border: 3px solid aliceblue;
-	background-color: aliceblue;
+	border: 3px solid white;
+	background-color: white;
 	color: black;
-	width: 20%;
-	height: 500px;
+	width: 17%;
+	height: 520px;
 	text-align: center;
+	box-shadow: 5px 5px 5px 5px gray;
 }
 
 .btn-outline-info {
-	width: 70px;
-	height: 50px;
+	width: 100px;
+	height: 40px;
 	margin: auto;
 	font-size: 17px;
 	border: none;
+	color: black;
+}
+
+.btn-outline-info:hover {
+	background-color: black;
+	color: white;
 }
 
 .tag>h3 {
@@ -162,18 +171,38 @@ body {
 	magin-right: 20px;
 }
 
-#month-choice {
-	margin-top: 50px;
+.month-choice {
+	font-family: 'Do Hyeon', sans-serif;
+	margin-top: 20px;
 	margin-bottom: 50px;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+li {
+	margin-top: 3px;
+}
+
+li button {
+	width: 50px;
+}
+
+th {
+	font-size: 25px;
+	font-weight: 400;
 }
 
 #write {
 	float: right;
+	background: white;
 }
 
 #insertBtn {
 	border: none;
-	background-color: ghostwhite;
+	background-color: white;
 }
 
 button {
@@ -199,8 +228,8 @@ span, p, input {
 }
 
 .nav {
-	margin: auto; 
-	ailgn : center;
+	margin: auto;
+	ailgn: center;
 	width: 600px;
 	ailgn: center;
 }
@@ -208,14 +237,61 @@ span, p, input {
 .form-control {
 	border: 1px solid black;
 }
+
+.pagingArea {
+	margin-top: 15px;
+	text-align: center;
+	font-size: 0;
+}
+
+.pagingArea button {
+	background-color: white;
+	display: inline-block;
+	width: 30px;
+	height: 28px;
+	margin: 0 1px;
+	border: 1px solid #dbdbdb;
+	color: #767676;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 20px;
+	vertical-align: middle;
+	text-decoration: none;
+}
+
+.pagingArea button:hover, .pagingArea button:active, .pagingArea button:focus
+	{
+	border: 1px solid #4c8500;
+}
 </style>
 </head>
 
 <body>
 	<%@ include file="../../common/menubar.jsp"%>
+	<%
+		if (lname == null && mname != null) {
+	%>
 	<h1
-		style="color: black; color: black; margin-top: 120px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">축제
-		ALL</h1>
+		style="color: black; margin-top: 120px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;"><%=mname%>
+		축제 목록
+	</h1>
+
+	<%
+		} else if (lname !=null && mname == null) {
+	%>
+	<h1
+		style="color: black; margin-top: 120px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;"><%=lname%>
+		축제 목록
+	</h1>
+	<%
+		} else if(lname == null && mname == null) {
+	%>
+	<h1
+		style="color: black; margin-top: 120px; margin-left: 40%; font-family: 'Black Han Sans', sans-serif;">전체
+		축제 목록
+	</h1>
+	<% } %>
+
 	<br>
 	<br>
 	<div id="total">
@@ -223,13 +299,11 @@ span, p, input {
 		<div id="choice1">
 
 			<div class="nav nav-justified navbar-nav">
-				<form class="navbar-form navbar-search" action="<%=contextPath%>/search.fe" method="get" onsubmit="return checkSearchCondition();">
-					<div class="input-group" >
-						<select id="searchCondition" name="searchCondition">
-							<option value="----">----</option>
-							<option value="title">제목</option>
-							<option value="content">내용</option>
-						</select> <input type="search" name="search" class="form-control"
+				<form class="navbar-form navbar-search"
+					action="<%=contextPath%>/search.fe" method="get">
+					<input type="hidden" name="flag" value="2">
+					<div class="input-group" style="margin-top: 20px;">
+						<input type="search" name="search" class="form-control"
 							placeholder="검색어 입력">
 
 						<div class="input-group-btn">
@@ -241,15 +315,6 @@ span, p, input {
 					</div>
 				</form>
 			</div>
-			<script>
-				function checkSearchCondition(){
-					if($("#searchCondition option:selected").val() == '----'){
-						alert("검색할 분야 선택");
-						return false;
-					}
-					return true;
-				}
-			</script>
 
 
 			<br> <br>
@@ -258,35 +323,27 @@ span, p, input {
 
 			<!-- 전체 글수 최신순 인기순 새로고침 -->
 			<div class="count">
-				<span style="text-align: left; margin-left: 20px;">전체 글 수 :
-					여기넣어</span>
-				<div id="good">
-					<button type="button" class="btn btn-outline-primary">최신순</button>
-					&emsp;
-					<button type="button" class="btn btn-outline-primary">인기순</button>
-					&emsp; <a href="javascript:" class="btn_represch"><img
-						src="<%=contextPath%>/resources/images/새로고침.png" id="represch"
-						width="30px" height="30px"></a>&emsp;
-				</div>
-
-			</div>
-			<br> <br>
-			<%
+				<span style="text-align: left; margin-left: 20px;">전체 글 수 : <%=listCount%></span>
+				
+				<%
 				if (loginUser != null) {
 			%>
 			<div id="write">
 				<button type="button" id="insertBtn"
 					onclick="location.href='<%=contextPath%>/views/board/festival/festivalInsert.jsp'">
-					<img src="<%=contextPath%>/resources/images/edit.png" width="40px"
-						height="40px">
+					<img src="<%=contextPath%>/resources/images/write.png" width="50px"
+						height="50px">
 				</button>
 			</div>
 			<%
 				}
 			%>
 
-
+			</div>
 			<br> <br>
+
+			
+
 
 			<hr>
 
@@ -301,7 +358,7 @@ span, p, input {
 					<div class="cli" style="height: 210px;">
 						<input type="hidden" value="<%=b.getbId()%>">
 						<div style="float: left; width: 300px; box-sizing: border-box;">
-
+						
 							<%
 								for (Attachment at : flist) {
 							%>
@@ -318,20 +375,32 @@ span, p, input {
 								}
 							%>
 						</div>
+						
 						<div
 							style="float: left; width: 550px; height: 200px; box-sizing: border-box;">
-							<span><%=b.getbId()%>번 게시글 </span>
-							<p><%=b.getbTitle()%></p>
-							<p><%=b.getbContent()%></p>
+							<span style="margin-left: 10px;"> No.<%=b.getbId()%></span>
+							<p style="font-size: 25px;"><%=b.getbTitle()%></p>
+							<p style="color: gray;"><%=b.getbContent()%></p>
+							<% for(Information i : in) { %>
+							<% if(i.getbId()== b.getbId()){ %>
+							<span style="margin-left: 10px; color:gray;" >[<%=i.getsDay() %>-<%= i.geteDay() %>]</span>
+							<% } %>
+							<% } %>
 						</div>
 						<div
 							style="float: left; width: 150px; height: 200px; box-sizing: border-box; margin-bottom: 40px;">
-							<p><%=b.getbWriter()%></p>
+							<br>
+							<p>
+								작성자 :
+								<%=b.getbWriter()%>
+							</p>
+							<br>
+							<hr>
+							<br>
+
 							<p>
 								조회수 :
 								<%=b.getbCount()%>
-								<br> 좋아요 :
-								<%=b.getGood()%>
 							</p>
 						</div>
 					</div>
@@ -347,7 +416,7 @@ span, p, input {
 			<div class="pagingArea" align="center">
 				<!-- 맨 처음으로 (<<) -->
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=1'">
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=1&flag=2'">
 					&lt;&lt;</button>
 
 				<!-- 이전 페이지로 (<) -->
@@ -359,7 +428,7 @@ span, p, input {
 					} else {
 				%>
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage - 1%>'">
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage - 1%>&flag=2'">
 					&lt;</button>
 				<%
 					}
@@ -372,14 +441,14 @@ span, p, input {
 				<%
 					if (p == currentPage) {
 				%>
-				<button disabled>
+				<button disabled style="background-color: black; color: white;">
 					<%=p%>
 				</button>
 				<%
 					} else {
 				%>
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=p%>'"><%=p%></button>
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=p%>&flag=2'"><%=p%></button>
 				<%
 					}
 				%>
@@ -396,7 +465,7 @@ span, p, input {
 					} else {
 				%>
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage + 1%>'">
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=currentPage + 1%>&flag=2'">
 					&gt;</button>
 				<%
 					}
@@ -404,7 +473,7 @@ span, p, input {
 
 				<!-- 맨 끝으로 (>>) -->
 				<button
-					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=maxPage%>'">
+					onclick="location.href='<%=contextPath%>/festivalall.fe?currentPage=<%=maxPage%>&flag=2'">
 					&gt;&gt;</button>
 			</div>
 		</div>
@@ -414,67 +483,90 @@ span, p, input {
 
 		<div id="ct">
 			<div id="choice2">
-				<table align="center" id="month-choice">
-					<tr>
-						<td><button type="button" class="btn btn-outline-info">#1월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#2월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#3월</button></td>
-					</tr>
-					<tr>
-						<td><button type="button" class="btn btn-outline-info">#4월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#5월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#6월</button></td>
-					</tr>
-					<tr>
-						<td><button type="button" class="btn btn-outline-info">#7월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#8월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#9월</button></td>
-					</tr>
-					<tr>
-						<td><button type="button" class="btn btn-outline-info">#10월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#11월</button></td>
-						<td><button type="button" class="btn btn-outline-info">#12월</button></td>
-					</tr>
-				</table>
+				<div class="month-choice">
+					<ul>
+						<li><button type="button" id="m1"
+								class="btn btn-outline-info">#1~3월</button>
+							<input type="hidden" value="1"></li>
+						<li><button type="button" id="m2"
+								class="btn btn-outline-info" value="2">#4~6월</button>
+							<input type="hidden" value="2"></li>
+						<li><button type="button" id="m3"
+								class="btn btn-outline-info" value="3">#7~9월</button>
+							<input type="hidden" value="3"></li>
+						<li><button type="button" id="m4"
+								class="btn btn-outline-info" value="4">#10~12월</button>
+							<input type="hidden" value="4"></li>
 
+					</ul>
 
+				</div>
 				<hr>
-				<table align="center" id="month-choice">
-					<tr>
-						<td><button type="button" class="btn btn-outline-info">
-								서울<br>특별시
-							</button></td>
-						<td><button type="button" class="btn btn-outline-info">강원도</button></td>
-						<td><button type="button" class="btn btn-outline-info">경기도</button></td>
-					</tr>
-					<tr>
-						<td><button type="button" class="btn btn-outline-info">충청도</button></td>
-						<td><button type="button" class="btn btn-outline-info">경상도</button></td>
-						<td><button type="button" class="btn btn-outline-info">전라도</button></td>
-					</tr>
-				</table>
+				<div class="location-choice">
+					<ul>
+						<li><button type="button" class="btn btn-outline-info"
+								id="seoul">서울</button> <input type="hidden" value="10"></li>
+						<li><button type="button" class="btn btn-outline-info"
+								id="kyeongi">경기도</button> <input type="hidden" value="20"></li>
+						<li><button type="button" class="btn btn-outline-info"
+								id="kangwon">강원도</button> <input type="hidden" value="30"></li>
+						<li><button type="button" class="btn btn-outline-info"
+								id="chung">충청도</button> <input type="hidden" value="40"></li>
+						<li><button type="button" class="btn btn-outline-info"
+								id="gyeong">경상도</button> <input type="hidden" value="50"></li>
+						<li><button type="button" class="btn btn-outline-info"
+								id="jeon">전라도</button> <input type="hidden" value="60"></li>
+					</ul>
+				</div>
+
 			</div>
 		</div>
 
 	</div>
 
 	<script>
+	
 		$(function(){
-			$(".cli").click(function(){
-				var bId =  $(this).children().eq(0).val();
-				location.href="<%=contextPath%>/detail.fe?bId=" + bId;
+			$(".month-choice li").click(function(){
+				var month = $(this).children().eq(1).val();
+				location.href="<%=contextPath%>/month.fe?month=" + month + "&flag=" + 2;
 			});
 		});
-		
+	
 		$(function(){
-		    
-		    $(".input-group-btn .dropdown-menu li a").click(function(){
+			$(".location-choice li").click(function(){
+				var lId = $(this).children().eq(1).val();
+				location.href="<%=contextPath%>/location.fe?lId=" + lId + "&flag=" +2;
+			});
+		});
+	
+		$(function(){
+			$(".cli").hover(function(){
+				$(this).css({"background":"#CBC4C4", "cursor":"pointer"});
+			}).mouseout(function(){
+				$(this).css({"background":"white"});
+			}).click(function(){
+				var bId =  $(this).children().eq(0).val();
+				<%if (loginUser != null) {%>
+				location.href="<%=contextPath%>/detail.fe?bId=" + bId + "&flag="+2;
+				<%} else {%>
+				alert('상세보기는 로그인이 필요합니다');
+				location.href="<%=contextPath%>/views/join&login/login.jsp";
+				<%}%>
+		});
+		});
 
-		        var selText = $(this).html();
-		    
-		       $(this).parents('.input-group-btn').find('.btn-search').html(selText);
+		$(function() {
 
-		   });
+			$(".input-group-btn .dropdown-menu li a").click(
+					function() {
+
+						var selText = $(this).html();
+
+						$(this).parents('.input-group-btn').find('.btn-search')
+								.html(selText);
+
+					});
 
 		});
 	</script>

@@ -19,10 +19,10 @@ import member.model.vo.MyPlan;
 
 public class PlanService {
 	// 계획 변경
-	public int updatePlan(MyPlan p, int userSeq) {
+	public int updatePlan(MyPlan p) {
 		Connection conn = getConnection();
 		
-		int result = new PlanDao().updatePlan(conn, p, userSeq);
+		int result = new PlanDao().updatePlan(conn, p);
 
 		if (result > 0) {
 			commit(conn);
@@ -36,10 +36,10 @@ public class PlanService {
 	}
 
 	// 계획 삭제
-	public int deletePlan(int pId, String mId) {
+	public int deletePlan(int pSeq, int mSeq) {
 		Connection conn = getConnection();
 
-		int result = new PlanDao().deletePlan(conn, pId, mId);
+		int result = new PlanDao().deletePlan(conn, pSeq, mSeq);
 
 		if (result > 0) {
 			commit(conn);
@@ -52,10 +52,10 @@ public class PlanService {
 		return result;
 	}
 
-	public int insertPlan(MyPlan p, int userSeq) {
+	public int insertPlan(MyPlan p) {
 		Connection conn = getConnection();
 
-		int result = new PlanDao().insertPlan(conn, p, userSeq);
+		int result = new PlanDao().insertPlan(conn, p);
 
 		if (result > 0) {
 			commit(conn);
@@ -77,5 +77,4 @@ public class PlanService {
 
 		return result;
 	}
-
 }

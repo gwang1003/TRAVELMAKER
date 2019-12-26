@@ -38,7 +38,10 @@ public class UpdateMemberServlet extends HttpServlet {
 		String upPass = request.getParameter("upPass");
 		String upNick = request.getParameter("upNick");
 		String upPhone = request.getParameter("upPhone");
-		String upEmail = request.getParameter("upEmail");
+		
+		String email1 = request.getParameter("upEmail");
+		String email2 = request.getParameter("upEmail2");
+		String upEmail = email1 + "@" + email2;
 		
 		Member m = new Member(upId, upPass, upNick, upPhone, upEmail);
 		Member updateMember = new MemberService().updateMember(m, updateId);

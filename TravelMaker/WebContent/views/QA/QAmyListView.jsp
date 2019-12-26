@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*, QA.model.vo.*, member.model.vo.*"%>
+	pageEncoding="UTF-8" import="java.util.*, QA.model.vo.*, member.model.vo.*, board.model.vo.*"%>
 	
 <% 
 	ArrayList<QA> list = (ArrayList<QA>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
 
 %>
 <!DOCTYPE html>
@@ -17,7 +24,7 @@
 			margin-top:10%;
 			margin-left:auto;
 			margin-right:auto;
-        }
+        } 
 
     <!-- 영역 분할 -->
     <style>
@@ -465,6 +472,37 @@
 					</div>
 				</div>
 			</section>
+			<div class="pagingArea" align="center">
+			<!-- 맨 처음으로 (<<) -->
+			<button onclick="location.href='<%= contextPath %>/select.qa?currentPage=1&mSeq=<%= loginUser.getM_seq()%>'"> &lt;&lt; </button>
+		
+			<!-- 이전 페이지로 (<) -->
+			<% if(currentPage == 1){ %>
+				<button disabled> &lt; </button>
+			<% } else { %>
+				<button onclick="location.href='<%= contextPath %>/select.qa?currentPage=<%= currentPage - 1 %>&mSeq=<%= loginUser.getM_seq()%>'"> &lt; </button>
+			<% } %>
+			
+			<!-- 10개의 페이지 목록 -->
+			<% for(int p = startPage; p <= endPage; p++){ %>
+				<% if(p == currentPage){ %>
+					<button disabled> <%= p %></button>
+				<% } else { %>
+					<button onclick="location.href='<%= contextPath %>/select.qa?currentPage=<%= p %>&mSeq=<%= loginUser.getM_seq()%>'"> <%= p %> </button>
+				<% } %>
+			<% } %>
+			
+			<!-- 다음 페이지로(>) -->
+			<% if(currentPage == maxPage) { %>
+				<button disabled> &gt; </button>
+			<% } else { %>
+				<button onclick="location.href='<%= contextPath %>/select.qa?currentPage=<%= currentPage + 1 %>&mSeq=<%= loginUser.getM_seq()%>'"> &gt; </button>
+			<% } %>
+			
+			<!--  맨 끝으로 (>>) -->
+			<button onclick="location.href='<%= contextPath %>/select.qa?currentPage=<%= maxPage %>&mSeq=<%= loginUser.getM_seq()%>'"> &gt;&gt; </button>
+			
+		</div>
 		</section>
 	</section>
 	
@@ -486,5 +524,6 @@
 		});
 	
 	</script>
+	<%@ include file="../common/footer.jsp"%>
 </body>
 </html>

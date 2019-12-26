@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,18 +16,18 @@ body {
 	margin-top: 0;
 	margin-left: auto;
 	margin-right: auto;
-	width: 1000px;
-	height: 100%;
+	width: 1200px;
+	height: 1000px;
 }
 
 .outer {
-	width: 500px;
-	height: 650px;
+	width: 50%;
+	height: 80%;
 	background: white;
 	color: black;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 150px;
+	margin-top: 100px;
 	border: 1px solid black;
 }
 
@@ -36,14 +37,6 @@ table {
 
 #joinForm {
 	height: 70%;
-}
-
-#joinForm td {
-	text-align: center;
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	height: 11%;
 }
 
 #passExp, #passCorrect, #nameExp, #noExp, #nickNameExp, #phoneExp {
@@ -70,17 +63,12 @@ button:hover {
 	background: salmon;
 }
 
-#idCheck, #pwdResult {
-	margin: auto;
-}
 
-#pwdResult {
-	text-align: left;
-}
 
 #logo {
 	margin-left: auto;
 	margin-right: auto;
+	cursor: pointer;
 }
 
 .mimg {
@@ -94,14 +82,6 @@ button:hover {
 	width: 150px;
 	height: 60%;
 	border-radius: 50%;
-}
-
-tr {
-	height: 50px;
-}
-
-#jo {
-	width: 79px;
 }
 
 #email {
@@ -125,6 +105,32 @@ tr {
 .btns button:hover {
 	background: salmon;
 }
+
+tr label {
+	color:red;
+}
+
+tr input {
+	width: 250px; /* 원하는 너비 설정 */ 
+	height: 10px; /* 높이값 초기화 */ 
+	line-height : normal; /* line-height 초기화 */ 
+	padding: .8em .5em; /* 원하는 여백 설정, 상하단 여백으로 높이를 조절 */ 
+	font-family: inherit; /* 폰트 상속 */ 
+	border: 1px solid #999; 
+	border-radius: 4px; /* iSO 둥근모서리 제거 */ 
+	/* outline-style: none; */ 
+	-webkit-appearance: none; /* 브라우저별 기본 스타일링 제거 */ 
+	-moz-appearance: none; 
+	appearance: none;
+
+}
+
+td:first-child {
+	padding: .8em .5em;
+	cursor: text;
+	width:250px;
+	text-align:right;
+}
 </style>
 </head>
 <body>
@@ -134,8 +140,8 @@ tr {
 	<!-- 1_1. 회원가입 폼 작성 -->
 	<div class="outer">
 		<div class="mimg">
-			<img id="logo" src="<%= request.getContextPath() %>/resources/images/로고.png" width="100px">
-			<h2 align="center">회원가입</h2>
+			<img id="logo" src="<%= request.getContextPath() %>/resources/images/로고.png" width="100px" onclick="location.href='<%= request.getContextPath() %>'">
+			<h2 align="center" style="user-select:none;">회원가입</h2>
 		</div>
 
 
@@ -143,7 +149,7 @@ tr {
 			<!-- onsubmit="return joinValidate();" -->
 			<table>
 				<tr>
-					<td width="200px">아이디</td>
+					<td width="200px"><label>* </label>아이디</td>
 					<td><input type="text" maxlength="13" name="mId" required></td>
 					<td width="200px">
 						<button id="idCheck" type="button">중복확인</button>
@@ -151,7 +157,7 @@ tr {
 				</tr>
 
 				<tr>
-					<td>비밀번호</td>
+					<td><label>* </label>비밀번호</td>
 					<td><input type="password" maxlength="15" name="pass" required></td>
 					<td><label id="passExp">비밀번호는 9자리 이상 13자리 이하, 영문과 숫자
 							조합입니다</label></td>
@@ -159,49 +165,52 @@ tr {
 
 
 				<tr>
-					<td>비밀번호 확인</td>
+					<td><label>* </label>비밀번호 확인</td>
 					<td><input type="password" maxlength="15" name="passCheck"
 						required></td>
 					<td><label id="passCorrect">비밀번호가 일치하지 않습니다</label></td>
 				</tr>
 
 				<tr>
-					<td>이름</td>
+					<td><label>* </label>이름</td>
 					<td><input type="text" maxlength="5" name="mName" required></td>
 					<td><label id="nameExp">이름은 한글로 2글자에서 4글자 사이입니다</label></td>
 				</tr>
 
 				<tr>
-					<td>주민등록번호</td>
-					<td><input type="text" id="jo" name="mNo1">-<input
-					type="text" id="jo" name="mNo2"></td>
-					<td><label id="noExp">주민등록번호는 총 13자리입니다</label></td>
+					<td><label>* </label>생년월일</td>
+					<td><input type="text" id="jo" name="mNo1" required>
+					<td><label id="noExp">생년월일은 총 6자리입니다</label></td>
 				</tr>
 
 				<tr>
-					<td>닉네임</td>
+					<td><label>* </label>닉네임</td>
 					<td><input type="text" maxlength="6" name="nickName" id="nickName" required></td>
 					<td><label id="nickNameExp">이미 존재하는 닉네임입니다</label></td>
 				</tr>
 
 				<tr>
-					<td>연락처</td>
-					<td><input type="tel" maxlength="11" name="phone"
+					<td><label>* </label>연락처</td>
+					<td><input type="tel" maxlength="11" name="phone" required
 						placeholder="(-없이)010-1234-5678"></td>
 					<td><label id="phoneExp">휴대폰 번호는 010, 011로 시작하며 11자리여야 합니다</label></td>
 				</tr>
 
 				<tr>
-					<td>이메일</td>
-					<td><input type="text" name="email" id="email">@<select
-						id="email" name="email2">
+					<td><label>* </label>이메일</td>
+					<td><input type="text" name="email" id="email" required>@<select
+						id="email2" name="email2">
 							<option value="naver.com">naver.com</option>
 							<option value="naver.com">daum.net</option>
 							<option value="naver.com">hanmail.net</option>
 							<option value="naver.com">google.com</option>
 					</select></td>
-					<td width="200px"><button id="emailCheck" type="button"
-							onclick="checkEmail()">이메일 인증</button></td>
+					<td>
+						<input type="text" id="key" style="width:100px;" placeholder="인증번호입력">
+					</td>	
+					<td>
+					<button id="emailCheck" type="button">이메일 인증</button>	
+					</td>
 				</tr>
 			</table>
 			<div class="btns" align="center">
@@ -213,13 +222,14 @@ tr {
 
 
 	<script>
-		var checkId, checkPwd1, checkPwd2, checkName, checkNo1, checkNo2, checkNickName, checkPhone, checkEmail; 
+	
+	
+		var checkId, checkPwd1, checkPwd2, checkName, checkNo1, checkNickName, checkPhone, checkEmail; 
 		checkId = false;
 		checkPwd1 = false;
 		checkPwd2 = false;
 		checkName = false;
 		checkNo1 = false;
-		checkNo2 = false; 
 		checkNickName = false;
 		checkPhone = false;
 		checkEmail = false;
@@ -294,7 +304,7 @@ tr {
 	    	 });
 	    	 
 	    	 // 이름이 한글로 올바르게 적혀 있는지
-	    	 var nameExp = /^[가-힣]{2,3}$/;
+	    	 var nameExp = /^[가-힣]{2,4}$/;
 	    	 $("input[name=mName]").focusout(function() {
 	    		 if(nameExp.test($(this).val())) {	
 	    			 $('#nameExp').css('display', 'none');
@@ -307,7 +317,6 @@ tr {
 	    	 
 	    	 // 주민번호 형식이 맞는지
 	    	 var noExp = /^[0-9]{6}$/;
-	    	 var noExp2 = /^[0-9]{7}$/;
 	    	 $("input[name=mNo1]").focusout(function() {
 	    		 if(noExp.test($(this).val())) {	
 	    			$('#noExp').css('display', 'none');
@@ -315,15 +324,6 @@ tr {
 	    		 }else {
 	    			 $('#noExp').css('display', 'unset');
 	    			 checkNo1 = false;
-	    		 }
-	    	 });
-	    	 $("input[name=mNo2]").focusout(function() {
-	    		 if(noExp2.test($(this).val())) {	
-	    			$('#noExp').css('display', 'none');
-	    			checkNo2 = true;  
-	    		 }else {
-	    			 $('#noExp').css('display', 'unset');
-	    			 checkNo2 = false;
 	    		 }
 	    	 });
 	    	 
@@ -364,19 +364,49 @@ tr {
 	    			 $("#phoneExp").css('display', 'unset');
 	    			 checkPhone = false;
 	    		 }
-	    		 console.log(checkId + " " + checkPwd1 + " " + checkPwd2 + " " + checkName + " " + checkNo1 + " " + checkNo2 + " " + checkNickName + " " + checkPhone);
-	    		 
 	    		 
 	    	 });
 	    	 
+	    	 var key;
+	 		$(function() {
+	 			$("#emailCheck").click(function(){
+	 				var email = $("#email").val() + '@' + $("#email2").val();
+	 				$.ajax({
+	 					// url : 데이터를 전송할 url(필수!!!)
+	 					url : "<%= request.getContextPath() %>/mail.mo",
+	 					
+	 					// data : 요청 시 전달할 파라미터 설정
+	 					data : {email:email},
+	 					// key:value
+	 					
+	 					// type : 전송 방식(GET / POST)
+	 					type : "get",
+	 					
+	 					// success : Ajax 통신 성공 시 처리할 함수를 지정하는 속성
+	 					success : function(result){
+	 						// result 매개변수 : 서버에서 응답이 왔을 때 그 값이 저장 되는 변수
+	 						// 매개변수명 임의 지정 가능
+	 						key = result;
+	 						checkEmail = true;
+	 					},
+	 					
+	 					// error : Ajax 통신 실패 시 처리할 함수를 지정하는 속성
+	 					error : function(){
+	 						console.log('Ajax 통신 실패...');
+	 						checkEmail = false;
+	 					}					
+	 				});
+	 			});
+	 		})
 	    	 
 	    	 $("#joinBtn").click(function() {
-	    		 console.log(checkId + checkPwd1 + checkPwd2 + checkName + checkNo1 + checkNo2 + checkNickName + checkPhone);
 	    		 if(checkId == true && checkPwd1 == true && checkPwd2 == true && checkName == true 
-		    				&& checkNo1 == true && checkNo2 == true && checkNickName == true && checkPhone == true) {
+		    				&& checkNo1 == true && checkNickName == true && checkPhone == true
+		    				&& checkEmail) {
 		    			$("#joinForm").attr("method", "post");
 		    			$("#joinForm").attr("action", "<%= request.getContextPath() %>/insert.me");
 		    			alert("회원가입에 성공하였습니다");
+	        			<% request.getSession().setAttribute("msg", null); %>
 		    	}else { 
 		    			if(checkId == false) {
 		    				alert("아이디를 체크해주세요");
@@ -387,20 +417,18 @@ tr {
 		    			}else if(checkName == false) {
 		    				alert("이름을 체크해주세요");
 		    			}else if(checkNo1 == false) {
-		    				alert("주민등록번호를 체크해주세요");
-		    			}else if(checkNo2 == false) {
-		    				alert("주민등록번호를 체크해주세요");
+		    				alert("생년월일을 체크해주세요");
 		    			}else if(checkNickName == false) {
 		    				alert("닉네임을 체크해주세요");
 		    			}else if(checkPhone == false) {
 		    				alert("연락처를 체크해주세요");
-		    			}else {
+		    			}else if($("#key").val() != key){
+		    				alert("이메일 및 인증번호를 체크해주세요");
+		    			}else{
 		    				
 		    			}
 		    	} 
 	    	 });
-	    	 
-	    		
       });
    </script>
 

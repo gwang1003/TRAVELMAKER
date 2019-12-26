@@ -12,16 +12,23 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
+<style>
+		#mypage-menu li {
+			
+		}
+		
+		.page {
+			cursor:pointer;
+		}
+		
+		.no {
+			user-select:none;
+		}
+	</style>
+
 <!-- 메뉴바 -->
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-<link
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-	rel="stylesheet"
-	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-	crossorigin="anonymous">
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <style>
@@ -162,7 +169,6 @@ nav ul li a.active {
 	width: 1500px;
 	height: 1000px;
 	display: flex;
-	overflow: auto;
 	flex-direction: row;
 	margin-left: auto;
 	margin-right: auto;
@@ -299,7 +305,7 @@ aside {
 .outer {
 	margin-left: 70px;
 	width: 800px;
-	height: 700px;
+	height: 1000px;
 	background: white;
 	color: black;
 }
@@ -373,7 +379,7 @@ tr {
 	width: 88px;
 }
 
-table {
+.outer table {
 	margin-left: 30px;
 	width: 100%;
 	height: 70%;
@@ -421,7 +427,6 @@ h2 {
 
 .outer hr {
 	width: 60%;
-	transform: translateX(-200px);
 }
 
 #logoText {
@@ -446,37 +451,58 @@ h2 {
 			<section id="my-info-section1">
 				<div class="my-info" id="my-info">
 					<h3 id="my-info-text">마이페이지</h3>
-					<img src="<%=request.getContextPath()%>/resources/images/smile.jpg"><br>
+					<img onclick="profileUpdate();"
+						src="<%= request.getContextPath() %>/resources/myplan_upload/<%= loginUser.getProfile() %>"><br>
 					<% System.out.println(request.getContextPath()); %>
-					<p id="name">&nbsp;&nbsp;&nbsp;임세웅</p>
+					<p id="name">&nbsp;&nbsp;&nbsp;<%= loginUser.getmName() %></p>
 					<br> <br>
 					<button class="myinfo-button" id="my-info-logout"
 						onclick="logout();">로그아웃</button>
 					<button class="myinfo-button" id="my-info-modify"
 						onclick="infoModify();">회원정보 수정</button>
 				</div>
+				<script>
+                	function logout() {
+            			location.href="<%= request.getContextPath() %>/logout.me";
+            		}
+            	
+            		function infoModify() {
+            			location.href="<%= request.getContextPath() %>/views/myPage/Info-update.jsp"
+            		}
+            		
+            		// 프로필 
+            		function profileUpdate() {
+            			var left = (screen.width/2)-135;
+            	    	var top = (screen.height/2)-115;
+            	   		var url = "<%= request.getContextPath() %>/views/myPage/ProfileUpdate.jsp";
+            	    	var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=270px, height=230px" + ",top=" + top + ",left=" + left);
+            	    	uploadWin.moveTo(left, top);
+            	    	uploadWin.focus();
+            		}
+                </script>
 			</section>
 
 			<section id="my-info-section2">
 				<div id="mypage-menu">
 					<ul>
-						<li class="bigContent">나의 활동</li>
-						<li><a href="#"
+						<li class="bigContent no">나의 활동</li>
+						<li><a class="page"
 							onclick="location.href='<%=request.getContextPath()%>/views/myPage/Plan.jsp';">나의
 								계획</a></li>
-						<li><a href="#"
+						<li><a class="page"
 							onclick="location.href='<%=request.getContextPath()%>/views/myPage/Board.jsp';">내가
 								쓴 게시글</a></li>
-						<li><a href="#"
+						<li><a class="page"
 							onclick="location.href='<%=request.getContextPath()%>/views/myPage/Basket.jsp';">장바구니</a></li>
 
 						<hr>
-						<li class="bigContent">개인정보 관리</li>
-						<li style="font-weight: bold">회원정보 수정</a></li>
+						<li class="bigContent no">개인정보 관리</li>
+						<li class="no" style="font-weight: bold"><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp.jsp';">회원정보 수정</a></li>
 
 						<hr>
-						<li class="bigContent">고객센터</li>
-						<li><a href="#"
+						<li class="bigContent no">고객센터</li>
+						<li><a class="page"
 							onclick="location.href='<%=request.getContextPath()%>/views/myPage/ServiceCenter.jsp';">문의
 								내역</a></li>
 					</ul>
@@ -546,10 +572,19 @@ h2 {
 						</tr>
 
 						<tr>
-							<td>이메일<input type="text" id="upEmail" name="upEmail"
-								value="<%=loginUser.getEmail()%>" style="margin-left: 52px;">
-								<button id="emailCheck" type="button" onclick="checkEmail()">이메일
-									인증</button>
+							<td>이메일
+							<input type="text" name="upEmail" id="upEmail" value="<%= loginUser.getEmail().substring(0, loginUser.getEmail().indexOf("@")) %>" required>@
+							<select
+								id="upEmail2" name="upEmail2">
+									<option value="naver.com">naver.com</option>
+									<option value="naver.com">daum.net</option>
+									<option value="naver.com">hanmail.net</option>
+									<option value="naver.com">google.com</option>
+							</select>
+							</td>
+							<td>
+								<div style="margin-left:-450px;"><button id="emailCheck" type="button">이메일 인증</button></div>
+								<div style="margin-left:-450px;"><input type="text" id="key" style="width:100px;" placeholder="인증번호입력"></div>
 							</td>
 						</tr>
 					</table>
@@ -696,6 +731,38 @@ h2 {
 				    		 
 				    	 });
 				    	 
+				    	 var key;
+					 		$(function() {
+					 			$("#emailCheck").click(function(){
+					 				var email = $("#upEmail").val() + '@' + $("#upEmail2").val();
+					 				$.ajax({
+					 					// url : 데이터를 전송할 url(필수!!!)
+					 					url : "<%= request.getContextPath() %>/mail.mo",
+					 					
+					 					// data : 요청 시 전달할 파라미터 설정
+					 					data : {email:email},
+					 					// key:value
+					 					
+					 					// type : 전송 방식(GET / POST)
+					 					type : "get",
+					 					
+					 					// success : Ajax 통신 성공 시 처리할 함수를 지정하는 속성
+					 					success : function(result){
+					 						// result 매개변수 : 서버에서 응답이 왔을 때 그 값이 저장 되는 변수
+					 						// 매개변수명 임의 지정 가능
+					 						key = result;
+					 						checkEmail = true;
+					 					},
+					 					
+					 					// error : Ajax 통신 실패 시 처리할 함수를 지정하는 속성
+					 					error : function(){
+					 						console.log('Ajax 통신 실패...');
+					 						checkEmail = false;
+					 					}					
+					 				});
+					 			});
+					 		})
+				    	 
 				    	 
 				    	 $("#updateBtn").click(function() {
 				    		 console.log(checkId + " " + checkPwd1 + " " + checkPwd2 + " " + checkNickName + " " + checkPhone);
@@ -720,6 +787,8 @@ h2 {
 					    			}else if(checkPhone == false) {
 					    				alert("연락처를 체크해주세요");
 					    				location.href="#upPhone";
+					    			}else if($("#key").val() != key){
+					    				alert("이메일 및 인증번호를 체크해주세요");
 					    			}else {
 					    				
 					    			}
@@ -729,6 +798,7 @@ h2 {
 			</script>
 		</section>
 	</section>
+	<%@ include file="../common/footer.jsp" %>
 </body>
 
 </html>

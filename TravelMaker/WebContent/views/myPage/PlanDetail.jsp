@@ -3,10 +3,12 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="member.model.vo.Member" %>
+<%@page import="member.model.vo.MyPlan" %>
+<%@page import="java.util.ArrayList" %>
 <%
 	String contextPath = request.getContextPath();
 	Member loginUser = (Member)request.getSession().getAttribute("loginUser");
-	System.out.println(loginUser);
+	ArrayList<MyPlan> planList = (ArrayList)request.getSession().getAttribute("planList");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -296,7 +298,7 @@ opacity: 0;
 					<button class="btn btn-success"
 						style="margin-left: 45%"
 						onclick="location.href='<%=request.getContextPath()%>'">취소</button>
-					<button class="btn btn-success">변경</button>
+					<button class="btn btn-success">추가</button>
 				</div>
 				<div class="week-space"></div>
 			</div>
@@ -310,11 +312,13 @@ opacity: 0;
 			$("#titleImgArea").click(function() {
 				$("#thumbnailImg1").click();
 			});
+			var date = new Date();
+			var hour = date.getHours();
 			
 			$('input[name=plan-start-date]').val(new Date().toISOString().substring(0,10));
 			$('input[name=plan-end-date]').val(new Date().toISOString().substring(0,10));
-			$('input[name=plan-start-time]').val(new Date().toISOString().slice(11,14) + "00");
-			$('input[name=plan-end-time]').val(new Date().toISOString().slice(11,14) + "00");
+			$('input[name=plan-start-time]').val(hour + ":00");
+			$('input[name=plan-end-time]').val((hour + 1) + ":00");
 		});
 		
 		function LoadImg(value, num) {

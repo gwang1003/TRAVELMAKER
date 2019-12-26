@@ -430,24 +430,28 @@
 					<th>아이디</th>
 					<th>닉네임</th>
 					<th>생년월일</th>
+					<th>전화번호</th>
 					<th>이메일</th>
 					<th>가입일</th>
 					<th>최근접속일</th>
 					<th>경고횟수</th> 
+					<th>STATUS</th>
 				</tr>
 				<% if(mList != null) {%>
 					<% for(Member m : mList) { %>
 						<tr height="40">
-							<th><input type="checkbox" value="<%= m.getM_seq()%>" name="mSeq"></th>
+							<th><input type="checkbox" value="<%= m.getmId()%>" name="mSeq" id="mSeq"></th>
 							<th><%= m.getM_seq()%></th>
 							<th><%= m.getmName()%></th>
 							<th><%= m.getmId()%></th>
 							<th><%= m.getNickName()%></th>
 							<th><%= m.getmNo()%></th>
+							<th><%= m.getPhone() %></th>
 							<th><%= m.getEmail()%></th>
 							<th><%= m.getJoinDate()%></th>
 							<th><%= m.getAccessDate() %></th>
 							<th><%= m.getReport() %></th>
+							<th><%= m.getStatus() %></th>
 						</tr>
 					<% } %>
 				<% }else { %>
@@ -460,12 +464,15 @@
 	</section>
 	
 	<script>
-		$(fucntion(){
-			$(".deleteM").click(function(){
-				$("input[name=mSeq]").attr("checked").val()
-			})
-		})
+
 		
+	$(function(){
+		$(".deleteM").click(function(){
+			var a = $("input:checkbox[name='mSeq']:checked").val()
+			console.log(a);
+			location.href="<%= request.getContextPath() %>/drop.me?mId=" + a;
+		})
+	})
 	
 	</script>
 </body>

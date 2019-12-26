@@ -5,8 +5,10 @@
     	Information info = (Information)request.getAttribute("info");
     	ArrayList<Attachment> fileList = (ArrayList<Attachment>) request.getAttribute("flist");
     	
-    	System.out.println("bid : " + board.getbId());
+    	System.out.println("fileList : " + fileList.get(0));
     	Attachment titleImg = fileList.get(0);
+    	
+    	System.out.println(fileList.get(1));
     
     	String lcode = board.getlCode();
     	System.out.println("asldkfjasldjf :" + board);
@@ -129,6 +131,7 @@ label{
 
 		<!-- 파일 업로드를 위해서는 enctype을 지정해줘야 함 -->
 		<form action="<%= contextPath %>/update.fe" method="post">
+		<input type="hidden" value="2" name="flag">
 			<div class="insertArea">
 				<table align="center">
 					<br>
@@ -164,10 +167,12 @@ label{
 						<td colspan="3"><textarea name="content" rows="7" cols="102"
 								style="resize: none;"><%= board.getbContent() %></textarea></td>
 					</tr>
-
+					
+					
 					<tr>
 						<td style="font-family: 'Do Hyeon', sans-serif;">내용 사진</td>
 						<td>
+						
 							<div id="contentImgArea1">
 								<img id="contentImg1" width="245" height="150" src="<%= contextPath %>/resources/festival_uploadFile/<%= fileList.get(1).getChangeName() %>">
 							</div>
@@ -183,6 +188,7 @@ label{
 							</div>
 						</td>
 					</tr>
+				
 
 				</table>
 
@@ -277,10 +283,11 @@ label{
 					style="font-family: 'Do Hyeon', sans-serif;">작성완료</button>
 				<button type="button" class="btn btn-outline-danger"
 					style="font-family: 'Do Hyeon', sans-serif;"
-					onclick="javascript:history.back();">삭제하기</button>
+					onclick="javascript:history.back();">취소하기</button>
 				
 			</div>
 		</form>
+		
 
 
 	</div>

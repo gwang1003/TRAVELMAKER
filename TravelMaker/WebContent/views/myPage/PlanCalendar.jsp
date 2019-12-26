@@ -1,9 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="member.model.vo.Member" %>
+<%@page import="member.model.vo.MyPlan" %>
+<%@page import="java.util.ArrayList" %>
+<%
+	ArrayList<MyPlan> planList = (ArrayList)request.getSession().getAttribute("planList");	
+	Member loginUser2 = (Member)request.getSession().getAttribute("loginUser");
+	if(!planList.isEmpty()) {
+		System.out.println(planList);
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset='utf-8' />
+<script
+  src="https://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous">
+</script>
 <link href='<%= request.getContextPath() %>/resources/fullcalendar-4.3.1/packages/core/main.css' rel='stylesheet' />
 <link href='<%= request.getContextPath() %>/resources/fullcalendar-4.3.1/packages/daygrid/main.css' rel='stylesheet' />
 <link href='<%= request.getContextPath() %>/resources/fullcalendar-4.3.1/packages/timegrid/main.css' rel='stylesheet' />
@@ -20,18 +35,30 @@
 	});
 
   document.addEventListener('DOMContentLoaded', function() {
+	  var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		if(dd<10) {
+		    dd='0'+dd
+		} 
+		if(mm<10) {
+		    mm='0'+mm
+		} 
+		today = yyyy + '-' + mm + '-' + dd;
+
     var initialLocaleCode = 'ko';
     var localeSelectorEl = document.getElementById('locale-selector');
     var calendarEl = document.getElementById('calendar');
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
       header: {
         left: 'prev,next today',
         center: 'title',
         right: 'dayGridMonth,listMonth'
       },
-      defaultDate: '2019-08-12',
+      defaultDate: today,
       locale: initialLocaleCode,
       buttonIcons: false, // show the prev/next text
       weekNumbers: true,
@@ -86,51 +113,63 @@
         },
         {
           title: 'Birthday Party',
-          start: '2019-08-13T07:00:00'
+          start: '2019-08-13T07:00:00',
         },
         {
           start: '2019-08-28',
           imageurl: '<%= request.getContextPath() %>/resources/images/강원도.jpg'
         }
+        <% if(!planList.isEmpty()) { %>
+    		<% for(MyPlan p : planList) { %>
+    			<% if(p.getmSeq() == loginUser2.getM_seq()) {%>
+    				,{
+    					title: '<%= p.getpName()%>',
+    					start: '<%= p.getStartDate() + "T" + p.getStartTime() %>',
+    					end: '<%= p.getEndDate() + "T" + p.getEndTime() %>',
+    					<% if(p.isFileBoard()) { %>
+							imageurl: '<%= request.getContextPath() %>/resources/festival_uploadFile/<%= p.getFileName() %>',
+						<% }else { %>
+							imageurl: '<%= request.getContextPath() %>/resources/myplan_upload/<%= p.getFileName() %>',
+						<% } %>
+    					id: '<%= p.getpSeq() %>',
+    					locationid: '<%= p.getmSeq() %>'
+    				}
+    			<% }%>
+    		<% }%>
+    	<% }%>
       ]
       ,dateClick: function(info) {
-    	  request.getSession().setAttribute("clickday", info.dateStr);
-    	  
+    	  sessionStorage.setItem("clickday", info.dateStr);
     	  var left = (screen.width/2)-300;
-    	  var top = (screen.height/2)-225;
+    	  var top = (screen.height/2)-300;
     	  var url = "<%= request.getContextPath() %>/views/myPage/PlanList.jsp";
-    	  var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=450" + ",top=" + top + ",left=" + left);
+    	  var uploadWin = window.open(url,"Calendar","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=600" + ",top=" + top + ",left=" + left);
     	  uploadWin.moveTo(left, top);
     	  uploadWin.focus();
 	  }
-      , eventRender:function(event, eventElement) {
-          if(event.imageurl) {
-              eventElement.find("span .fc-title").prepend("<center><img src='" + event.imageurl + "'><center>");
-          }
+      , eventRender:function(info) {   
+    	  <% if(!planList.isEmpty()) { %>
+    	  	if (info.event.extendedProps.imageurl) {
+           	   info.el.firstChild.innerHTML = "<img src='" + info.event.extendedProps.imageurl +"' width='60' height='40' style='display:block; margin-left:auto; margin-right:auto;'>" + "<div style='text-align:center'><%= planList.get(0).getpName() %></div>";
+    	  	}
+    	  <% } %>
       }
-      , eventClick:function(event) {
-    	  var yy=date.format("YYYY");
-   	   	  var mm=date.format("MM");
-   	      var dd=date.format("DD");
-   	      var ss=date.format("dd");
-   	      System.out.println("yymmdd : " + yy + mm + dd);
-   	       request.getSession().setAttribute("clickdate", new date(yy + mm + dd));
-   	       
+      , eventClick:function(info) {
+    	  console.log(info.event.start);
+    	  if(info.event.start.getMonth() <= 8) {
+    		  sessionStorage.setItem("clickday", info.event.start.getFullYear() + "-0" + (info.event.start.getMonth() + 1) + "-" + info.event.start.getDate());
+    	  }else {
+    		  sessionStorage.setItem("clickday", info.event.start.getFullYear() + "-" + (info.event.start.getMonth() + 1) + "-" + info.event.start.getDate());
+    	  }
+    	  
     	  var left = (screen.width/2)-300;
-    	  var top = (screen.height/2)-225;
+    	  var top = (screen.height/2)-300;
     	  var url = "<%= request.getContextPath() %>/views/myPage/PlanList.jsp";
-    	  var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=450" + ",top=" + top + ",left=" + left);
+    	  var uploadWin = window.open(url,"Calendar","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=600" + ",top=" + top + ",left=" + left);
     	  uploadWin.moveTo(left, top);
     	  uploadWin.focus();
       }
-      <%-- , eventClick:function(event) {
-    	  var left = (screen.width/2)-300;
-    	  var top = (screen.height/2)-225;
-    	  var url = "<%= request.getContextPath() %>/views/myPage/PlanDetail.jsp";
-    	  var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=600, height=450" + ",top=" + top + ",left=" + left);
-    	  uploadWin.moveTo(left, top);
-    	  uploadWin.focus();
-      } --%>
+      
     });
 
     calendar.render();
@@ -141,21 +180,14 @@
       optionEl.value = localeCode;
       optionEl.selected = localeCode == initialLocaleCode;
       optionEl.innerText = localeCode;
-      localeSelectorEl.appendChild(optionEl);
-    });
-
-    // when the selected option changes, dynamically change the calendar option
-    localeSelectorEl.addEventListener('change', function() {
-      if (this.value) {
-        calendar.setOption('locale', this.value);
-      }
+      /* localeSelectorEl.appendChild(optionEl); */
     });
 
   });
 </script>
 <style>
 
-  body {
+  #calendar {
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
@@ -174,6 +206,7 @@
     max-width: 900px;
     margin: 0 auto;
     padding: 0 10px;
+    z-index:-1;
     <%-- background-image : url(<%= request.getContextPath() %>/resources/images/PlanBackground.jpeg);
     background-size : 100%;
     /* opacity:0.5!important; */
@@ -191,6 +224,7 @@
   .fc-week-number {
   	display:none;
   }
+  
 </style>
 </head>
 <body>

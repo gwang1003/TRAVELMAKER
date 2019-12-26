@@ -58,7 +58,7 @@ public class MemberDao {
 			if (rset.next()) {
 				loginUser = new Member(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getString(4),
 						rset.getString(5), rset.getString(6), rset.getString(7), rset.getDate(8), rset.getDate(9), rset.getString(10),
-						rset.getString(11), rset.getInt(12), rset.getString(13));
+						rset.getString(11), rset.getInt(12), rset.getString(13), rset.getString(14));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -168,7 +168,7 @@ public class MemberDao {
 			if (rset.next()) {
 				mem = new Member(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getString(4),
 						rset.getString(5), rset.getString(6), rset.getString(7), rset.getDate(8), rset.getDate(9), 
-						rset.getString(10), rset.getString(11), rset.getInt(12), rset.getString(13));
+						rset.getString(10), rset.getString(11), rset.getInt(12), rset.getString(13), rset.getString(14));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -258,8 +258,8 @@ public class MemberDao {
 	         
 	         while (rset.next()) {
 	            mList.add(new Member(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getString(4),
-	                  rset.getString(5), rset.getString(6), rset.getString(7), rset.getDate(8), 
-	                  rset.getString(9), rset.getString(10)));
+						rset.getString(5), rset.getString(6), rset.getString(7), rset.getDate(8), rset.getDate(9), 
+						rset.getString(10), rset.getString(11), rset.getInt(12), rset.getString(13), rset.getString(14)));
 	         }
 	      } catch (SQLException e) {
 	         e.printStackTrace();
@@ -269,4 +269,125 @@ public class MemberDao {
 	      }
 	      return mList;
 	   }
+	
+	public int insertProfile(Connection conn, int userSeq, String profile) {
+		int result = 0;
+
+		PreparedStatement pstmt = null;
+
+		String sql = prop.getProperty("insertProfile");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, profile);
+			pstmt.setInt(2, userSeq);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public String findMemberId(Connection conn, String findName, String findNo) {
+		String memberId = "";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("findMemberId");
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, findName);
+			pstmt.setString(2, findNo);
+
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				memberId = rset.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return memberId;
+	}
+
+	public String findMemberPwd(Connection conn, String findId, String findName, String findNo) {
+		String memberPass = "";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("findMemberPwd");
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, findId);
+			pstmt.setString(2, findName);
+			pstmt.setString(3, findNo);
+
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				memberPass = rset.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return memberPass;
+	}
+	
+	public int report(Connection conn, int mSeq) {
+	      PreparedStatement pstmt = null;
+	      int result = 0;
+	      String sql = prop.getProperty("report");
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+
+	         pstmt.setInt(1, mSeq);
+	         
+
+	         result = pstmt.executeUpdate();
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } finally {
+	         close(pstmt);
+	      }
+	      return result;
+	   }
+
+	public Member reportNo(Connection conn, int mSeq) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reportNo");
+		Member report = new Member();
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, mSeq);
+
+
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				report = new Member(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getString(4),
+						rset.getString(5), rset.getString(6), rset.getString(7), rset.getDate(8), rset.getDate(9), 
+						rset.getString(10), rset.getString(11), rset.getInt(12), rset.getString(13), rset.getString(14));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return report;
+	}
 }

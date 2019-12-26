@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import board.model.service.BoardService;
 import board.model.vo.Attachment;
 import board.model.vo.Board;
+import board.model.vo.Information;
 import board.model.vo.PageInfo;
 
 /**
@@ -36,11 +37,14 @@ public class FestivalAllList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		int flag = Integer.parseInt(request.getParameter("flag"));
 		BoardService bs = new BoardService();
+		
+		String no = request.getParameter("no");
 
 		
 		// 1_1. 게시판 리스트 총 갯수 구하기
-		int listCount = bs.getListCount();
+		int listCount = bs.getListCount(flag);
 		
 		// System.out.println("listCount : " + listCount);
 		
@@ -52,8 +56,8 @@ public class FestivalAllList extends HttpServlet {
 		int maxPage;			// 전체 페이지에 가장 마지막 페이지
 		int startPage;			// 한 페이지 하단에 보여질 시작 페이지
 		int endPage;			// 한 페이지 하단에 보여질 끝 페이지
-		
-		int boardLimit = 6;	// 한 페이지에 보여질 게시글 최대 수
+		int boardLimit = 6;
+
 		
 		// * currentPage : 현재 페이지
 		// 기본적으로 게시판은 1페이지부터 시작함
@@ -96,16 +100,34 @@ public class FestivalAllList extends HttpServlet {
 		// 페이지 정보를 공유할 vo 객체 PageInfo 클래스를 만들고 오자
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 		
-		ArrayList<Board> blist = bs.selectList(1,currentPage, boardLimit);
-		ArrayList<Attachment> flist = bs.selectList(2,currentPage, boardLimit);
+		ArrayList<Board> blist = bs.selectList(flag,currentPage, boardLimit, 1);
+		ArrayList<Attachment> flist = bs.selectList(flag,currentPage, boardLimit, 2);
+		ArrayList<Information> in = bs.InformationAll();
 		
 		if (blist != null && flist != null) {
+			request.setAttribute("in", in);
 			request.setAttribute("blist", blist);
 			request.setAttribute("flist", flist);
 			request.setAttribute("pi", pi);
-			RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");
+			System.out.println(flag);
+			if(flag == 1) {
+				RequestDispatcher view = request.getRequestDispatcher("views/board/trip/tripAllList.jsp");				
+				view.forward(request, response);
+				
+			}else if(flag == 2){
+				RequestDispatcher view = request.getRequestDispatcher("views/board/festival/festivalAllList.jsp");				
+				view.forward(request, response);
+			}else if(flag == 3){
+				
+				
+			}else if(flag == 4){
+				RequestDispatcher view = request.getRequestDispatcher("views/board/community/communityAllList.jsp");				
+				view.forward(request, response);
+			}else if(no != null) {
+				RequestDispatcher view = request.getRequestDispatcher("views/myPage/Board.jsp");				
+				view.forward(request, response);
+			}
 			
-			view.forward(request, response);
 
 		} else {
 			request.setAttribute("msg", "사진 게시판 조회 실패!!");

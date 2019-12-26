@@ -43,6 +43,8 @@ public class PlanInsertServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		boolean isMulti = ServletFileUpload.isMultipartContent(request);
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
+		ArrayList<MyPlan> planList = (ArrayList)request.getSession().getAttribute("planList");
+		
 		if(isMulti) {
 			int maxSize = 1024 * 1024 * 10;
 			String root = request.getSession().getServletContext().getRealPath("/");
@@ -68,19 +70,28 @@ public class PlanInsertServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			MyPlan p = new MyPlan(loginUser.getM_seq(), planName, planStartDate
+			int pId = 1;
+			if(planList != null) {
+				int max = 1;
+				for(MyPlan p : planList) {
+					if(p.getmSeq() == userSeq && p.getpSeq() >= max) {
+						max = p.getpSeq();
+					}
+				}
+				pId = ++max;
+			}
+			
+			MyPlan p = new MyPlan(pId, userSeq, planName, planStartDate
 						, planEndDate, planStartTime, planEndTime, fileName);
 			
-			
-			 try {
-				 int result = new PlanService().insertPlan(p, userSeq);
+			try {
+				 int result = new PlanService().insertPlan(p);
                  if (result > 0) {
-                       ArrayList<MyPlan> list = new PlanService().selectAllPlan();
-                       
-                       request.setAttribute("planList", list);
-                       response.sendRedirect(request.getContextPath() + "/views/myPage/PlanList.jsp");
+                	 planList = new PlanService().selectAllPlan();
+                	 request.getSession().setAttribute("planList", planList);
+                	 request.getRequestDispatcher("views/myPage/PlanList.jsp").forward(request, response);
                  } else {
-                       response.sendRedirect(request.getContextPath() + "/views/myPage/PlanList.jsp");
+                	 request.getRequestDispatcher("views/myPage/PlanList.jsp").forward(request, response);
                  }
            } catch (Exception e) {
                  e.printStackTrace();

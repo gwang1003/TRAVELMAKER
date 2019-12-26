@@ -56,7 +56,7 @@ public class Board {
 	
 
 	public Board(int bId, Date wDate, Date uDate, String bTitle, String bContent, int bCount, String bWriter,
-			String status, String lCode, int bType) {
+			String status, String lCode, int bType,int mId) {
 		this.bId = bId;
 		this.wDate = wDate;
 		this.uDate = uDate;
@@ -67,7 +67,18 @@ public class Board {
 		this.status = status;
 		this.lCode = lCode;
 		this.bType = bType;
+		this.mId = mId;
 	}
+	
+	public Board(String bTitle, String bContent, String bWriter, int mId) {
+	      super();
+	      this.bTitle = bTitle;
+	      this.bContent = bContent;
+	      this.bWriter = bWriter;
+	      this.mId = mId;
+	   }
+
+
 
 	public int getbId() {
 		return bId;
