@@ -10,7 +10,7 @@ import static common.JDBCTemplate.*;
 
 public class MemberService {
 
-	// 로그인 
+	// 로그인
 	public Member loginMember(String userId, String userPwd) {
 		Connection conn = getConnection();
 
@@ -165,6 +165,35 @@ public class MemberService {
 	}
 	
 	public int report(int mSeq) {
+
+        Connection conn = getConnection();
+        
+        int result = new MemberDao().report(conn, mSeq);
+        
+        if(result > 0) {
+           commit(conn);
+        }else {
+           rollback(conn);
+        }
+        return result;
+     }
+
+	public Member reportNo(int mSeq) {
+     Connection conn = getConnection();
+     Member report = new MemberDao().reportNo(conn, mSeq);
+     
+     close(conn);
+     return report;
+	}
+
+	public int getListCount() {
+     Connection con = getConnection();
+     int result = new MemberDao().getAllListCount(con);
+
+     close(con);
+
+     return result;
+
 	      Connection conn = getConnection();
 	      
 	      int result = new MemberDao().report(conn, mSeq);
@@ -183,5 +212,6 @@ public class MemberService {
 		
 		close(conn);
 		return report;
+
 	}
 }
