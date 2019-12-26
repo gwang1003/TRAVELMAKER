@@ -194,24 +194,8 @@ public class MemberService {
 
      return result;
 
-	      Connection conn = getConnection();
-	      
-	      int result = new MemberDao().report(conn, mSeq);
-	      
-	      if(result > 0) {
-	         commit(conn);
-	      }else {
-	         rollback(conn);
-	      }
-	      return result;
-	   }
 
-	public Member reportNo(int mSeq) {
-		Connection conn = getConnection();
-		Member report = new MemberDao().reportNo(conn, mSeq);
-		
-		close(conn);
-		return report;
+	  }
 
-	}
+
 }

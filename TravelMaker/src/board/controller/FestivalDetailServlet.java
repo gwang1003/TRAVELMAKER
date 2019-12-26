@@ -39,7 +39,12 @@ public class FestivalDetailServlet extends HttpServlet {
 
 		BoardService bService = new BoardService();
 
-		int detailflag = Integer.parseInt(request.getParameter("flag"));
+		int detailflag = 2;
+		if(request.getParameter("flag") != null) {
+			detailflag = Integer.parseInt(request.getParameter("flag"));
+		}else {
+			detailflag = 2;
+		}
 		// 1. 해당 게시판 정보 조회
 		Board board = null;
 
