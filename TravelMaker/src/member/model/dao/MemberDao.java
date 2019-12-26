@@ -363,4 +363,31 @@ public class MemberDao {
 	      }
 	      return result;
 	   }
+
+	public Member reportNo(Connection conn, int mSeq) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reportNo");
+		Member report = new Member();
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, mSeq);
+
+
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				report = new Member(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getString(4),
+						rset.getString(5), rset.getString(6), rset.getString(7), rset.getDate(8), rset.getDate(9), 
+						rset.getString(10), rset.getString(11), rset.getInt(12), rset.getString(13), rset.getString(14));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return report;
+	}
 }

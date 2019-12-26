@@ -1,27 +1,27 @@
 package member.controller.member;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import member.model.service.MemberService;
 import member.model.vo.Member;
 
 /**
- * Servlet implementation class ReportServlet
+ * Servlet implementation class DropMemberServlet
  */
-@WebServlet("/report.me")
-public class ReportServlet extends HttpServlet {
+@WebServlet("/drop.me")
+public class DropMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReportServlet() {
+    public DropMemberServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,19 +30,17 @@ public class ReportServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int mSeq = Integer.parseInt(request.getParameter("mSeq"));
-		int bId = Integer.parseInt(request.getParameter("bId"));
-		
-		int result = new MemberService().report(mSeq);
-		
-		Member m = new MemberService().reportNo(mSeq);
-		System.out.println(m);
-		if(m.getReport() == 5) {
-			int delete = new MemberService().deleteMember(m.getmId());
-		}
-		
+		String mId = (String) request.getParameter("mId");
+		System.out.println(mId);
+		int result = new MemberService().deleteMember(mId);
+
 		if(result > 0) {
-			response.sendRedirect("detail.co?bId=" + bId);
+			request.getSession().invalidate();
+			response.sendRedirect(request.getContextPath() + "/select.mo");
+			
+		}else {
+			request.setAttribute("msg", "회원 삭제에 실패하였습니다.");
+			response.sendRedirect(request.getContextPath());
 		}
 	}
 
