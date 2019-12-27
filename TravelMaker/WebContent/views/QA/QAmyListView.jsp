@@ -21,6 +21,9 @@
 	href="https://fonts.googleapis.com/css?family=Black+Han+Sans&display=swap"
 	rel="stylesheet">
 <title>Insert title here</title>
+<script
+  src="https://code.jquery.com/jquery-2.2.4.js"></script>
+
 <!-- 영역 분할 -->
 <style>
 /* 몸체 */
@@ -29,7 +32,6 @@
 	width: 1500px;
 	height: 700px;
 	display: flex;
-	overflow: auto;
 	flex-direction: row;
 	margin-left: auto;
 	margin-right: auto;

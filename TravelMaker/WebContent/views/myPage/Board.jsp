@@ -526,13 +526,7 @@ th {
 					<%
 						if (loginUser != null) {
 					%>
-					<div id="write" style="margin-top:7px; margin-bottom:15px;">
-						<button type="button" id="insertBtn"
-							onclick="location.href='<%=contextPath%>/views/board/community/communityInsert.jsp'">
-							<img src="<%=contextPath%>/resources/images/edit.png"
-								width="40px" height="40px">
-						</button>
-					</div>
+					
 					<%
 						}
 					%>
