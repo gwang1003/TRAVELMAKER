@@ -8,9 +8,9 @@
 	Sleep s = (Sleep) request.getAttribute("sleep");
 
 	
-	System.out.println("sleep : " + s);
+	System.out.println("sleep reservation: " + s);
 
-	System.out.println("room : " + r);
+	System.out.println("room reservation: " + r);
 	 
 
 	
@@ -115,24 +115,23 @@
 #pop_agree_01 .fix_cont, #pop_agree_02 .fix_cont, #pop_agree_03 .fix_cont{overflow:hidden;position:absolute;z-index:1;top:44px;bottom:0;left:0;width:100%;margin:0 0 0 0}
 @media all and (min-width:1024px){
 	#pop_agree_01, #pop_agree_02, #pop_agree_03{overflow:hidden;position:fixed;top:50%;right:auto;left:50%;bottom:auto;width:529px !important;height:592px;margin:-296px 0 0 -265px !important;border-radius:4px}
-.fix_title{display:block;position:absolute;top:0;left:0;height:64px;padding:0 0 0 32px;background:#fff;font-size:18px;font-weight:bold;line-height:64px;text-align:left}
-.fix_title button{top:20px;right:25px}
-.fix_cont{overflow:hidden;position:absolute;z-index:1;top:64px;bottom:0;left:0;width:100%;margin:0 0 0 0}
+.fix_title{
+display:block;
+position:absolute;
+top:0;
+left:80;
+height:22px;
+padding:0 0 0 32px;
+background:#fff;
+font-size:18px;
+font-weight:bold;
+line-height:64px;
+text-align:left
+}
+.fix_title button{top:50px;right:25px}
+.fix_cont{overflow:hidden;position:absolute;z-index:1;top:20px;bottom:0;left:0;width:100%;margin:0 0 0 0}
 }
 
-.fix_title {
-    position: fixed;
-    top: 0;
-    left: -20px;
-    right: 0;
-    z-index: 300;
-    width: 100%;
-    height: 44px;
-    background: #fff;
-    font-size: 18px;
-    line-height: 265px;
-    text-align: center;
-}
 
 
 
@@ -190,7 +189,7 @@ $(function(){
          dateFormat: "yymmdd",
          minDate: 0,
          onClose: function( selectedDate ) {   
-        	 
+        	  
               //시작일(startDate) datepicker가 닫힐때
               //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
          $("#endDate").datepicker( "option", "minDate", selectedDate );
@@ -234,9 +233,9 @@ $(function(){
              var total = betweenDay * <%= r.getPrice()%>;
              
              $("#totalPrice").text(total+"원");
-             var type = <%= r.getrContent()%>+"  /"+betweenDay+"박";
-             $("#betweenDate").text(type);
              
+             var type = "<%= r.getrContent()%>" + "  /" + betweenDay+"박";
+             $("#betweenDate").text(type);
              $("#total").val(total);
              
 			
@@ -253,7 +252,7 @@ $(function(){
 
 
    <%@ include file="../../views/common/menubar.jsp" %>
-		
+		<%= r.getrContent() %>
 
         <div id="rs">
         <h3>예약자 정보</h3>
@@ -407,7 +406,7 @@ $(function(){
 			           
 			
 			            <div style="color:gray; font-size:17px; margin-top:8%; margin-left:6%;">객실타입/기간 </div>
-			            <div type="hidden" name="betweenDate" id="betweenDate" style="color:black; font-size:22px; margin-top:3%; margin-left:6%;"><%-- <%=r.getrContent() %> --%></div>
+			            <div type="hidden" name="betweenDate" id="betweenDate" style="color:black; font-size:22px; margin-top:3%; margin-left:6%;"></div>
 			            <hr>
 			
 			            <div style="color:gray; font-size:17px; margin-top:8%; margin-left:6%;">체크인 </div>

@@ -96,7 +96,7 @@ public class SleepListServlet extends HttpServlet {
 			request.setAttribute("flist", flist);
 			request.setAttribute("pi", pi);
 			request.getRequestDispatcher("views/Sleep/SleepAll.jsp").forward(request, response);
-
+ 
 		} else {
 			request.setAttribute("msg", "사진 게시판 조회 실패!!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

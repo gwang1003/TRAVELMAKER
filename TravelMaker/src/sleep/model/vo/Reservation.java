@@ -19,7 +19,7 @@ public class Reservation {
 		this.checkout = checkout;
 		this.r_id = r_id;
 	}
-
+ 
 	public int getRsv_id() {
 		return rsv_id;
 	}
