@@ -36,7 +36,7 @@ public class SleepDeleteServlet extends HttpServlet {
     int result = new SleepService().deleteSleep(sid);
     int result1 = new SleepService().deleteAttachment(sid);
     int result2 = new SleepService().deleteroom(sid);
-    
+     
     if(result>0 && result1>0 && result2>0) {
        response.sendRedirect("list.sl");
     }else {

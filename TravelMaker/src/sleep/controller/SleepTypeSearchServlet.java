@@ -108,7 +108,7 @@ public class SleepTypeSearchServlet extends HttpServlet {
 	}
 }
 	
-
+ 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

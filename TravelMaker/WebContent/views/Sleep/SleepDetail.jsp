@@ -206,7 +206,7 @@ body {
 	font-size: 14px;
 }
 
-.tab button:nth-child(2) {
+.tab button:nth-child(0) {
 	float: left;
 	width: 200px;
 	height: 48px;
@@ -218,7 +218,8 @@ body {
 
 .tab .on {
 	float: left;
-	border-bottom: 2px solid rgb(242, 17, 76);
+
+
 	font-weight: bold;
 	color: rgb(230, 28, 81);
 }
@@ -318,11 +319,11 @@ body {
 
 		<div class="sub2">
 
-			<div style="border: 1px solid red;" class="tab">
-				<button id="hide2" onclick="hide1('subtotal');" class="on">
+			<div class="tab">
+				<button id="hide1" onclick="hide1(1);" class="on">
 					<span>객실안내/예약</span>
 				</button>
-				<button id="hide2" onclick="hide2('subtotal2');">
+				<button id="hide2" onclick="hide2(2);" class="on">
 					<span>숙소정보</span>
 				</button>
 			</div>
@@ -372,8 +373,13 @@ body {
 			
 		</div>
 
+	
+	<div id="subtotal2" style="display:none; float:left; width:700px; margin-left:300px; margin-top:100px;">
+		<h3><%= s.getsContent() %></h1>
+	
 	</div>
 	
+	</div>
 
 
 	<form action="" id="detailForm" method="post">
@@ -422,12 +428,26 @@ body {
 		}
 		
 		function hide1(target){
-       	 document.getElementById(target).style.display = 'block';
+       	 $('#subtotal').css("display","unset");
+       	$('#subtotal2').css("display","none");
        }
 		
 		function hide2(target){
-	       	 document.getElementById(target).style.display = 'block';
+			$('#subtotal').css("display","none");
+			$('#subtotal2').css("display","unset");
 	       }
+	
+		
+		/* .tab button:nth-child(2) {
+	float: left;
+	width: 200px;
+	height: 48px;
+	border: none;
+	border-bottom: 2px solid #fff;
+	background: none;
+	font-size: 14px;
+} */
+		
 	</script>
 
 </body>

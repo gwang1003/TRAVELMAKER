@@ -102,7 +102,7 @@ public class SleepLocationServlet extends HttpServlet {
 		case 60:
 			lname = "전라도 지역";
 			break;
-
+ 
 		}
 
 		if (list != null && list2 != null) {

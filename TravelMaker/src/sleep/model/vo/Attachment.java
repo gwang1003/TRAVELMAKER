@@ -18,7 +18,7 @@ public class Attachment {
 		
 	}
 
-
+ 
 	public Attachment(int fId, int bId, String originName, String changeName, String filePath,
 			int fileLevel, Date createDate, Date modifyDate, String status) {
 		super();

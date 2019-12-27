@@ -189,7 +189,7 @@ $(function(){
          dateFormat: "yymmdd",
          minDate: 0,
          onClose: function( selectedDate ) {   
-        	 
+        	  
               //시작일(startDate) datepicker가 닫힐때
               //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
          $("#endDate").datepicker( "option", "minDate", selectedDate );

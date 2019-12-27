@@ -160,7 +160,7 @@ public class SleepInsertServlet extends HttpServlet {
 		System.out.println(sId);
 		int result1 = new SleepService().insertRoom(R, sId);
 		
-
+ 
 		if (result > 0 && result1 > 0) {
 			response.sendRedirect("list.sl");
 			

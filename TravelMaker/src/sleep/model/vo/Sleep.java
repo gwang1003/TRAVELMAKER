@@ -21,7 +21,7 @@ public class Sleep {
 
 	
 
-	
+	 
 
 	public Sleep(int sId, String sType, String sName, String sContent, String lCode, int price, int mId, String sWriter,
 			int sCount, String status, String address, String enName) {

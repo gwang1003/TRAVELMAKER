@@ -21,7 +21,7 @@ public class Room {
 	}
 	
 	
-
+ 
 	public Room(int price, String rContent) {
 		super();
 		this.price = price;

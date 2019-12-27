@@ -81,7 +81,7 @@ public class SleepDetailServlet extends HttpServlet {
 		ArrayList<Attachment> fileList = sService.selectThumbnail(sId);
 		RList = sService.selectrList(sId);
 		
-		
+		 
 		if(fileList != null) {
 			request.setAttribute("sleep", sleep);
 			request.setAttribute("fileList", fileList);
