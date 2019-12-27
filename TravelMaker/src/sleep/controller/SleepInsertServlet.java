@@ -40,9 +40,7 @@ public class SleepInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {request.setCharacterEncoding("UTF-8");
-	System.out.println("1");
 	if (ServletFileUpload.isMultipartContent(request)) {
-		System.out.println("2");
 		int maxSize = 1024 * 1024 * 10;
 
 		String root = request.getSession().getServletContext().getRealPath("/");

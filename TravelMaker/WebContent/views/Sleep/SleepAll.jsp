@@ -8,6 +8,7 @@
 
 	PageInfo pi = (PageInfo) request.getAttribute("pi");
 
+
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
@@ -41,7 +42,7 @@ body {
 }
 
 #total {
-float:left;
+	float: left;
 	width: 100%;
 	height: 950px;
 }
@@ -54,21 +55,18 @@ float:left;
 	border: 1px solid black;
 	padding: 0;
 	background: white;
-
 	border-radius: 3px;
 }
 
 #ct {
 	width: 380px;
 }
-  
 
-#choice2 {	
-	margin-left:5%;
-	float:left;
+#choice2 {
+	margin-left: 5%;
+	float: left;
 	border-radius: 8px;
 	border: 3px solid aliceblue;
-	background-color: orangered;
 	color: black;
 	width: 300px;
 	height: 700px;
@@ -185,15 +183,45 @@ span, p {
 	font-family: 'Do Hyeon', sans-serif;
 }
 
- #minus{
-            width:30px;
-            height:30px;
-        }
-        
-  #plus{
-  	 width:30px;
-            height:30px;
-  }      
+#minus {
+	width: 30px;
+	height: 30px;
+}
+
+#plus {
+	width: 30px;
+	height: 30px;
+}
+
+.nav {
+	margin: auto;
+	ailgn: center;
+	width: 600px;
+	ailgn: center;
+}
+
+.navbar .navbar-search .dropdown-menu {
+	min-width: 25px;
+}
+
+.month-choice {
+	font-family: 'Do Hyeon', sans-serif;
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+li {
+	margin-top: 3px;
+}
+
+li button {
+	width: 50px;
+}
 </style>
 </head>
 
@@ -207,20 +235,25 @@ span, p {
 	<div id="total">
 
 		<div id="choice1">
+			<div class="nav nav-justified navbar-nav">
+				<form class="navbar-form navbar-search"
+					action="<%=contextPath%>/search.sl" method="get">
 
-			<div id="search" align="center" style="display: inline;">
-				<div>
-					<!-- <select>
-						<option>----</option>
-						<option>제목</option>
-						<option>작성자</option>
-					</select>  --><input type="search"style="width: 500px; height: 40px; margin-top: 20px;">
-					<button style="width: 100px; height: 40px; background-color: orangered; color: white; border-radius: 10px; font-size: 25px;">검색</button>
+					<div class="input-group" style="margin-top: 20px;">
+						<input type="search" name="search" class="form-control"
+							placeholder="검색어 입력">
+
+						<div class="input-group-btn">
+							<button type="submit" class="btn btn-search btn-default"
+								style="border: 1px solid black;">검색</button>
 
 
-				</div>
-
+						</div>
+					</div>
+				</form>
 			</div>
+
+
 
 			<br> <br>
 
@@ -228,160 +261,171 @@ span, p {
 
 			<!-- 전체 글수 최신순 인기순 새로고침 -->
 			<div class="count">
-				
-				<div id="good">
-					
-			</div>
-			<br> <br>
-			<%
-				if (loginUser != null) {
-			%>
-			<div id="write">
-				<button type="button" id="insertBtn"onclick="location.href='<%=contextPath%>/views/Sleep/SleepInsert.jsp'">
-					<img src="<%=contextPath%>/resources/images/edit.png" width="40px"
-						height="40px">
-				</button>
-			</div>
-			<%
-				}
-			%>
+
+				<div id="good"></div>
+				<br> <br>
+				<%
+					if (loginUser != null) {
+				%>
+				<div id="write">
+					<button type="button" id="insertBtn"
+						onclick="location.href='<%=contextPath%>/views/Sleep/SleepInsert.jsp'">
+						<img src="<%=contextPath%>/resources/images/edit.png" width="40px"
+							height="40px">
+					</button>
+				</div>
+				<%
+					}
+				%>
 
 
-			<br> <br>
+				<br> <br>
 
-			<hr>
+				<hr>
 
-			<div id="festivalTable">
+				<div id="festivalTable">
 
-				<div class="thumbnailArea" style="width: 1000px; height: 1000px;">
-					<%
-						for (Sleep s : slist) {
-					%>
+					<div class="thumbnailArea" style="width: 1000px; height: 1000px;">
+						<%
+							for (Sleep s : slist) {
+						%>
 
-					<div class="cli" style="height: 210px;">
-						<input type="hidden" value="<%=s.getsId()%>">
-						<div style="float: left; width: 300px; box-sizing: border-box;">
+						<div class="cli" style="height: 210px;">
+							<input type="hidden" value="<%=s.getsId()%>">
+							<div style="float: left; width: 300px; box-sizing: border-box;">
 
-							<%
-								for (Attachment at : flist) {
-							%>
-							<%
-								if (s.getsId() == at.getbId()) {
-							%>
+								<%
+									for (Attachment at : flist) {
+								%>
+								<%
+									if (s.getsId() == at.getbId()) {
+								%>
 
+								<img
+									src="<%=contextPath%>/resources/sleep_uploadFile/<%=at.getChangeName()%>"
+									width="300px" height="200px">
 
-							<img src="<%=contextPath%>/resources/sleep_uploadFile/<%=at.getChangeName()%>"
-								width="300px" height="200px">
+								<%
+									}
+								%>
+								<%
+									}
+								%>
+							</div>
+							<div
+								style="float: left; width: 500px; height: 200px; box-sizing: border-box;">
 
-							<%
-								}
-							%>
-							<%
-								}
-							%>
+								<p style="font-size: 40px; float: left;"><%=s.getsName()%><br>
+									<br> <span style="font-size: 30px; color: orangered"><%=s.getPrice()%>원~</span>
+								</p>
+								<p style="float: left"><%=s.getsContent()%></p>
+								<%-- <p style="color:red; font-size:30px; float:left;"><%= s.getPrice() %>원~</p> --%>
+							</div>
+							<div
+								style="float: left; width: 200px; height: 200px; box-sizing: border-box; margin-bottom: 40px;">
+								<%-- 	<p><%=b.getbWriter()%></p> --%>
+								<p>
+									
+									<%=s.getsWriter()%>
+									<br> 조회수 :
+									<%-- <%=b.getGood()%> --%>
+									<%=s.getsCount()%><br> (<%
+										if (s.getlCode().equals("10")) {
+									%>
+									호텔 )
+									<%
+										} else if (s.getlCode().equals("20")) {
+									%>
+									모텔 )
+									<%
+										} else {
+									%>
+									펜션 )
+									<%
+										}
+									%>
+								</p>
+							</div>
 						</div>
-						<div style="float: left; width: 500px; height: 200px; box-sizing: border-box;">
-							
-							 <p style="font-size:40px; float:left;"><%=s.getsName()%><br><br><span style="font-size:30px; color:orangered"><%= s.getPrice() %>원~</span></p>
-						<p style="float:left"><%=s.getsContent()%></p>
-						<%-- <p style="color:red; font-size:30px; float:left;"><%= s.getPrice() %>원~</p> --%>
-						</div>
-						<div
-							style="float: left; width: 200px; height: 200px; box-sizing: border-box; margin-bottom: 40px;">
-							<%-- 	<p><%=b.getbWriter()%></p> --%>
-							<p>
-								작성자 :
-								<%=s.getsWriter()%>
-								<br> 조회수 :
-								<%-- <%=b.getGood()%> --%>
-								<%=s.getsCount()%><br>
-								(<% if(s.getlCode().equals("10")) {%> 호텔 ) 
-								<% }else if(s.getlCode().equals("20")) {%> 모텔 )
-								<% }else { %> 펜션 )
-								<% }	 %>
-							</p>
-						</div>
+						<hr>
+						<%
+							}
+						%>
 					</div>
-					<hr>
+				</div>
+
+				<!-- 페이징 바 -->
+				<div class="pagingArea" align="center">
+					<!-- 맨 처음으로 (<<) -->
+					<button
+						onclick="location.href='<%=contextPath%>/list.sl?currentPage=1'">
+						&lt;&lt;</button>
+
+					<!-- 이전 페이지로 (<) -->
+					<%
+						if (currentPage == 1) {
+					%>
+					<button disabled>&lt;</button>
+					<%
+						} else {
+					%>
+					<button
+						onclick="location.href='<%=contextPath%>/list.sl?currentPage=<%=currentPage - 1%>'">
+						&lt;</button>
 					<%
 						}
 					%>
+
+					<!-- 10개의 페이지 목록 -->
+					<%
+						for (int p = startPage; p <= endPage; p++) {
+					%>
+					<%
+						if (p == currentPage) {
+					%>
+					<button disabled>
+						<%=p%>
+					</button>
+					<%
+						} else {
+					%>
+					<button
+						onclick="location.href='<%=contextPath%>/list.sl?currentPage=<%=p%>'"><%=p%></button>
+					<%
+						}
+					%>
+					<%
+						}
+					%>
+
+					<!-- 다음 페이지로 (>) -->
+					<%
+						if (currentPage == maxPage) {
+					%>
+					<button disabled>&gt;</button>
+					<%
+						} else {
+					%>
+					<button
+						onclick="location.href='<%=contextPath%>/list.sl?currentPage=<%=currentPage + 1%>'">
+
+						&gt;</button>
+					<%
+						}
+					%>
+
+					<!-- 맨 끝으로 (>>) -->
+					<button
+						onclick="location.href='<%=contextPath%>/list.sl?currentPage=<%=maxPage%>'">
+						&gt;&gt;</button>
 				</div>
-				<hr>
 			</div>
 
-			<!-- 페이징 바 -->
-			<div class="pagingArea" align="center">
-				<!-- 맨 처음으로 (<<) -->
-				<button
-					onclick="location.href='<%=contextPath%>/list.sl?currentPage=1'">
-					&lt;&lt;</button>
-
-				<!-- 이전 페이지로 (<) -->
-				<%
-					if (currentPage == 1) {
-				%>
-				<button disabled>&lt;</button>
-				<%
-					} else {
-				%>
-				<button
-					onclick="location.href='<%=contextPath%>/list.sl?currentPage=<%=currentPage - 1%>'">
-					&lt;</button>
-				<%
-					}
-				%>
-
-				<!-- 10개의 페이지 목록 -->
-				<%
-					for (int p = startPage; p <= endPage; p++) {
-				%>
-				<%
-					if (p == currentPage) {
-				%>
-				<button disabled>
-					<%=p%>
-				</button>
-				<%
-					} else {
-				%>
-				<button
-					onclick="location.href='<%=contextPath%>/list.sl?currentPage=<%=p%>'"><%=p%></button>
-				<%
-					}
-				%>
-				<%
-					}
-				%>
-
-				<!-- 다음 페이지로 (>) -->
-				<%
-					if (currentPage == maxPage) {
-				%>
-				<button disabled>&gt;</button>
-				<%
-					} else {
-				%>
-				<button
-					onclick="location.href='<%=contextPath%>/list.sl?currentPage=<%=currentPage + 1%>'">
-					
-					&gt;</button>
-				<%
-					}
-				%>
-
-				<!-- 맨 끝으로 (>>) -->
-				<button
-					onclick="location.href='<%=contextPath%>/list.sl?currentPage=<%=maxPage%>'">
-					&gt;&gt;</button>
-			</div>
-		</div>
 
 
 
-
-		<!-- 인워수 늘리고 줄이기 -->
-		<script> 
+			<!-- 인워수 늘리고 줄이기 -->
+			<script> 
         $(function(){
             $('#decreaseQuantity').click(function(e){
                 e.preventDefault();
@@ -411,9 +455,9 @@ span, p {
 
 
 
-		<!-- 가격 -->
+			<!-- 가격 -->
 
-		<script>
+			<script>
             $(function(){
                 $('#decreaseQuantity1').click(function(e){
                     e.preventDefault();
@@ -446,42 +490,93 @@ span, p {
 
 
 
-	</div>
+		</div>
 
-	<div id="choice2">
-		<h2>지역</h2>
-		<select
-			style="width: 100%; height: 30px; font-size: 20px; align: center;">
-			<option>--------</option>
-			<option>서울</option>
-			<option>경기</option>
-			<option>강원</option>
-			<option>충청</option>
-			<option>경상</option>
-			<option>제주</option>
+		<div id="choice2">
+			<div class="local">
+				<h2>지역</h2>
 
-		</select> <br> <br>
-		<button type="button" class="btn btn-outline-light" style="float:left">지역별</button>
-					<br><br><br>
-		<button type="button" class="btn btn-outline-light" style="float:left">조회순</button>
-		
-
-	</div>
+				<div class="local-choice">
 
 
-	<script>
+					<ul>
+						<li><button type="button" class="btn btn-outline-info"
+								id="seoul" style="color: black;">서울</button> <input
+							type="hidden" value="10"></li>
+						<li><button type="button" class="btn btn-outline-info"
+								id="kyeongi" style="color: black;">경기도</button> <input
+							type="hidden" value="20"></li>
+						<li><button type="button" class="btn btn-outline-info"
+								id="kangwon" style="color: black;">강원도</button> <input
+							type="hidden" value="30"></li>
+						<li><button type="button" class="btn btn-outline-info"
+								id="chung" style="color: black;">충청도</button> <input
+							type="hidden" value="40"></li>
+						<li><button type="button" class="btn btn-outline-info"
+								id="gyeong" style="color: black;">경상도</button> <input
+							type="hidden" value="50"></li>
+						<li><button type="button" class="btn btn-outline-info"
+								id="jeon" style="color: black;">전라도</button> <input
+							type="hidden" value="60"></li>
+					</ul>
+				</div>
+				<hr>
+
+
+				<div class="stype">
+					<ul>
+						<li><button type="button" class="btn btn-outline-info"
+								id="ho" style="color: black;">호텔</button> <input type="hidden"
+							value="1"></li>
+						<li><button type="button" class="btn btn-outline-info"
+								id="mo" style="color: black;">모텔</button> <input type="hidden"
+							value="2"></li>
+						<li><button type="button" class="btn btn-outline-info"
+								id="pan" style="color: black;">펜션</button> <input type="hidden"
+							value="3"></li>
+
+					</ul>
+				</div>
+
+			</div>
+		</div>
+
+
+		<script>
 		$(function(){
 			$(".cli").click(function(){
 				var sId =  $(this).children().eq(0).val();
-				location.href="<%=contextPath%>/detail.sl?sId=" +sId;
+				location.href="<%=contextPath%>/detail.sl?sId=" + sId;
+				});
 			});
-		});
-	</script>
+		
+			$(function() {
+				$("#searchBtn").click(function(){
+							var search = $(this).val();
+							$(this).parents('#searchBtnp').find('#searchBtn').val(search);
+						});
+			});
+			
+			$(function(){
+				$(".local-choice li").click(function(){
+					var lId = $(this).children().eq(1).val();
+					location.href="<%=contextPath%>/lo.sl?lId=" + lId;
+				});
+			});
+			
+			$(function(){
+				$(".stype li").click(function(){
+					var stype = $(this).children().eq(1).val();
+					console.log(stype);
+					location.href="<%=contextPath%>/type.sl?stype=" + stype;
+				});
+			});
+		</script>
 
 
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"></script>
 </body>
 </html>

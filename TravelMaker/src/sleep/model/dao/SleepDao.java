@@ -62,6 +62,7 @@ public class SleepDao {
 		} finally {
 			close(pstmt);
 		}
+		System.out.println();
 		return result;
 	}
 
@@ -239,7 +240,7 @@ public class SleepDao {
 
 			while (rset.next()) {
 				Attachment at = new Attachment();
-				at.setbId(rset.getInt("b_id"));
+				at.setbId(rset.getInt("s_id"));
 				at.setChangeName(rset.getString("newfilename"));
 
 				list.add(at);
@@ -380,11 +381,10 @@ public class SleepDao {
 			while (rs.next()) {
 				Attachment at = new Attachment();
 				at.setfId(rs.getInt("no"));
-				at.setbId(rs.getInt("b_id"));
+				at.setbId(rs.getInt("s_id"));
 				at.setOriginName(rs.getString("originname"));
 				at.setChangeName(rs.getString("newfilename"));
 				at.setFilePath(rs.getString("filepath"));
-				at.setCreateDate(rs.getDate("write_date"));
 
 				list.add(at);
 
@@ -560,4 +560,253 @@ public class SleepDao {
 	}
 	return result;
 }
+
+	public ArrayList<Sleep> selectSearchList(Connection con, String search, int currentPage, int boardLimit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Sleep> list = null;
+		String sql = prop.getProperty("selectSearchTitleList");
+
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setString(1, search);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+
+			rset = pstmt.executeQuery();
+
+			list = new ArrayList<Sleep>();
+
+			while (rset.next()) {
+				list.add(new Sleep(rset.getInt("s_id"), rset.getString("s_type"), rset.getString("s_Name"),
+						rset.getString("s_content"), rset.getString("l_code"), rset.getInt("price"),
+						rset.getInt("m_seq"), rset.getString("writer"), rset.getInt("view_cnt"),
+						rset.getString("status"), rset.getString("address"), rset.getString("enName")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int getListCount(Connection con, int flag) {
+	int listCount = 0;
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+
+	String sql = prop.getProperty("getListCounts");
+
+	try {
+		pstmt = con.prepareStatement(sql);
+
+		rset = pstmt.executeQuery();
+
+		if (rset.next()) {
+			listCount = rset.getInt(1);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return listCount;
+	}
+
+	public ArrayList<Attachment> selectSearchAttachment(Connection con, String search, int currentPage, int boardLimit) {
+		ArrayList<Attachment> list = new ArrayList<Attachment>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String query = prop.getProperty("selectSearchAttachment");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setString(1, search);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Attachment at = new Attachment();
+				at.setbId(rset.getInt("s_id"));
+				at.setChangeName(rset.getString("newfilename"));
+
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+
+
+	public ArrayList<Sleep> selectLocationList(Connection con, int stype, int currentPage, int boardLimit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Sleep> list = null;
+		
+		String sql = prop.getProperty("selectStype");
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+
+			pstmt.setInt(1, stype);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rset = pstmt.executeQuery();
+
+			list = new ArrayList<Sleep>();
+
+			while (rset.next()) {
+				list.add(new Sleep(rset.getInt("s_id"), rset.getString("s_type"), rset.getString("s_Name"),
+						rset.getString("s_content"), rset.getString("l_code"), rset.getInt("price"),
+						rset.getInt("m_seq"), rset.getString("writer"), rset.getInt("view_cnt"),
+						rset.getString("status"), rset.getString("address"), rset.getString("enName")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Attachment> selectLocationAttachment(Connection con, int stype, int currentPage, int boardLimit) {
+		ArrayList<Attachment> list = new ArrayList<Attachment>();
+
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+
+	String query = prop.getProperty("selectLocationAttachment");
+
+	try {
+		pstmt = con.prepareStatement(query);
+
+		int startRow = (currentPage - 1) * boardLimit + 1;
+		int endRow = startRow + boardLimit - 1;
+
+		pstmt.setInt(1, stype);
+		pstmt.setInt(2, startRow);
+		pstmt.setInt(3, endRow);
+
+		rset = pstmt.executeQuery();
+
+		while (rset.next()) {
+			Attachment at = new Attachment();
+			at.setbId(rset.getInt("s_id"));
+			at.setChangeName(rset.getString("newfilename"));
+
+			list.add(at);
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	return list;
 }
+
+	public ArrayList<Sleep> sleepLocation(Connection con, int lId, int currentPage, int boardLimit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Sleep> list = null;
+		
+		String sql = prop.getProperty("sleepLocation");
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+
+			pstmt.setInt(1, lId);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rset = pstmt.executeQuery();
+
+			list = new ArrayList<Sleep>();
+
+			while (rset.next()) {
+				list.add(new Sleep(rset.getInt("s_id"), rset.getString("s_type"), rset.getString("s_Name"),
+						rset.getString("s_content"), rset.getString("l_code"), rset.getInt("price"),
+						rset.getInt("m_seq"), rset.getString("writer"), rset.getInt("view_cnt"),
+						rset.getString("status"), rset.getString("address"), rset.getString("enName")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Attachment> sleepAttachmentLocation(Connection con, int lId, int currentPage, int boardLimit) {
+		ArrayList<Attachment> list = new ArrayList<Attachment>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String query = prop.getProperty("sleepAttachmentLocation");
+
+		try {
+			pstmt = con.prepareStatement(query);
+
+			int startRow = (currentPage - 1) * boardLimit + 1;
+			int endRow = startRow + boardLimit - 1;
+
+			pstmt.setInt(1, lId);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Attachment at = new Attachment();
+				at.setbId(rset.getInt("s_id"));
+				at.setChangeName(rset.getString("newfilename"));
+
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+
+	}
+

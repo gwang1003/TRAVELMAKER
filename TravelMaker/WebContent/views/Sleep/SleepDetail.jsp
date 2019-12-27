@@ -11,6 +11,8 @@
 	ArrayList<Attachment> fileList = (ArrayList<Attachment>) request.getAttribute("fileList");
 	Member m = (Member) request.getAttribute("member");
 	ArrayList<Room> RList = (ArrayList<Room>) request.getAttribute("RList");
+	System.out.println(fileList);
+	System.out.println(s);
 	System.out.println(RList);
 %>
 
@@ -123,14 +125,15 @@ body {
 .badge1 {
 	float: left;
 	font-size: 20px;
-	margin-top: 3%;
+	margin-top: 20px;
 }
 
 .sub3 {
-	width: 80%;
-	height: 400px;
+	width: 70%;
+	height: 340px;
 	border: 1px solid white;
-	margin-left: 200px;
+	margin-left: 300px;
+	margin-top:40px;
 	border: 1px solid rgb(235, 223, 223);
 	border-radius: 6px;
 	float:left;
@@ -148,12 +151,10 @@ body {
 #subimg1 {
 	width: 50%;
 	margin-left: 50%;
-	margin-top: 2%;
 }
 
 #subimg2 {
 	widows: 50%;
-	margin-top: 3%;
 	margin-left: 47%;
 }
 
@@ -224,7 +225,7 @@ body {
 
 .sub2 {
 	float:left;
-	margin-left:0;
+	margin-left:100px;;
 	width:100%;
 	height: 100px;
 }
@@ -256,8 +257,8 @@ body {
 					<div class="swiper-slide"
 						style="background-image:url('<%=contextPath%>/resources/sleep_uploadFile/<%=fileList.get(1).getChangeName()%>')"></div>
 					<div class="swiper-slide"
-						style="background-image:url('<%=contextPath%>/resources/sleep_uploadFile/<%=fileList.get(1).getChangeName()%>')"></div>
-					<div class="swiper-slide"
+					<%-- 	style="background-image:url('<%=contextPath%>/resources/sleep_uploadFile/<%=fileList.get(1).getChangeName()%>')"></div>
+					<div class="swiper-slide" --%>
 						style="background-image:url('<%=contextPath%>/resources/sleep_uploadFile/<%=fileList.get(2).getChangeName()%>')"></div>
 					<div class="swiper-slide"
 						style="background-image:url('<%=contextPath%>/resources/sleep_uploadFile/<%=fileList.get(3).getChangeName()%>')"></div>
@@ -294,16 +295,21 @@ body {
 
 			<div class="badge1">
 				<span class="build_badge"
-					style="color: rgba(255, 255, 255, 1); background-color: rgb(230, 68, 27); font-size: 40px; margin-left: 50px;"><%=s.getsName()%></span>
+					style="color: rgba(255, 255, 255, 1); background-color: rgb(230, 68, 27); font-size: 35px; margin-left: 50px;"><%=s.getsName()%></span>
 			</div>
 
-			<h2 style="margin-top: 44px;">
+			<h2 style="margin-top: 30px;">
 				(<%=s.getEnName()%>)
+				
+				
 			</h2>
 
 			<h3 class="sub" style="margin-left: 50px;">
 				위치 :
-				<%=s.getAddress()%></h3>
+				<%=s.getAddress()%>
+				
+				
+				</h3>
 
 		</div>
 
@@ -313,15 +319,15 @@ body {
 		<div class="sub2">
 
 			<div style="border: 1px solid red;" class="tab">
-				<button class="on">
+				<button id="hide2" onclick="hide1('subtotal');" class="on">
 					<span>객실안내/예약</span>
 				</button>
-				<button id="button1" onclick="button1_click();">
+				<button id="hide2" onclick="hide2('subtotal2');">
 					<span>숙소정보</span>
 				</button>
 			</div>
 			<div class="deleteBtn">
-				<button type="button" class="btn btn-outline-danger" onclick="deleteSleep();" style="float: right;">삭제하기</button>
+				<button type="button" class="btn btn-outline-danger" onclick="deleteSleep();" style="float: right; margin-right:200px;">삭제하기</button>
 			</div>
 
 		</div>
@@ -329,7 +335,7 @@ body {
 
 
 
-		<div class="subtotal">
+		<div id="subtotal">
 			<%
 				for (int i = 0; i < RList.size(); i++) {
 			%>
@@ -367,6 +373,7 @@ body {
 		</div>
 
 	</div>
+	
 
 
 	<form action="" id="detailForm" method="post">
@@ -408,13 +415,19 @@ body {
 				swiper : galleryThumbs,
 			},
 		});
-	</script>
-	
-	<script>
+
 		function deleteSleep(){
 			$("#detailForm").attr("action", "<%=contextPath%>/delete.sl");
 	         $("#detailForm").submit();
 		}
+		
+		function hide1(target){
+       	 document.getElementById(target).style.display = 'block';
+       }
+		
+		function hide2(target){
+	       	 document.getElementById(target).style.display = 'block';
+	       }
 	</script>
 
 </body>

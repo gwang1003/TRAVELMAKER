@@ -264,6 +264,73 @@ public class SleepService {
 			return result;
 		}
 
+		public ArrayList<Sleep> selectSearchList(String search, int currentPage, int boardLimit) {
+			Connection con = getConnection();
+			ArrayList<Sleep> list = new SleepDao().selectSearchList(con, search, currentPage, boardLimit);
+
+			close(con);
+			return list;
+		}
+
+	
+		public int getListCount(int flag) {Connection con = getConnection();
+		int result = new SleepDao().getListCount(con, flag);
+
+		close(con);
+
+		return result;
+		}
+
+		public ArrayList<Attachment> selectSearchAttachment(String search, int currentPage, int boardLimit) {
+			Connection con = getConnection();
+			ArrayList<Attachment> list = new SleepDao().selectSearchAttachment(con, search, currentPage, boardLimit);
+
+			close(con);
+			return list;
+		}
+
+		
+
+		public ArrayList<Sleep> selectLocationList(int stype, int currentPage, int boardLimit) {
+			Connection con = getConnection();
+
+			ArrayList<Sleep> list = new SleepDao().selectLocationList(con, stype, currentPage, boardLimit);
+
+			close(con);
+
+			return list;
+		}
+
+		public ArrayList<Attachment> selectLocationAttachment(int stype, int currentPage, int boardLimit) {
+			Connection con = getConnection();
+
+			ArrayList<Attachment> list = new SleepDao().selectLocationAttachment(con, stype, currentPage, boardLimit);
+
+			close(con);
+
+			return list;
+		}
+
+		public ArrayList<Sleep> sleepLocation(int lId, int currentPage, int boardLimit) {
+			Connection con = getConnection();
+
+			ArrayList<Sleep> list = new SleepDao().sleepLocation(con, lId, currentPage, boardLimit);
+
+			close(con);
+
+			return list;
+		}
+
+		public ArrayList<Attachment> sleepAttachmentLocation(int lId, int currentPage, int boardLimit) {
+			Connection con = getConnection();
+
+			ArrayList<Attachment> list = new SleepDao().sleepAttachmentLocation(con, lId, currentPage, boardLimit);
+
+			close(con);
+
+			return list;
+		}
+
 
 
 	
