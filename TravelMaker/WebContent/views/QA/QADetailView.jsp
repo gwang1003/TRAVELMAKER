@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*, QA.model.vo.*"%>
+	pageEncoding="UTF-8" import="java.util.*, QA.model.vo.*, member.model.vo.*, board.model.vo.*"%>
 
 <%
 	QA q = (QA) request.getAttribute("q");
@@ -21,63 +21,42 @@
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
 <title>Insert title here</title>
+
+<!-- 영역 분할 -->
 <style>
-body {
-	font-family: Arial; 
-	width: 1500px;
-	margin-top: 10%;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-<!--
-영역 분할 --> <style> /* 헤더 */ #menubar {
-	width: 100%;
-	height: 150px;
-}
-
+/* 몸체 */
 #body {
-	margin-top: 4%;
+	margin-top: 180px;
 	width: 1500px;
-	height: 1000px;
+	height: 700px;
 	display: flex;
-	overflow: auto;
 	flex-direction: row;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 aside {
+	margin-left: 10%;
 	width: 15%;
 	height: 100%;
-}
-
-#marginBody {
-	width: 65%;
+	margin-right: 2%;
 }
 
 #my-info-section1 {
 	width: 80%;
 	height: 220px;
+	font-family: 'Do Hyeon', sans-serif;
 }
 
 /* aside -> my-info-section2 */
 #my-info-section2 {
 	width: 80%;
-	height: 520px;
+	height: 460px;
+	font-family: 'Do Hyeon', sans-serif;
 }
 
-ul a {
-	color: black;
-}
-
-@media only screen and (max-width: 2000px) {
-	#my-info-section1 {
-		width: 220px;
-	}
-	#my-info-section2 {
-		width: 220px;
-	}
+#marginBody {
+	width: 65%;
 }
 </style>
 
@@ -87,12 +66,6 @@ ul a {
 	width: 100%;
 	height: 100%;
 	background-color: cornflowerblue;
-}
-
-.bi-person {
-	width: 40px;
-	height: 40px;
-	float: left;
 }
 
 #my-info-text {
@@ -124,6 +97,15 @@ ul a {
 
 #my-info-logout {
 	float: left;
+}
+
+@media only screen and (max-width: 2000px) {
+	#my-info-section1 {
+		width: 220px;
+	}
+	#my-info-section2 {
+		width: 220px;
+	}
 }
 </style>
 
@@ -166,6 +148,7 @@ aside {
 }
 </style>
 
+
 <!-- .notice -->
 <style>
 .notice {
@@ -189,7 +172,7 @@ table {
 
 .title {
 	width: 100%;
-	height: 5%;
+	height: 5.5%;
 	border: 1px solid rgba(31, 5, 5, 0.158);
 	background: rgba(31, 5, 5, 0.158);
 	font-size: 22px;
@@ -445,36 +428,63 @@ table {
 			</section>
 		</aside>
 		<% } else {%>
-		<aside>
+		<aside id="aside1">
 			<section id="my-info-section1">
 				<div class="my-info" id="my-info">
 					<h3 id="my-info-text">마이페이지</h3>
-					<img src="img/smile.jpg"><br>
+					<img onclick="profileUpdate();" id="profile"
+						src="<%= request.getContextPath() %>/resources/myplan_upload/<%= loginUser.getProfile() %>"><br>
 					<p id="name">
-						&nbsp;&nbsp;&nbsp;<%=loginUser.getmName()%></p>
+						&nbsp;&nbsp;&nbsp;<%= loginUser.getmName() %></p>
 					<br> <br>
 					<button class="myinfo-button" id="my-info-logout"
 						onclick="logout();">로그아웃</button>
 					<button class="myinfo-button" id="my-info-modify"
 						onclick="infoModify();">회원정보 수정</button>
 				</div>
+				<script>
+					// 로그아웃 이동 
+                	function logout() {
+                		location.href="<%= request.getContextPath() %>/logout.me";
+                	}
+                	
+					// 정보수정 이동 
+                	function infoModify() {
+                		location.href="<%= request.getContextPath() %>/views/myPage/Info-update.jsp"
+                	}
+            		
+            		// 프로필 
+            		function profileUpdate() {
+            			var left = (screen.width/2)-135;
+            	    	var top = (screen.height/2)-115;
+            	   		var url = "<%= request.getContextPath() %>/views/myPage/ProfileUpdate.jsp";
+            	    	var uploadWin = window.open(url,"Upload","toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=270px, height=230px" + ",top=" + top + ",left=" + left);
+            	    	uploadWin.moveTo(left, top);
+            	    	uploadWin.focus();
+            		}
+                </script>
 			</section>
 
 			<section id="my-info-section2">
 				<div id="mypage-menu">
 					<ul>
-						<li class="bigContent">나의 활동</li>
-						<li><a href="MyPage_MyActive-1.html">나의 계획</a></li>
-						<li><a href="MyPage_MyActive-2.html">내가 쓴 게시글</a></li>
-						<li><a href="MyPage_MyActive-3.html">장바구니</a></li>
-
+						<li class="bigContent no">나의 활동</li>
+						<li class="no"><a class="page"
+							onclick="location.href='<%= contextPath %>/festivalMember.fe?=' + 2">
+								나의계획</a></li>
+						<li><a class="page"
+							onclick="location.href='<%= contextPath %>/festivalall.fe?flag=4&no=1'">내가
+								쓴 게시글</a></li>
 						<hr>
-						<li class="bigContent">개인정보 관리</li>
-						<li><a href="Mypage_ChangeIdPwd.html">회원정보 수정</a></li>
-
+						<li class="bigContent no">개인정보 관리</li>
+						<li><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/views/myPage/Info-update.jsp';">회원정보
+								수정</a></li>
 						<hr>
-						<li class="bigContent">고객센터</li>
-						<li style="font-weight: bold">문의 내역</li>
+						<li class="bigContent no">고객센터</li>
+						<li style="font-weight: bold"><a class="page"
+							onclick="location.href='<%= request.getContextPath() %>/select.qa?mSeq=' + <%= loginUser.getM_seq()%>">문의
+								내역</a></li>
 					</ul>
 				</div>
 			</section>
