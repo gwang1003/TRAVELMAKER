@@ -235,8 +235,8 @@ aside {
 	width: 600px;
 	height: 400px;
 	position:absolute;
-	left:38%;
-	top:115%;
+	margin-left:530px;
+	margin-top:660px;
 	font-family: 'Do Hyeon', sans-serif;
 }
 </style>
